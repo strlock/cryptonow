@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/startpage.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/startpage.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,7 +226,7 @@
       <recent name="E:\coding\OpenServer\domains\crypto\app" />
     </key>
   </component>
-  <component name="RunManager" selected="PHP Script.artisan.php">
+  <component name="RunManager" selected="PHP Script.artisan">
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
@@ -244,7 +244,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHP Script.artisan.php" />
         <item itemvalue="PHP Script.index.php" />
       </list>
     </recent_temporary>
@@ -278,7 +277,8 @@
       <workItem from="1649880125341" duration="7632000" />
       <workItem from="1649960578705" duration="79558000" />
       <workItem from="1650480524657" duration="7195000" />
-      <workItem from="1650515955987" duration="43238000" />
+      <workItem from="1650515955987" duration="45366000" />
+      <workItem from="1650814916598" duration="640000" />
     </task>
     <task id="LOCAL-00001" summary="WOrk">
       <created>1648282713619</created>
@@ -357,7 +357,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650716690515</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Changes">
+      <created>1650805309045</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1650805309045</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -389,7 +396,8 @@
     <MESSAGE value="adding" />
     <MESSAGE value="Adding parameter data to response" />
     <MESSAGE value="Improving" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
+    <MESSAGE value="Changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

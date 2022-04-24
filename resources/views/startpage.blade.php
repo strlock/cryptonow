@@ -1,6 +1,6 @@
 @extends('page')
 
-@section('title')Home page @endsection
+@section('title')Dashboard @endsection
 
 @section('content')
     <div id="app"></div>
