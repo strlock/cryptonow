@@ -26,6 +26,7 @@ class OrdersList extends React.Component
                             <th>Type</th>
                             <th>Stop Loss</th>
                             <th>Take Profit</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,6 +41,7 @@ class OrdersList extends React.Component
                                     <td>{order.type}</td>
                                     <td>{order.sl}</td>
                                     <td>{order.tp}</td>
+                                    <td><button className="btn btn-danger btn-sm" onClick={() => this.onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"></i></button></td>
                                 </tr>
                             );
                         } )}
@@ -51,6 +53,11 @@ class OrdersList extends React.Component
 
     componentDidMount()
     {
+        this.refresh();
+    }
+
+    refresh()
+    {
         let self = this;
         return RequestHelper.fetch('/api/orders', {
             headers: {
@@ -58,6 +65,19 @@ class OrdersList extends React.Component
             },
         }, function(response) {
             self.setState({orders: response.data});
+        });
+    }
+
+    onDeleteClick(order)
+    {
+        const self = this;
+        RequestHelper.fetch('/api/orders/' + order.id, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + LoginHelper.getAccessToken(),
+            },
+        }, function() {
+            self.refresh();
         });
     }
 }

@@ -10653,6 +10653,8 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
   _createClass(OrdersList, [{
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var orders = this.state.orders.map(function (order) {
         order.created_at_formatted = new Date(order.created_at).toLocaleString();
         return order;
@@ -10677,7 +10679,7 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
                 children: "Stop Loss"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
                 children: "Take Profit"
-              })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {})]
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("tbody", {
             children: orders.map(function (order) {
@@ -10698,6 +10700,17 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
                   children: order.sl
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
                   children: order.tp
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                    className: "btn btn-danger btn-sm",
+                    onClick: function onClick() {
+                      return _this2.onDeleteClick(order);
+                    },
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("i", {
+                      className: "fa fa-times",
+                      "aria-hidden": "true"
+                    })
+                  })
                 })]
               }, order.id);
             })
@@ -10708,6 +10721,11 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.refresh();
+    }
+  }, {
+    key: "refresh",
+    value: function refresh() {
       var self = this;
       return _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/orders', {
         headers: {
@@ -10717,6 +10735,19 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
         self.setState({
           orders: response.data
         });
+      });
+    }
+  }, {
+    key: "onDeleteClick",
+    value: function onDeleteClick(order) {
+      var self = this;
+      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/orders/' + order.id, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getAccessToken()
+        }
+      }, function () {
+        self.refresh();
       });
     }
   }]);
