@@ -1,0 +1,7 @@
+function showMessage(message){
+    jQuery('#pageMessage .message').html(message).removeClass('hide');
+}
+
+function hideMessage(){
+    jQuery('#pageMessage .message').addClass('hide');
+}

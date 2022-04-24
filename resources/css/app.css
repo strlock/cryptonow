@@ -1,0 +1,145 @@
+:root{
+    --bs-body-font-size: 16px;
+    --bg-color: #404364;
+    --top-bg-color: #2a2f44;
+}
+
+*, :before, :after{
+    padding: 0;
+    margin: 0;
+}
+
+a{
+    color: #fff;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #eee;
+}
+
+body{
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--bg-color);
+    font-family: 'Open Sans', sans-serif;
+    padding: 1em 1em 5em 1em;
+}
+
+h1{
+    font-family: 'Poppins', sans-serif;
+    color: #5b4339;
+    font-size: 8.86em;
+    line-height: 0.917em;
+    text-transform: uppercase;
+    font-weight: 900;
+    text-align: right;
+}
+
+#top{
+    display: grid;
+    grid-template-columns: minmax(340px, 1220px) 1fr;
+    margin-bottom: 1em;
+    background-color: var(--top-bg-color);
+}
+
+#top .top-left{
+    grid-column-start: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+}
+
+#top .top-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 3em;
+}
+
+.logo-link img{
+    display: inline-block;
+}
+
+#app {
+    width: 100%;
+}
+
+#app .container {
+    max-width: 100%;
+}
+
+#app .container>div>div {
+    padding: 0;
+}
+
+.card .card-header {
+    text-align: center;
+    font-weight: bold;
+}
+
+.overlay, .overlay:before {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.overlay {
+    z-index: 65534;
+}
+
+.overlay:before{
+    content: "";
+    background-color: #000;
+    opacity: 0.6;
+}
+
+.show {
+    display: block !important;
+}
+
+.orders .order.order-ready {
+    background-color: #91cfff;
+}
+
+.orders .order.order-profit {
+    background-color: #1A791A;
+}
+
+.orders .order.order-loss {
+    background-color: #AC1313;
+}
+
+.orders .order.order-failed {
+    background-color: red;
+}
+
+@media(max-width: 1500px){
+    #top .top-left{
+        padding: 1.25em 1.875em;
+    }
+    ul#topmenu{
+        font-size: 1.125em;
+        width: 100%;
+        margin-bottom: 0;
+    }
+    .search-wrapper input[type="text"]{
+        min-width: 0;
+    }
+}
+
+@media(max-width: 1200px){
+    #top{
+        grid-auto-flow: row;
+    }
+    .search-wrapper input[type="text"]{
+        max-width: 13.797em;
+    }
+    #top .top-right{
+        padding: 1.25em;
+        grid-column-start: 1;
+    }
+}

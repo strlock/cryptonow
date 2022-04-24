@@ -1,0 +1,30 @@
+@extends('page')
+
+@section('title')Home page @endsection
+
+@section('content')
+<div class="middle-left">
+    <div class="image-block">
+        <img src="{{asset('images/image.png')}}" alt="" />
+    </div>
+</div>
+<div class="middle-right">
+    <h1>crypto-currency exchange</h1>
+    <div class="exchange-form">
+        <div class="from-currency">
+            @include('currency', ['name' => 'from'])
+        </div>
+        <div class="to-currency">
+            @include('currency', ['name' => 'to'])
+        </div>
+        <div class="from-amount">
+            <label for="fromamount"><?php echo __('custom.yousend')?></label>
+            <input type="text" name="fromamount" value="" />
+        </div>
+        <div class="to-amount">
+            <label for="toamount"><?php echo __('custom.youget')?></label>
+            <input type="text" name="toamount" value="" />
+        </div>
+    </div>
+</div>
+@endsection
