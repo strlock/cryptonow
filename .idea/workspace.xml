@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
-      <change afterPath="$PROJECT_DIR$/resources/js/Helpers/RequestHelper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/artisan" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/Helpers/LoginHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Helpers/LoginHelper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/LoginForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/LoginForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrderForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrderForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/PriceChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/PriceChart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -285,7 +278,7 @@
       <workItem from="1649880125341" duration="7632000" />
       <workItem from="1649960578705" duration="79558000" />
       <workItem from="1650480524657" duration="7195000" />
-      <workItem from="1650515955987" duration="41312000" />
+      <workItem from="1650515955987" duration="43238000" />
     </task>
     <task id="LOCAL-00001" summary="WOrk">
       <created>1648282713619</created>
