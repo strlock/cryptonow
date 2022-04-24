@@ -12,7 +12,7 @@ import LoginForm from "./LoginForm";
 import LoginHelper from "../Helpers/LoginHelper";
 import OrdersList from "./OrdersList";
 
-class Main extends React.Component {
+class App extends React.Component {
     wsClient = null
 
     state = {
@@ -172,5 +172,5 @@ class Main extends React.Component {
 }
 
 if (document.getElementById('app')) {
-    ReactDOM.render(<Main/>, document.getElementById('app'));
+    ReactDOM.render(<App/>, document.getElementById('app'));
 }
