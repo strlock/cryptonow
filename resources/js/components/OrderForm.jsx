@@ -123,13 +123,11 @@ class OrderForm extends React.Component
         data.append('exchange', 'binance');
         RequestHelper.fetch('/api/orders', {
             method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + LoginHelper.getAccessToken(),
-            },
             body: data,
-        }, function (response) {
+        }, response => {
             self.clearForm();
             self.props.showPopup('Order created!');
+            this.props.ordersList.refresh();
         });
     }
 

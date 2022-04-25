@@ -37,6 +37,7 @@ function App() {
 
     const priceChartRef = useRef();
     const mdChartRef = useRef();
+    const ordersListRef = useRef();
 
     const showPopup = (message, type, title) => {
         setPopup({
@@ -141,12 +142,12 @@ function App() {
                     <div className="card">
                         <div className="card-header">Orders</div>
                         <div className="card-body">
-                            <OrdersList />
+                            <OrdersList ref={ordersListRef} />
                         </div>
                     </div>
                 </div>
                 <div className="col-md-2 ps-3">
-                    <OrderForm currentPrice={currentPrice} showPopup={showPopup} />
+                    <OrderForm currentPrice={currentPrice} showPopup={showPopup} ordersList={ordersListRef.current} />
                 </div>
             </div>
         </div>

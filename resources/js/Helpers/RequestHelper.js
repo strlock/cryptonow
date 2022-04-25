@@ -6,6 +6,12 @@ class RequestHelper
 {
     static fetch(url, options, success, failed)
     {
+        const accessToken = LoginHelper.getAccessToken();
+        if (accessToken) {
+            options.headers = {
+                'Authorization': 'Bearer ' + accessToken,
+            };
+        }
         return fetch(url, options).then(response => response.json()).then(function (response) {
             if (response.status && response.status === 'Token is Expired') {
                 LoginHelper.logout();

@@ -45,7 +45,7 @@ class LoginForm extends React.Component {
         RequestHelper.fetch('/api/login', {
             method: 'POST',
             body: data
-        }, function (response) {
+        }, response => {
             if (typeof response.error != 'undefined') {
                 if (typeof self.props.onFail != 'undefined') {
                     self.props.onFail(response.error);

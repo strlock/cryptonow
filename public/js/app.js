@@ -9332,6 +9332,14 @@ var RequestHelper = /*#__PURE__*/function () {
 
       return fetch;
     }(function (url, options, success, failed) {
+      var accessToken = _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_0__["default"].getAccessToken();
+
+      if (accessToken) {
+        options.headers = {
+          'Authorization': 'Bearer ' + accessToken
+        };
+      }
+
       return fetch(url, options).then(function (response) {
         return response.json();
       }).then(function (response) {
@@ -9578,6 +9586,7 @@ function App() {
 
   var priceChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var mdChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var ordersListRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
 
   var showPopup = function showPopup(message, type, title) {
     setPopup({
@@ -9766,14 +9775,17 @@ function App() {
               children: "Orders"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
               className: "card-body",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_11__["default"], {})
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_11__["default"], {
+                ref: ordersListRef
+              })
             })]
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
           className: "col-md-2 ps-3",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
             currentPrice: currentPrice,
-            showPopup: showPopup
+            showPopup: showPopup,
+            ordersList: ordersListRef.current
           })
         })]
       })]
@@ -10206,9 +10218,7 @@ var MarketDeltaChart = /*#__PURE__*/function (_React$Component) {
     key: "refresh",
     value: function refresh() {
       var self = this;
-      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/marketDelta/BTCUSDT/' + this.props.fromTime + '/' + this.props.toTime + '/' + this.props.interval, {
-        mode: 'no-cors'
-      }, function (response) {
+      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/marketDelta/BTCUSDT/' + this.props.fromTime + '/' + this.props.toTime + '/' + this.props.interval, {}, function (response) {
         var series = [{
           data: response.data
         }];
@@ -10502,6 +10512,8 @@ var OrderForm = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "postOrder",
     value: function postOrder(type) {
+      var _this3 = this;
+
       var self = this;
       var data = new FormData();
       data.append('price', this.priceRef.current.value);
@@ -10513,13 +10525,12 @@ var OrderForm = /*#__PURE__*/function (_React$Component) {
       data.append('exchange', 'binance');
       _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/orders', {
         method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getAccessToken()
-        },
         body: data
       }, function (response) {
         self.clearForm();
         self.props.showPopup('Order created!');
+
+        _this3.props.ordersList.refresh();
       });
     }
   }, {
@@ -10685,11 +10696,7 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
     key: "refresh",
     value: function refresh() {
       var self = this;
-      return _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/orders', {
-        headers: {
-          'Authorization': 'Bearer ' + _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getAccessToken()
-        }
-      }, function (response) {
+      return _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/orders', {}, function (response) {
         self.setState({
           orders: response.data
         });
@@ -10700,10 +10707,7 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
     value: function onDeleteClick(order) {
       var self = this;
       _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/orders/' + order.id, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': 'Bearer ' + _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_1__["default"].getAccessToken()
-        }
+        method: 'DELETE'
       }, function () {
         self.refresh();
       });

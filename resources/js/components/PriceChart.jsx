@@ -117,7 +117,7 @@ class PriceChart extends React.Component {
     refresh() {
         let self = this;
         RequestHelper.fetch('/api/price/BTCUSDT/' + this.props.fromTime + '/' + this.props.toTime + '/' + this.props.interval, {},
-            function (response) {
+            response => {
                 self.chartContext.updateSeries([{data:response.data}]);
             },
             error => console.log(error)

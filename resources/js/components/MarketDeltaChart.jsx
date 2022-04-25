@@ -127,9 +127,7 @@ class MarketDeltaChart extends React.Component {
     refresh()
     {
         let self = this;
-        RequestHelper.fetch('/api/marketDelta/BTCUSDT/' + this.props.fromTime + '/' + this.props.toTime + '/' + this.props.interval, {
-            mode: 'no-cors',
-        }, function (response) {
+        RequestHelper.fetch('/api/marketDelta/BTCUSDT/' + this.props.fromTime + '/' + this.props.toTime + '/' + this.props.interval, {}, response => {
             let series = [{data:response.data}];
             self.chartContext.updateSeries(series);
         }, error => console.log(error));

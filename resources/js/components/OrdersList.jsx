@@ -59,11 +59,7 @@ class OrdersList extends React.Component
     refresh()
     {
         let self = this;
-        return RequestHelper.fetch('/api/orders', {
-            headers: {
-                'Authorization': 'Bearer ' + LoginHelper.getAccessToken(),
-            },
-        }, function(response) {
+        return RequestHelper.fetch('/api/orders', {}, response => {
             self.setState({orders: response.data});
         });
     }
@@ -73,10 +69,7 @@ class OrdersList extends React.Component
         const self = this;
         RequestHelper.fetch('/api/orders/' + order.id, {
             method: 'DELETE',
-            headers: {
-                'Authorization': 'Bearer ' + LoginHelper.getAccessToken(),
-            },
-        }, function() {
+        }, () => {
             self.refresh();
         });
     }
