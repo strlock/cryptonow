@@ -17,7 +17,7 @@ abstract class AbstractFacade implements FacadeInterface
      * @param string $symbol
      * @param int $fromTime
      */
-    abstract protected function dispatchMinuteMarketDeltaFetchJob(string $symbol, int $fromTime): void;
+    abstract protected function dispatchMinuteMarketStatFetchJob(string $symbol, int $fromTime): void;
 
     /**
      * @param string $symbol
@@ -31,7 +31,7 @@ abstract class AbstractFacade implements FacadeInterface
         if ($result !== false) {
             return $result;
         }
-        $this->dispatchMinuteMarketDeltaFetchJob($symbol, $fromTime);
+        $this->dispatchMinuteMarketStatFetchJob($symbol, $fromTime);
         return 0.0;
     }
 

@@ -5,7 +5,7 @@ import RequestHelper from "../Helpers/RequestHelper";
 class MarketDeltaChart extends React.Component {
     state = {
         series: [{
-            name: 'Market Delta',
+            name: 'Market Statistics',
             data: [],
         }],
         options: {

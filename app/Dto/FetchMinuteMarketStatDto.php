@@ -2,7 +2,7 @@
 
 namespace App\Dto;
 
-class FetchMinuteMarketDeltaDto
+class FetchMinuteMarketStatDto
 {
     public function __construct(
         private string $symbol,

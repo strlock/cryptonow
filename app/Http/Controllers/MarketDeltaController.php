@@ -6,14 +6,14 @@ use App\Crypto\Exchanges\Aggregate\Facade as AggregateExchangeFacade;
 use App\Crypto\Exchanges\FacadeInterface;
 use App\Crypto\Helpers\TimeHelper;
 use App\Http\Resources\SeriesResource;
-use App\Services\GetAggregateMarketDeltaService;
+use App\Services\GetAggregateMarketStatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Redis;
 
 class MarketDeltaController extends Controller
 {
-    public function __construct(private GetAggregateMarketDeltaService $aggregateMarketDeltaService)
+    public function __construct(private GetAggregateMarketStatService $aggregateMarketDeltaService)
     {
     }
 

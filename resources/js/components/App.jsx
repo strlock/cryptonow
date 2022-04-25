@@ -86,7 +86,7 @@ class App extends React.Component {
                             </div>
                         </div><br/>
                         <div className="card">
-                            <div className="card-header">Market Delta</div>
+                            <div className="card-header">Market Statistics</div>
                             <div className="card-body">
                                 <MarketDeltaChart fromTime={this.state.fromTime} toTime={this.state.toTime} interval={this.state.interval} height={this.state.mdHeight} updateInterval={this.state.updateInterval} />
                             </div>
@@ -165,7 +165,7 @@ class App extends React.Component {
     componentDidMount()
     {
         /*setInterval(function(){
-            console.log('Refreshing market delta...');
+            console.log('Refreshing market statistics...');
             self.refresh();
         }, this.props.updateInterval);*/
     }

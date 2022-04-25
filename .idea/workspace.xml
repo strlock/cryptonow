@@ -3,13 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Crypto/Exchanges/AbstractFacade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Crypto/Exchanges/AbstractFacade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Crypto/Exchanges/Binance/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Crypto/Exchanges/Binance/Facade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Crypto/Exchanges/Bitfinex/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Crypto/Exchanges/Bitfinex/Facade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Crypto/Exchanges/Bitstamp/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Crypto/Exchanges/Bitstamp/Facade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Dto/FetchMinuteMarketDeltaDto.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Dto/FetchMinuteMarketStatDto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Enums/QueueNames.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Enums/QueueNames.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BinanceFetchMinuteMarketDelta.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BinanceFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketDelta.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BitstampFetchMinuteMarketDelta.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BitstampFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/Test.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/GetAggregateMarketDeltaService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/GetAggregateMarketDeltaServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatServiceInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,7 +293,7 @@
       <workItem from="1649960578705" duration="79558000" />
       <workItem from="1650480524657" duration="7195000" />
       <workItem from="1650515955987" duration="45366000" />
-      <workItem from="1650814916598" duration="5810000" />
+      <workItem from="1650814916598" duration="8391000" />
     </task>
     <task id="LOCAL-00001" summary="WOrk">
       <created>1648282713619</created>
@@ -409,7 +418,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketDelta.php</url>
+          <url>file://$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php</url>
           <line>40</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>

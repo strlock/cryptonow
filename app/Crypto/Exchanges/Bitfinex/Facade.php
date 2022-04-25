@@ -4,10 +4,10 @@ namespace App\Crypto\Exchanges\Bitfinex;
 use App\Crypto\Exchanges\AbstractFacade;
 use App\Crypto\Exchanges\Trade;
 use App\Crypto\Helpers\TimeHelper;
-use App\Dto\FetchMinuteMarketDeltaDto;
+use App\Dto\FetchMinuteMarketStatDto;
 use App\Dto\TimeIntervalChunkDto;
 use App\Enums\QueueNames;
-use App\Jobs\BitfinexFetchMinuteMarketDelta;
+use App\Jobs\BitfinexFetchMinuteMarketStat;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
@@ -74,12 +74,12 @@ class Facade extends AbstractFacade
      * @param string $symbol
      * @param int $fromTime
      */
-    protected function dispatchMinuteMarketDeltaFetchJob(string $symbol, int $fromTime): void
+    protected function dispatchMinuteMarketStatFetchJob(string $symbol, int $fromTime): void
     {
         dispatch(
-            (new BitfinexFetchMinuteMarketDelta(
-                new FetchMinuteMarketDeltaDto($symbol, $fromTime)
-            ))->onQueue(QueueNames::BITFINEX_MARKET_DELTA_CALCULATION)->delay($this->delay),
+            (new BitfinexFetchMinuteMarketStat(
+                new FetchMinuteMarketStatDto($symbol, $fromTime)
+            ))->onQueue(QueueNames::BITFINEX_MARKET_STAT_CALCULATION)->delay($this->delay),
         );
         $this->delay += 2;
     }

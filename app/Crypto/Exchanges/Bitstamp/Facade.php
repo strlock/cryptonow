@@ -4,9 +4,9 @@ namespace App\Crypto\Exchanges\Bitstamp;
 use App\Crypto\Exchanges\AbstractFacade;
 use App\Crypto\Exchanges\Trade;
 use App\Crypto\Helpers\TimeHelper;
-use App\Dto\FetchMinuteMarketDeltaDto;
+use App\Dto\FetchMinuteMarketStatDto;
 use App\Enums\TimeIntervals;
-use App\Jobs\BitstampFetchMinuteMarketDelta;
+use App\Jobs\BitstampFetchMinuteMarketStat;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
@@ -61,12 +61,12 @@ class Facade extends AbstractFacade
      * @param string $symbol
      * @param int $fromTime
      */
-    protected function dispatchMinuteMarketDeltaFetchJob(string $symbol, int $fromTime): void
+    protected function dispatchMinuteMarketStatFetchJob(string $symbol, int $fromTime): void
     {
         /*dispatch(
-            (new BitstampFetchMinuteMarketDelta(
-                new FetchMinuteMarketDeltaDto($symbol, $fromTime)
-            ))->onQueue(QueueNames::BITSTAMP_MARKET_DELTA_CALCULATION)//->delay($this->delay),
+            (new BitstampFetchMinuteMarketStat(
+                new FetchMinuteMarketStatDto($symbol, $fromTime)
+            ))->onQueue(QueueNames::BITSTAMP_MARKET_STAT_CALCULATION)//->delay($this->delay),
         );*/
         //$this->delay += 2;
     }

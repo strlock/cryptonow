@@ -9,7 +9,7 @@ use App\Crypto\Exchanges\Factory;
 use App\Crypto\Helpers\TimeHelper;
 use Illuminate\Support\Collection;
 
-class GetAggregateMarketDeltaService implements GetAggregateMarketDeltaServiceInterface
+class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInterface
 {
     private array $exchangeNames = [
         'bitfinex',
@@ -41,7 +41,7 @@ class GetAggregateMarketDeltaService implements GetAggregateMarketDeltaServiceIn
                     $exchange = Factory::create($exchangeName);
                     /** @var FacadeInterface $exchange */
                     //$test = $exchange->getTrades($symbol, $fromTime, $toTime);
-                    //$job = new BitstampFetchMinuteMarketDelta(new FetchMinuteMarketDeltaDto('BTCUSDT', strtotime('10.04.2022 13:00')*1000));
+                    //$job = new BitstampFetchMinuteMarketStat(new FetchMinuteMarketDeltaDto('BTCUSDT', strtotime('10.04.2022 13:00')*1000));
                     //$job->handle();
                     $result[$fromTime] += $exchange->getMinuteMarketDelta($symbol, $nextTime);
                 }

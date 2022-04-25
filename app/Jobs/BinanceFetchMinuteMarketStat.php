@@ -6,7 +6,7 @@ use App\Crypto\Exchanges\AbstractFacade as ExchangeFacade;
 use App\Crypto\Exchanges\Factory as ExchangesFactory;
 use App\Crypto\Exchanges\TradeInterface;
 use App\Crypto\Helpers\TimeHelper;
-use App\Dto\FetchMinuteMarketDeltaDto;
+use App\Dto\FetchMinuteMarketStatDto;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
-class BitstampFetchMinuteMarketDelta implements ShouldQueue, ShouldBeUnique
+class BinanceFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -26,7 +26,7 @@ class BitstampFetchMinuteMarketDelta implements ShouldQueue, ShouldBeUnique
      *
      * @return void
      */
-    public function __construct(private FetchMinuteMarketDeltaDto $dto)
+    public function __construct(private FetchMinuteMarketStatDto $dto)
     {
         //
     }
@@ -39,28 +39,30 @@ class BitstampFetchMinuteMarketDelta implements ShouldQueue, ShouldBeUnique
     public function handle()
     {
         $symbol = $this->dto->getSymbol();
-        $mdQueueName = 'bitstamp:md:'.$symbol;
+        $mdQueueName = 'binance:md:'.$symbol;
         $fromTime = TimeHelper::roundTimestampMs($this->dto->getFromTime());
         $fromDate = Date::createFromTimestampMs($fromTime);
         $nowDate = Date::now();
         $nowDate->setSeconds(0);
         $nowDate->setMicroseconds(0);
-        $exchange = ExchangesFactory::create('bitstamp');
+        /** @var ExchangeFacade $exchange */
+        $exchange = ExchangesFactory::create('binance');
         $marketDelta = $exchange->getMinuteMarketDeltaFromDatabase($symbol, $fromTime);
         if ($marketDelta !== false) {
-            Log::debug('BITSTAMP: Minute market delta already fetched.', ['symbol' => $symbol, 'fromTime' => date('d.m.Y H:i:s', $fromTime/1000)]);
+            Log::debug('BINANCE: Minute market stat already fetched.', ['symbol' => $symbol, 'fromTime' => date('d.m.Y H:i:s', $fromTime/1000)]);
             return;
         }
         if ($fromDate === $nowDate) {
-            Log::debug('BITSTAMP: Minute market delta cannot be fetched for current minute.');
+            Log::debug('BINANCE: Minute market stat cannot be fetched for current minute.');
             return;
         }
         $toTime = $fromTime+TimeHelper::MINUTE_MS;
         $marketDelta = 0.0;
         foreach ($exchange->getTrades($symbol, $fromTime, $toTime) as $trade) {
+            /** @var TradeInterface $trade */
             $marketDelta += $trade->getVolume();
         }
-        Log::debug('BITSTAMP: Adding minute market delta to database. Market delta: '.$marketDelta, ['symbol' => $symbol, 'fromTime' => $fromTime]);
+        Log::debug('BINANCE: Adding minute market stat to database. Market delta: '.$marketDelta, ['symbol' => $symbol, 'fromTime' => $fromTime]);
         Redis::zAdd($mdQueueName, $fromTime, $fromTime.':'.$marketDelta);
     }
 

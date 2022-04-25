@@ -4,12 +4,12 @@ namespace App\Crypto\Exchanges\Binance;
 use App\Crypto\Exchanges\AbstractFacade;
 use App\Crypto\Exchanges\Trade;
 use App\Crypto\Helpers\TimeHelper;
-use App\Dto\FetchMinuteMarketDeltaDto;
+use App\Dto\FetchMinuteMarketStatDto;
 use App\Dto\TimeIntervalChunkDto;
 use App\Enums\BinanceTimeIntervals;
 use App\Enums\QueueNames;
 use App\Enums\TimeIntervals;
-use App\Jobs\BinanceFetchMinuteMarketDelta;
+use App\Jobs\BinanceFetchMinuteMarketStat;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
@@ -82,12 +82,12 @@ class Facade extends AbstractFacade
         return $result;
     }
 
-    protected function dispatchMinuteMarketDeltaFetchJob(string $symbol, int $fromTime): void
+    protected function dispatchMinuteMarketStatFetchJob(string $symbol, int $fromTime): void
     {
         /*dispatch(
-            (new BinanceFetchMinuteMarketDelta(
-                new FetchMinuteMarketDeltaDto($symbol, $fromTime)
-            ))->onQueue(QueueNames::BINANCE_MARKET_DELTA_CALCULATION),
+            (new BinanceFetchMinuteMarketStat(
+                new FetchMinuteMarketStatDto($symbol, $fromTime)
+            ))->onQueue(QueueNames::BINANCE_MARKET_STAT_CALCULATION),
         );*/
     }
 

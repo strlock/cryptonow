@@ -9735,7 +9735,7 @@ var App = /*#__PURE__*/function (_React$Component) {
                 className: "card",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
                   className: "card-header",
-                  children: "Market Delta"
+                  children: "Market Statistics"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
                   className: "card-body",
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -9852,7 +9852,7 @@ var App = /*#__PURE__*/function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       /*setInterval(function(){
-          console.log('Refreshing market delta...');
+          console.log('Refreshing market statistics...');
           self.refresh();
       }, this.props.updateInterval);*/
     }
@@ -10123,7 +10123,7 @@ var MarketDeltaChart = /*#__PURE__*/function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       series: [{
-        name: 'Market Delta',
+        name: 'Market Statistics',
         data: []
       }],
       options: {
