@@ -129,7 +129,7 @@ class OrderForm extends React.Component
             body: data,
         }, function (response) {
             self.clearForm();
-            self.props.alert('Order created!');
+            self.props.showPopup('Order created!');
         });
     }
 
