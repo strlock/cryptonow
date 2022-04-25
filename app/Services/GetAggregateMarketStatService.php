@@ -13,8 +13,8 @@ class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInte
 {
     private array $exchangeNames = [
         'bitfinex',
-        'binance',
-        'bitstamp',
+        //'binance',
+        //'bitstamp',
     ];
 
     /**
