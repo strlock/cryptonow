@@ -105,6 +105,7 @@ class PriceChart extends React.Component {
         };
         this.refresh();
     }
+
     render() {
         return (
             <div className="chart">

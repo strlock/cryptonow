@@ -140,6 +140,9 @@ class MarketDeltaChart extends React.Component {
         let self = this;
         this.refresh();
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+    }
 };
 
 export default MarketDeltaChart;

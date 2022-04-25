@@ -1,0 +1,7 @@
+const REFRESH_INTERVAL = 15000;
+const POPUP_TIMEOUT = 3000;
+
+export {
+    REFRESH_INTERVAL,
+    POPUP_TIMEOUT
+};

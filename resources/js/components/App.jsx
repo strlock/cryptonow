@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import ReactDOM from 'react-dom';
 import MarketDeltaChart from './MarketDeltaChart';
 import PriceChart from './PriceChart';
@@ -11,25 +11,32 @@ import Alert from 'react-bootstrap/Alert';
 import LoginForm from "./LoginForm";
 import LoginHelper from "../Helpers/LoginHelper";
 import OrdersList from "./OrdersList";
+import {
+    REFRESH_INTERVAL,
+    POPUP_TIMEOUT
+} from '../constants';
 
 function App() {
-    const [interval, setInterval] = useState(5*60000);
-    const [updateInterval, setUpdateInterval] = useState(15000);
-    const [priceHeight, setPriceHeight] = useState(400);
-    const [mdHeight, setMdHeight] = useState(250);
-    const [currentPrice, setCurrentPrice] = useState(0);
-    const popupDefaultState = {
+    const updateInterval = 15000;
+    const priceHeight = 400;
+    const mdHeight = 250;
+    const popupDefault = {
         show: false,
         type: 'success',
         message: 'TEST',
         title: '',
     };
-    const [popup, setPopup] = useState(popupDefaultState);
-    const [isLoggedIn, setIsLoggedIn] = useState(LoginHelper.isLoggedIn());
-
     //const fromCurrencySign = '₿';
     const toCurrencySign = '$';
     let popupTimeout = null;
+
+    const [chartsInterval, setChartsInterval] = useState(5*60000);
+    const [currentPrice, setCurrentPrice] = useState(0);
+    const [popup, setPopup] = useState(popupDefault);
+    const [isLoggedIn, setIsLoggedIn] = useState(LoginHelper.isLoggedIn());
+
+    const priceChartRef = useRef();
+    const mdChartRef = useRef();
 
     const showPopup = (message, type, title) => {
         setPopup({
@@ -40,8 +47,12 @@ function App() {
         });
         clearTimeout(popupTimeout);
         popupTimeout = setTimeout(function() {
-            setPopup(popupDefaultState);
-        }, 3000);
+            setPopup(popupDefault);
+        }, POPUP_TIMEOUT);
+    }
+
+    const hidePopup = () => {
+        setPopup(popupDefault);
     }
 
     const onLoginSuccess = (accessToken, userName) => {
@@ -60,52 +71,71 @@ function App() {
         setIsLoggedIn(LoginHelper.isLoggedIn());
     }
 
-    const wsClient = new BinanceWebsocketClient(function(price) {
+    const refreshCharts = () => {
+        const priceChart = priceChartRef.current;
+        const mdChart = mdChartRef.current;
+        priceChart.refresh();
+        mdChart.refresh();
+    }
+
+    const onChangeChartsInterval = (newInterval) => {
+        setChartsInterval(newInterval);
+        refreshCharts();
+    }
+
+    new BinanceWebsocketClient(function(price) {
         setCurrentPrice(1.0*price);
     });
 
-    let daysForInterval = TimeHelper.daysForInterval(interval)
+    useEffect(() => {
+        const interval = setInterval(() => {
+            refreshCharts();
+        }, REFRESH_INTERVAL);
+        return () => clearInterval(interval);
+    }, []);
+
+    let daysForInterval = TimeHelper.daysForInterval(chartsInterval)
     if (daysForInterval > 3) {
         daysForInterval = 3;
     }
     let fromDate = TimeHelper.subDaysFromDate(new Date(), daysForInterval);
     let toDate = new Date();
-    let fromTime = interval*parseInt(fromDate.getTime()/interval);
-    let toTime = interval*(parseInt(toDate.getTime()/interval)+1);
-    const popupDom = <Alert variant={popup.type} onClose={() => setPopup(popupDefaultState)} dismissible>
-        <Alert.Heading>{popup.title}</Alert.Heading>
-        <p>{popup.message}</p>
-    </Alert>;
+    let fromTime = chartsInterval*parseInt(fromDate.getTime()/chartsInterval);
+    let toTime = chartsInterval*(parseInt(toDate.getTime()/chartsInterval)+1);
+    const popupDom = <Alert variant={popup.type} onClose={() => hidePopup()} dismissible>
+                         <Alert.Heading>{popup.title}</Alert.Heading>
+                         <p>{popup.message}</p>
+                     </Alert>;
     let loginButton = '';
     let content = '';
     if (isLoggedIn) {
         loginButton = <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>Logout ({LoginHelper.getLoggedInUserName()})</button>;
-        content =                     <div className="container">
+        content = <div className="container">
             {popup.show ? popupDom : ''}
             <div className="row justify-content-center">
                 <div className="col-md-10">
                     <div className="card">
                         <div className="card-header">
-                            <button onClick={() => setInterval(TimeIntervals.ONE_MINUTE)} className="btn btn-primary btn-sm">1m</button>&nbsp;
-                            <button onClick={() => setInterval(TimeIntervals.FIVE_MINUTES)} className="btn btn-secondary btn-sm">5m</button>&nbsp;
-                            <button onClick={() => setInterval(TimeIntervals.FIFTEEN_MINUTES)} className="btn btn-primary btn-sm">15m</button>&nbsp;
-                            <button onClick={() => setInterval(TimeIntervals.THIRTEEN_MINUTES)} className="btn btn-secondary btn-sm">30m</button>&nbsp;
-                            <button onClick={() => setInterval(TimeIntervals.ONE_HOUR)} className="btn btn-primary btn-sm">1h</button>&nbsp;
-                            <button onClick={() => setInterval(TimeIntervals.FOUR_HOURS)} className="btn btn-secondary btn-sm">4h</button>&nbsp;
-                            <button onClick={() => setInterval(TimeIntervals.ONE_DAY)} className="btn btn-primary btn-sm">1d</button>
+                            <button onClick={() => onChangeChartsInterval(TimeIntervals.ONE_MINUTE)} className="btn btn-primary btn-sm">1m</button>&nbsp;
+                            <button onClick={() => onChangeChartsInterval(TimeIntervals.FIVE_MINUTES)} className="btn btn-secondary btn-sm">5m</button>&nbsp;
+                            <button onClick={() => onChangeChartsInterval(TimeIntervals.FIFTEEN_MINUTES)} className="btn btn-primary btn-sm">15m</button>&nbsp;
+                            <button onClick={() => onChangeChartsInterval(TimeIntervals.THIRTEEN_MINUTES)} className="btn btn-secondary btn-sm">30m</button>&nbsp;
+                            <button onClick={() => onChangeChartsInterval(TimeIntervals.ONE_HOUR)} className="btn btn-primary btn-sm">1h</button>&nbsp;
+                            <button onClick={() => onChangeChartsInterval(TimeIntervals.FOUR_HOURS)} className="btn btn-secondary btn-sm">4h</button>&nbsp;
+                            <button onClick={() => onChangeChartsInterval(TimeIntervals.ONE_DAY)} className="btn btn-primary btn-sm">1d</button>
                             <div>{fromDate.toLocaleString()} - {toDate.toLocaleString()} - {daysForInterval}d</div>
                         </div>
                     </div><br/>
                     <div className="card">
                         <div className="card-header">Price{currentPrice !== 0.0 ? ': ' + currentPrice.toFixed(2) + toCurrencySign : ''}</div>
                         <div className="card-body">
-                            <PriceChart fromTime={fromTime} toTime={toTime} interval={interval} height={priceHeight} updateInterval={updateInterval} />
+                            <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} updateInterval={updateInterval} ref={priceChartRef} />
                         </div>
                     </div><br/>
                     <div className="card">
                         <div className="card-header">Market Statistics</div>
                         <div className="card-body">
-                            <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={interval} height={mdHeight} updateInterval={updateInterval} />
+                            <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} ref={mdChartRef} />
                         </div>
                     </div><br/>
                     <div className="card">
@@ -124,6 +154,7 @@ function App() {
         loginButton = <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginForm">Login</button>;
         content = <LoginForm onSuccess={onLoginSuccess} onFail={onLoginFail} />
     }
+
     return (
         <div id="page">
             <div id="top">

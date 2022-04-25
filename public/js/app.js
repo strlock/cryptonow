@@ -9507,11 +9507,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./BinanceWebsocketClient */ "./resources/js/components/BinanceWebsocketClient.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
 /* harmony import */ var _LoginForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./LoginForm */ "./resources/js/components/LoginForm.jsx");
 /* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
 /* harmony import */ var _OrdersList__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./OrdersList */ "./resources/js/components/OrdersList.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -9540,52 +9541,43 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function App() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(5 * 60000),
-      _useState2 = _slicedToArray(_useState, 2),
-      interval = _useState2[0],
-      setInterval = _useState2[1];
-
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(15000),
-      _useState4 = _slicedToArray(_useState3, 2),
-      updateInterval = _useState4[0],
-      setUpdateInterval = _useState4[1];
-
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(400),
-      _useState6 = _slicedToArray(_useState5, 2),
-      priceHeight = _useState6[0],
-      setPriceHeight = _useState6[1];
-
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(250),
-      _useState8 = _slicedToArray(_useState7, 2),
-      mdHeight = _useState8[0],
-      setMdHeight = _useState8[1];
-
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-      _useState10 = _slicedToArray(_useState9, 2),
-      currentPrice = _useState10[0],
-      setCurrentPrice = _useState10[1];
-
-  var popupDefaultState = {
+  var updateInterval = 15000;
+  var priceHeight = 400;
+  var mdHeight = 250;
+  var popupDefault = {
     show: false,
     type: 'success',
     message: 'TEST',
     title: ''
-  };
-
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(popupDefaultState),
-      _useState12 = _slicedToArray(_useState11, 2),
-      popup = _useState12[0],
-      setPopup = _useState12[1];
-
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].isLoggedIn()),
-      _useState14 = _slicedToArray(_useState13, 2),
-      isLoggedIn = _useState14[0],
-      setIsLoggedIn = _useState14[1]; //const fromCurrencySign = '₿';
-
+  }; //const fromCurrencySign = '₿';
 
   var toCurrencySign = '$';
   var popupTimeout = null;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(5 * 60000),
+      _useState2 = _slicedToArray(_useState, 2),
+      chartsInterval = _useState2[0],
+      setChartsInterval = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+      _useState4 = _slicedToArray(_useState3, 2),
+      currentPrice = _useState4[0],
+      setCurrentPrice = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(popupDefault),
+      _useState6 = _slicedToArray(_useState5, 2),
+      popup = _useState6[0],
+      setPopup = _useState6[1];
+
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].isLoggedIn()),
+      _useState8 = _slicedToArray(_useState7, 2),
+      isLoggedIn = _useState8[0],
+      setIsLoggedIn = _useState8[1];
+
+  var priceChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var mdChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
 
   var showPopup = function showPopup(message, type, title) {
     setPopup({
@@ -9596,8 +9588,12 @@ function App() {
     });
     clearTimeout(popupTimeout);
     popupTimeout = setTimeout(function () {
-      setPopup(popupDefaultState);
-    }, 3000);
+      setPopup(popupDefault);
+    }, _constants__WEBPACK_IMPORTED_MODULE_12__.POPUP_TIMEOUT);
+  };
+
+  var hidePopup = function hidePopup() {
+    setPopup(popupDefault);
   };
 
   var onLoginSuccess = function onLoginSuccess(accessToken, userName) {
@@ -9616,10 +9612,30 @@ function App() {
     setIsLoggedIn(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].isLoggedIn());
   };
 
-  var wsClient = new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_7__["default"](function (price) {
+  var refreshCharts = function refreshCharts() {
+    var priceChart = priceChartRef.current;
+    var mdChart = mdChartRef.current;
+    priceChart.refresh();
+    mdChart.refresh();
+  };
+
+  var onChangeChartsInterval = function onChangeChartsInterval(newInterval) {
+    setChartsInterval(newInterval);
+    refreshCharts();
+  };
+
+  new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_7__["default"](function (price) {
     setCurrentPrice(1.0 * price);
   });
-  var daysForInterval = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_5__["default"].daysForInterval(interval);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var interval = setInterval(function () {
+      refreshCharts();
+    }, _constants__WEBPACK_IMPORTED_MODULE_12__.REFRESH_INTERVAL);
+    return function () {
+      return clearInterval(interval);
+    };
+  }, []);
+  var daysForInterval = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_5__["default"].daysForInterval(chartsInterval);
 
   if (daysForInterval > 3) {
     daysForInterval = 3;
@@ -9627,18 +9643,18 @@ function App() {
 
   var fromDate = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_5__["default"].subDaysFromDate(new Date(), daysForInterval);
   var toDate = new Date();
-  var fromTime = interval * parseInt(fromDate.getTime() / interval);
-  var toTime = interval * (parseInt(toDate.getTime() / interval) + 1);
+  var fromTime = chartsInterval * parseInt(fromDate.getTime() / chartsInterval);
+  var toTime = chartsInterval * (parseInt(toDate.getTime() / chartsInterval) + 1);
 
-  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_13__["default"], {
+  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_14__["default"], {
     variant: popup.type,
     onClose: function onClose() {
-      return setPopup(popupDefaultState);
+      return hidePopup();
     },
     dismissible: true,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_13__["default"].Heading, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_14__["default"].Heading, {
       children: popup.title
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("p", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("p", {
       children: popup.message
     })]
   });
@@ -9647,7 +9663,7 @@ function App() {
   var content = '';
 
   if (isLoggedIn) {
-    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("button", {
+    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("button", {
       type: "button",
       className: "btn btn-primary",
       onClick: function onClick() {
@@ -9655,105 +9671,107 @@ function App() {
       },
       children: ["Logout (", _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].getLoggedInUserName(), ")"]
     });
-    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
       className: "container",
-      children: [popup.show ? popupDom : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+      children: [popup.show ? popupDom : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
         className: "row justify-content-center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
           className: "col-md-10",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
             className: "card",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
               className: "card-header",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("button", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("button", {
                 onClick: function onClick() {
-                  return setInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].ONE_MINUTE);
+                  return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].ONE_MINUTE);
                 },
                 className: "btn btn-primary btn-sm",
                 children: "1m"
-              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("button", {
+              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("button", {
                 onClick: function onClick() {
-                  return setInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].FIVE_MINUTES);
+                  return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].FIVE_MINUTES);
                 },
                 className: "btn btn-secondary btn-sm",
                 children: "5m"
-              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("button", {
+              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("button", {
                 onClick: function onClick() {
-                  return setInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].FIFTEEN_MINUTES);
+                  return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].FIFTEEN_MINUTES);
                 },
                 className: "btn btn-primary btn-sm",
                 children: "15m"
-              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("button", {
+              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("button", {
                 onClick: function onClick() {
-                  return setInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].THIRTEEN_MINUTES);
+                  return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].THIRTEEN_MINUTES);
                 },
                 className: "btn btn-secondary btn-sm",
                 children: "30m"
-              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("button", {
+              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("button", {
                 onClick: function onClick() {
-                  return setInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].ONE_HOUR);
+                  return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].ONE_HOUR);
                 },
                 className: "btn btn-primary btn-sm",
                 children: "1h"
-              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("button", {
+              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("button", {
                 onClick: function onClick() {
-                  return setInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].FOUR_HOURS);
+                  return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].FOUR_HOURS);
                 },
                 className: "btn btn-secondary btn-sm",
                 children: "4h"
-              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("button", {
+              }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("button", {
                 onClick: function onClick() {
-                  return setInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].ONE_DAY);
+                  return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_4__["default"].ONE_DAY);
                 },
                 className: "btn btn-primary btn-sm",
                 children: "1d"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
                 children: [fromDate.toLocaleString(), " - ", toDate.toLocaleString(), " - ", daysForInterval, "d"]
               })]
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
             className: "card",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
               className: "card-header",
               children: ["Price", currentPrice !== 0.0 ? ': ' + currentPrice.toFixed(2) + toCurrencySign : '']
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
               className: "card-body",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
                 fromTime: fromTime,
                 toTime: toTime,
-                interval: interval,
+                interval: chartsInterval,
                 height: priceHeight,
-                updateInterval: updateInterval
+                updateInterval: updateInterval,
+                ref: priceChartRef
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
             className: "card",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
               className: "card-header",
               children: "Market Statistics"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
               className: "card-body",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
                 fromTime: fromTime,
                 toTime: toTime,
-                interval: interval,
+                interval: chartsInterval,
                 height: mdHeight,
-                updateInterval: updateInterval
+                updateInterval: updateInterval,
+                ref: mdChartRef
               })
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
             className: "card",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
               className: "card-header",
               children: "Orders"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
               className: "card-body",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_11__["default"], {})
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_11__["default"], {})
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
           className: "col-md-2 ps-3",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
             currentPrice: currentPrice,
             showPopup: showPopup
           })
@@ -9761,37 +9779,37 @@ function App() {
       })]
     });
   } else {
-    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("button", {
+    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("button", {
       type: "button",
       className: "btn btn-primary",
       "data-bs-toggle": "modal",
       "data-bs-target": "#loginForm",
       children: "Login"
     });
-    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_9__["default"], {
       onSuccess: onLoginSuccess,
       onFail: onLoginFail
     });
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
     id: "page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
       id: "top",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
         className: "top-left",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("a", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("a", {
           href: "/",
           className: "logo-link",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("img", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("img", {
             src: "images/logo.png"
           })
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
         className: "top-right",
         children: loginButton
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
       id: "middle",
       children: content
     })]
@@ -9799,7 +9817,7 @@ function App() {
 }
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(App, {}), document.getElementById('app'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(App, {}), document.getElementById('app'));
 }
 
 /***/ }),
@@ -10205,6 +10223,9 @@ var MarketDeltaChart = /*#__PURE__*/function (_React$Component) {
       var self = this;
       this.refresh();
     }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {}
   }]);
 
   return MarketDeltaChart;
@@ -10894,6 +10915,24 @@ var PriceChart = /*#__PURE__*/function (_React$Component) {
 
 ;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PriceChart);
+
+/***/ }),
+
+/***/ "./resources/js/constants.js":
+/*!***********************************!*\
+  !*** ./resources/js/constants.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "REFRESH_INTERVAL": () => (/* binding */ REFRESH_INTERVAL),
+/* harmony export */   "POPUP_TIMEOUT": () => (/* binding */ POPUP_TIMEOUT)
+/* harmony export */ });
+var REFRESH_INTERVAL = 15000;
+var POPUP_TIMEOUT = 3000;
+
 
 /***/ }),
 
