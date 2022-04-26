@@ -15,6 +15,7 @@ import {
     REFRESH_INTERVAL,
     POPUP_TIMEOUT
 } from '../constants';
+import IntervalSelector from "./IntervalSelector";
 
 function App() {
     const updateInterval = 15000;
@@ -79,11 +80,6 @@ function App() {
         mdChart.refresh();
     }
 
-    const onChangeChartsInterval = (newInterval) => {
-        setChartsInterval(newInterval);
-        refreshCharts();
-    }
-
     new BinanceWebsocketClient(function(price) {
         setCurrentPrice(1.0*price);
     });
@@ -115,28 +111,13 @@ function App() {
             {popup.show ? popupDom : ''}
             <div className="row justify-content-center">
                 <div className="col-md-10">
-                    <div className="card">
-                        <div className="card-header">
-                            <button onClick={() => onChangeChartsInterval(TimeIntervals.ONE_MINUTE)} className="btn btn-primary btn-sm">1m</button>&nbsp;
-                            <button onClick={() => onChangeChartsInterval(TimeIntervals.FIVE_MINUTES)} className="btn btn-secondary btn-sm">5m</button>&nbsp;
-                            <button onClick={() => onChangeChartsInterval(TimeIntervals.FIFTEEN_MINUTES)} className="btn btn-primary btn-sm">15m</button>&nbsp;
-                            <button onClick={() => onChangeChartsInterval(TimeIntervals.THIRTEEN_MINUTES)} className="btn btn-secondary btn-sm">30m</button>&nbsp;
-                            <button onClick={() => onChangeChartsInterval(TimeIntervals.ONE_HOUR)} className="btn btn-primary btn-sm">1h</button>&nbsp;
-                            <button onClick={() => onChangeChartsInterval(TimeIntervals.FOUR_HOURS)} className="btn btn-secondary btn-sm">4h</button>&nbsp;
-                            <button onClick={() => onChangeChartsInterval(TimeIntervals.ONE_DAY)} className="btn btn-primary btn-sm">1d</button>
-                            <div>{fromDate.toLocaleString()} - {toDate.toLocaleString()} - {daysForInterval}d</div>
-                        </div>
-                    </div><br/>
+                    <IntervalSelector setChartsInterval={setChartsInterval} refreshCharts={refreshCharts} />
+                    <br/>
                     <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} toCurrencySign={toCurrencySign} ref={priceChartRef} />
                     <br/>
                     <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} ref={mdChartRef} />
                     <br/>
-                    <div className="card">
-                        <div className="card-header">Orders</div>
-                        <div className="card-body">
-                            <OrdersList ref={ordersListRef} />
-                        </div>
-                    </div>
+                    <OrdersList ref={ordersListRef} />
                 </div>
                 <div className="col-md-2 ps-3">
                     <OrderForm currentPrice={currentPrice} showPopup={showPopup} ordersList={ordersListRef.current} />

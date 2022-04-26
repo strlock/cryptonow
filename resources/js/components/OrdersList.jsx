@@ -17,42 +17,47 @@ class OrdersList extends React.Component
             return order;
         });
         return (
-            <div className="table-responsive orders">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Date</th>
-                            <th>Price</th>
-                            <th>Amount</th>
-                            <th>Type</th>
-                            <th>Stop Loss</th>
-                            <th>Take Profit</th>
-                            <th>Buy/Sell Date</th>
-                            <th>Completion Date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {orders.map((order) => {
-                            let orderClass = 'order order-' + order.state;
-                            return (
-                                <tr key={order.id} className={orderClass}>
-                                    <td>{order.id}</td>
-                                    <td>{order.created_at_formatted}</td>
-                                    <td>{parseFloat(order.price).toFixed(2)}</td>
-                                    <td>{parseFloat(order.amount).toFixed(5)}</td>
-                                    <td>{order.type}</td>
-                                    <td>{order.sl}</td>
-                                    <td>{order.tp}</td>
-                                    <td>{order.ready_at_formatted}</td>
-                                    <td>{order.completed_at_formatted}</td>
-                                    <td><button className="btn btn-danger btn-sm" onClick={() => this.onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"></i></button></td>
+            <div className="card">
+                <div className="card-header">Orders</div>
+                <div className="card-body">
+                    <div className="table-responsive orders">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Price</th>
+                                    <th>Amount</th>
+                                    <th>Type</th>
+                                    <th>Stop Loss</th>
+                                    <th>Take Profit</th>
+                                    <th>Buy/Sell Date</th>
+                                    <th>Completion Date</th>
+                                    <th></th>
                                 </tr>
-                            );
-                        } )}
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody>
+                                {orders.map((order) => {
+                                    let orderClass = 'order order-' + order.state;
+                                    return (
+                                        <tr key={order.id} className={orderClass}>
+                                            <td>{order.id}</td>
+                                            <td>{order.created_at_formatted}</td>
+                                            <td>{parseFloat(order.price).toFixed(2)}</td>
+                                            <td>{parseFloat(order.amount).toFixed(5)}</td>
+                                            <td>{order.type}</td>
+                                            <td>{order.sl}</td>
+                                            <td>{order.tp}</td>
+                                            <td>{order.ready_at_formatted}</td>
+                                            <td>{order.completed_at_formatted}</td>
+                                            <td><button className="btn btn-danger btn-sm" onClick={() => this.onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"></i></button></td>
+                                        </tr>
+                                    );
+                                } )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         );
     }
