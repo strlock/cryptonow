@@ -10693,9 +10693,9 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
                       children: [parseFloat(order.sl).toFixed(2), "/", parseFloat(order.tp).toFixed(2)]
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
-                      children: [order.ready_at_formatted, ", ", parseFloat(order.ready_price).toFixed(2)]
+                      children: [order.ready_at_formatted, order.ready_price !== 0.0 ? ', ' + parseFloat(order.ready_price).toFixed(2) : '']
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
-                      children: [order.completed_at_formatted, ", ", parseFloat(order.completed_price).toFixed(2)]
+                      children: [order.completed_at_formatted, order.completed_price !== 0.0 ? ', ' + parseFloat(order.completed_price).toFixed(2) : '']
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                         className: "btn btn-danger btn-sm",
