@@ -9744,22 +9744,13 @@ function App() {
             currentPrice: currentPrice,
             toCurrencySign: toCurrencySign,
             ref: priceChartRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
-            className: "card",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
-              className: "card-header",
-              children: "Market Statistics"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
-              className: "card-body",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                fromTime: fromTime,
-                toTime: toTime,
-                interval: chartsInterval,
-                height: mdHeight,
-                updateInterval: updateInterval,
-                ref: mdChartRef
-              })
-            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            fromTime: fromTime,
+            toTime: toTime,
+            interval: chartsInterval,
+            height: mdHeight,
+            updateInterval: updateInterval,
+            ref: mdChartRef
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
             className: "card",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
@@ -10068,6 +10059,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var MarketDeltaChart = /*#__PURE__*/function (_React$Component) {
   _inherits(MarketDeltaChart, _React$Component);
 
@@ -10196,14 +10188,23 @@ var MarketDeltaChart = /*#__PURE__*/function (_React$Component) {
   _createClass(MarketDeltaChart, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        className: "chart",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_apexcharts__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          options: this.state.options,
-          series: this.state.series,
-          type: "bar",
-          height: this.props.height
-        })
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "card",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "card-header",
+          children: "Market Statistics"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "card-body",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "chart",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_apexcharts__WEBPACK_IMPORTED_MODULE_1__["default"], {
+              options: this.state.options,
+              series: this.state.series,
+              type: "bar",
+              height: this.props.height
+            })
+          })
+        })]
       });
     }
   }, {

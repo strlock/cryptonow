@@ -129,12 +129,8 @@ function App() {
                     </div><br/>
                     <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} toCurrencySign={toCurrencySign} ref={priceChartRef} />
                     <br/>
-                    <div className="card">
-                        <div className="card-header">Market Statistics</div>
-                        <div className="card-body">
-                            <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} ref={mdChartRef} />
-                        </div>
-                    </div><br/>
+                    <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} ref={mdChartRef} />
+                    <br/>
                     <div className="card">
                         <div className="card-header">Orders</div>
                         <div className="card-body">

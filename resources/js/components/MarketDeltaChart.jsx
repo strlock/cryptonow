@@ -118,8 +118,13 @@ class MarketDeltaChart extends React.Component {
     render()
     {
         return (
-            <div className="chart">
-                <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={this.props.height} />
+            <div className="card">
+                <div className="card-header">Market Statistics</div>
+                <div className="card-body">
+                    <div className="chart">
+                        <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height={this.props.height} />
+                    </div>
+                </div>
             </div>
         );
     }
