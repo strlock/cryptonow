@@ -218,7 +218,6 @@ class Order extends Model implements OrderInterface
      */
     public function setCompletedAt(?DateTime $value): void
     {
-        Log::debug('Setting completed_at: '.$value->format('Y-m-d H:i:s'));
         $this->completed_at = $value->format('Y-m-d H:i:s');
     }
 

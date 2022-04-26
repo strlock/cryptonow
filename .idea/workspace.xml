@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Set completed at when simple order completed">
-      <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Debug">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -280,7 +280,7 @@
       <workItem from="1649960578705" duration="79558000" />
       <workItem from="1650480524657" duration="7195000" />
       <workItem from="1650515955987" duration="45366000" />
-      <workItem from="1650814916598" duration="48064000" />
+      <workItem from="1650814916598" duration="48368000" />
     </task>
     <task id="LOCAL-00001" summary="WOrk">
       <created>1648282713619</created>
@@ -555,7 +555,21 @@
       <option name="project" value="LOCAL" />
       <updated>1651001081563</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Improving">
+      <created>1651001270859</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1651001270859</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Debug">
+      <created>1651001498652</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1651001498652</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -594,9 +608,10 @@
     <MESSAGE value="Improving price chart" />
     <MESSAGE value="Improving market delta chart" />
     <MESSAGE value="Adding ready_price and completed_price" />
-    <MESSAGE value="Improving" />
     <MESSAGE value="Set completed at when simple order completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set completed at when simple order completed" />
+    <MESSAGE value="Improving" />
+    <MESSAGE value="Debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Debug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
