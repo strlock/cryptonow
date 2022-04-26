@@ -9736,22 +9736,14 @@ function App() {
                 children: [fromDate.toLocaleString(), " - ", toDate.toLocaleString(), " - ", daysForInterval, "d"]
               })]
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
-            className: "card",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
-              className: "card-header",
-              children: ["Price", currentPrice !== 0.0 ? ': ' + currentPrice.toFixed(2) + toCurrencySign : '']
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
-              className: "card-body",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                fromTime: fromTime,
-                toTime: toTime,
-                interval: chartsInterval,
-                height: priceHeight,
-                updateInterval: updateInterval,
-                ref: priceChartRef
-              })
-            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            fromTime: fromTime,
+            toTime: toTime,
+            interval: chartsInterval,
+            height: priceHeight,
+            currentPrice: currentPrice,
+            toCurrencySign: toCurrencySign,
+            ref: priceChartRef
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
             className: "card",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
@@ -10775,6 +10767,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var PriceChart = /*#__PURE__*/function (_React$Component) {
   _inherits(PriceChart, _React$Component);
 
@@ -10895,14 +10888,23 @@ var PriceChart = /*#__PURE__*/function (_React$Component) {
   _createClass(PriceChart, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        className: "chart",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_apexcharts__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          options: this.state.options,
-          series: this.state.series,
-          type: "candlestick",
-          height: this.props.height
-        })
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        className: "card",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "card-header",
+          children: ["Price", this.props.currentPrice !== 0.0 ? ': ' + this.props.currentPrice.toFixed(2) + this.props.toCurrencySign : '']
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          className: "card-body",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "chart",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_apexcharts__WEBPACK_IMPORTED_MODULE_1__["default"], {
+              options: this.state.options,
+              series: this.state.series,
+              type: "candlestick",
+              height: this.props.height
+            })
+          })
+        })]
       });
     }
   }, {

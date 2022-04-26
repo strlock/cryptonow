@@ -127,12 +127,8 @@ function App() {
                             <div>{fromDate.toLocaleString()} - {toDate.toLocaleString()} - {daysForInterval}d</div>
                         </div>
                     </div><br/>
-                    <div className="card">
-                        <div className="card-header">Price{currentPrice !== 0.0 ? ': ' + currentPrice.toFixed(2) + toCurrencySign : ''}</div>
-                        <div className="card-body">
-                            <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} updateInterval={updateInterval} ref={priceChartRef} />
-                        </div>
-                    </div><br/>
+                    <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} toCurrencySign={toCurrencySign} ref={priceChartRef} />
+                    <br/>
                     <div className="card">
                         <div className="card-header">Market Statistics</div>
                         <div className="card-body">

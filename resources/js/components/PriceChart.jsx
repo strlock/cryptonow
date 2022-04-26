@@ -108,8 +108,13 @@ class PriceChart extends React.Component {
 
     render() {
         return (
-            <div className="chart">
-                <ReactApexChart options={this.state.options} series={this.state.series} type="candlestick" height={this.props.height} />
+            <div className="card">
+                <div className="card-header">Price{this.props.currentPrice !== 0.0 ? ': ' + this.props.currentPrice.toFixed(2) + this.props.toCurrencySign : ''}</div>
+                <div className="card-body">
+                    <div className="chart">
+                        <ReactApexChart options={this.state.options} series={this.state.series} type="candlestick" height={this.props.height} />
+                    </div>
+                </div>
             </div>
         );
     }
