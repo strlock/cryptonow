@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
-use App\Crypto\Exchanges\FacadeInterface as ExchangeInterface;
+use App\Services\Crypto\Exchanges\FacadeInterface as ExchangeInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(OrdersServiceInterface::class, OrdersService::class);
         $this->app->bind(ExchangeInterface::class, function ($app, $parameters) {
-            $class = 'App\\Crypto\\Exchanges\\'.ucfirst($parameters['name']).'\\Facade';
+            $class = 'App\\Services\\Crypto\\Exchanges\\'.ucfirst($parameters['name']).'\\Facade';
             return new $class();
         });
     }

@@ -1,9 +1,9 @@
 <?php
-namespace App\Crypto\Exchanges\Bitfinex;
+namespace App\Services\Crypto\Exchanges\Bitfinex;
 
-use App\Crypto\Exchanges\AbstractFacade;
-use App\Crypto\Exchanges\Trade;
-use App\Crypto\Helpers\TimeHelper;
+use App\Services\Crypto\Exchanges\AbstractFacade;
+use App\Services\Crypto\Exchanges\Trade;
+use App\Services\Crypto\Helpers\TimeHelper;
 use App\Dto\FetchMinuteMarketStatDto;
 use App\Dto\TimeIntervalChunkDto;
 use App\Enums\QueueNames;

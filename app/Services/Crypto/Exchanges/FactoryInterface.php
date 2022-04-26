@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Crypto\Exchanges;
+namespace App\Services\Crypto\Exchanges;
 
 /**
  * Interface FactoryInterface
- * @package App\Crypto\Exchanges
+ * @package App\Services\Crypto\Exchanges
  */
 interface FactoryInterface
 {

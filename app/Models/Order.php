@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
+use DateTime;
 
 class Order extends Model implements OrderInterface
 {
@@ -19,6 +21,8 @@ class Order extends Model implements OrderInterface
         'market',
         'exchange',
         'state',
+        'ready_at',
+        'completed_at',
     ];
 
     /**
@@ -161,5 +165,25 @@ class Order extends Model implements OrderInterface
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    public function getReadyAt(): ?DateTime
+    {
+        return Date::parse($this->ready_at);
+    }
+
+    public function setReadyAt(?DateTime $date): void
+    {
+        $this->ready_at = $date->format('Y-m-d H:i:s');
+    }
+
+    public function getCompletedAt(): ?DateTime
+    {
+        return Date::parse($this->completed_at);
+    }
+
+    public function setCompletedAt(?DateTime $date): void
+    {
+        $this->completed_at = $date->format('Y-m-d H:i:s');
     }
 }

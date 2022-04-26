@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-use App\Crypto\Helpers\TimeHelper;
+use App\Services\Crypto\Helpers\TimeHelper;
 
 class TimeIntervals
 {

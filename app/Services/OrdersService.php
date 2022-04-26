@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderInterface;
 use App\Repositories\OrdersRepository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 
 class OrdersService implements OrdersServiceInterface
@@ -118,6 +119,12 @@ class OrdersService implements OrdersServiceInterface
     private function changeOrderState(OrderInterface|Model $order, string $newState)
     {
         $order->setState($newState);
+        if ($newState === OrderState::READY) {
+            $order->setReadyAt(Date::now());
+        }
+        if (in_array($newState, [OrderState::PROFIT, OrderState::LOSS, OrderState::FAILED])) {
+            $order->setCompletedAt(Date::now());
+        }
         $order->save();
     }
 }

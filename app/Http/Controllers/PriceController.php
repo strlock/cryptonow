@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Crypto\Exchanges\Factory;
-use App\Crypto\Helpers\TimeHelper;
+use App\Services\Crypto\Exchanges\Factory;
+use App\Services\Crypto\Helpers\TimeHelper;
 use App\Http\Resources\SeriesResource;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class PriceController extends Controller
 {

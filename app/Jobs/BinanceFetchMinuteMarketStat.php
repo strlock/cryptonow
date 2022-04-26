@@ -2,10 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Crypto\Exchanges\AbstractFacade as ExchangeFacade;
-use App\Crypto\Exchanges\Factory as ExchangesFactory;
-use App\Crypto\Exchanges\TradeInterface;
-use App\Crypto\Helpers\TimeHelper;
+use App\Services\Crypto\Exchanges\AbstractFacade as ExchangeFacade;
+use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
+use App\Services\Crypto\Exchanges\TradeInterface;
+use App\Services\Crypto\Helpers\TimeHelper;
 use App\Dto\FetchMinuteMarketStatDto;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;

@@ -2,12 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Crypto\Exchanges\AbstractFacade;
-use App\Crypto\Exchanges\Factory;
-use App\Crypto\Helpers\TimeHelper;
+use App\Services\Crypto\Exchanges\AbstractFacade;
+use App\Services\Crypto\Exchanges\Factory;
+use App\Services\Crypto\Helpers\TimeHelper;
 use App\Events\BinancePrice;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use Throwable;

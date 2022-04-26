@@ -1,12 +1,12 @@
 <?php
-namespace App\Crypto\Exchanges;
+namespace App\Services\Crypto\Exchanges;
 
-use App\Crypto\Helpers\TimeHelper;
+use App\Services\Crypto\Helpers\TimeHelper;
 use Illuminate\Support\Collection;
 
 /**
  * Interface FacadeInterface
- * @package App\Crypto\Exchanges
+ * @package App\Services\Crypto\Exchanges
  */
 interface FacadeInterface
 {

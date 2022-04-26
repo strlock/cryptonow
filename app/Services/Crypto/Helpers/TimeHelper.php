@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Crypto\Helpers;
+namespace App\Services\Crypto\Helpers;
 
 
 use Illuminate\Support\Facades\Date;

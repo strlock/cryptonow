@@ -4,9 +4,9 @@
 namespace App\Services;
 
 
-use App\Crypto\Exchanges\FacadeInterface;
-use App\Crypto\Exchanges\Factory;
-use App\Crypto\Helpers\TimeHelper;
+use App\Services\Crypto\Exchanges\FacadeInterface;
+use App\Services\Crypto\Exchanges\Factory;
+use App\Services\Crypto\Helpers\TimeHelper;
 use Illuminate\Support\Collection;
 
 class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInterface

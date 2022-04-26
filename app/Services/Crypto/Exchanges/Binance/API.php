@@ -1,5 +1,5 @@
 <?php
-namespace App\Crypto\Exchanges\Binance;
+namespace App\Services\Crypto\Exchanges\Binance;
 
 use Binance\API as BinanceAPI;
 

@@ -10626,6 +10626,8 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
 
       var orders = this.state.orders.map(function (order) {
         order.created_at_formatted = new Date(order.created_at).toLocaleString();
+        order.ready_at_formatted = order.ready_at ? new Date(order.ready_at).toLocaleString() : '-';
+        order.completed_at_formatted = order.completed_at ? new Date(order.completed_at).toLocaleString() : '-';
         return order;
       });
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -10648,6 +10650,10 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
                 children: "Stop Loss"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
                 children: "Take Profit"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                children: "Buy/Sell Date"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                children: "Completion Date"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {})]
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("tbody", {
@@ -10669,6 +10675,10 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
                   children: order.sl
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
                   children: order.tp
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                  children: order.ready_at_formatted
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                  children: order.completed_at_formatted
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                     className: "btn btn-danger btn-sm",

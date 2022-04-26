@@ -1,5 +1,5 @@
 <?php
-namespace App\Crypto\Exchanges\Bitfinex;
+namespace App\Services\Crypto\Exchanges\Bitfinex;
 
 use BFX\RESTv2 as BitfinexAPI;
 use Illuminate\Support\Facades\Log;

@@ -1,5 +1,5 @@
 <?php
-namespace App\Crypto\Exchanges\Bitstamp;
+namespace App\Services\Crypto\Exchanges\Bitstamp;
 
 class API
 {

@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Crypto\Exchanges\FacadeInterface as ExchangeInterface;
 use App;
 
 class CryptoTestCommand extends Command

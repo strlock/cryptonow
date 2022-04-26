@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Crypto\Exchanges\Aggregate\Facade as AggregateExchangeFacade;
-use App\Crypto\Exchanges\FacadeInterface;
-use App\Crypto\Helpers\TimeHelper;
+use App\Services\Crypto\Exchanges\Aggregate\Facade as AggregateExchangeFacade;
+use App\Services\Crypto\Exchanges\FacadeInterface;
+use App\Services\Crypto\Helpers\TimeHelper;
 use App\Http\Resources\SeriesResource;
 use App\Services\GetAggregateMarketStatService;
 use Illuminate\Http\Request;

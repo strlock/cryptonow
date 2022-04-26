@@ -1,9 +1,9 @@
 <?php
-namespace App\Crypto\Exchanges;
+namespace App\Services\Crypto\Exchanges;
 
 /**
  * Interface TradeInterface
- * @package App\Crypto\Exchanges
+ * @package App\Services\Crypto\Exchanges
  */
 interface TradeInterface
 {

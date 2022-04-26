@@ -4,7 +4,7 @@
 namespace App\Services;
 
 
-use App\Crypto\Helpers\TimeHelper;
+use App\Services\Crypto\Helpers\TimeHelper;
 use Illuminate\Support\Collection;
 
 interface GetAggregateMarketStatServiceInterface

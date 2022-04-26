@@ -12,6 +12,8 @@ class OrdersList extends React.Component
     {
         const orders = this.state.orders.map(function (order) {
             order.created_at_formatted = (new Date(order.created_at)).toLocaleString();
+            order.ready_at_formatted = order.ready_at ? (new Date(order.ready_at)).toLocaleString() : '-';
+            order.completed_at_formatted = order.completed_at ? (new Date(order.completed_at)).toLocaleString() : '-';
             return order;
         });
         return (
@@ -26,6 +28,8 @@ class OrdersList extends React.Component
                             <th>Type</th>
                             <th>Stop Loss</th>
                             <th>Take Profit</th>
+                            <th>Buy/Sell Date</th>
+                            <th>Completion Date</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -41,6 +45,8 @@ class OrdersList extends React.Component
                                     <td>{order.type}</td>
                                     <td>{order.sl}</td>
                                     <td>{order.tp}</td>
+                                    <td>{order.ready_at_formatted}</td>
+                                    <td>{order.completed_at_formatted}</td>
                                     <td><button className="btn btn-danger btn-sm" onClick={() => this.onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"></i></button></td>
                                 </tr>
                             );

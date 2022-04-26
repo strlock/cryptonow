@@ -1,11 +1,11 @@
 <?php
-namespace App\Crypto\Exchanges;
+namespace App\Services\Crypto\Exchanges;
 
 use Illuminate\Support\Str;
 
 /**
  * Class Factory
- * @package App\Crypto\Exchanges
+ * @package App\Services\Crypto\Exchanges
  */
 class Factory implements FactoryInterface
 {
@@ -15,7 +15,7 @@ class Factory implements FactoryInterface
      */
     public static function create(string $name): FacadeInterface
     {
-        $className = 'App\\Crypto\\Exchanges\\'.Str::studly($name).'\\Facade';
+        $className = 'App\\Services\Crypto\\Exchanges\\'.Str::studly($name).'\\Facade';
         return new $className();
     }
 }

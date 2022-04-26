@@ -1,12 +1,12 @@
 <?php
-namespace App\Crypto\Exchanges;
+namespace App\Services\Crypto\Exchanges;
 
-use App\Crypto\Exchanges\TradeInterface;
+use App\Services\Crypto\Exchanges\TradeInterface;
 use Stringable;
 
 /**
  * Class Trade
- * @package App\Crypto\Exchanges
+ * @package App\Services\Crypto\Exchanges
  */
 class Trade implements TradeInterface, Stringable
 {

@@ -4,6 +4,9 @@
 namespace App\Models;
 
 
+use DateTime;
+use Illuminate\Support\Facades\Date;
+
 interface OrderInterface
 {
     public function getId(): int;
@@ -26,4 +29,8 @@ interface OrderInterface
     public function setExchange(string $exchange): void;
     public function getState(): string;
     public function setState(string $state): void;
+    public function getReadyAt(): ?DateTime;
+    public function setReadyAt(?DateTime $date): void;
+    public function getCompletedAt(): ?DateTime;
+    public function setCompletedAt(?DateTime $date): void;
 }
