@@ -15,6 +15,7 @@ import {
     POPUP_TIMEOUT
 } from '../constants';
 import IntervalSelector from "./IntervalSelector";
+import FormatHelper from "../Helpers/FormatHelper";
 
 function App() {
     const updateInterval = 15000;
@@ -26,9 +27,10 @@ function App() {
         message: 'TEST',
         title: '',
     };
-    //const fromCurrencySign = '₿';
-    const toCurrencySign = '$';
     let popupTimeout = null;
+
+    FormatHelper.setFromSign('₿');
+    FormatHelper.setToSign('$');
 
     const [chartsInterval, setChartsInterval] = useState(5*60000);
     const [currentPrice, setCurrentPrice] = useState(0);
@@ -112,7 +114,7 @@ function App() {
                 <div className="col-md-10">
                     <IntervalSelector setChartsInterval={setChartsInterval} refreshCharts={refreshCharts} />
                     <br/>
-                    <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} toCurrencySign={toCurrencySign} ref={priceChartRef} />
+                    <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} ref={priceChartRef} />
                     <br/>
                     <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} ref={mdChartRef} />
                     <br/>

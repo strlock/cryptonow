@@ -14,8 +14,8 @@ class CreateNewOrderDto implements Arrayable
         private string $type,
         private float $price,
         private float $amount,
-        private float $sl,
-        private float $tp,
+        private ?float $sl,
+        private ?float $tp,
         private bool $market,
         private string $exchange,
         private string $symbol,
@@ -66,17 +66,17 @@ class CreateNewOrderDto implements Arrayable
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getSl(): float
+    public function getSl(): ?float
     {
         return $this->sl;
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getTp(): float
+    public function getTp(): ?float
     {
         return $this->tp;
     }
