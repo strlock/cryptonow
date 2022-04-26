@@ -42,7 +42,7 @@ class OrdersList extends React.Component
                                         <tr key={order.id} className={orderClass}>
                                             <td>{order.id}</td>
                                             <td>{order.created_at_formatted}</td>
-                                            <td>{parseFloat(order.price).toFixed(2)}/</td>
+                                            <td>{parseFloat(order.price).toFixed(2)}</td>
                                             <td>{parseFloat(order.amount).toFixed(5)}</td>
                                             <td>{order.type}</td>
                                             <td>{order.sl != 0.0 ? parseFloat(order.sl).toFixed(2) : '-'}/{order.tp != 0.0 ? parseFloat(order.tp).toFixed(2) : '-'}</td>
