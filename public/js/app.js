@@ -10793,9 +10793,6 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
                           children: "Amount"
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("th", {
                           className: "text-center",
-                          children: "Buy/Sell"
-                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("th", {
-                          className: "text-center",
                           children: "Stop Loss/Take Profit"
                         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("th", {
                           className: "text-center",
@@ -10828,11 +10825,8 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
                             className: "text-center order-amount",
                             children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatAmount(order.amount)
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("td", {
-                            className: "text-center order-buy-sell",
-                            children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatDate(order.ready_at), order.ready_price !== null ? '<br/>' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.ready_price) : '']
-                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("td", {
                             className: "text-center order-sl-tp",
-                            children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.sl), "/", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.tp)]
+                            children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.sl), "/", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.tp), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), "Ready: ", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatDate(order.ready_at), order.ready_price !== null ? '<br/>' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.ready_price) : '']
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("td", {
                             className: "text-center order-completed-at",
                             children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatDate(order.completed_at), order.completed_price !== null ? '<br/>' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.completed_price) : '']

@@ -46,7 +46,6 @@ class OrdersList extends React.Component
                                                 <th className={"text-center"}>Direction</th>
                                                 <th className={"text-center"}>Price</th>
                                                 <th className={"text-center"}>Amount</th>
-                                                <th className={"text-center"}>Buy/Sell</th>
                                                 <th className={"text-center"}>Stop Loss/Take Profit</th>
                                                 <th className={"text-center"}>Completion</th>
                                                 <th className={"text-center"}>Status</th>
@@ -63,8 +62,10 @@ class OrdersList extends React.Component
                                                         <td className={"text-center order-type"}>{ORDER_DIRECTION_TITLES[order.type]}</td>
                                                         <td className={"text-center order-price"}>{FormatHelper.formatPrice(order.price)}</td>
                                                         <td className={"text-center order-amount"}>{FormatHelper.formatAmount(order.amount)}</td>
-                                                        <td className={"text-center order-buy-sell"}>{FormatHelper.formatDate(order.ready_at)}{order.ready_price !== null ? '<br/>' + FormatHelper.formatPrice(order.ready_price) : ''}</td>
-                                                        <td className={"text-center order-sl-tp"}>{FormatHelper.formatPrice(order.sl)}/{FormatHelper.formatPrice(order.tp)}</td>
+                                                        <td className={"text-center order-sl-tp"}>
+                                                            {FormatHelper.formatPrice(order.sl)}/{FormatHelper.formatPrice(order.tp)}<br/>
+                                                            Ready: {FormatHelper.formatDate(order.ready_at)}{order.ready_price !== null ? '<br/>' + FormatHelper.formatPrice(order.ready_price) : ''}
+                                                        </td>
                                                         <td className={"text-center order-completed-at"}>{FormatHelper.formatDate(order.completed_at)}{order.completed_price !== null ? '<br/>' + FormatHelper.formatPrice(order.completed_price) : ''}</td>
                                                         <td className={"text-center order-state"}>{ORDER_STATE_TITLES[order.state]}</td>
                                                         <td className={"text-center order-actions"}><button className="btn btn-danger btn-sm" onClick={() => this.onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"></i></button></td>
