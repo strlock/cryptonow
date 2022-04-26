@@ -2,7 +2,6 @@ import React, {useState, useEffect, useRef} from "react";
 import ReactDOM from 'react-dom';
 import MarketDeltaChart from './MarketDeltaChart';
 import PriceChart from './PriceChart';
-import TimeIntervals from '../TimeIntervals';
 import TimeHelper from "../Helpers/TimeHelper";
 import OrderForm from "./OrderForm";
 import BinanceWebsocketClient from "./BinanceWebsocketClient";

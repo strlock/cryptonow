@@ -1,6 +1,6 @@
 import React from "react";
-import LoginHelper from "../Helpers/LoginHelper";
 import RequestHelper from "../Helpers/RequestHelper";
+import {ORDER_STATE_TITLES, ORDER_DIRECTION_TITLES, ORDERS_LIST_TAB_TITLES, ORDER_LIST_TAB_ORDER_SATES} from "../constants";
 
 class OrdersList extends React.Component
 {
@@ -16,44 +16,74 @@ class OrdersList extends React.Component
             order.completed_at_formatted = order.completed_at ? (new Date(order.completed_at)).toLocaleString() : '-';
             return order;
         });
+
+        const tabAliases = ['active', 'history'];
+
         return (
             <div className="card">
                 <div className="card-header">Orders</div>
                 <div className="card-body">
                     <div className="table-responsive orders">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Date</th>
-                                    <th>Price</th>
-                                    <th>Amount</th>
-                                    <th>Type</th>
-                                    <th>Stop Loss/Take Profit</th>
-                                    <th>Buy/Sell</th>
-                                    <th>Completion</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {orders.map((order) => {
-                                    let orderClass = 'order order-' + order.state;
+                        <nav>
+                            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                                {tabAliases.map((tabAlias, i) => {
+                                    let liClass = 'nav-link' + (i === 0 ? ' active' : '');
+                                    let tabId = "nav-" + tabAlias + "-tab";
+                                    let tabTarget = "#nav-" + tabAlias;
+                                    let tabAriaControls = "nav-" + tabAlias;
                                     return (
-                                        <tr key={order.id} className={orderClass}>
-                                            <td>{order.id}</td>
-                                            <td>{order.created_at_formatted}</td>
-                                            <td>{parseFloat(order.price).toFixed(2)}</td>
-                                            <td>{parseFloat(order.amount).toFixed(5)}</td>
-                                            <td>{order.type}</td>
-                                            <td>{order.sl != 0.0 ? parseFloat(order.sl).toFixed(2) : '-'}/{order.tp != 0.0 ? parseFloat(order.tp).toFixed(2) : '-'}</td>
-                                            <td>{order.ready_at_formatted} {order.ready_price != 0.0 ? ', ' + parseFloat(order.ready_price).toFixed(2) : ''}</td>
-                                            <td>{order.completed_at_formatted}{order.completed_price != 0.0 ? ', ' + parseFloat(order.completed_price).toFixed(2) : ''}</td>
-                                            <td><button className="btn btn-danger btn-sm" onClick={() => this.onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"></i></button></td>
-                                        </tr>
+                                        <button className={liClass} id={tabId} data-bs-toggle="tab"
+                                                data-bs-target={tabTarget} type="button" role="tab" aria-controls={tabAriaControls}
+                                                aria-selected={i === 0 ? "true" : "false"} key={tabAlias}>{ORDERS_LIST_TAB_TITLES[tabAlias]}</button>
                                     );
-                                } )}
-                            </tbody>
-                        </table>
+                                })}
+                            </div>
+                        </nav>
+                        <div className="tab-content" id="myTabContent">
+                            {tabAliases.map((tabAlias, i) => {
+                                let paneClass = "tab-pane fade " + (i === 0 ? ' active show' : '');
+                                let paneId = "nav-" + tabAlias;
+                                return (
+                                    <div className={paneClass} id={paneId} role="tabpanel" key={tabAlias}>
+                                        <table className="table">
+                                            <thead>
+                                            <tr>
+                                                <th className={"text-center"}>Asset</th>
+                                                <th className={"text-center"}>Status</th>
+                                                <th className={"text-center"}>Date</th>
+                                                <th className={"text-center"}>Price</th>
+                                                <th className={"text-center"}>Amount</th>
+                                                <th className={"text-center"}>Direction</th>
+                                                <th className={"text-center"}>Stop Loss/Take Profit</th>
+                                                <th className={"text-center"}>Buy/Sell</th>
+                                                <th className={"text-center"}>Completion</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {orders.filter(order => ORDER_LIST_TAB_ORDER_SATES[tabAlias].indexOf(order.state) !== -1).map((order) => {
+                                                let orderClass = 'order order-' + order.state;
+                                                return (
+                                                    <tr key={order.id} className={orderClass}>
+                                                        <td className={"text-center order-symbol"}>{order.symbol}</td>
+                                                        <td className={"text-center order-state"}>{ORDER_STATE_TITLES[order.state]}</td>
+                                                        <td className={"text-center order-created-at"}>{order.created_at_formatted}</td>
+                                                        <td className={"text-center order-price"}>{parseFloat(order.price).toFixed(2)}</td>
+                                                        <td className={"text-center order-amount"}>{parseFloat(order.amount).toFixed(5)}</td>
+                                                        <td className={"text-center order-type"}>{ORDER_DIRECTION_TITLES[order.type]}</td>
+                                                        <td className={"text-center order-sl-tp"}>{order.sl && order.sl !== 0.0 ? parseFloat(order.sl).toFixed(2) : '-'}/{order.tp && order.tp !== 0.0 ? parseFloat(order.tp).toFixed(2) : '-'}</td>
+                                                        <td className={"text-center order-buy-sell"}>{order.ready_at_formatted} {order.ready_price && order.ready_price !== 0.0 ? ', ' + parseFloat(order.ready_price).toFixed(2) : ''}</td>
+                                                        <td className={"text-center order-completed-at"}>{order.completed_at_formatted}{order.completed_price && order.completed_price !== 0.0 ? ', ' + parseFloat(order.completed_price).toFixed(2) : ''}</td>
+                                                        <td className={"text-center order-actions"}><button className="btn btn-danger btn-sm" onClick={() => this.onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"></i></button></td>
+                                                    </tr>
+                                                );
+                                            } )}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddReadyPriceAndCompletedPriceFiledsToOrdersTable extends Migration
+class AddSymbolFieldToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddReadyPriceAndCompletedPriceFiledsToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->decimal('ready_price', 18, 7, true)->nullable();
-            $table->decimal('completed_price', 18, 7, true)->nullable();
+            $table->string('symbol')->after('id');
         });
     }
 
@@ -27,8 +26,7 @@ class AddReadyPriceAndCompletedPriceFiledsToOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->removeColumn('ready_price');
-            $table->removeColumn('completed_price');
+            $table->removeColumn('symbol');
         });
     }
 }

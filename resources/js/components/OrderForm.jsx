@@ -121,6 +121,7 @@ class OrderForm extends React.Component
         data.append('market', 1*this.marketRef.current.checked);
         data.append('type', type);
         data.append('exchange', 'binance');
+        data.append('symbol', 'BTCUSDT');
         RequestHelper.fetch('/api/orders', {
             method: 'POST',
             body: data,

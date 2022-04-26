@@ -25,6 +25,7 @@ class Order extends Model implements OrderInterface
         'completed_at',
         'ready_price',
         'completed_price',
+        'symbol',
     ];
 
     /**
@@ -36,11 +37,11 @@ class Order extends Model implements OrderInterface
     }
 
     /**
-     * @param mixed $user_id
+     * @param mixed $value
      */
-    public function setUserId(int $user_id): void
+    public function setUserId(int $value): void
     {
-        $this->user_id = $user_id;
+        $this->user_id = $value;
     }
 
     /**
@@ -52,11 +53,11 @@ class Order extends Model implements OrderInterface
     }
 
     /**
-     * @param mixed $type
+     * @param mixed $value
      */
-    public function setType(string $type): void
+    public function setType(string $value): void
     {
-        $this->type = $type;
+        $this->type = $value;
     }
 
     /**
@@ -68,11 +69,11 @@ class Order extends Model implements OrderInterface
     }
 
     /**
-     * @param mixed $price
+     * @param mixed $value
      */
-    public function setPrice(float $price): void
+    public function setPrice(float $value): void
     {
-        $this->price = $price;
+        $this->price = $value;
     }
 
     /**
@@ -84,11 +85,11 @@ class Order extends Model implements OrderInterface
     }
 
     /**
-     * @param mixed $amount
+     * @param mixed $value
      */
-    public function setAmount(float $amount): void
+    public function setAmount(float $value): void
     {
-        $this->amount = $amount;
+        $this->amount = $value;
     }
 
     /**
@@ -100,11 +101,11 @@ class Order extends Model implements OrderInterface
     }
 
     /**
-     * @param mixed|null $sl
+     * @param mixed|null $value
      */
-    public function setSl(?float $sl): void
+    public function setSl(?float $value): void
     {
-        $this->sl = $sl;
+        $this->sl = $value;
     }
 
     /**
@@ -116,11 +117,11 @@ class Order extends Model implements OrderInterface
     }
 
     /**
-     * @param mixed $tp|null
+     * @param mixed $value|null
      */
-    public function setTp(?float $tp): void
+    public function setTp(?float $value): void
     {
-        $this->tp = $tp;
+        $this->tp = $value;
     }
 
     /**
@@ -132,80 +133,138 @@ class Order extends Model implements OrderInterface
     }
 
     /**
-     * @param mixed $market
+     * @param mixed $value
      */
-    public function setMarket(bool $market): void
+    public function setMarket(bool $value): void
     {
-        $this->market = $market;
+        $this->market = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getExchange(): string
     {
         return $this->exchange;
     }
 
-    public function setExchange(string $exchange): void
+    /**
+     * @param string $value
+     */
+    public function setExchange(string $value): void
     {
-        $this->exchange = $exchange;
+        $this->exchange = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getState(): string
     {
         return $this->state;
     }
 
-    public function setState(string $state): void
+    /**
+     * @param string $value
+     */
+    public function setState(string $value): void
     {
-        $this->state = $state;
+        $this->state = $value;
     }
 
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    /**
+     * @param int $value
+     */
+    public function setId(int $value): void
     {
-        $this->id = $id;
+        $this->id = $value;
     }
 
+    /**
+     * @return DateTime|null
+     */
     public function getReadyAt(): ?DateTime
     {
         return Date::parse($this->ready_at);
     }
 
-    public function setReadyAt(?DateTime $date): void
+    /**
+     * @param DateTime|null $value
+     */
+    public function setReadyAt(?DateTime $value): void
     {
-        $this->ready_at = $date->format('Y-m-d H:i:s');
+        $this->ready_at = $value->format('Y-m-d H:i:s');
     }
 
+    /**
+     * @return DateTime|null
+     */
     public function getCompletedAt(): ?DateTime
     {
         return Date::parse($this->completed_at);
     }
 
-    public function setCompletedAt(?DateTime $date): void
+    /**
+     * @param DateTime|null $value
+     */
+    public function setCompletedAt(?DateTime $value): void
     {
-        $this->completed_at = $date->format('Y-m-d H:i:s');
+        $this->completed_at = $value->format('Y-m-d H:i:s');
     }
 
+    /**
+     * @return float
+     */
     public function getReadyPrice(): float
     {
         return $this->ready_price;
     }
 
-    public function setReadyPrice(float $price): void
+    /**
+     * @param float $value
+     */
+    public function setReadyPrice(float $value): void
     {
-        $this->ready_price = $price;
+        $this->ready_price = $value;
     }
 
+    /**
+     * @return float
+     */
     public function getCompletedPrice(): float
     {
         return $this->completed_price;
     }
 
-    public function setCompletedPrice(float $price): void
+    /**
+     * @param float $value
+     */
+    public function setCompletedPrice(float $value): void
     {
-        $this->completed_price = $price;
+        $this->completed_price = $value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSymbol(): string
+    {
+        return $this->symbol;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setSymbol(string $value): void
+    {
+        $this->symbol = $value;
     }
 }

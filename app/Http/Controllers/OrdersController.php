@@ -60,6 +60,7 @@ class OrdersController extends Controller
                 (float)$data['tp'],
                 $data['market'],
                 $data['exchange'],
+                $data['symbol'],
             ));
             return response()->json(['success' => true, 'id' => $order->id]);
         } catch (Throwable $e) {

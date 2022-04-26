@@ -18,10 +18,19 @@ class CreateNewOrderDto implements Arrayable
         private float $tp,
         private bool $market,
         private string $exchange,
+        private string $symbol,
         private string $state = OrderState::NEW,
     )
     {
         //
+    }
+
+    /**
+     * @return string
+     */
+    public function getSymbol(): string
+    {
+        return $this->symbol;
     }
 
     /**
@@ -108,6 +117,7 @@ class CreateNewOrderDto implements Arrayable
             'market' => $this->market,
             'exchange' => $this->exchange,
             'state' => $this->state,
+            'symbol' => $this->symbol,
         ];
     }
 }

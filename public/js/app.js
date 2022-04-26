@@ -9509,19 +9509,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var _MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MarketDeltaChart */ "./resources/js/components/MarketDeltaChart.jsx");
 /* harmony import */ var _PriceChart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PriceChart */ "./resources/js/components/PriceChart.jsx");
-/* harmony import */ var _TimeIntervals__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../TimeIntervals */ "./resources/js/TimeIntervals.js");
-/* harmony import */ var _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Helpers/TimeHelper */ "./resources/js/Helpers/TimeHelper.js");
-/* harmony import */ var _OrderForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./OrderForm */ "./resources/js/components/OrderForm.jsx");
-/* harmony import */ var _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./BinanceWebsocketClient */ "./resources/js/components/BinanceWebsocketClient.js");
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
-/* harmony import */ var _LoginForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./LoginForm */ "./resources/js/components/LoginForm.jsx");
-/* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
-/* harmony import */ var _OrdersList__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./OrdersList */ "./resources/js/components/OrdersList.jsx");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
-/* harmony import */ var _IntervalSelector__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./IntervalSelector */ "./resources/js/components/IntervalSelector.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Helpers/TimeHelper */ "./resources/js/Helpers/TimeHelper.js");
+/* harmony import */ var _OrderForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./OrderForm */ "./resources/js/components/OrderForm.jsx");
+/* harmony import */ var _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BinanceWebsocketClient */ "./resources/js/components/BinanceWebsocketClient.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var _LoginForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./LoginForm */ "./resources/js/components/LoginForm.jsx");
+/* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
+/* harmony import */ var _OrdersList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./OrdersList */ "./resources/js/components/OrdersList.jsx");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
+/* harmony import */ var _IntervalSelector__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./IntervalSelector */ "./resources/js/components/IntervalSelector.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -9533,7 +9532,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -9581,7 +9579,7 @@ function App() {
       popup = _useState6[0],
       setPopup = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].isLoggedIn()),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].isLoggedIn()),
       _useState8 = _slicedToArray(_useState7, 2),
       isLoggedIn = _useState8[0],
       setIsLoggedIn = _useState8[1];
@@ -9600,7 +9598,7 @@ function App() {
     clearTimeout(popupTimeout);
     popupTimeout = setTimeout(function () {
       setPopup(popupDefault);
-    }, _constants__WEBPACK_IMPORTED_MODULE_12__.POPUP_TIMEOUT);
+    }, _constants__WEBPACK_IMPORTED_MODULE_11__.POPUP_TIMEOUT);
   };
 
   var hidePopup = function hidePopup() {
@@ -9609,18 +9607,18 @@ function App() {
 
   var onLoginSuccess = function onLoginSuccess(accessToken, userName) {
     showPopup('Login successfull');
-    _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].login(accessToken, userName);
-    setIsLoggedIn(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].isLoggedIn());
+    _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].login(accessToken, userName);
+    setIsLoggedIn(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].isLoggedIn());
   };
 
   var onLoginFail = function onLoginFail(message) {
     showPopup(message, 'danger');
-    setIsLoggedIn(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].isLoggedIn());
+    setIsLoggedIn(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].isLoggedIn());
   };
 
   var onLogoutClick = function onLogoutClick() {
-    _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].logout();
-    setIsLoggedIn(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].isLoggedIn());
+    _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].logout();
+    setIsLoggedIn(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].isLoggedIn());
   };
 
   var refreshCharts = function refreshCharts() {
@@ -9630,37 +9628,37 @@ function App() {
     mdChart.refresh();
   };
 
-  new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_7__["default"](function (price) {
+  new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {
     setCurrentPrice(1.0 * price);
   });
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var interval = setInterval(function () {
       refreshCharts();
-    }, _constants__WEBPACK_IMPORTED_MODULE_12__.REFRESH_INTERVAL);
+    }, _constants__WEBPACK_IMPORTED_MODULE_11__.REFRESH_INTERVAL);
     return function () {
       return clearInterval(interval);
     };
   }, []);
-  var daysForInterval = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_5__["default"].daysForInterval(chartsInterval);
+  var daysForInterval = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].daysForInterval(chartsInterval);
 
   if (daysForInterval > 3) {
     daysForInterval = 3;
   }
 
-  var fromDate = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_5__["default"].subDaysFromDate(new Date(), daysForInterval);
+  var fromDate = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].subDaysFromDate(new Date(), daysForInterval);
   var toDate = new Date();
   var fromTime = chartsInterval * parseInt(fromDate.getTime() / chartsInterval);
   var toTime = chartsInterval * (parseInt(toDate.getTime() / chartsInterval) + 1);
 
-  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_15__["default"], {
+  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_14__["default"], {
     variant: popup.type,
     onClose: function onClose() {
       return hidePopup();
     },
     dismissible: true,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_15__["default"].Heading, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_14__["default"].Heading, {
       children: popup.title
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("p", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("p", {
       children: popup.message
     })]
   });
@@ -9669,24 +9667,24 @@ function App() {
   var content = '';
 
   if (isLoggedIn) {
-    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("button", {
+    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("button", {
       type: "button",
       className: "btn btn-primary",
       onClick: function onClick() {
         return onLogoutClick();
       },
-      children: ["Logout (", _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_10__["default"].getLoggedInUserName(), ")"]
+      children: ["Logout (", _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].getLoggedInUserName(), ")"]
     });
-    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
       className: "container",
-      children: [popup.show ? popupDom : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+      children: [popup.show ? popupDom : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
         className: "row justify-content-center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
           className: "col-md-10",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_IntervalSelector__WEBPACK_IMPORTED_MODULE_13__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {
             setChartsInterval: setChartsInterval,
             refreshCharts: refreshCharts
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
             fromTime: fromTime,
             toTime: toTime,
             interval: chartsInterval,
@@ -9694,19 +9692,19 @@ function App() {
             currentPrice: currentPrice,
             toCurrencySign: toCurrencySign,
             ref: priceChartRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
             fromTime: fromTime,
             toTime: toTime,
             interval: chartsInterval,
             height: mdHeight,
             updateInterval: updateInterval,
             ref: mdChartRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_11__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
             ref: ordersListRef
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
           className: "col-md-2 ps-3",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
             currentPrice: currentPrice,
             showPopup: showPopup,
             ordersList: ordersListRef.current
@@ -9715,37 +9713,37 @@ function App() {
       })]
     });
   } else {
-    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("button", {
+    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("button", {
       type: "button",
       className: "btn btn-primary",
       "data-bs-toggle": "modal",
       "data-bs-target": "#loginForm",
       children: "Login"
     });
-    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
       onSuccess: onLoginSuccess,
       onFail: onLoginFail
     });
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
     id: "page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsxs)("div", {
       id: "top",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
         className: "top-left",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("a", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("a", {
           href: "/",
           className: "logo-link",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("img", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("img", {
             src: "images/logo.png"
           })
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
         className: "top-right",
         children: loginButton
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)("div", {
       id: "middle",
       children: content
     })]
@@ -9753,7 +9751,7 @@ function App() {
 }
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(App, {}), document.getElementById('app'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(App, {}), document.getElementById('app'));
 }
 
 /***/ }),
@@ -10537,6 +10535,7 @@ var OrderForm = /*#__PURE__*/function (_React$Component) {
       data.append('market', 1 * this.marketRef.current.checked);
       data.append('type', type);
       data.append('exchange', 'binance');
+      data.append('symbol', 'BTCUSDT');
       _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/orders', {
         method: 'POST',
         body: data
@@ -10577,8 +10576,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
-/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
@@ -10644,6 +10643,7 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
         order.completed_at_formatted = order.completed_at ? new Date(order.completed_at).toLocaleString() : '-';
         return order;
       });
+      var tabAliases = ['active', 'history'];
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "card",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -10651,67 +10651,128 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
           children: "Orders"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: "card-body",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "table-responsive orders",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("table", {
-              className: "table",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("thead", {
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-                    children: "ID"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-                    children: "Date"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-                    children: "Price"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-                    children: "Amount"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-                    children: "Type"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-                    children: "Stop Loss/Take Profit"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-                    children: "Buy/Sell"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-                    children: "Completion"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {})]
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("nav", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                className: "nav nav-tabs",
+                id: "nav-tab",
+                role: "tablist",
+                children: tabAliases.map(function (tabAlias, i) {
+                  var liClass = 'nav-link' + (i === 0 ? ' active' : '');
+                  var tabId = "nav-" + tabAlias + "-tab";
+                  var tabTarget = "#nav-" + tabAlias;
+                  var tabAriaControls = "nav-" + tabAlias;
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                    className: liClass,
+                    id: tabId,
+                    "data-bs-toggle": "tab",
+                    "data-bs-target": tabTarget,
+                    type: "button",
+                    role: "tab",
+                    "aria-controls": tabAriaControls,
+                    "aria-selected": i === 0 ? "true" : "false",
+                    children: _constants__WEBPACK_IMPORTED_MODULE_2__.ORDERS_LIST_TAB_TITLES[tabAlias]
+                  }, tabAlias);
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("tbody", {
-                children: orders.map(function (order) {
-                  var orderClass = 'order order-' + order.state;
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
-                    className: orderClass,
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-                      children: order.id
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-                      children: order.created_at_formatted
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-                      children: parseFloat(order.price).toFixed(2)
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-                      children: parseFloat(order.amount).toFixed(5)
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-                      children: order.type
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
-                      children: [order.sl != 0.0 ? parseFloat(order.sl).toFixed(2) : '-', "/", order.tp != 0.0 ? parseFloat(order.tp).toFixed(2) : '-']
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
-                      children: [order.ready_at_formatted, " ", order.ready_price != 0.0 ? ', ' + parseFloat(order.ready_price).toFixed(2) : '']
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
-                      children: [order.completed_at_formatted, order.completed_price != 0.0 ? ', ' + parseFloat(order.completed_price).toFixed(2) : '']
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                        className: "btn btn-danger btn-sm",
-                        onClick: function onClick() {
-                          return _this2.onDeleteClick(order);
-                        },
-                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("i", {
-                          className: "fa fa-times",
-                          "aria-hidden": "true"
-                        })
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+              className: "tab-content",
+              id: "myTabContent",
+              children: tabAliases.map(function (tabAlias, i) {
+                var paneClass = "tab-pane fade " + (i === 0 ? ' active show' : '');
+                var paneId = "nav-" + tabAlias;
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+                  className: paneClass,
+                  id: paneId,
+                  role: "tabpanel",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("table", {
+                    className: "table",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("thead", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
+                        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                          className: "text-center",
+                          children: "Asset"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                          className: "text-center",
+                          children: "Status"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                          className: "text-center",
+                          children: "Date"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                          className: "text-center",
+                          children: "Price"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                          className: "text-center",
+                          children: "Amount"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                          className: "text-center",
+                          children: "Direction"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                          className: "text-center",
+                          children: "Stop Loss/Take Profit"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                          className: "text-center",
+                          children: "Buy/Sell"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                          className: "text-center",
+                          children: "Completion"
+                        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {})]
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("tbody", {
+                      children: orders.filter(function (order) {
+                        return _constants__WEBPACK_IMPORTED_MODULE_2__.ORDER_LIST_TAB_ORDER_SATES[tabAlias].indexOf(order.state) !== -1;
+                      }).map(function (order) {
+                        var orderClass = 'order order-' + order.state;
+                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
+                          className: orderClass,
+                          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                            className: "text-center order-symbol",
+                            children: order.symbol
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                            className: "text-center order-state",
+                            children: _constants__WEBPACK_IMPORTED_MODULE_2__.ORDER_STATE_TITLES[order.state]
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                            className: "text-center order-created-at",
+                            children: order.created_at_formatted
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                            className: "text-center order-price",
+                            children: parseFloat(order.price).toFixed(2)
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                            className: "text-center order-amount",
+                            children: parseFloat(order.amount).toFixed(5)
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                            className: "text-center order-type",
+                            children: _constants__WEBPACK_IMPORTED_MODULE_2__.ORDER_DIRECTION_TITLES[order.type]
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
+                            className: "text-center order-sl-tp",
+                            children: [order.sl && order.sl !== 0.0 ? parseFloat(order.sl).toFixed(2) : '-', "/", order.tp && order.tp !== 0.0 ? parseFloat(order.tp).toFixed(2) : '-']
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
+                            className: "text-center order-buy-sell",
+                            children: [order.ready_at_formatted, " ", order.ready_price && order.ready_price !== 0.0 ? ', ' + parseFloat(order.ready_price).toFixed(2) : '']
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("td", {
+                            className: "text-center order-completed-at",
+                            children: [order.completed_at_formatted, order.completed_price && order.completed_price !== 0.0 ? ', ' + parseFloat(order.completed_price).toFixed(2) : '']
+                          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                            className: "text-center order-actions",
+                            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                              className: "btn btn-danger btn-sm",
+                              onClick: function onClick() {
+                                return _this2.onDeleteClick(order);
+                              },
+                              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("i", {
+                                className: "fa fa-times",
+                                "aria-hidden": "true"
+                              })
+                            })
+                          })]
+                        }, order.id);
                       })
                     })]
-                  }, order.id);
-                })
-              })]
-            })
+                  })
+                }, tabAlias);
+              })
+            })]
           })
         })]
       });
@@ -10725,7 +10786,7 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
     key: "refresh",
     value: function refresh() {
       var self = this;
-      return _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/orders', {}, function (response) {
+      return _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/orders', {}, function (response) {
         self.setState({
           orders: response.data
         });
@@ -10735,7 +10796,7 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
     key: "onDeleteClick",
     value: function onDeleteClick(order) {
       var self = this;
-      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/orders/' + order.id, {
+      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/orders/' + order.id, {
         method: 'DELETE'
       }, function () {
         self.refresh();
@@ -10971,10 +11032,33 @@ var PriceChart = /*#__PURE__*/function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "REFRESH_INTERVAL": () => (/* binding */ REFRESH_INTERVAL),
-/* harmony export */   "POPUP_TIMEOUT": () => (/* binding */ POPUP_TIMEOUT)
+/* harmony export */   "POPUP_TIMEOUT": () => (/* binding */ POPUP_TIMEOUT),
+/* harmony export */   "ORDER_STATE_TITLES": () => (/* binding */ ORDER_STATE_TITLES),
+/* harmony export */   "ORDER_DIRECTION_TITLES": () => (/* binding */ ORDER_DIRECTION_TITLES),
+/* harmony export */   "ORDERS_LIST_TAB_TITLES": () => (/* binding */ ORDERS_LIST_TAB_TITLES),
+/* harmony export */   "ORDER_LIST_TAB_ORDER_SATES": () => (/* binding */ ORDER_LIST_TAB_ORDER_SATES)
 /* harmony export */ });
 var REFRESH_INTERVAL = 15000;
 var POPUP_TIMEOUT = 3000;
+var ORDER_STATE_TITLES = {
+  'new': 'New Order',
+  'ready': 'Order is bought/sold',
+  'profit': 'Order completed (profit)',
+  'loss': 'Order completed (loss)',
+  'failed': 'Order failed'
+};
+var ORDER_DIRECTION_TITLES = {
+  'buy': 'Buy',
+  'sell': 'Sell'
+};
+var ORDERS_LIST_TAB_TITLES = {
+  'active': 'Active',
+  'history': 'History'
+};
+var ORDER_LIST_TAB_ORDER_SATES = {
+  'active': ['new', 'ready'],
+  'history': ['profit', 'loss', 'failed']
+};
 
 
 /***/ }),

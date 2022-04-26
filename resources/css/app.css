@@ -101,20 +101,24 @@ h1{
     display: block !important;
 }
 
-.orders .order.order-ready {
-    background-color: #91cfff;
+.orders .order.order-new .order-state {
+    color: #444;
 }
 
-.orders .order.order-profit {
-    background-color: #1A791A;
+.orders .order.order-ready .order-state {
+    color: #91cfff;
 }
 
-.orders .order.order-loss {
-    background-color: #AC1313;
+.orders .order.order-profit .order-state {
+    color: #1A791A;
 }
 
-.orders .order.order-failed {
-    background-color: red;
+.orders .order.order-loss .order-state {
+    color: #AC1313;
+}
+
+.orders .order.order-failed .order-state {
+    color: red;
 }
 
 @media(max-width: 1500px){
