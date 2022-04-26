@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use DateTime;
+use Illuminate\Support\Facades\Log;
 
 class Order extends Model implements OrderInterface
 {
@@ -217,6 +218,7 @@ class Order extends Model implements OrderInterface
      */
     public function setCompletedAt(?DateTime $value): void
     {
+        Log::debug('Setting completed_at: '.$value->format('Y-m-d H:i:s'));
         $this->completed_at = $value->format('Y-m-d H:i:s');
     }
 
