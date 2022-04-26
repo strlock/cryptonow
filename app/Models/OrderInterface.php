@@ -33,4 +33,8 @@ interface OrderInterface
     public function setReadyAt(?DateTime $date): void;
     public function getCompletedAt(): ?DateTime;
     public function setCompletedAt(?DateTime $date): void;
+    public function getReadyPrice(): float;
+    public function setReadyPrice(float $price): void;
+    public function getCompletedPrice(): float;
+    public function setCompletedPrice(float $price): void;
 }

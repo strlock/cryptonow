@@ -23,6 +23,8 @@ class Order extends Model implements OrderInterface
         'state',
         'ready_at',
         'completed_at',
+        'ready_price',
+        'completed_price',
     ];
 
     /**
@@ -185,5 +187,25 @@ class Order extends Model implements OrderInterface
     public function setCompletedAt(?DateTime $date): void
     {
         $this->completed_at = $date->format('Y-m-d H:i:s');
+    }
+
+    public function getReadyPrice(): float
+    {
+        return $this->ready_price;
+    }
+
+    public function setReadyPrice(float $price): void
+    {
+        $this->ready_price = $price;
+    }
+
+    public function getCompletedPrice(): float
+    {
+        return $this->completed_price;
+    }
+
+    public function setCompletedPrice(float $price): void
+    {
+        $this->completed_price = $price;
     }
 }
