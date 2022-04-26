@@ -270,6 +270,6 @@ class Order extends Model implements OrderInterface
 
     public function isSimple(): bool
     {
-        return !$this->getSl() && !$this->getTp();
+        return !$this->getSl() && !$this->getTp() && $this->getSl() !== 0.0 && $this->getTp() !== 0.0;
     }
 }
