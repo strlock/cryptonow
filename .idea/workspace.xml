@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving market delta chart">
-      <change afterPath="$PROJECT_DIR$/resources/js/components/IntervalSelector.jsx" afterDir="false" />
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_04_26_112609_add_ready_price_and_completed_price_fileds_to_orders_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -282,7 +279,7 @@
       <workItem from="1649960578705" duration="79558000" />
       <workItem from="1650480524657" duration="7195000" />
       <workItem from="1650515955987" duration="45366000" />
-      <workItem from="1650814916598" duration="28265000" />
+      <workItem from="1650814916598" duration="28563000" />
     </task>
     <task id="LOCAL-00001" summary="WOrk">
       <created>1648282713619</created>
@@ -431,7 +428,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650960891242</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Improving">
+      <created>1650961360642</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1650961360642</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +466,6 @@
     <MESSAGE value="WOrk" />
     <MESSAGE value="adding" />
     <MESSAGE value="Adding parameter data to response" />
-    <MESSAGE value="Improving" />
     <MESSAGE value="Changes" />
     <MESSAGE value="Renaming Delta to Stat" />
     <MESSAGE value="Updating charts by interval" />
@@ -470,7 +473,8 @@
     <MESSAGE value="Adding ready_at, completed_at and moving Crypto to Services" />
     <MESSAGE value="Improving price chart" />
     <MESSAGE value="Improving market delta chart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improving market delta chart" />
+    <MESSAGE value="Improving" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
