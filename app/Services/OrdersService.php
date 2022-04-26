@@ -82,7 +82,7 @@ class OrdersService implements OrdersServiceInterface
 
     private function executeBuyOrder(OrderInterface $order)
     {
-        Log::info("Buy order executed: ".$order->getId());
+        Log::info("Buy order executed: ".$order->getId().'. Simple: '.($order->isSimple() ? 'Yes' : 'No'));
         if (!$order->isSimple()) {
             $this->changeOrderState($order, OrderState::READY);
         } else {
@@ -92,7 +92,7 @@ class OrdersService implements OrdersServiceInterface
 
     private function executeSellOrder(OrderInterface $order)
     {
-        Log::info("Sell order executed: ".$order->getId());
+        Log::info("Sell order executed: ".$order->getId().'. Simple: '.($order->isSimple() ? 'Yes' : 'No'));
         if (!$order->isSimple()) {
             $this->changeOrderState($order, OrderState::READY);
         } else {
