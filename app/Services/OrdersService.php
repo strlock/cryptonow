@@ -130,7 +130,7 @@ class OrdersService implements OrdersServiceInterface
         if ($newState === OrderState::READY) {
             $order->setReadyAt(Date::now());
         }
-        if (in_array($newState, [OrderState::PROFIT, OrderState::LOSS, OrderState::FAILED])) {
+        if (in_array($newState, [OrderState::PROFIT, OrderState::LOSS, OrderState::FAILED, OrderState::COMPLETED])) {
             $order->setCompletedAt(Date::now());
         }
         $order->save();
