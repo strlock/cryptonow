@@ -46,7 +46,7 @@ class OrdersList extends React.Component
                                             <td>{parseFloat(order.amount).toFixed(5)}</td>
                                             <td>{order.type}</td>
                                             <td>{parseFloat(order.sl).toFixed(2)}/{parseFloat(order.tp).toFixed(2)}</td>
-                                            <td>{order.ready_at_formatted}{order.ready_price != 0.0 ? ', ' + parseFloat(order.ready_price).toFixed(2) : ''}</td>
+                                            <td>{order.ready_at_formatted} {order.ready_price} {order.ready_price != 0.0 ? ', ' + parseFloat(order.ready_price).toFixed(2) : ''}</td>
                                             <td>{order.completed_at_formatted}{order.completed_price != 0.0 ? ', ' + parseFloat(order.completed_price).toFixed(2) : ''}</td>
                                             <td><button className="btn btn-danger btn-sm" onClick={() => this.onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"></i></button></td>
                                         </tr>
