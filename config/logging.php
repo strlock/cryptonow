@@ -56,7 +56,7 @@ return [
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel-'.date('d-m-Y-H').'.log'),
+            'path' => storage_path('logs/laravel-'.date('d-m-Y').'.log'),
             'level' => env('LOG_LEVEL', 'debug'),
         ],
 
