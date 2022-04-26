@@ -83,13 +83,21 @@ class OrdersService implements OrdersServiceInterface
     private function executeBuyOrder(OrderInterface $order)
     {
         Log::info("Buy order executed: ".$order->getId());
-        $this->changeOrderState($order, OrderState::READY);
+        if (!$order->isSimple()) {
+            $this->changeOrderState($order, OrderState::READY);
+        } else {
+            $this->changeOrderState($order, OrderState::COMPLETED);
+        }
     }
 
     private function executeSellOrder(OrderInterface $order)
     {
         Log::info("Sell order executed: ".$order->getId());
-        $this->changeOrderState($order, OrderState::READY);
+        if (!$order->isSimple()) {
+            $this->changeOrderState($order, OrderState::READY);
+        } else {
+            $this->changeOrderState($order, OrderState::COMPLETED);
+        }
     }
 
     private function executeBuyOrderTakeProfit(OrderInterface $order)

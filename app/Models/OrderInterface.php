@@ -38,4 +38,5 @@ interface OrderInterface
     public function setCompletedPrice(float $value): void;
     public function getSymbol(): string;
     public function setSymbol(string $value): void;
+    public function isSimple(): bool;
 }

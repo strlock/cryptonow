@@ -267,4 +267,9 @@ class Order extends Model implements OrderInterface
     {
         $this->symbol = $value;
     }
+
+    public function isSimple(): bool
+    {
+        return !$this->getSl() && !$this->getTp();
+    }
 }

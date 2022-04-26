@@ -11045,7 +11045,9 @@ var ORDER_STATE_TITLES = {
   'ready': 'Order is bought/sold',
   'profit': 'Order completed (profit)',
   'loss': 'Order completed (loss)',
-  'failed': 'Order failed'
+  'failed': 'Order failed',
+  'canceled': 'Canceled',
+  'completed': 'Completed'
 };
 var ORDER_DIRECTION_TITLES = {
   'buy': 'Buy',
@@ -11057,7 +11059,7 @@ var ORDERS_LIST_TAB_TITLES = {
 };
 var ORDER_LIST_TAB_ORDER_SATES = {
   'active': ['new', 'ready'],
-  'history': ['profit', 'loss', 'failed']
+  'history': ['profit', 'loss', 'failed', 'canceled', 'completed']
 };
 
 

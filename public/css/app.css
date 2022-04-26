@@ -14435,6 +14435,14 @@ h1{
     color: red;
 }
 
+.orders .order.order-cenceled .order-state {
+    color: red;
+}
+
+.orders .order.order-completed .order-state {
+    color: #1A791A;
+}
+
 @media(max-width: 1500px){
     #top .top-left{
         padding: 1.25em 1.875em;

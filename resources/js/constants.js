@@ -7,6 +7,8 @@ const ORDER_STATE_TITLES = {
     'profit': 'Order completed (profit)',
     'loss': 'Order completed (loss)',
     'failed': 'Order failed',
+    'canceled': 'Canceled',
+    'completed': 'Completed',
 };
 
 const ORDER_DIRECTION_TITLES = {
@@ -21,7 +23,7 @@ const ORDERS_LIST_TAB_TITLES = {
 
 const ORDER_LIST_TAB_ORDER_SATES = {
     'active': ['new', 'ready'],
-    'history': ['profit','loss','failed'],
+    'history': ['profit','loss','failed','canceled','completed'],
 };
 
 export {
