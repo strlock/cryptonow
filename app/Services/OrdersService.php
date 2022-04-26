@@ -126,12 +126,16 @@ class OrdersService implements OrdersServiceInterface
 
     private function changeOrderState(OrderInterface|Model $order, string $newState)
     {
+        $now = Date::now();
+        Log::debug('Order state changed to: '.$newState);
         $order->setState($newState);
         if ($newState === OrderState::READY) {
-            $order->setReadyAt(Date::now());
+            Log::debug('Order '.$order->id.' is ready at '.$now->format(config('crypto.dateFormat')));
+            $order->setReadyAt($now);
         }
         if (in_array($newState, [OrderState::PROFIT, OrderState::LOSS, OrderState::FAILED, OrderState::COMPLETED])) {
-            $order->setCompletedAt(Date::now());
+            Log::debug('Order '.$order->id.' is completed at '.$now->format(config('crypto.dateFormat')));
+            $order->setCompletedAt($now);
         }
         $order->save();
     }
