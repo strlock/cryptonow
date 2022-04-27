@@ -128,7 +128,7 @@ class Order extends Model implements OrderInterface
     /**
      * @return mixed
      */
-    public function getMarket(): bool
+    public function isMarket(): bool
     {
         return $this->market;
     }

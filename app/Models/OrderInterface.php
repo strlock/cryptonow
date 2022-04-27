@@ -22,7 +22,7 @@ interface OrderInterface
     public function setSl(?float $value): void;
     public function getTp(): ?float;
     public function setTp(?float $value): void;
-    public function getMarket(): bool;
+    public function isMarket(): bool;
     public function setMarket(bool $value): void;
     public function getExchange(): string;
     public function setExchange(string $value): void;

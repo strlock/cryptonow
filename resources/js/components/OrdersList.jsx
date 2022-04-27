@@ -60,13 +60,13 @@ class OrdersList extends React.Component
                                                         <td className={"text-center order-created-at"}>{FormatHelper.formatDate(order.created_at)}</td>
                                                         <td className={"text-center order-symbol"}>{order.symbol}</td>
                                                         <td className={"text-center order-type"}>{ORDER_DIRECTION_TITLES[order.type]}</td>
-                                                        <td className={"text-center order-price"}>{FormatHelper.formatPrice(order.price)}</td>
-                                                        <td className={"text-center order-amount"}>{FormatHelper.formatAmount(order.amount)}</td>
+                                                        <td className={"text-center order-price"}>{FormatHelper.formatPrice(order.price, true)}</td>
+                                                        <td className={"text-center order-amount"}>{FormatHelper.formatAmount(order.amount, true)}</td>
                                                         <td className={"text-center order-sl-tp"}>
-                                                            {FormatHelper.formatPrice(order.sl)}/{FormatHelper.formatPrice(order.tp)}<br/>
-                                                            Ready: {FormatHelper.formatDate(order.ready_at)}{order.ready_price !== null ? '<br/>' + FormatHelper.formatPrice(order.ready_price) : ''}
+                                                            {FormatHelper.formatPrice(order.sl, true)}/{FormatHelper.formatPrice(order.tp, true)}<br/>
+                                                            Ready: {FormatHelper.formatDate(order.ready_at)}{order.ready_price !== null ? '<br/>' + FormatHelper.formatPrice(order.ready_price, true) : ''}
                                                         </td>
-                                                        <td className={"text-center order-completed-at"}>{FormatHelper.formatDate(order.completed_at)}{order.completed_price !== null ? '<br/>' + FormatHelper.formatPrice(order.completed_price) : ''}</td>
+                                                        <td className={"text-center order-completed-at"}>{FormatHelper.formatDate(order.completed_at)}{order.completed_price !== null ? '<br/>' + FormatHelper.formatPrice(order.completed_price, true) : ''}</td>
                                                         <td className={"text-center order-state"}>{ORDER_STATE_TITLES[order.state]}</td>
                                                         <td className={"text-center order-actions"}><button className="btn btn-danger btn-sm" onClick={() => this.onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"></i></button></td>
                                                     </tr>

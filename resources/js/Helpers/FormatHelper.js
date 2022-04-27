@@ -3,23 +3,23 @@ class FormatHelper
     static fromSign = null
     static toSign = null
 
-    static formatPrice(price, sign)
+    static formatPrice(price, checkNull, sign)
     {
-        if (price === null) {
+        if (checkNull && price === null) {
             return '-';
         }
-        if (!sign) {
+        if (sign === undefined) {
             sign = this.toSign;
         }
         return this.formatFloat(price, 2) + (sign ? sign : '');
     }
 
-    static formatAmount(amount, sign)
+    static formatAmount(amount, checkNull, sign)
     {
-        if (amount === '-') {
+        if (checkNull && amount === null) {
             return '-';
         }
-        if (!sign) {
+        if (sign === undefined) {
             sign = this.fromSign;
         }
         return this.formatFloat(amount, 5) + (sign ? sign : '');

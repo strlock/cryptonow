@@ -36,12 +36,16 @@ class OrdersService implements OrdersServiceInterface
     private function checkAndExecuteOrder(string $exchange, OrderInterface $order, float $price): void
     {
         if ($order->getState() === OrderState::NEW) {
-            $priceDifference = $price - $order->getPrice();
-            if ($order->getType() === OrderType::BUY && $priceDifference <= 0) {
-                $this->executeBuyOrder($order);
-            }
-            if ($order->getType() === OrderType::SELL && $priceDifference >= 0) {
-                $this->executeSellOrder($order);
+            if (!$order->isMarket()) {
+                $priceDifference = $price - $order->getPrice();
+                if ($order->getType() === OrderType::BUY && $priceDifference <= 0) {
+                    $this->executeBuyOrder($order);
+                }
+                if ($order->getType() === OrderType::SELL && $priceDifference >= 0) {
+                    $this->executeSellOrder($order);
+                }
+            } else {
+                $this->executeMarketOrder($order);
             }
         }
         if ($order->getState() === OrderState::READY) {
@@ -82,7 +86,7 @@ class OrdersService implements OrdersServiceInterface
 
     private function executeBuyOrder(OrderInterface $order)
     {
-        Log::info("Buy order executed: ".$order->getId().'. Simple: '.($order->isSimple() ? 'Yes' : 'No'));
+        Log::info("Buy order executed: ".$order->getId().'. Simple: '.($order->isSimple() ? 'Yes' : 'No').', Market: '.($order->isMarket() ? 'Yes' : 'No'));
         if (!$order->isSimple()) {
             $this->changeOrderState($order, OrderState::READY);
         } else {
@@ -92,7 +96,7 @@ class OrdersService implements OrdersServiceInterface
 
     private function executeSellOrder(OrderInterface $order)
     {
-        Log::info("Sell order executed: ".$order->getId().'. Simple: '.($order->isSimple() ? 'Yes' : 'No'));
+        Log::info("Sell order executed: ".$order->getId().'. Simple: '.($order->isSimple() ? 'Yes' : 'No').', Market: '.($order->isMarket() ? 'Yes' : 'No'));
         if (!$order->isSimple()) {
             $this->changeOrderState($order, OrderState::READY);
         } else {
@@ -138,5 +142,15 @@ class OrdersService implements OrdersServiceInterface
             $order->setCompletedAt($now);
         }
         $order->save();
+    }
+
+    private function executeMarketOrder(OrderInterface $order)
+    {
+        if ($order->getType() === OrderType::BUY) {
+            $this->executeBuyOrder($order);
+        }
+        if ($order->getType() === OrderType::SELL) {
+            $this->executeSellOrder($order);
+        }
     }
 }

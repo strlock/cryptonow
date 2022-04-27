@@ -9208,12 +9208,12 @@ var FormatHelper = /*#__PURE__*/function () {
 
   _createClass(FormatHelper, null, [{
     key: "formatPrice",
-    value: function formatPrice(price, sign) {
-      if (price === null) {
+    value: function formatPrice(price, checkNull, sign) {
+      if (checkNull && price === null) {
         return '-';
       }
 
-      if (!sign) {
+      if (sign === undefined) {
         sign = this.toSign;
       }
 
@@ -9221,12 +9221,12 @@ var FormatHelper = /*#__PURE__*/function () {
     }
   }, {
     key: "formatAmount",
-    value: function formatAmount(amount, sign) {
-      if (amount === '-') {
+    value: function formatAmount(amount, checkNull, sign) {
+      if (checkNull && amount === null) {
         return '-';
       }
 
-      if (!sign) {
+      if (sign === undefined) {
         sign = this.fromSign;
       }
 
@@ -10360,8 +10360,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
-/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
@@ -10403,20 +10403,29 @@ var OrderForm = /*#__PURE__*/function (_React$Component) {
 
     _classCallCheck(this, OrderForm);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _super.call.apply(_super, [this].concat(args));
+    _this = _super.call(this);
 
     _defineProperty(_assertThisInitialized(_this), "state", {
-      market: false
+      market: false,
+      virtual: true,
+      sl: 0,
+      tp: 0,
+      slPercent: 0,
+      tpPercent: 0
     });
 
     _defineProperty(_assertThisInitialized(_this), "totalRef", null);
 
     _defineProperty(_assertThisInitialized(_this), "amountRef", null);
 
+    _this.totalRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+    _this.amountRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+    _this.priceRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+    _this.slRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+    _this.tpRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+    _this.marketRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
+    _this.onSlChange = _this.onSlChange.bind(_assertThisInitialized(_this));
+    _this.onTpChange = _this.onTpChange.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -10435,19 +10444,13 @@ var OrderForm = /*#__PURE__*/function (_React$Component) {
         });
       };
 
-      this.totalRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-      this.amountRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-      this.priceRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-      this.slRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-      this.tpRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-      this.marketRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
         className: "card bg-secondary text-white mb-3",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: "card-body",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-2",
+              className: "input-group input-group-sm mb-4",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                 htmlFor: "price",
                 className: "input-group-text w-25",
@@ -10466,7 +10469,7 @@ var OrderForm = /*#__PURE__*/function (_React$Component) {
                 }
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-2",
+              className: "input-group input-group-sm mb-4",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                 htmlFor: "volume",
                 className: "input-group-text w-25",
@@ -10483,7 +10486,7 @@ var OrderForm = /*#__PURE__*/function (_React$Component) {
                 ref: this.amountRef
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-2",
+              className: "input-group input-group-sm mb-4",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                 htmlFor: "total",
                 className: "input-group-text w-25",
@@ -10500,46 +10503,95 @@ var OrderForm = /*#__PURE__*/function (_React$Component) {
                 ref: this.totalRef
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-2",
+              className: "input-group input-group-sm mb-3",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                 htmlFor: "sl",
                 className: "input-group-text w-25",
-                children: "SL"
+                children: "Stop Loss"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
                 type: "number",
                 name: "sl",
                 id: "sl",
                 className: "form-control",
                 step: "0.01",
+                value: this.state.sl,
+                onChange: function onChange(event) {
+                  return _this2.onSlChange(event);
+                },
                 ref: this.slRef
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                type: "range",
+                className: "form-range mt-1",
+                min: "0",
+                max: "100",
+                step: "1",
+                id: "slRange",
+                value: this.state.slPercent,
+                onChange: function onChange(event) {
+                  return _this2.onSlRangeChange(event);
+                }
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
+                children: [this.state.slPercent, "%"]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-2",
+              className: "input-group input-group-sm mb-3",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                 htmlFor: "tp",
                 className: "input-group-text w-25",
-                children: "TP"
+                children: "Take Profit"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
                 type: "number",
                 name: "tp",
                 id: "tp",
                 className: "form-control",
                 step: "0.01",
+                value: this.state.tp,
+                onChange: function onChange(event) {
+                  return _this2.onTpChange(event);
+                },
                 ref: this.tpRef
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                type: "range",
+                className: "form-range mt-1",
+                min: "0",
+                max: "100",
+                step: "1",
+                id: "tpRange",
+                value: this.state.tpPercent,
+                onChange: function onChange(event) {
+                  return _this2.onTpRangeChange(event);
+                }
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
+                children: [this.state.tpPercent, "%"]
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
               className: "form-check form-check-inline mb-3",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
                 className: "form-check-input",
                 type: "checkbox",
-                id: "inlineCheckbox1",
+                id: "marketCheckbox",
                 defaultChecked: this.state.market,
                 onClick: this.onMarketChange,
                 ref: this.marketRef
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                 className: "form-check-label",
-                htmlFor: "inlineCheckbox1",
+                htmlFor: "marketCheckbox",
                 children: "Market"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+              className: "form-check form-check-inline mb-3",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                className: "form-check-input",
+                type: "checkbox",
+                id: "virtualCheckbox",
+                defaultChecked: this.state.virtual,
+                onClick: this.onVirtualChange,
+                ref: this.virtualRef,
+                disabled: true
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                className: "form-check-label",
+                htmlFor: "virtualCheckbox",
+                children: "Virtual"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
               className: "input-group input-group-sm",
@@ -10626,7 +10678,7 @@ var OrderForm = /*#__PURE__*/function (_React$Component) {
       data.append('type', type);
       data.append('exchange', 'binance');
       data.append('symbol', 'BTCUSDT');
-      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/orders', {
+      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/orders', {
         method: 'POST',
         body: data
       }, function (response) {
@@ -10644,7 +10696,37 @@ var OrderForm = /*#__PURE__*/function (_React$Component) {
       this.slRef.current.value = '';
       this.tpRef.current.value = '';
       this.marketRef.current.checked = false;
+      this.virtualRef.current.checked = true;
     }
+  }, {
+    key: "onSlRangeChange",
+    value: function onSlRangeChange(event) {
+      var price = this.priceRef.current.value;
+      var value = event.target.value;
+      var sl = price * (1 - value / 100);
+      console.log(_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(sl, false, ''));
+      this.setState({
+        sl: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(sl, false, ''),
+        slPercent: value
+      });
+    }
+  }, {
+    key: "onTpRangeChange",
+    value: function onTpRangeChange(event) {
+      var price = this.priceRef.current.value;
+      var value = event.target.value;
+      var tp = price * (1 + value / 100);
+      this.setState({
+        tp: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(tp, false, ''),
+        tpPercent: value
+      });
+    }
+  }, {
+    key: "onSlChange",
+    value: function onSlChange(event) {}
+  }, {
+    key: "onTpChange",
+    value: function onTpChange(event) {}
   }]);
 
   return OrderForm;
@@ -10820,16 +10902,16 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
                             children: _constants__WEBPACK_IMPORTED_MODULE_2__.ORDER_DIRECTION_TITLES[order.type]
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("td", {
                             className: "text-center order-price",
-                            children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.price)
+                            children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.price, true)
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("td", {
                             className: "text-center order-amount",
-                            children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatAmount(order.amount)
+                            children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatAmount(order.amount, true)
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("td", {
                             className: "text-center order-sl-tp",
-                            children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.sl), "/", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.tp), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), "Ready: ", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatDate(order.ready_at), order.ready_price !== null ? '<br/>' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.ready_price) : '']
+                            children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.sl, true), "/", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.tp, true), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), "Ready: ", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatDate(order.ready_at), order.ready_price !== null ? '<br/>' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.ready_price, true) : '']
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("td", {
                             className: "text-center order-completed-at",
-                            children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatDate(order.completed_at), order.completed_price !== null ? '<br/>' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.completed_price) : '']
+                            children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatDate(order.completed_at), order.completed_price !== null ? '<br/>' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.completed_price, true) : '']
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("td", {
                             className: "text-center order-state",
                             children: _constants__WEBPACK_IMPORTED_MODULE_2__.ORDER_STATE_TITLES[order.state]
