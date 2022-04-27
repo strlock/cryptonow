@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Crypto\Exchanges;
 
+use App\Dto\CreateNewOrderDto;
+use App\Models\OrderInterface;
 use App\Services\Crypto\Helpers\TimeHelper;
 use Illuminate\Support\Collection;
 
@@ -25,4 +27,10 @@ interface FacadeInterface
      * @return Collection
      */
     public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection;
+
+    /**
+     * @param CreateNewOrderDto $dto
+     * @return bool
+     */
+    public function placeOrder(OrderInterface $dto): void;
 }

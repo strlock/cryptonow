@@ -4,7 +4,6 @@ namespace App\Services\Crypto\Exchanges;
 use App\Dto\TimeIntervalChunkDto;
 use App\Services\Crypto\Helpers\TimeHelper;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 abstract class AbstractFacade implements FacadeInterface

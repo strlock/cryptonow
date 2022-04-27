@@ -11,13 +11,16 @@ const ORDER_STATE_TITLES = {
     'completed': 'Completed',
 };
 
+const ORDER_DIRECTION_BUY = 'buy'
+const ORDER_DIRECTION_SELL = 'sell'
+
 const ORDER_DIRECTION_TITLES = {
     'buy': 'Buy',
     'sell': 'Sell',
 };
 
 const ORDERS_LIST_TAB_TITLES = {
-    'active': 'Active',
+    'active': 'Active Orders',
     'history': 'History',
 };
 
@@ -33,4 +36,6 @@ export {
     ORDER_DIRECTION_TITLES,
     ORDERS_LIST_TAB_TITLES,
     ORDER_LIST_TAB_ORDER_SATES,
+    ORDER_DIRECTION_BUY,
+    ORDER_DIRECTION_SELL,
 };

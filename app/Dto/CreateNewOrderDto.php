@@ -19,7 +19,6 @@ class CreateNewOrderDto implements Arrayable
         private bool $market,
         private string $exchange,
         private string $symbol,
-        private string $state = OrderState::NEW,
     )
     {
         //
@@ -97,14 +96,6 @@ class CreateNewOrderDto implements Arrayable
         return $this->exchange;
     }
 
-    /**
-     * @return string
-     */
-    public function getState(): string
-    {
-        return $this->state;
-    }
-
     public function toArray()
     {
         return [
@@ -116,7 +107,6 @@ class CreateNewOrderDto implements Arrayable
             'tp' => $this->tp,
             'market' => $this->market,
             'exchange' => $this->exchange,
-            'state' => $this->state,
             'symbol' => $this->symbol,
         ];
     }

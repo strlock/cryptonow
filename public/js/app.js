@@ -9603,14 +9603,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BinanceWebsocketClient */ "./resources/js/components/BinanceWebsocketClient.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
 /* harmony import */ var _LoginForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./LoginForm */ "./resources/js/components/LoginForm.jsx");
 /* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
 /* harmony import */ var _OrdersList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./OrdersList */ "./resources/js/components/OrdersList.jsx");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
 /* harmony import */ var _IntervalSelector__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./IntervalSelector */ "./resources/js/components/IntervalSelector.jsx");
 /* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./UserSettingsModal */ "./resources/js/components/UserSettingsModal.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -9641,7 +9642,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function App() {
+
+var App = function App() {
   var updateInterval = 15000;
   var priceHeight = 400;
   var mdHeight = 250;
@@ -9741,24 +9743,25 @@ function App() {
   var fromTime = chartsInterval * parseInt(fromDate.getTime() / chartsInterval);
   var toTime = chartsInterval * (parseInt(toDate.getTime() / chartsInterval) + 1);
 
-  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_15__["default"], {
+  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_16__["default"], {
     variant: popup.type,
     onClose: function onClose() {
       return hidePopup();
     },
     dismissible: true,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_15__["default"].Heading, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_16__["default"].Heading, {
       children: popup.title
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("p", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("p", {
       children: popup.message
     })]
   });
 
   var loginButton = '';
   var content = '';
+  var settingsButton = '';
 
   if (isLoggedIn) {
-    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("button", {
+    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("button", {
       type: "button",
       className: "btn btn-primary",
       onClick: function onClick() {
@@ -9766,35 +9769,42 @@ function App() {
       },
       children: ["Logout (", _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].getLoggedInUserName(), ")"]
     });
-    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+    settingsButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("button", {
+      type: "button",
+      className: "btn btn-secondary",
+      "data-bs-toggle": "modal",
+      "data-bs-target": "#userSettingsModal",
+      children: "Settings"
+    });
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
       className: "container",
-      children: [popup.show ? popupDom : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+      children: [popup.show ? popupDom : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
         className: "row justify-content-center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
           className: "col-md-10",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {
             setChartsInterval: setChartsInterval,
             refreshCharts: refreshCharts
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
             fromTime: fromTime,
             toTime: toTime,
             interval: chartsInterval,
             height: priceHeight,
             currentPrice: currentPrice,
             ref: priceChartRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
             fromTime: fromTime,
             toTime: toTime,
             interval: chartsInterval,
             height: mdHeight,
             updateInterval: updateInterval,
             ref: mdChartRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
             ref: ordersListRef
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {
           className: "col-md-2 ps-3",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
             currentPrice: currentPrice,
             showPopup: showPopup,
             ordersList: ordersListRef.current
@@ -9803,45 +9813,45 @@ function App() {
       })]
     });
   } else {
-    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("button", {
+    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("button", {
       type: "button",
       className: "btn btn-primary",
       "data-bs-toggle": "modal",
       "data-bs-target": "#loginForm",
       children: "Login"
     });
-    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
       onSuccess: onLoginSuccess,
       onFail: onLoginFail
     });
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
     id: "page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
       id: "top",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {
         className: "top-left",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("a", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("a", {
           href: "/",
           className: "logo-link",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("img", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("img", {
             src: "images/logo.png"
           })
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
         className: "top-right",
-        children: loginButton
+        children: [loginButton, "\xA0\xA0\xA0", settingsButton]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {
       id: "middle",
       children: content
-    })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {})]
   });
-}
+};
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(App, {}), document.getElementById('app'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(App, {}), document.getElementById('app'));
 }
 
 /***/ }),
@@ -10208,11 +10218,11 @@ var MarketDeltaChart = /*#__PURE__*/function (_React$Component) {
               ranges: [{
                 from: -1000,
                 to: 0,
-                color: 'rgb(172, 19, 19)'
+                color: 'rgba(239,64,60,1)'
               }, {
                 from: 0,
                 to: 1000,
-                color: 'rgb(26, 121, 26)'
+                color: 'rgba(0,183,70,1)'
               }]
             },
             columnWidth: '80%'
@@ -10261,8 +10271,8 @@ var MarketDeltaChart = /*#__PURE__*/function (_React$Component) {
           }
         },
         theme: {
-          mode: 'light',
-          palette: 'palette3'
+          mode: 'dark',
+          palette: 'palette1'
         },
         noData: {
           text: "Loading...",
@@ -10275,6 +10285,9 @@ var MarketDeltaChart = /*#__PURE__*/function (_React$Component) {
             fontSize: '14px',
             fontFamily: "Helvetica"
           }
+        },
+        grid: {
+          borderColor: '#666'
         }
       }
     });
@@ -10362,30 +10375,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
 /* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -10393,344 +10395,347 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var OrderForm = /*#__PURE__*/function (_React$Component) {
-  _inherits(OrderForm, _React$Component);
 
-  var _super = _createSuper(OrderForm);
+var OrderForm = function OrderForm(props) {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      market = _useState2[0],
+      setMarket = _useState2[1];
 
-  function OrderForm() {
-    var _this;
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+      _useState4 = _slicedToArray(_useState3, 2),
+      sl = _useState4[0],
+      setSl = _useState4[1];
 
-    _classCallCheck(this, OrderForm);
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+      _useState6 = _slicedToArray(_useState5, 2),
+      tp = _useState6[0],
+      setTp = _useState6[1];
 
-    _this = _super.call(this);
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+      _useState8 = _slicedToArray(_useState7, 2),
+      slPercent = _useState8[0],
+      setSlPercent = _useState8[1];
 
-    _defineProperty(_assertThisInitialized(_this), "state", {
-      market: false,
-      virtual: true,
-      sl: 0,
-      tp: 0,
-      slPercent: 0,
-      tpPercent: 0
-    });
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+      _useState10 = _slicedToArray(_useState9, 2),
+      tpPercent = _useState10[0],
+      setTpPercent = _useState10[1];
 
-    _defineProperty(_assertThisInitialized(_this), "totalRef", null);
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY),
+      _useState12 = _slicedToArray(_useState11, 2),
+      direction = _useState12[0],
+      setDirection = _useState12[1];
 
-    _defineProperty(_assertThisInitialized(_this), "amountRef", null);
+  var totalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var amountRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var priceRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var slRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var tpRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var marketRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
 
-    _this.totalRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    _this.amountRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    _this.priceRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    _this.slRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    _this.tpRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    _this.marketRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    _this.onSlChange = _this.onSlChange.bind(_assertThisInitialized(_this));
-    _this.onTpChange = _this.onTpChange.bind(_assertThisInitialized(_this));
-    return _this;
-  }
+  var onMarketChange = function onMarketChange(event) {
+    var target = event.target;
+    var value = target.type === 'checkbox' ? target.checked : target.value;
+    setMarket(value);
+  };
 
-  _createClass(OrderForm, [{
-    key: "render",
-    value: function render() {
-      var _this2 = this;
+  var onAmountChange = function onAmountChange() {
+    var price = getFloatValueByRef(priceRef);
+    var amount = getFloatValueByRef(amountRef);
+    setFloatValueByRef(totalRef, price * amount);
+  };
 
-      var self = this;
+  var onTotalChange = function onTotalChange() {
+    var price = getFloatValueByRef(priceRef);
+    var total = getFloatValueByRef(totalRef);
+    setFloatValueByRef(amountRef, total / price, 5);
+  };
 
-      this.onMarketChange = function (event) {
-        var target = event.target;
-        var value = target.type === 'checkbox' ? target.checked : target.value;
-        self.setState({
-          market: value
-        });
-      };
+  var onPriceChange = function onPriceChange() {
+    var price = getFloatValueByRef(priceRef);
+    var amount = getFloatValueByRef(amountRef);
+    setFloatValueByRef(totalRef, price * amount);
+  };
 
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-        className: "card bg-secondary text-white mb-3",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-          className: "card-body",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-4",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                htmlFor: "price",
-                className: "input-group-text w-25",
-                children: "Price"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "number",
-                name: "price",
-                id: "price",
-                defaultValue: this.state.market ? this.props.currentPrice : '',
-                className: "form-control",
-                step: "0.01",
-                disabled: this.state.market,
-                ref: this.priceRef,
-                onChange: function onChange() {
-                  return _this2.onPriceChange();
-                }
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-4",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                htmlFor: "volume",
-                className: "input-group-text w-25",
-                children: "Amount"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "number",
-                name: "amount",
-                id: "amount",
-                className: "form-control",
-                step: "0.00001",
-                onChange: function onChange() {
-                  return _this2.onAmountChange();
-                },
-                ref: this.amountRef
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-4",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                htmlFor: "total",
-                className: "input-group-text w-25",
-                children: "Total"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "number",
-                name: "total",
-                id: "total",
-                className: "form-control",
-                step: "0.01",
-                onChange: function onChange() {
-                  return _this2.onTotalChange();
-                },
-                ref: this.totalRef
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-3",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                htmlFor: "sl",
-                className: "input-group-text w-25",
-                children: "Stop Loss"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "number",
-                name: "sl",
-                id: "sl",
-                className: "form-control",
-                step: "0.01",
-                value: this.state.sl,
-                onChange: function onChange(event) {
-                  return _this2.onSlChange(event);
-                },
-                ref: this.slRef
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "range",
-                className: "form-range mt-1",
-                min: "0",
-                max: "100",
-                step: "1",
-                id: "slRange",
-                value: this.state.slPercent,
-                onChange: function onChange(event) {
-                  return _this2.onSlRangeChange(event);
-                }
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
-                children: [this.state.slPercent, "%"]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-3",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                htmlFor: "tp",
-                className: "input-group-text w-25",
-                children: "Take Profit"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "number",
-                name: "tp",
-                id: "tp",
-                className: "form-control",
-                step: "0.01",
-                value: this.state.tp,
-                onChange: function onChange(event) {
-                  return _this2.onTpChange(event);
-                },
-                ref: this.tpRef
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "range",
-                className: "form-range mt-1",
-                min: "0",
-                max: "100",
-                step: "1",
-                id: "tpRange",
-                value: this.state.tpPercent,
-                onChange: function onChange(event) {
-                  return _this2.onTpRangeChange(event);
-                }
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("span", {
-                children: [this.state.tpPercent, "%"]
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "form-check form-check-inline mb-3",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                className: "form-check-input",
-                type: "checkbox",
-                id: "marketCheckbox",
-                defaultChecked: this.state.market,
-                onClick: this.onMarketChange,
-                ref: this.marketRef
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                className: "form-check-label",
-                htmlFor: "marketCheckbox",
-                children: "Market"
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "form-check form-check-inline mb-3",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                className: "form-check-input",
-                type: "checkbox",
-                id: "virtualCheckbox",
-                defaultChecked: this.state.virtual,
-                onClick: this.onVirtualChange,
-                ref: this.virtualRef,
-                disabled: true
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                className: "form-check-label",
-                htmlFor: "virtualCheckbox",
-                children: "Virtual"
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                type: "button",
-                name: "volume",
-                className: "btn btn-success form-control",
-                onClick: function onClick() {
-                  return _this2.onBuyClick();
-                },
-                children: "BUY"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                type: "button",
-                name: "volume",
-                className: "btn btn-danger form-control",
-                onClick: function onClick() {
-                  return _this2.onSellClick();
-                },
-                children: "SELL"
-              })]
-            })]
-          })
-        })
-      });
+  var getFloatValueByRef = function getFloatValueByRef(ref) {
+    var result = ref.current.value.replace(/\,+/, '.');
+    return !isNaN(result) ? result : 0.0;
+  };
+
+  var setFloatValueByRef = function setFloatValueByRef(ref, value, digits) {
+    if (!digits) {
+      digits = 2;
     }
-  }, {
-    key: "onAmountChange",
-    value: function onAmountChange() {
-      var price = this.getFloatValueByRef(this.priceRef);
-      var amount = this.getFloatValueByRef(this.amountRef);
-      this.setFloatValueByRef(this.totalRef, price * amount);
-    }
-  }, {
-    key: "onTotalChange",
-    value: function onTotalChange() {
-      var price = this.getFloatValueByRef(this.priceRef);
-      var total = this.getFloatValueByRef(this.totalRef);
-      this.setFloatValueByRef(this.amountRef, total / price, 5);
-    }
-  }, {
-    key: "onPriceChange",
-    value: function onPriceChange() {
-      var price = this.getFloatValueByRef(this.priceRef);
-      var amount = this.getFloatValueByRef(this.amountRef);
-      this.setFloatValueByRef(this.totalRef, price * amount);
-    }
-  }, {
-    key: "getFloatValueByRef",
-    value: function getFloatValueByRef(ref) {
-      var result = ref.current.value.replace(/\,+/, '.');
-      return !isNaN(result) ? result : 0.0;
-    }
-  }, {
-    key: "setFloatValueByRef",
-    value: function setFloatValueByRef(ref, value, digits) {
-      if (!digits) {
-        digits = 2;
+
+    ref.current.value = value.toFixed(digits);
+  };
+
+  var onBuyClick = function onBuyClick() {
+    postOrder('buy');
+  };
+
+  var onSellClick = function onSellClick() {
+    postOrder('sell');
+  };
+
+  var postOrder = function postOrder(type) {
+    var data = new FormData();
+    data.append('price', priceRef.current.value);
+    data.append('amount', amountRef.current.value);
+    data.append('sl', slRef.current.value);
+    data.append('tp', tpRef.current.value);
+    data.append('market', 1 * marketRef.current.checked);
+    data.append('type', type);
+    data.append('exchange', 'binance');
+    data.append('symbol', 'BTCBUSD');
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/orders', {
+      method: 'POST',
+      body: data
+    }, function (response) {
+      clearForm();
+
+      if (response.error !== undefined) {
+        props.showPopup(response.error, 'danger');
+        console.log(response.error);
+      } else {
+        props.showPopup('Order created!');
       }
 
-      ref.current.value = value.toFixed(digits);
-    }
-  }, {
-    key: "onBuyClick",
-    value: function onBuyClick() {
-      this.postOrder('buy');
-    }
-  }, {
-    key: "onSellClick",
-    value: function onSellClick() {
-      this.postOrder('sell');
-    }
-  }, {
-    key: "postOrder",
-    value: function postOrder(type) {
-      var _this3 = this;
+      props.ordersList.refresh();
+    });
+  };
 
-      var self = this;
-      var data = new FormData();
-      data.append('price', this.priceRef.current.value);
-      data.append('amount', this.amountRef.current.value);
-      data.append('sl', this.slRef.current.value);
-      data.append('tp', this.tpRef.current.value);
-      data.append('market', 1 * this.marketRef.current.checked);
-      data.append('type', type);
-      data.append('exchange', 'binance');
-      data.append('symbol', 'BTCUSDT');
-      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/orders', {
-        method: 'POST',
-        body: data
-      }, function (response) {
-        self.clearForm();
-        self.props.showPopup('Order created!');
+  var clearForm = function clearForm() {
+    amountRef.current.value = '';
+    totalRef.current.value = '';
+    marketRef.current.checked = false;
+    setMarket(false);
+    setSl(0);
+    setTp(0);
+    setSlPercent(0);
+    setTpPercent(0);
+    setDirection(_constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY);
+  };
 
-        _this3.props.ordersList.refresh();
-      });
-    }
-  }, {
-    key: "clearForm",
-    value: function clearForm() {
-      this.amountRef.current.value = '';
-      this.totalRef.current.value = '';
-      this.slRef.current.value = '';
-      this.tpRef.current.value = '';
-      this.marketRef.current.checked = false;
-      this.virtualRef.current.checked = true;
-    }
-  }, {
-    key: "onSlRangeChange",
-    value: function onSlRangeChange(event) {
-      var price = this.priceRef.current.value;
-      var value = event.target.value;
-      var sl = price * (1 - value / 100);
-      console.log(_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(sl, false, ''));
-      this.setState({
-        sl: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(sl, false, ''),
-        slPercent: value
-      });
-    }
-  }, {
-    key: "onTpRangeChange",
-    value: function onTpRangeChange(event) {
-      var price = this.priceRef.current.value;
-      var value = event.target.value;
-      var tp = price * (1 + value / 100);
-      this.setState({
-        tp: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(tp, false, ''),
-        tpPercent: value
-      });
-    }
-  }, {
-    key: "onSlChange",
-    value: function onSlChange(event) {}
-  }, {
-    key: "onTpChange",
-    value: function onTpChange(event) {}
-  }]);
+  var onSlRangeChange = function onSlRangeChange(event) {
+    var price = getFloatValue(priceRef);
+    var value = event.target.value;
+    var direction = direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? 1 : -1;
+    var sl = price * (1 - direction * value / 100);
+    setSl(_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(sl, false, ''));
+    setSlPercent(value);
+  };
 
-  return OrderForm;
-}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+  var onTpRangeChange = function onTpRangeChange(event) {
+    var price = getFloatValue(priceRef);
+    var value = event.target.value;
+    var direction = direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? 1 : -1;
+    var tp = price * (1 + direction * value / 100);
+    setTp(_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(tp, false, ''));
+    setTpPercent(value);
+  };
+
+  var onSlChange = function onSlChange(event) {
+    setSlPercent(0);
+    setSl(getFloatValue(slRef));
+  };
+
+  var onTpChange = function onTpChange(event) {
+    setTpPercent(0);
+    setTp(getFloatValue(tpRef));
+  };
+
+  var getFloatValue = function getFloatValue(ref) {
+    var value = parseFloat(ref.current.value);
+
+    if (isNaN(value)) {
+      value = 0.0;
+    }
+
+    return value;
+  };
+
+  var onDirectionClick = function onDirectionClick(direction) {
+    setDirection(direction);
+    setSl(0);
+    setTp(0);
+    setSlPercent(0);
+    setTpPercent(0);
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    className: "card text-white mb-3 order-form",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "card-body",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "input-group input-group-sm mb-4 mt-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "button",
+            name: "volume",
+            className: "btn btn-success form-control",
+            onClick: function onClick() {
+              return onDirectionClick(_constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY);
+            },
+            children: "BUY"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "button",
+            name: "volume",
+            className: "btn btn-danger form-control",
+            onClick: function onClick() {
+              return onDirectionClick(_constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_SELL);
+            },
+            children: "SELL"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "input-group input-group-sm mb-4",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+            htmlFor: "price",
+            className: "input-group-text w-25 bg-dark text-white",
+            children: "Price"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+            type: "text",
+            name: "price",
+            id: "price",
+            defaultValue: market ? props.currentPrice : '',
+            className: "form-control bg-dark text-white",
+            disabled: market,
+            ref: priceRef,
+            onChange: function onChange() {
+              return onPriceChange();
+            }
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "input-group input-group-sm mb-4",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+            htmlFor: "volume",
+            className: "input-group-text w-25 bg-dark text-white",
+            children: "Amount"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+            type: "text",
+            name: "amount",
+            id: "amount",
+            className: "form-control bg-dark text-white",
+            onChange: function onChange() {
+              return onAmountChange();
+            },
+            ref: amountRef
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "input-group input-group-sm mb-4",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+            htmlFor: "total",
+            className: "input-group-text w-25 bg-dark text-white",
+            children: "Total"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+            type: "text",
+            name: "total",
+            id: "total",
+            className: "form-control bg-dark text-white",
+            onChange: function onChange() {
+              return onTotalChange();
+            },
+            ref: totalRef
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "input-group input-group-sm mb-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+            htmlFor: "tp",
+            className: "input-group-text w-25 bg-dark text-white",
+            children: "Take Profit"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+            type: "text",
+            name: "tp",
+            id: "tp",
+            className: "form-control bg-dark text-white",
+            value: tp,
+            onChange: function onChange(event) {
+              return onTpChange(event);
+            },
+            ref: tpRef
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+            type: "range",
+            className: "form-range mt-1",
+            min: "0",
+            max: "200",
+            step: "1",
+            id: "tpRange",
+            value: tpPercent,
+            onChange: function onChange(event) {
+              return onTpRangeChange(event);
+            }
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+            children: [direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? '+' : '-', tpPercent, "%"]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "input-group input-group-sm mb-3",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+            htmlFor: "sl",
+            className: "input-group-text w-25 bg-dark text-white",
+            children: "Stop Loss"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+            type: "text",
+            name: "sl",
+            id: "sl",
+            className: "form-control bg-dark text-white",
+            value: sl,
+            onChange: function onChange(event) {
+              return onSlChange(event);
+            },
+            ref: slRef
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+            type: "range",
+            className: "form-range mt-1",
+            min: "0",
+            max: "50",
+            step: "1",
+            id: "slRange",
+            value: slPercent,
+            onChange: function onChange(event) {
+              return onSlRangeChange(event);
+            }
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+            children: [direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? '-' : '+', slPercent, "%"]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "form-check form-check-inline mb-4",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+            className: "form-check-input",
+            type: "checkbox",
+            id: "marketCheckbox",
+            defaultChecked: market,
+            onClick: onMarketChange,
+            ref: marketRef
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+            className: "form-check-label",
+            htmlFor: "marketCheckbox",
+            children: "Market"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "input-group input-group-sm mb-4",
+          children: [direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "button",
+            name: "order",
+            className: "btn btn-success form-control",
+            onClick: function onClick() {
+              return onBuyClick();
+            },
+            children: "BUY"
+          }) : '', direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_SELL ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "button",
+            name: "order",
+            className: "btn btn-danger form-control",
+            onClick: function onClick() {
+              return onSellClick();
+            },
+            children: "SELL"
+          }) : '']
+        })]
+      })
+    })
+  });
+};
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OrderForm);
 
@@ -10812,12 +10817,9 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
       var _this2 = this;
 
       var tabAliases = ['active', 'history'];
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
         className: "card",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-          className: "card-header",
-          children: "Orders"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           className: "card-body",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
             className: "table-responsive orders",
@@ -10936,7 +10938,7 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
               })
             })]
           })
-        })]
+        })
       });
     }
   }, {
@@ -11053,14 +11055,6 @@ var PriceChart = /*#__PURE__*/function (_React$Component) {
             enabled: false
           }
         },
-        plotOptions: {
-          candlestick: {
-            colors: {
-              upward: 'rgb(26, 121, 26)',
-              downward: 'rgb(172, 19, 19)'
-            }
-          }
-        },
         dataLabels: {
           enabled: false
         },
@@ -11104,8 +11098,8 @@ var PriceChart = /*#__PURE__*/function (_React$Component) {
           }
         },
         theme: {
-          mode: 'light',
-          palette: 'palette3'
+          mode: 'dark',
+          palette: 'palette2'
         },
         noData: {
           text: "Loading...",
@@ -11118,6 +11112,9 @@ var PriceChart = /*#__PURE__*/function (_React$Component) {
             fontSize: '14px',
             fontFamily: "Helvetica"
           }
+        },
+        grid: {
+          borderColor: '#444'
         }
       }
     });
@@ -11186,6 +11183,98 @@ var PriceChart = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
+/***/ "./resources/js/components/UserSettingsModal.jsx":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/UserSettingsModal.jsx ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+function UserSettingsModal(props) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    className: "modal fade",
+    id: "userSettingsModal",
+    tabIndex: "-1",
+    "aria-labelledby": "userSettingsModalLabel",
+    "aria-hidden": "true",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      className: "modal-dialog",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "modal-content",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "modal-header",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h5", {
+            className: "modal-title",
+            id: "userSettingsModalLabel",
+            children: "Settings"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+            type: "button",
+            className: "btn-close",
+            "data-bs-dismiss": "modal",
+            "aria-label": "Close"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "modal-body",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("form", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+              className: "input-group input-group-sm mb-4",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+                htmlFor: "price",
+                className: "input-group-text w-25 bg-dark text-white",
+                children: "API Key"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+                type: "text",
+                name: "api_key",
+                id: "api_key",
+                defaultValue: "",
+                className: "form-control bg-dark text-white"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+              className: "input-group input-group-sm mb-4",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+                htmlFor: "volume",
+                className: "input-group-text w-25 bg-dark text-white",
+                children: "API secret"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+                type: "text",
+                name: "api_secret",
+                id: "api_secret",
+                className: "form-control bg-dark text-white"
+              })]
+            })]
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          className: "modal-footer",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+            type: "button",
+            className: "btn btn-secondary",
+            "data-bs-dismiss": "modal",
+            children: "Close"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+            type: "button",
+            className: "btn btn-primary",
+            children: "Save changes"
+          })]
+        })]
+      })
+    })
+  });
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UserSettingsModal);
+
+/***/ }),
+
 /***/ "./resources/js/constants.js":
 /*!***********************************!*\
   !*** ./resources/js/constants.js ***!
@@ -11200,7 +11289,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "ORDER_STATE_TITLES": () => (/* binding */ ORDER_STATE_TITLES),
 /* harmony export */   "ORDER_DIRECTION_TITLES": () => (/* binding */ ORDER_DIRECTION_TITLES),
 /* harmony export */   "ORDERS_LIST_TAB_TITLES": () => (/* binding */ ORDERS_LIST_TAB_TITLES),
-/* harmony export */   "ORDER_LIST_TAB_ORDER_SATES": () => (/* binding */ ORDER_LIST_TAB_ORDER_SATES)
+/* harmony export */   "ORDER_LIST_TAB_ORDER_SATES": () => (/* binding */ ORDER_LIST_TAB_ORDER_SATES),
+/* harmony export */   "ORDER_DIRECTION_BUY": () => (/* binding */ ORDER_DIRECTION_BUY),
+/* harmony export */   "ORDER_DIRECTION_SELL": () => (/* binding */ ORDER_DIRECTION_SELL)
 /* harmony export */ });
 var REFRESH_INTERVAL = 15000;
 var POPUP_TIMEOUT = 3000;
@@ -11213,12 +11304,14 @@ var ORDER_STATE_TITLES = {
   'canceled': 'Canceled',
   'completed': 'Completed'
 };
+var ORDER_DIRECTION_BUY = 'buy';
+var ORDER_DIRECTION_SELL = 'sell';
 var ORDER_DIRECTION_TITLES = {
   'buy': 'Buy',
   'sell': 'Sell'
 };
 var ORDERS_LIST_TAB_TITLES = {
-  'active': 'Active',
+  'active': 'Active Orders',
   'history': 'History'
 };
 var ORDER_LIST_TAB_ORDER_SATES = {

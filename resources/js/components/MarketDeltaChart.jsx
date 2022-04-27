@@ -30,11 +30,11 @@ class MarketDeltaChart extends React.Component {
                         ranges: [{
                             from: -1000,
                             to: 0,
-                            color: 'rgb(172, 19, 19)'
+                            color: 'rgba(239,64,60,1)'
                         }, {
                             from: 0,
                             to: 1000,
-                            color: 'rgb(26, 121, 26)'
+                            color: 'rgba(0,183,70,1)'
                         }]
                     },
                     columnWidth: '80%',
@@ -83,8 +83,8 @@ class MarketDeltaChart extends React.Component {
                 },
             },
             theme: {
-                mode: 'light',
-                palette: 'palette3',
+                mode: 'dark',
+                palette: 'palette1',
             },
             noData: {
                 text: "Loading...",
@@ -97,6 +97,9 @@ class MarketDeltaChart extends React.Component {
                     fontSize: '14px',
                     fontFamily: "Helvetica"
                 }
+            },
+            grid: {
+                borderColor: '#666',
             },
         },
     };

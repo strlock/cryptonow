@@ -16,8 +16,9 @@ import {
 } from '../constants';
 import IntervalSelector from "./IntervalSelector";
 import FormatHelper from "../Helpers/FormatHelper";
+import UserSettingsModal from "./UserSettingsModal";
 
-function App() {
+const App = () => {
     const updateInterval = 15000;
     const priceHeight = 400;
     const mdHeight = 250;
@@ -106,8 +107,10 @@ function App() {
                      </Alert>;
     let loginButton = '';
     let content = '';
+    let settingsButton = '';
     if (isLoggedIn) {
         loginButton = <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>Logout ({LoginHelper.getLoggedInUserName()})</button>;
+        settingsButton = <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#userSettingsModal">Settings</button>;
         content = <div className="container">
             {popup.show ? popupDom : ''}
             <div className="row justify-content-center">
@@ -139,12 +142,14 @@ function App() {
                     </a>
                 </div>
                 <div className="top-right">
-                    {loginButton}
+                    {loginButton}&nbsp;&nbsp;&nbsp;
+                    {settingsButton}
                 </div>
             </div>
             <div id="middle">
                 {content}
             </div>
+            <UserSettingsModal />
         </div>
     );
 }

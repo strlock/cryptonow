@@ -1,16 +1,14 @@
 <?php
 namespace App\Services\Crypto\Exchanges\Bitstamp;
 
+use App\Dto\CreateNewOrderDto;
+use App\Models\OrderInterface;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Trade;
 use App\Services\Crypto\Helpers\TimeHelper;
-use App\Dto\FetchMinuteMarketStatDto;
-use App\Enums\TimeIntervals;
-use App\Jobs\BitstampFetchMinuteMarketStat;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 
 class Facade extends AbstractFacade
 {
@@ -71,6 +69,12 @@ class Facade extends AbstractFacade
         //$this->delay += 2;
     }
 
+    /**
+     * @param $symbol
+     * @param $fromTime
+     * @param $toTime
+     * @return array
+     */
     private function getTransactions($symbol, $fromTime, $toTime)
     {
         $result = [];
@@ -84,8 +88,22 @@ class Facade extends AbstractFacade
         return $result;
     }
 
+    /**
+     * @param string $symbol
+     * @param int $fromTime
+     * @param int|null $toTime
+     * @param int|float $interval
+     * @return Collection
+     */
     public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection
     {
         // TODO: Implement getCandlesticks() method.
+    }
+
+    /**
+     * @param OrderInterface $order
+     */
+    public function placeOrder(OrderInterface $order): void
+    {
     }
 }

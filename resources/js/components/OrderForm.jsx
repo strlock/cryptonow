@@ -1,199 +1,195 @@
-import React from "react";
+import React, {useState, useRef} from "react";
 import RequestHelper from "../Helpers/RequestHelper";
 import FormatHelper from "../Helpers/FormatHelper";
+import {
+    ORDER_DIRECTION_BUY,
+    ORDER_DIRECTION_SELL,
+} from "../constants";
 
-class OrderForm extends React.Component
-{
-    state = {
-        market: false,
-        virtual: true,
-        sl: 0,
-        tp: 0,
-        slPercent: 0,
-        tpPercent: 0,
+const OrderForm = (props) => {
+    const [market, setMarket] = useState(false);
+    const [sl, setSl] = useState(0);
+    const [tp, setTp] = useState(0);
+    const [slPercent, setSlPercent] = useState(0);
+    const [tpPercent, setTpPercent] = useState(0);
+    const [direction, setDirection] = useState(ORDER_DIRECTION_BUY);
+
+    const totalRef = useRef();
+    const amountRef = useRef();
+    const priceRef = useRef();
+    const slRef = useRef();
+    const tpRef = useRef();
+    const marketRef = useRef();
+
+    const onMarketChange = (event) => {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        setMarket(value);
     }
 
-    totalRef = null
-    amountRef = null
-
-    constructor() {
-        super();
-        this.totalRef = React.createRef();
-        this.amountRef = React.createRef();
-        this.priceRef = React.createRef();
-        this.slRef = React.createRef();
-        this.tpRef = React.createRef();
-        this.marketRef = React.createRef();
-
-        this.onSlChange = this.onSlChange.bind(this);
-        this.onTpChange = this.onTpChange.bind(this);
+    const onAmountChange = () => {
+        let price = getFloatValueByRef(priceRef);
+        let amount = getFloatValueByRef(amountRef);
+        setFloatValueByRef(totalRef, price*amount);
     }
 
-    render()
-    {
-        let self = this;
-        this.onMarketChange = function(event) {
-            const target = event.target;
-            const value = target.type === 'checkbox' ? target.checked : target.value;
-            self.setState({
-                market: value
-            });
-        };
-        return (
-            <div className="card bg-secondary text-white mb-3">
-                <div className="card-body">
-                    <form>
-                        <div className="input-group input-group-sm mb-4">
-                            <label htmlFor="price" className="input-group-text w-25">Price</label>
-                            <input type="number" name="price" id="price" defaultValue={this.state.market ? this.props.currentPrice : ''} className="form-control" step="0.01" disabled={this.state.market} ref={this.priceRef} onChange={() => this.onPriceChange()} />
-                        </div>
-                        <div className="input-group input-group-sm mb-4">
-                            <label htmlFor="volume" className="input-group-text w-25">Amount</label>
-                            <input type="number" name="amount" id="amount" className="form-control" step="0.00001" onChange={() => this.onAmountChange()} ref={this.amountRef} />
-                        </div>
-                        <div className="input-group input-group-sm mb-4">
-                            <label htmlFor="total" className="input-group-text w-25">Total</label>
-                            <input type="number" name="total" id="total" className="form-control" step="0.01" onChange={() => this.onTotalChange()} ref={this.totalRef} />
-                        </div>
-                        <div className="input-group input-group-sm mb-3">
-                            <label htmlFor="sl" className="input-group-text w-25">Stop Loss</label>
-                            <input type="number" name="sl" id="sl" className="form-control" step="0.01" value={this.state.sl} onChange={event => this.onSlChange(event)} ref={this.slRef} />
-                            <input type="range" className="form-range mt-1" min="0" max="100" step="1" id="slRange" value={this.state.slPercent} onChange={event => this.onSlRangeChange(event)} />
-                            <span>{this.state.slPercent}%</span>
-                        </div>
-                        <div className="input-group input-group-sm mb-3">
-                            <label htmlFor="tp" className="input-group-text w-25">Take Profit</label>
-                            <input type="number" name="tp" id="tp" className="form-control" step="0.01" value={this.state.tp} onChange={event => this.onTpChange(event)} ref={this.tpRef} />
-                            <input type="range" className="form-range mt-1" min="0" max="100" step="1" id="tpRange" value={this.state.tpPercent} onChange={event => this.onTpRangeChange(event)} />
-                            <span>{this.state.tpPercent}%</span>
-                        </div>
-                        <div className="form-check form-check-inline mb-3">
-                            <input className="form-check-input" type="checkbox" id="marketCheckbox" defaultChecked={this.state.market} onClick={this.onMarketChange} ref={this.marketRef} />
-                            <label className="form-check-label" htmlFor="marketCheckbox">Market</label>
-                        </div>
-                        <div className="form-check form-check-inline mb-3">
-                            <input className="form-check-input" type="checkbox" id="virtualCheckbox" defaultChecked={this.state.virtual} onClick={this.onVirtualChange} ref={this.virtualRef} disabled={true} />
-                            <label className="form-check-label" htmlFor="virtualCheckbox">Virtual</label>
-                        </div>
-                        <div className="input-group input-group-sm">
-                            <button type="button" name="volume" className="btn btn-success form-control" onClick={() => this.onBuyClick()}>BUY</button>
-                            <button type="button" name="volume" className="btn btn-danger form-control" onClick={() => this.onSellClick()}>SELL</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        );
+    const onTotalChange = () => {
+        let price = getFloatValueByRef(priceRef);
+        let total = getFloatValueByRef(totalRef);
+        setFloatValueByRef(amountRef, total/price, 5);
     }
 
-    onAmountChange()
-    {
-        let price = this.getFloatValueByRef(this.priceRef);
-        let amount = this.getFloatValueByRef(this.amountRef);
-        this.setFloatValueByRef(this.totalRef, price*amount);
+    const onPriceChange = () => {
+        let price = getFloatValueByRef(priceRef);
+        let amount = getFloatValueByRef(amountRef);
+        setFloatValueByRef(totalRef, price*amount);
     }
 
-    onTotalChange()
-    {
-        let price = this.getFloatValueByRef(this.priceRef);
-        let total = this.getFloatValueByRef(this.totalRef);
-        this.setFloatValueByRef(this.amountRef, total/price, 5);
-    }
-
-    onPriceChange()
-    {
-        let price = this.getFloatValueByRef(this.priceRef);
-        let amount = this.getFloatValueByRef(this.amountRef);
-        this.setFloatValueByRef(this.totalRef, price*amount);
-    }
-
-    getFloatValueByRef(ref)
-    {
+    const getFloatValueByRef = (ref) => {
         let result = ref.current.value.replace(/\,+/, '.');
         return !isNaN(result) ? result : 0.0;
     }
 
-    setFloatValueByRef(ref, value, digits)
-    {
+    const setFloatValueByRef = (ref, value, digits) => {
         if (!digits) {
             digits = 2;
         }
         ref.current.value = value.toFixed(digits);
     }
 
-    onBuyClick()
-    {
-        this.postOrder('buy');
+    const onBuyClick = () => {
+        postOrder('buy');
     }
 
-    onSellClick()
-    {
-        this.postOrder('sell');
+    const onSellClick = () => {
+        postOrder('sell');
     }
 
-    postOrder(type)
-    {
-        let self = this;
+    const postOrder = (type) => {
         let data = new FormData();
-        data.append('price', this.priceRef.current.value);
-        data.append('amount', this.amountRef.current.value);
-        data.append('sl', this.slRef.current.value);
-        data.append('tp', this.tpRef.current.value);
-        data.append('market', 1*this.marketRef.current.checked);
+        data.append('price', priceRef.current.value);
+        data.append('amount', amountRef.current.value);
+        data.append('sl', slRef.current.value);
+        data.append('tp', tpRef.current.value);
+        data.append('market', 1*marketRef.current.checked);
         data.append('type', type);
         data.append('exchange', 'binance');
-        data.append('symbol', 'BTCUSDT');
+        data.append('symbol', 'BTCBUSD');
         RequestHelper.fetch('/api/orders', {
             method: 'POST',
             body: data,
         }, response => {
-            self.clearForm();
-            self.props.showPopup('Order created!');
-            this.props.ordersList.refresh();
+            clearForm();
+            if (response.error !== undefined) {
+                props.showPopup(response.error, 'danger');
+                console.log(response.error);
+            } else {
+                props.showPopup('Order created!');
+            }
+            props.ordersList.refresh();
         });
     }
 
-    clearForm()
-    {
-        this.amountRef.current.value = '';
-        this.totalRef.current.value = '';
-        this.slRef.current.value = '';
-        this.tpRef.current.value = '';
-        this.marketRef.current.checked = false;
-        this.virtualRef.current.checked = true;
+    const clearForm = () => {
+        amountRef.current.value = '';
+        totalRef.current.value = '';
+        marketRef.current.checked = false;
+        setMarket(false);
+        setSl(0);
+        setTp(0);
+        setSlPercent(0);
+        setTpPercent(0);
+        setDirection(ORDER_DIRECTION_BUY);
     }
 
-    onSlRangeChange(event)
-    {
-        const price = this.priceRef.current.value;
+    const onSlRangeChange = (event) => {
+        const price = getFloatValue(priceRef);
         const value = event.target.value;
-        const sl = price*(1-value/100);
-        console.log(FormatHelper.formatPrice(sl, false, ''));
-        this.setState({
-            sl: FormatHelper.formatPrice(sl, false, ''),
-            slPercent: value,
-        });
+        const direction = direction === ORDER_DIRECTION_BUY ? 1 : -1;
+        const sl = price*(1-direction*value/100);
+        setSl(FormatHelper.formatPrice(sl, false, ''));
+        setSlPercent(value);
     }
 
-    onTpRangeChange(event)
-    {
-        const price = this.priceRef.current.value;
+    const onTpRangeChange = (event) => {
+        const price = getFloatValue(priceRef);
         const value = event.target.value;
-        const tp = price*(1+value/100);
-        this.setState({
-            tp: FormatHelper.formatPrice(tp, false, ''),
-            tpPercent: value,
-        });
+        const direction = direction === ORDER_DIRECTION_BUY ? 1 : -1;
+        const tp = price*(1+direction*value/100);
+        setTp(FormatHelper.formatPrice(tp, false, ''));
+        setTpPercent(value);
     }
 
-    onSlChange(event)
-    {
-
+    const onSlChange = (event) => {
+        setSlPercent(0);
+        setSl(getFloatValue(slRef));
     }
 
-    onTpChange(event)
-    {
-
+    const onTpChange = (event) => {
+        setTpPercent(0);
+        setTp(getFloatValue(tpRef));
     }
+
+    const getFloatValue = (ref) => {
+        let value = parseFloat(ref.current.value);
+        if (isNaN(value)) {
+            value = 0.0;
+        }
+        return value;
+    }
+
+    const onDirectionClick = (direction) => {
+        setDirection(direction);
+        setSl(0);
+        setTp(0);
+        setSlPercent(0);
+        setTpPercent(0);
+    }
+
+    return (
+        <div className="card text-white mb-3 order-form">
+            <div className="card-body">
+                <form>
+                    <div className="input-group input-group-sm mb-4 mt-3">
+                        <button type="button" name="volume" className="btn btn-success form-control" onClick={() => onDirectionClick(ORDER_DIRECTION_BUY)}>BUY</button>
+                        <button type="button" name="volume" className="btn btn-danger form-control" onClick={() => onDirectionClick(ORDER_DIRECTION_SELL)}>SELL</button>
+                    </div>
+                    <div className="input-group input-group-sm mb-4">
+                        <label htmlFor="price" className="input-group-text w-25 bg-dark text-white">Price</label>
+                        <input type="text" name="price" id="price" defaultValue={market ? props.currentPrice : ''} className="form-control bg-dark text-white" disabled={market} ref={priceRef} onChange={() => onPriceChange()} />
+                    </div>
+                    <div className="input-group input-group-sm mb-4">
+                        <label htmlFor="volume" className="input-group-text w-25 bg-dark text-white">Amount</label>
+                        <input type="text" name="amount" id="amount" className="form-control bg-dark text-white" onChange={() => onAmountChange()} ref={amountRef} />
+                    </div>
+                    <div className="input-group input-group-sm mb-4">
+                        <label htmlFor="total" className="input-group-text w-25 bg-dark text-white">Total</label>
+                        <input type="text" name="total" id="total" className="form-control bg-dark text-white" onChange={() => onTotalChange()} ref={totalRef} />
+                    </div>
+                    <div className="input-group input-group-sm mb-3">
+                        <label htmlFor="tp" className="input-group-text w-25 bg-dark text-white">Take Profit</label>
+                        <input type="text" name="tp" id="tp" className="form-control bg-dark text-white" value={tp} onChange={event => onTpChange(event)} ref={tpRef} />
+                        <input type="range" className="form-range mt-1" min="0" max="200" step="1" id="tpRange" value={tpPercent} onChange={event => onTpRangeChange(event)} />
+                        <span>{direction === ORDER_DIRECTION_BUY ? '+' : '-'}{tpPercent}%</span>
+                    </div>
+                    <div className="input-group input-group-sm mb-3">
+                        <label htmlFor="sl" className="input-group-text w-25 bg-dark text-white">Stop Loss</label>
+                        <input type="text" name="sl" id="sl" className="form-control bg-dark text-white" value={sl} onChange={event => onSlChange(event)} ref={slRef} />
+                        <input type="range" className="form-range mt-1" min="0" max="50" step="1" id="slRange" value={slPercent} onChange={event => onSlRangeChange(event)} />
+                        <span>{direction === ORDER_DIRECTION_BUY ? '-' : '+'}{slPercent}%</span>
+                    </div>
+                    <div className="form-check form-check-inline mb-4">
+                        <input className="form-check-input" type="checkbox" id="marketCheckbox" defaultChecked={market} onClick={onMarketChange} ref={marketRef} />
+                        <label className="form-check-label" htmlFor="marketCheckbox">Market</label>
+                    </div>
+                    <div className="input-group input-group-sm mb-4">
+                        {direction === ORDER_DIRECTION_BUY ? (<button type="button" name="order" className="btn btn-success form-control" onClick={() => onBuyClick()}>BUY</button>) : ''}
+                        {direction === ORDER_DIRECTION_SELL ? (<button type="button" name="order" className="btn btn-danger form-control" onClick={() => onSellClick()}>SELL</button>) : ''}
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
 }
 
 export default OrderForm;

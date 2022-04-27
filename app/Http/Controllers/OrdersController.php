@@ -64,7 +64,7 @@ class OrdersController extends Controller
             ));
             return response()->json(['success' => true, 'id' => $order->id]);
         } catch (Throwable $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 

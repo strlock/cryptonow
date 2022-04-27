@@ -14315,7 +14315,18 @@ textarea.form-control-lg {
 :root{
     --bs-body-font-size: 16px;
     --bg-color: #404364;
-    --top-bg-color: #2a2f44;
+    --top-bg-color: #111;
+    --card-bg-color: #111;
+    --card-text-color: #aaa;
+    --card-header-bg-color: #131722;
+    --table-text-color: #aaa;
+    --table-border-color: #333742;
+    --table-bg-color: #232732;
+    --active-tab-color: #232732;
+    --active-tab-text-color: #aaa;
+    --tab-text-color: #666;
+    --modal-bg-color: #111;
+    --modal-text-color: #aaa;
 }
 
 *, :before, :after{
@@ -14388,9 +14399,32 @@ h1{
     padding: 0;
 }
 
+.card {
+    background-color: var(--card-bg-color);
+    color: var(--card-text-color);
+}
+
+.card.order-form {
+    min-height: 35.2em;
+}
+
 .card .card-header {
     text-align: center;
     font-weight: bold;
+    background-color: var(--card-header-bg-color);
+}
+
+.card .card-body .chart svg {
+    background: none !important;
+}
+
+.table {
+    color: var(--table-text-color);
+    background-color: var(--table-bg-color);
+}
+
+.table tr {
+    border-color: var(--table-border-color);
 }
 
 .overlay, .overlay:before {
@@ -14416,7 +14450,7 @@ h1{
 }
 
 .orders .order.order-new .order-state {
-    color: #444;
+    color: #888;
 }
 
 .orders .order.order-ready .order-state {
@@ -14441,6 +14475,21 @@ h1{
 
 .orders .order.order-completed .order-state {
     color: #1A791A;
+}
+
+.nav-tabs .nav-link {
+    color: var(--tab-text-color);
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    background-color: var(--active-tab-color);
+    color: var(--active-tab-text-color);
+    border: none;
+}
+
+.modal-content {
+    background-color: var(--modal-bg-color);
+    color: var(--modal-text-color);
 }
 
 @media(max-width: 1500px){

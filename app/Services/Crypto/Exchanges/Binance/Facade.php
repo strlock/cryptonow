@@ -1,20 +1,19 @@
 <?php
 namespace App\Services\Crypto\Exchanges\Binance;
 
+use App\Dto\CreateNewOrderDto;
+use App\Enums\OrderType;
+use App\Models\OrderInterface;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Trade;
 use App\Services\Crypto\Helpers\TimeHelper;
-use App\Dto\FetchMinuteMarketStatDto;
 use App\Dto\TimeIntervalChunkDto;
 use App\Enums\BinanceTimeIntervals;
-use App\Enums\QueueNames;
 use App\Enums\TimeIntervals;
-use App\Jobs\BinanceFetchMinuteMarketStat;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 
 class Facade extends AbstractFacade
 {
@@ -35,6 +34,12 @@ class Facade extends AbstractFacade
         $this->api = new API(env('BINANCE_API_KEY'), env('BINANCE_API_SECRET'));
     }
 
+    /**
+     * @param string $symbol
+     * @param int $fromTime
+     * @param int|null $toTime
+     * @return Collection
+     */
     public function getTrades(string $symbol, int $fromTime, int $toTime = null): Collection
     {
         $result = collect();
@@ -82,6 +87,10 @@ class Facade extends AbstractFacade
         return $result;
     }
 
+    /**
+     * @param string $symbol
+     * @param int $fromTime
+     */
     protected function dispatchMinuteMarketStatFetchJob(string $symbol, int $fromTime): void
     {
         /*dispatch(
@@ -91,6 +100,14 @@ class Facade extends AbstractFacade
         );*/
     }
 
+    /**
+     * @param string $symbol
+     * @param int $fromTime
+     * @param int|null $toTime
+     * @param int|float $interval
+     * @return Collection
+     * @throws Exception
+     */
     public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection
     {
         $result = collect();
@@ -108,5 +125,18 @@ class Facade extends AbstractFacade
             ]);
         }
         return $result;
+    }
+
+    /**
+     * @param OrderInterface $order
+     */
+    public function placeOrder(OrderInterface $order): void
+    {
+        if ($order->getType() === OrderType::BUY) {
+            $this->api->buy($order->getSymbol(), $order->getAmount(), $order->getPrice(), $order->isMarket() ? 'MARKET' : 'LIMIT');
+        }
+        if ($order->getType() === OrderType::SELL) {
+            $this->api->sell($order->getSymbol(), $order->getAmount(), $order->getPrice(), $order->isMarket() ? 'MARKET' : 'LIMIT');
+        }
     }
 }

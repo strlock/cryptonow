@@ -14,7 +14,6 @@ class OrdersList extends React.Component
         const tabAliases = ['active', 'history'];
         return (
             <div className="card">
-                <div className="card-header">Orders</div>
                 <div className="card-body">
                     <div className="table-responsive orders">
                         <nav>

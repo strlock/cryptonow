@@ -5,11 +5,13 @@ namespace App\Services;
 
 
 use App\Dto\CreateNewOrderDto;
+use App\Enums\OrderDirection;
 use App\Enums\OrderState;
 use App\Enums\OrderType;
 use App\Models\Order;
 use App\Models\OrderInterface;
 use App\Repositories\OrdersRepository;
+use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
@@ -29,103 +31,59 @@ class OrdersService implements OrdersServiceInterface
             if ($order->getExchange() !== $exchange) {
                 continue;
             }
-            $this->checkAndExecuteOrder($exchange, $order, $price);
+            $this->checkAndExecuteOrder($order, $price);
         }
     }
 
-    private function checkAndExecuteOrder(string $exchange, OrderInterface $order, float $price): void
+    private function checkAndExecuteOrder(OrderInterface $order, float $currentPrice = null): void
     {
-        if ($order->getState() === OrderState::NEW) {
-            if (!$order->isMarket()) {
-                $priceDifference = $price - $order->getPrice();
-                if ($order->getType() === OrderType::BUY && $priceDifference <= 0) {
-                    $this->executeBuyOrder($order);
-                }
-                if ($order->getType() === OrderType::SELL && $priceDifference >= 0) {
-                    $this->executeSellOrder($order);
-                }
-            } else {
-                $this->executeMarketOrder($order);
+        /*if ($order->getState() === OrderState::NEW) {
+            $newState = $order->isSimple() ? OrderState::COMPLETED : OrderState::READY;
+            if ($order->isMarket()) {
+                $this->executeOrderByMarket($order, $order->getType(), $newState);
+                return;
+            }
+            $priceDifference = $currentPrice - $order->getPrice();
+            if (($order->getType() === OrderType::BUY && $priceDifference <= 0) || ($order->getType() === OrderType::SELL && $priceDifference >= 0)) {
+                $this->executeOrderByMarket($order, $order->getType(), $newState);
             }
         }
         if ($order->getState() === OrderState::READY) {
             if ($order->getType() === OrderType::BUY) {
-                if (!empty($order->getTp())) {
-                    if ($price >= $order->getTp()) {
-                        $this->executeBuyOrderTakeProfit($order);
-                    }
+                if (!empty($order->getTp()) && $currentPrice >= $order->getTp()) {
+                    $this->executeOrderByMarket($order, OrderType::SELL, OrderState::PROFIT);
                 }
-                if (!empty($order->getSl())) {
-                    if ($price <= $order->getSl()) {
-                        $this->executeBuyOrderStopLoss($order);
-                    }
+                if (!empty($order->getSl()) && $currentPrice <= $order->getSl()) {
+                    $this->executeOrderByMarket($order, OrderType::SELL, OrderState::LOSS);
                 }
             }
             if ($order->getType() === OrderType::SELL) {
-                if (!empty($order->getTp())) {
-                    if ($price <= $order->getTp()) {
-                        $this->executeSellOrderTakeProfit($order);
-                    }
+                if (!empty($order->getTp()) && $currentPrice <= $order->getTp()) {
+                    $this->executeOrderByMarket($order, OrderType::BUY, OrderState::PROFIT);
                 }
-                if (!empty($order->getSl())) {
-                    if ($price >= $order->getSl()) {
-                        $this->executeSellOrderStopLoss($order);
-                    }
+                if (!empty($order->getSl()) && $currentPrice >= $order->getSl()) {
+                    $this->executeOrderByMarket($order, OrderType::BUY, OrderState::LOSS);
                 }
             }
-        }
+        }*/
     }
 
     public function createNewOrder(CreateNewOrderDto $dto): OrderInterface
     {
         $order = new Order();
         $order->fill($dto->toArray());
+        $order->setState(OrderState::NEW);
         $order->save();
+        $exchange = ExchangesFactory::create($dto->getExchange());
+        $exchange->placeOrder($order);
+        $this->checkAndExecuteOrder($order);
         return $order;
     }
 
-    private function executeBuyOrder(OrderInterface $order)
+    private function executeOrderByMarket(OrderInterface $order, string $direction, string $stateAfterExecute)
     {
-        Log::info("Buy order executed: ".$order->getId().'. Simple: '.($order->isSimple() ? 'Yes' : 'No').', Market: '.($order->isMarket() ? 'Yes' : 'No'));
-        if (!$order->isSimple()) {
-            $this->changeOrderState($order, OrderState::READY);
-        } else {
-            $this->changeOrderState($order, OrderState::COMPLETED);
-        }
-    }
-
-    private function executeSellOrder(OrderInterface $order)
-    {
-        Log::info("Sell order executed: ".$order->getId().'. Simple: '.($order->isSimple() ? 'Yes' : 'No').', Market: '.($order->isMarket() ? 'Yes' : 'No'));
-        if (!$order->isSimple()) {
-            $this->changeOrderState($order, OrderState::READY);
-        } else {
-            $this->changeOrderState($order, OrderState::COMPLETED);
-        }
-    }
-
-    private function executeBuyOrderTakeProfit(OrderInterface $order)
-    {
-        Log::info("Buy order take profit executed: ".$order->getId());
-        $this->changeOrderState($order, OrderState::PROFIT);
-    }
-
-    private function executeBuyOrderStopLoss(OrderInterface $order)
-    {
-        Log::info("Buy order stop loss executed: ".$order->getId());
-        $this->changeOrderState($order, OrderState::LOSS);
-    }
-
-    private function executeSellOrderTakeProfit(OrderInterface $order)
-    {
-        Log::info("Sell order take profit executed: ".$order->getId());
-        $this->changeOrderState($order, OrderState::PROFIT);
-    }
-
-    private function executeSellOrderStopLoss(OrderInterface $order)
-    {
-        Log::info("Sell order stop loss executed: ".$order->getId());
-        $this->changeOrderState($order, OrderState::LOSS);
+        Log::info(ucfirst($direction)." order executed: ".$order->getId().'. Simple: '.($order->isSimple() ? 'Yes' : 'No').', Market: '.($order->isMarket() ? 'Yes' : 'No'));
+        $this->changeOrderState($order, $stateAfterExecute);
     }
 
     private function changeOrderState(OrderInterface|Model $order, string $newState)
@@ -142,15 +100,5 @@ class OrdersService implements OrdersServiceInterface
             $order->setCompletedAt($now);
         }
         $order->save();
-    }
-
-    private function executeMarketOrder(OrderInterface $order)
-    {
-        if ($order->getType() === OrderType::BUY) {
-            $this->executeBuyOrder($order);
-        }
-        if ($order->getType() === OrderType::SELL) {
-            $this->executeSellOrder($order);
-        }
     }
 }

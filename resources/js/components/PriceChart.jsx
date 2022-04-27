@@ -25,14 +25,6 @@ class PriceChart extends React.Component {
                     enabled: false,
                 },
             },
-            plotOptions: {
-                candlestick: {
-                    colors: {
-                        upward: 'rgb(26, 121, 26)',
-                        downward: 'rgb(172, 19, 19)'
-                    }
-                }
-            },
             dataLabels: {
                 enabled: false,
             },
@@ -76,8 +68,8 @@ class PriceChart extends React.Component {
                 },
             },
             theme: {
-                mode: 'light',
-                palette: 'palette3',
+                mode: 'dark',
+                palette: 'palette2',
             },
             noData: {
                 text: "Loading...",
@@ -90,6 +82,9 @@ class PriceChart extends React.Component {
                     fontSize: '14px',
                     fontFamily: "Helvetica"
                 }
+            },
+            grid: {
+                borderColor: '#444',
             },
         },
     };
