@@ -123,8 +123,10 @@ class API extends BinanceAPI
         $params['stopLimitTimeInForce'] = "GTC";
         $params['stopPrice'] = $slPrice;
         $slDiff = ($tpPrice - $slPrice)*0.01;
-        $params['stopLimitPrice'] = $slPrice - $slDiff;
-        Log::debug('BINANCE: Placing OCO order. Side: '.$side.', Symbol: '.$symbol.', Quantity: '.$quantity.', TP: '.$tpPrice.', SL: '.$slPrice, ['params' => $params]);
+        $params['stopLimitPrice'] = round($slPrice - $slDiff, 2);
+        Log::debug('BINANCE: Placing OCO order. Side: '.$side.', Symbol: '.$symbol.', Quantity: '.$quantity.
+                   ', Price: '.$tpPrice.', Stop price: '.$slPrice.
+                   ', Stop limit price: '.$params['stopLimitPrice'], ['params' => $params]);
         return $this->httpRequest('v3/order/oco', 'POST', $params, true);
     }
 

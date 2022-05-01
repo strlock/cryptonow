@@ -71,14 +71,23 @@ class BinanceWebsocketUserDataClient extends Command
                     $clientOrderId = str_replace(['stop-', 'limit-'], '', $clientOrderId);
                     $executionType = BinanceOrderExecutionType::memberByValue($report['executionType']);
                     $this->log('Execution type: '.$executionType->value().', Order id: '.$clientOrderId.', Binance order id: '.$report['exchangeOrderId'].
-                               ', Direction: '.$report['side'].', Stop: '.($isStopReport ? 'Yes' : 'No').', Limit: '.($isLimitReport ? 'Yes' : 'No'));
+                               ', Direction: '.$report['side'].', Price:'.$report['price'].', Quantity: '.$report['quantity'].', Stop: '.($isStopReport ? 'Yes' : 'No').', Limit: '.($isLimitReport ? 'Yes' : 'No'));
+                    //$this->log('Report: '.var_export($report, true));
                     if (!is_numeric($clientOrderId)) {
-                        $this->log('Order not found. Client order id: '.$clientOrderId);
+                        $this->log('Ignoring report with client order id '.$clientOrderId);
                         return;
                     }
                     $order = $ordersRepository->getOrder($clientOrderId);
+                    $this->log('Order: Symbol: '.$order->getSymbol().', Direction: '.$order->getDirection()->value().
+                               ', Price: '.$order->getPrice().', Amount: '.$order->getAmount().', SL: '.$order->getSl().
+                               ', TP: '.$order->getTp().', Market: '.($order->isMarket() ? 'Yes' : 'No').
+                               ', State: '.$order->getState()->value());
                     if (empty($order)) {
                         $this->log('Order not found. Client order id: '.$clientOrderId);
+                        return;
+                    }
+                    if (!$order->getState()->isNEW() && !$order->getState()->isREADY()) {
+                        $this->log('Order already has state: '.$order->getState()->value().'. Ignoring.');
                         return;
                     }
                     if ($executionType->isCANCELED()) {
