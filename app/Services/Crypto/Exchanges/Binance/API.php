@@ -98,7 +98,6 @@ class API extends BinanceAPI
                     '_clientOrderId' => $response->c,
                     'timeInForce' => $response->f,
                     'stopPrice' => $response->P,
-                    'trailingDelta' => $response->d,
                     'icebergQuantity' => $response->F,
                     'orderListId' => $response->g,
                     'originalClientOrderId' => $response->C,
