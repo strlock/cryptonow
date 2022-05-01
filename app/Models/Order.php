@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\OrderDirection;
+use App\Enums\OrderState;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
@@ -46,19 +48,19 @@ class Order extends Model implements OrderInterface
     }
 
     /**
-     * @return mixed
+     * @return OrderDirection
      */
-    public function getDirection(): string
+    public function getDirection(): OrderDirection
     {
-        return $this->direction;
+        return OrderDirection::memberByValue($this->direction);
     }
 
     /**
-     * @param mixed $value
+     * @param OrderDirection $value
      */
-    public function setDirection(string $value): void
+    public function setDirection(OrderDirection $value): void
     {
-        $this->direction = $value;
+        $this->direction = $value->value();
     }
 
     /**
@@ -158,19 +160,19 @@ class Order extends Model implements OrderInterface
     }
 
     /**
-     * @return string
+     * @return OrderState
      */
-    public function getState(): string
+    public function getState(): OrderState
     {
-        return $this->state;
+        return OrderState::memberByValue($this->state);
     }
 
     /**
-     * @param string $value
+     * @param OrderState $value
      */
-    public function setState(string $value): void
+    public function setState(OrderState $value): void
     {
-        $this->state = $value;
+        $this->state = $value->value();
     }
 
     /**

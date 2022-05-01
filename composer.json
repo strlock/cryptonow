@@ -17,6 +17,7 @@
         "laravel/ui": "^3.4",
         "mxl/laravel-job": "^1.2",
         "predis/predis": "^1.1",
+        "sourceboat/laravel-enumeration": "^3.1",
         "textalk/websocket": "^1.5",
         "tymon/jwt-auth": "^1.0"
     },

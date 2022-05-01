@@ -59,51 +59,44 @@ class BinanceWebsocketUserDataClient extends Command
             try {
                 $exchange->userDataStream(function ($report) use($ordersService, $ordersRepository) {
                     /*$report = [
-                        'clientOrderId' => '162',
+                        'clientOrderId' => '161',
                         'executionType' => 'TRADE',
                         'exchangeOrderId' => '4842488533',
                         'side'          => 'BUY',
                     ];*/
                     /** @var OrderInterface $order */
                     $clientOrderId = $report['clientOrderId'];
-                    $isReportForStop = false;
-                    if (str_starts_with($clientOrderId, 'stop-')) {
-                        $clientOrderId = str_replace('stop-', '', $clientOrderId);
-                        $isReportForStop = true;
-                    }
-                    $isReportForLimit = false;
-                    if (str_starts_with($clientOrderId, 'limit-')) {
-                        $clientOrderId = str_replace('limit-', '', $clientOrderId);
-                        $isReportForLimit = true;
-                    }
-                    $executionType = $report['executionType'];
-                    $this->log('Execution type: '.$executionType.', Order id: '.$clientOrderId.', Binance order id: '.$report['exchangeOrderId'].
-                               ', Direction: '.$report['side'].', Stop: '.($isReportForStop ? 'Yes' : 'No').', Limit: '.($isReportForLimit ? 'Yes' : 'No'));
+                    $isStopReport = str_starts_with($clientOrderId, 'stop-');
+                    $isLimitReport = str_starts_with($clientOrderId, 'limit-');
+                    $clientOrderId = preg_replace('/^\w+\-/', '', $clientOrderId);
+                    $executionType = BinanceOrderExecutionType::memberByValue($report['executionType']);
+                    $this->log('Execution type: '.$executionType->value().', Order id: '.$clientOrderId.', Binance order id: '.$report['exchangeOrderId'].
+                               ', Direction: '.$report['side'].', Stop: '.($isStopReport ? 'Yes' : 'No').', Limit: '.($isLimitReport ? 'Yes' : 'No'));
                     $order = $ordersRepository->getOrder($clientOrderId);
                     if (empty($order)) {
                         echo 'Order not found. Order id: '.$clientOrderId.PHP_EOL;
                         return;
                     }
-                    if ($executionType === BinanceOrderExecutionType::CANCELED) {
-                        $ordersService->changeOrderState($order, OrderState::CANCELED);
+                    if ($executionType->isCANCELED()) {
+                        $ordersService->changeOrderState($order, OrderState::CANCELED());
                     }
-                    if ($executionType === BinanceOrderExecutionType::TRADE) {
-                        if (!$isReportForStop && !$isReportForLimit) {
+                    if ($executionType->isTRADE()) {
+                        if (!$isStopReport && !$isLimitReport) {
                             echo 'Order is '.($order->hasGoal() ? 'ready' : 'completed').PHP_EOL;
                             if ($order->hasGoal()) {
                                 if (!$ordersService->placeGoalOrder($order)) {
                                     echo 'Reverting initial order'.PHP_EOL;
                                     $ordersService->placeRevertMarketOrderToExchange($order);
-                                    $ordersService->changeOrderState($order,OrderState::CANCELED);
+                                    $ordersService->changeOrderState($order,OrderState::CANCELED());
                                 } else {
-                                    $ordersService->changeOrderState($order, OrderState::READY);
+                                    $ordersService->changeOrderState($order, OrderState::READY());
                                 }
                             } else {
-                                $ordersService->changeOrderState($order, OrderState::COMPLETED);
+                                $ordersService->changeOrderState($order, OrderState::COMPLETED());
                             }
                         } else {
                             echo 'Order '.$order->getId().' is completed'.PHP_EOL;
-                            $ordersService->changeOrderState($order, OrderState::COMPLETED);
+                            $ordersService->changeOrderState($order, OrderState::COMPLETED());
                         }
                     }
                 });

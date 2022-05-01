@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "02d97eeb344cb823b3b90b65e2ca1f94",
+    "content-hash": "7da9737e831d0bb580021ebe2a4180b0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4594,6 +4594,83 @@
                 }
             ],
             "time": "2021-07-11T12:37:55+00:00"
+        },
+        {
+            "name": "sourceboat/laravel-enumeration",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sourceboat/laravel-enumeration.git",
+                "reference": "1b72c471cf857b34bda0bc4fec2a75e393b4ba80"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sourceboat/laravel-enumeration/zipball/1b72c471cf857b34bda0bc4fec2a75e393b4ba80",
+                "reference": "1b72c471cf857b34bda0bc4fec2a75e393b4ba80",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^8.0|^9.0",
+                "illuminate/contracts": "^8.0|^9.0",
+                "illuminate/support": "^8.0|^9.0",
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0|^7.0",
+                "phpmd/phpmd": "^2.6",
+                "phpunit/phpunit": "9.*",
+                "slevomat/coding-standard": "7.1",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Sourceboat\\Enumeration\\EnumerationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sourceboat\\Enumeration\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Buchholz",
+                    "email": "kevin@sourceboat.com",
+                    "homepage": "https://sourceboat.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple, extensible and powerful enumeration implementation for Laravel, based on eloquent/enumeration.",
+            "homepage": "https://github.com/sourceboat/laravel-enumeration",
+            "keywords": [
+                "castable",
+                "casts",
+                "enum",
+                "enumeration",
+                "extendible",
+                "laravel",
+                "localization",
+                "package",
+                "php",
+                "sourceboat",
+                "typed",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/sourceboat/laravel-enumeration/issues",
+                "source": "https://github.com/sourceboat/laravel-enumeration/tree/3.1.1"
+            },
+            "time": "2022-03-31T08:05:19+00:00"
         },
         {
             "name": "stella-maris/clock",

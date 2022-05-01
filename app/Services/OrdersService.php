@@ -7,19 +7,16 @@ namespace App\Services;
 use App\Dto\CreateNewOrderDto;
 use App\Dto\PlaceGoalOrderDto;
 use App\Dto\PlaceOrderDto;
+use App\Enums\ExchangeOrderType;
 use App\Enums\OrderState;
 use App\Enums\OrderDirection;
 use App\Models\Order;
 use App\Models\OrderInterface;
-use App\Models\User;
-use App\Repositories\OrdersRepository;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class OrdersService implements OrdersServiceInterface
 {
@@ -37,7 +34,7 @@ class OrdersService implements OrdersServiceInterface
     {
         $order = new Order();
         $order->fill($dto->toArray());
-        $order->setState(OrderState::NEW);
+        $order->setState(OrderState::NEW());
         $order->save();
         $this->placeNewOrderToExchange($order);
         return $order;
@@ -55,7 +52,7 @@ class OrdersService implements OrdersServiceInterface
             $order->getSymbol(),
             $order->getAmount(),
             $order->getPrice(),
-            $order->isMarket() ? 'MARKET' : 'LIMIT',
+            $order->isMarket() ? ExchangeOrderType::market() : ExchangeOrderType::limit(),
             $order->getId(),
         ));
         if ($exchangeOrderId === false) {
@@ -73,11 +70,11 @@ class OrdersService implements OrdersServiceInterface
     {
         $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
         return $exchange->placeOrder(new PlaceOrderDto(
-            $order->getDirection() === OrderDirection::BUY ? OrderDirection::SELL : OrderDirection::BUY,
+            $order->getDirection()->isBUY() ? OrderDirection::SELL() : OrderDirection::BUY(),
             $order->getSymbol(),
             $order->getAmount(),
             $order->getPrice(),
-            'MARKET',
+            ExchangeOrderType::market(),
             'revert-'.$order->getId(),
         ));
     }
@@ -86,7 +83,7 @@ class OrdersService implements OrdersServiceInterface
      * @param OrderInterface|Model $order
      * @param string $newState
      */
-    public function changeOrderState(OrderInterface|Model $order, string $newState): void
+    public function changeOrderState(OrderInterface|Model $order, OrderState $newState): void
     {
         $oldState = $order->getState();
         if ($newState === $oldState) {
@@ -94,11 +91,11 @@ class OrdersService implements OrdersServiceInterface
             return;
         }
         $now = Date::now();
-        if ($newState === OrderState::READY) {
+        if ($newState->isREADY()) {
             Log::info('Order '.$order->getId().' is ready to achieve the goal');
             $order->setReadyAt($now);
         }
-        if (in_array($newState, [OrderState::PROFIT, OrderState::LOSS, OrderState::FAILED, OrderState::COMPLETED])) {
+        if (in_array($newState, [OrderState::PROFIT(), OrderState::LOSS(), OrderState::FAILED(), OrderState::COMPLETED()])) {
             Log::info('Order '.$order->getId().' is closed. State: '.$newState);
             $order->setCompletedAt($now);
         }
@@ -115,15 +112,15 @@ class OrdersService implements OrdersServiceInterface
     {
         $result = false;
         $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
-        $newOrderDirection = $order->getDirection() === OrderDirection::BUY ? OrderDirection::SELL : OrderDirection::BUY;
+        $newOrderDirection = $order->getDirection()->isBUY() ? OrderDirection::SELL() : OrderDirection::BUY();
         if (!empty($order->getSl()) && !empty($order->getTp())) {
-            if ($order->getDirection() === OrderDirection::SELL) {
+            if ($order->getDirection()->isSELL()) {
                 $amount = $order->getPrice()*$order->getAmount()/$order->getTp();
             } else {
                 $amount = $order->getAmount();
             }
             $placedOrderIds = $exchange->placeTakeProfitAndStopLossOrder(new PlaceGoalOrderDto(
-               $newOrderDirection,
+                $newOrderDirection,
                 $order->getSymbol(),
                 $amount,
                 $order->getSl(),
@@ -142,7 +139,7 @@ class OrdersService implements OrdersServiceInterface
                 $order->getSymbol(),
                 $order->getAmount(),
                 $order->getSl(),
-                'STOP_LOSS_LIMIT',
+                ExchangeOrderType::stop_loss(),
                 'sl-'.$order->getId(),
             ));
             if ($exchangeOrderId !== false) {
@@ -154,7 +151,7 @@ class OrdersService implements OrdersServiceInterface
                 $order->getSymbol(),
                 $order->getAmount(),
                 $order->getTp(),
-                'LIMIT',
+                ExchangeOrderType::limit(),
                 'tp-'.$order->getId(),
             ));
             if ($exchangeOrderId !== false) {

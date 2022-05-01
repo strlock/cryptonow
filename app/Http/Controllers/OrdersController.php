@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dto\CreateNewOrderDto;
+use App\Enums\OrderDirection;
 use App\Http\Resources\OrdersResource;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
@@ -53,7 +54,7 @@ class OrdersController extends Controller
             $data = $request->post();
             $order = $ordersService->createNewOrder(new CreateNewOrderDto(
                 (int)$user->id,
-                $data['type'],
+                OrderDirection::memberByValue($data['direction']),
                 (float)$data['price'],
                 (float)$data['amount'],
                 $data['sl'] ? (float)$data['sl'] : null,

@@ -4,6 +4,8 @@
 namespace App\Models;
 
 
+use App\Enums\OrderDirection;
+use App\Enums\OrderState;
 use DateTime;
 
 interface OrderInterface
@@ -12,8 +14,8 @@ interface OrderInterface
     public function setId(int $value): void;
     public function getUserId(): int;
     public function setUserId(int $value): void;
-    public function getDirection(): string;
-    public function setDirection(string $value): void;
+    public function getDirection(): OrderDirection;
+    public function setDirection(OrderDirection $value): void;
     public function getPrice(): float;
     public function setPrice(float $value): void;
     public function getAmount(): float;
@@ -26,8 +28,8 @@ interface OrderInterface
     public function setMarket(bool $value): void;
     public function getExchange(): string;
     public function setExchange(string $value): void;
-    public function getState(): string;
-    public function setState(string $value): void;
+    public function getState(): OrderState;
+    public function setState(OrderState $value): void;
     public function getReadyAt(): ?DateTime;
     public function setReadyAt(?DateTime $value): void;
     public function getCompletedAt(): ?DateTime;

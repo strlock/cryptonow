@@ -65,14 +65,14 @@ const OrderForm = (props) => {
         postOrder('sell');
     }
 
-    const postOrder = (type) => {
+    const postOrder = (direction) => {
         let data = new FormData();
         data.append('price', priceRef.current.value);
         data.append('amount', amountRef.current.value);
         data.append('sl', slRef.current.value);
         data.append('tp', tpRef.current.value);
         data.append('market', 1*marketRef.current.checked);
-        data.append('type', type);
+        data.append('direction', direction);
         data.append('exchange', 'binance');
         data.append('symbol', 'BTCBUSD');
         RequestHelper.fetch('/api/orders', {

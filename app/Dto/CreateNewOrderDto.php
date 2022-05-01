@@ -4,14 +4,14 @@
 namespace App\Dto;
 
 
-use App\Enums\OrderState;
+use App\Enums\OrderDirection;
 use Illuminate\Contracts\Support\Arrayable;
 
 class CreateNewOrderDto implements Arrayable
 {
     public function __construct(
         private int $userId,
-        private string $direction,
+        private OrderDirection $direction,
         private float $price,
         private float $amount,
         private ?float $sl,
@@ -41,9 +41,9 @@ class CreateNewOrderDto implements Arrayable
     }
 
     /**
-     * @return int
+     * @return OrderDirection
      */
-    public function getDirection(): int
+    public function getDirection(): OrderDirection
     {
         return $this->direction;
     }
@@ -100,7 +100,7 @@ class CreateNewOrderDto implements Arrayable
     {
         return [
             'user_id' => $this->userId,
-            'direction' => $this->direction,
+            'direction' => $this->direction->value(),
             'price' => $this->price,
             'amount' => $this->amount,
             'sl' => $this->sl,

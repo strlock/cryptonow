@@ -4,10 +4,12 @@
 namespace App\Dto;
 
 
+use App\Enums\OrderDirection;
+
 class PlaceGoalOrderDto
 {
     public function __construct(
-        private string $direction,
+        private OrderDirection $direction,
         private string $symbol,
         private float $amount,
         private ?float $sl,
@@ -19,9 +21,9 @@ class PlaceGoalOrderDto
     }
 
     /**
-     * @return string
+     * @return OrderDirection
      */
-    public function getDirection(): string
+    public function getDirection(): OrderDirection
     {
         return $this->direction;
     }

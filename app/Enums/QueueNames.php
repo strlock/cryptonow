@@ -3,7 +3,19 @@
 
 namespace App\Enums;
 
-class QueueNames
+use Sourceboat\Enumeration\Enumeration;
+
+/**
+ * @method static self DEFAULT()
+ * @method static self MARKET_STAT_CALCULATION()
+ * @method static self BITFINEX_MARKET_STAT_CALCULATION()
+ * @method static self BITSTAMP_MARKET_STAT_CALCULATION()
+ * @method bool isDEFAULT()
+ * @method bool isMARKET_STAT_CALCULATION()
+ * @method bool isBITFINEX_MARKET_STAT_CALCULATION()
+ * @method bool isBITSTAMP_MARKET_STAT_CALCULATION()
+ */
+class QueueNames extends Enumeration
 {
     public const DEFAULT = 'default';
     public const BINANCE_MARKET_STAT_CALCULATION = 'binance-market-stat-calculation';

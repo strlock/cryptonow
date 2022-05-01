@@ -10471,14 +10471,14 @@ var OrderForm = function OrderForm(props) {
     postOrder('sell');
   };
 
-  var postOrder = function postOrder(type) {
+  var postOrder = function postOrder(direction) {
     var data = new FormData();
     data.append('price', priceRef.current.value);
     data.append('amount', amountRef.current.value);
     data.append('sl', slRef.current.value);
     data.append('tp', tpRef.current.value);
     data.append('market', 1 * marketRef.current.checked);
-    data.append('type', type);
+    data.append('direction', direction);
     data.append('exchange', 'binance');
     data.append('symbol', 'BTCBUSD');
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/orders', {

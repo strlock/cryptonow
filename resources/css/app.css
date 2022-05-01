@@ -1,20 +1,20 @@
 :root{
-    --bs-body-font-size: 16px;
-    --bg-color: #404364;
-    --top-bg-color: #111;
-    --card-bg-color: #111;
-    --card-text-color: #aaa;
-    --card-header-bg-color: #131722;
+    --bs-body-font-size: 18px;
+    --bg-color: #171430;
+    --top-bg-color: #24204B;
+    --card-bg-color: #24204B;
+    --card-text-color: #635E98;
+    --card-header-bg-color: transparent;
     --table-text-color: #aaa;
     --table-border-color: #333742;
-    --table-bg-color: #232732;
+    --table-bg-color: transparent;
     --active-tab-color: #232732;
     --active-tab-text-color: #aaa;
-    --tab-text-color: #666;
-    --modal-bg-color: #111;
+    --tab-text-color: #635E98;
+    --modal-bg-color: #24204B;
     --modal-text-color: #aaa;
     --modal-close-button-color: #aaa;
-    --main-border-radius: 10px;
+    --main-border-radius: 20px;
 }
 
 *, :before, :after{
@@ -48,7 +48,7 @@ body:before{
     height: 100%;
     opacity: 0.6;
     z-index: -1;
-    background: url('/images/background.jpg') repeat center center;
+    /*background: url('/images/background.jpg') repeat center center;*/
 }
 
 h1{
@@ -66,8 +66,8 @@ h1{
     grid-template-columns: minmax(340px, 1220px) 1fr;
     margin-bottom: 1em;
     background-color: var(--top-bg-color);
-    border: 1px solid #666;
     border-radius: var(--main-border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 #top .top-left{
@@ -108,8 +108,8 @@ h1{
 .card {
     background-color: var(--card-bg-color);
     color: var(--card-text-color);
-    border: 1px solid #666;
     border-radius: var(--main-border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .card.order-form {
@@ -130,6 +130,10 @@ h1{
 .table {
     color: var(--table-text-color);
     background-color: var(--table-bg-color);
+}
+
+.table tbody {
+    border-top: none;
 }
 
 .table tr {

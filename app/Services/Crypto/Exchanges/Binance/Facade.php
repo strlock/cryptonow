@@ -3,7 +3,8 @@ namespace App\Services\Crypto\Exchanges\Binance;
 
 use App\Dto\PlaceGoalOrderDto;
 use App\Dto\PlaceOrderDto;
-use App\Enums\OrderDirection;
+use App\Enums\BinanceOrderType;
+use App\Enums\ExchangeOrderType;
 use App\Models\User;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Trade;
@@ -147,26 +148,31 @@ class Facade extends AbstractFacade
     /**
      * @param PlaceOrderDto $dto
      * @return false|int
-     * @throws Exception
      */
     public function placeOrder(PlaceOrderDto $dto): false|int
     {
+        $result = false;
+        $orderType = $this->getBinanceOrderType($dto->getOrderType())->value();
         $params = [
             'newClientOrderId' => $dto->getClientOrderId(),
         ];
-        if ($dto->getOrderType() === 'STOP_LOSS_LIMIT') {
-            if ($dto->getDirection() === OrderDirection::SELL) {
+        if ($orderType === 'STOP_LOSS_LIMIT') {
+            if ($dto->getDirection()->isSELL()) {
                 $params['stopPrice'] = 1.005*$dto->getPrice();
             }
-            if ($dto->getDirection() === OrderDirection::BUY) {
+            if ($dto->getDirection()->isBUY()) {
                 $params['stopPrice'] = 0.995*$dto->getPrice();
             }
         }
-        $response = $this->api->order(strtoupper($dto->getDirection()), $dto->getSymbol(), $dto->getAmount(), $dto->getPrice(), $dto->getOrderType(), $params);
-        if (is_array($response) && isset($response['orderId'])) {
-            return $response['orderId'];
+        try {
+            $response = $this->api->order(strtoupper($dto->getDirection()->value()), $dto->getSymbol(), $dto->getAmount(), $dto->getPrice(), $orderType, $params);
+            if (is_array($response) && isset($response['orderId'])) {
+                $result = $response['orderId'];
+            }
+        } catch (Throwable $e) {
+            Log::error($e);
         }
-        return false;
+        return $result;
     }
 
     public function userDataStream(callable $executionCallback)
@@ -176,14 +182,13 @@ class Facade extends AbstractFacade
 
     /**
      * @param PlaceGoalOrderDto $dto
-     * @return array
-     * @throws Exception
+     * @return array|false
      */
     public function placeTakeProfitAndStopLossOrder(PlaceGoalOrderDto $dto): array|false
     {
         $result = false;
         try {
-            $response = $this->api->orderOCO(strtoupper($dto->getDirection()), $dto->getSymbol(), $dto->getAmount(), $dto->getTp(), $dto->getSl(), [
+            $response = $this->api->orderOCO(strtoupper($dto->getDirection()->value()), $dto->getSymbol(), $dto->getAmount(), $dto->getTp(), $dto->getSl(), [
                 'listClientOrderId' => $dto->getOrderId(),
                 'limitClientOrderId' => 'limit-'.$dto->getOrderId(),
                 'stopClientOrderId' => 'stop-'.$dto->getOrderId(),
@@ -202,5 +207,15 @@ class Facade extends AbstractFacade
             Log::error($e);
         }
         return $result;
+    }
+
+    private function getBinanceOrderType(ExchangeOrderType $orderType)
+    {
+        return match($orderType) {
+            ExchangeOrderType::market() => BinanceOrderType::MARKET(),
+            ExchangeOrderType::limit() => BinanceOrderType::LIMIT(),
+            ExchangeOrderType::stop_loss() => BinanceOrderType::STOP_LOSS_LIMIT(),
+            ExchangeOrderType::take_profit() => BinanceOrderType::TAKE_PROFIT(),
+        };
     }
 }

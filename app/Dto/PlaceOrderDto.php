@@ -4,14 +4,17 @@
 namespace App\Dto;
 
 
+use App\Enums\ExchangeOrderType;
+use App\Enums\OrderDirection;
+
 class PlaceOrderDto
 {
     public function __construct(
-        private string $direction,
+        private OrderDirection $direction,
         private string $symbol,
         private float $amount,
         private float $price,
-        private string $orderType,
+        private ExchangeOrderType $orderType,
         private string $clientOrderId,
     )
     {
@@ -19,9 +22,9 @@ class PlaceOrderDto
     }
 
     /**
-     * @return string
+     * @return OrderDirection
      */
-    public function getDirection(): string
+    public function getDirection(): OrderDirection
     {
         return $this->direction;
     }
@@ -51,9 +54,9 @@ class PlaceOrderDto
     }
 
     /**
-     * @return string
+     * @return ExchangeOrderType
      */
-    public function getOrderType(): string
+    public function getOrderType(): ExchangeOrderType
     {
         return $this->orderType;
     }
