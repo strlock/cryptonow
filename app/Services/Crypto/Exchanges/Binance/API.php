@@ -3,6 +3,7 @@ namespace App\Services\Crypto\Exchanges\Binance;
 
 use Binance\API as BinanceAPI;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 use WebSocket\Client;
 
@@ -123,6 +124,7 @@ class API extends BinanceAPI
         $params['stopPrice'] = $slPrice;
         $slDiff = ($tpPrice - $slPrice)*0.01;
         $params['stopLimitPrice'] = $slPrice - $slDiff;
+        Log::debug('BINANCE: Placing OCO order. Side: '.$side.', Symbol: '.$symbol.', Quantity: '.$quantity.', TP: '.$tpPrice.', SL: '.$slPrice, ['params' => $params]);
         return $this->httpRequest('v3/order/oco', 'POST', $params, true);
     }
 
