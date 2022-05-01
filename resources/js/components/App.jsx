@@ -60,7 +60,6 @@ const App = () => {
     }
 
     const onLoginSuccess = (accessToken, userName) => {
-        showPopup('Login successfull');
         LoginHelper.login(accessToken, userName);
         setIsLoggedIn(LoginHelper.isLoggedIn());
     }

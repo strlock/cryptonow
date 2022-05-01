@@ -9699,7 +9699,6 @@ var App = function App() {
   };
 
   var onLoginSuccess = function onLoginSuccess(accessToken, userName) {
-    showPopup('Login successfull');
     _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].login(accessToken, userName);
     setIsLoggedIn(_Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].isLoggedIn());
   };

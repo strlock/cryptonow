@@ -68,7 +68,7 @@ class BinanceWebsocketUserDataClient extends Command
                     $clientOrderId = $report['clientOrderId'];
                     $isStopReport = str_starts_with($clientOrderId, 'stop-');
                     $isLimitReport = str_starts_with($clientOrderId, 'limit-');
-                    $clientOrderId = preg_replace('/^\w+\-/', '', $clientOrderId);
+                    $clientOrderId = str_replace(['stop-', 'limit-'], '', $clientOrderId);
                     $executionType = BinanceOrderExecutionType::memberByValue($report['executionType']);
                     $this->log('Execution type: '.$executionType->value().', Order id: '.$clientOrderId.', Binance order id: '.$report['exchangeOrderId'].
                                ', Direction: '.$report['side'].', Stop: '.($isStopReport ? 'Yes' : 'No').', Limit: '.($isLimitReport ? 'Yes' : 'No'));
@@ -82,7 +82,6 @@ class BinanceWebsocketUserDataClient extends Command
                     }
                     if ($executionType->isTRADE()) {
                         if (!$isStopReport && !$isLimitReport) {
-                            echo 'Order is '.($order->hasGoal() ? 'ready' : 'completed').PHP_EOL;
                             if ($order->hasGoal()) {
                                 if (!$ordersService->placeGoalOrder($order)) {
                                     echo 'Reverting initial order'.PHP_EOL;
