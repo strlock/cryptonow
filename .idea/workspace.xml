@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Bugfix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Binance/API.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Binance/API.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -286,14 +286,7 @@
       <workItem from="1650814916598" duration="49395000" />
       <workItem from="1651040820492" duration="55579000" />
       <workItem from="1651217650558" duration="53800000" />
-      <workItem from="1651383837282" duration="17756000" />
-    </task>
-    <task id="LOCAL-00001" summary="WOrk">
-      <created>1648282713619</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1648282713619</updated>
+      <workItem from="1651383837282" duration="18108000" />
     </task>
     <task id="LOCAL-00002" summary="adding">
       <created>1648282866782</created>
@@ -631,7 +624,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651415137285</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Bugfix">
+      <created>1651416625644</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1651416625645</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -703,7 +703,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php</url>
-          <line>79</line>
+          <line>83</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>

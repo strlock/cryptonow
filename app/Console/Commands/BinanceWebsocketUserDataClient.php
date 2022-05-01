@@ -50,7 +50,7 @@ class BinanceWebsocketUserDataClient extends Command
         $userId = (int)$this->argument('userId');
         $user = User::find($userId);
         if (empty($user)) {
-            echo 'User not found'.PHP_EOL;
+            $this->log('User not found');
             return 0;
         }
         /** @var BinanceExchange $exchange */
@@ -72,9 +72,13 @@ class BinanceWebsocketUserDataClient extends Command
                     $executionType = BinanceOrderExecutionType::memberByValue($report['executionType']);
                     $this->log('Execution type: '.$executionType->value().', Order id: '.$clientOrderId.', Binance order id: '.$report['exchangeOrderId'].
                                ', Direction: '.$report['side'].', Stop: '.($isStopReport ? 'Yes' : 'No').', Limit: '.($isLimitReport ? 'Yes' : 'No'));
+                    if (!is_numeric($clientOrderId)) {
+                        $this->log('Order not found. Client order id: '.$clientOrderId);
+                        return;
+                    }
                     $order = $ordersRepository->getOrder($clientOrderId);
                     if (empty($order)) {
-                        echo 'Order not found. Order id: '.$clientOrderId.PHP_EOL;
+                        $this->log('Order not found. Client order id: '.$clientOrderId);
                         return;
                     }
                     if ($executionType->isCANCELED()) {
@@ -84,7 +88,7 @@ class BinanceWebsocketUserDataClient extends Command
                         if (!$isStopReport && !$isLimitReport) {
                             if ($order->hasGoal()) {
                                 if (!$ordersService->placeGoalOrder($order)) {
-                                    echo 'Reverting initial order'.PHP_EOL;
+                                    $this->log('Reverting initial order');
                                     $ordersService->placeRevertMarketOrderToExchange($order);
                                     $ordersService->changeOrderState($order,OrderState::CANCELED());
                                 } else {
@@ -94,7 +98,7 @@ class BinanceWebsocketUserDataClient extends Command
                                 $ordersService->changeOrderState($order, OrderState::COMPLETED());
                             }
                         } else {
-                            echo 'Order '.$order->getId().' is completed'.PHP_EOL;
+                            $this->log('Order '.$order->getId().' is completed');
                             $ordersService->changeOrderState($order, OrderState::COMPLETED());
                         }
                     }
@@ -103,7 +107,7 @@ class BinanceWebsocketUserDataClient extends Command
                 $this->log($e->getMessage());
             }
             sleep(5);
-            echo 'Retrying to start user data stream'.PHP_EOL;
+            $this->log('Retrying to start user data stream');
         }
         return 0;
     }
