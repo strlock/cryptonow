@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-class OrderType
+class OrderDirection
 {
     public const BUY = 'buy';
     public const SELL = 'sell';

@@ -13,7 +13,7 @@ class Order extends Model implements OrderInterface
 
     protected $fillable = [
         'user_id',
-        'type',
+        'direction',
         'price',
         'amount',
         'sl',
@@ -23,9 +23,10 @@ class Order extends Model implements OrderInterface
         'state',
         'ready_at',
         'completed_at',
-        'ready_price',
-        'completed_price',
         'symbol',
+        'exchange_order_id',
+        'exchange_sl_order_id',
+        'exchange_tp_order_id',
     ];
 
     /**
@@ -47,17 +48,17 @@ class Order extends Model implements OrderInterface
     /**
      * @return mixed
      */
-    public function getType(): string
+    public function getDirection(): string
     {
-        return $this->type;
+        return $this->direction;
     }
 
     /**
      * @param mixed $value
      */
-    public function setType(string $value): void
+    public function setDirection(string $value): void
     {
-        $this->type = $value;
+        $this->direction = $value;
     }
 
     /**
@@ -221,38 +222,6 @@ class Order extends Model implements OrderInterface
     }
 
     /**
-     * @return float
-     */
-    public function getReadyPrice(): float
-    {
-        return $this->ready_price;
-    }
-
-    /**
-     * @param float $value
-     */
-    public function setReadyPrice(float $value): void
-    {
-        $this->ready_price = $value;
-    }
-
-    /**
-     * @return float
-     */
-    public function getCompletedPrice(): float
-    {
-        return $this->completed_price;
-    }
-
-    /**
-     * @param float $value
-     */
-    public function setCompletedPrice(float $value): void
-    {
-        $this->completed_price = $value;
-    }
-
-    /**
      * @return string
      */
     public function getSymbol(): string
@@ -268,8 +237,18 @@ class Order extends Model implements OrderInterface
         $this->symbol = $value;
     }
 
-    public function isSimple(): bool
+    public function hasGoal(): bool
     {
-        return (float)$this->getSl() === 0.0 && (float)$this->getTp() === 0.0;
+        return (float)$this->getSl() !== 0.0 || (float)$this->getTp() !== 0.0;
+    }
+
+    public function getExchangeOrderId(): string
+    {
+        return $this->exchange_order_id;
+    }
+
+    public function setExchangeOrderId(string $value): void
+    {
+        $this->exchange_order_id = $value;
     }
 }

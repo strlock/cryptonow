@@ -105,8 +105,7 @@ const OrderForm = (props) => {
     const onSlRangeChange = (event) => {
         const price = getFloatValue(priceRef);
         const value = event.target.value;
-        const direction = direction === ORDER_DIRECTION_BUY ? 1 : -1;
-        const sl = price*(1-direction*value/100);
+        const sl = price*(1-(direction === ORDER_DIRECTION_BUY ? 1 : -1)*value/100);
         setSl(FormatHelper.formatPrice(sl, false, ''));
         setSlPercent(value);
     }
@@ -114,8 +113,7 @@ const OrderForm = (props) => {
     const onTpRangeChange = (event) => {
         const price = getFloatValue(priceRef);
         const value = event.target.value;
-        const direction = direction === ORDER_DIRECTION_BUY ? 1 : -1;
-        const tp = price*(1+direction*value/100);
+        const tp = price*(1+(direction === ORDER_DIRECTION_BUY ? 1 : -1)*value/100);
         setTp(FormatHelper.formatPrice(tp, false, ''));
         setTpPercent(value);
     }

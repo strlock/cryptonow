@@ -9810,6 +9810,8 @@ var App = function App() {
             ordersList: ordersListRef.current
           })
         })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        showPopup: showPopup
       })]
     });
   } else {
@@ -9846,7 +9848,7 @@ var App = function App() {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {
       id: "middle",
       children: content
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {})]
+    })]
   });
 };
 
@@ -10048,21 +10050,16 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
           className: "modal-dialog",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
             className: "modal-content",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: "modal-header",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
                 className: "modal-title",
                 children: "Login"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                type: "button",
-                className: "btn-close",
-                "data-bs-dismiss": "modal",
-                "aria-label": "Close"
-              })]
+              })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "modal-body p-2",
+              className: "modal-body p-3",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-                className: "form-group mb-2",
+                className: "form-group mb-3",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
                   type: "email",
                   name: "email",
@@ -10084,19 +10081,14 @@ var LoginForm = /*#__PURE__*/function (_React$Component) {
                   ref: this.passwordRef
                 })
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
               className: "modal-footer",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                 type: "button",
                 className: "btn btn-primary form-control",
                 onClick: this.login.bind(this),
                 children: "Login"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
-                type: "button",
-                className: "btn btn-secondary form-control",
-                "data-bs-dismiss": "modal",
-                children: "Cancel"
-              })]
+              })
             })]
           })
         })
@@ -10521,8 +10513,7 @@ var OrderForm = function OrderForm(props) {
   var onSlRangeChange = function onSlRangeChange(event) {
     var price = getFloatValue(priceRef);
     var value = event.target.value;
-    var direction = direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? 1 : -1;
-    var sl = price * (1 - direction * value / 100);
+    var sl = price * (1 - (direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? 1 : -1) * value / 100);
     setSl(_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(sl, false, ''));
     setSlPercent(value);
   };
@@ -10530,8 +10521,7 @@ var OrderForm = function OrderForm(props) {
   var onTpRangeChange = function onTpRangeChange(event) {
     var price = getFloatValue(priceRef);
     var value = event.target.value;
-    var direction = direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? 1 : -1;
-    var tp = price * (1 + direction * value / 100);
+    var tp = price * (1 + (direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? 1 : -1) * value / 100);
     setTp(_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(tp, false, ''));
     setTpPercent(value);
   };
@@ -10910,7 +10900,7 @@ var OrdersList = /*#__PURE__*/function (_React$Component) {
                             children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatAmount(order.amount, true)
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("td", {
                             className: "text-center order-sl-tp",
-                            children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.sl, true), "/", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.tp, true), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), "Ready: ", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatDate(order.ready_at), order.ready_price !== null ? '<br/>' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.ready_price, true) : '']
+                            children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.sl, true), "/", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.tp, true), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), "Ready: ", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatDate(order.ready_at), order.ready_price !== null ? ' ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.ready_price, true) : '']
                           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("td", {
                             className: "text-center order-completed-at",
                             children: [_Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatDate(order.completed_at), order.completed_price !== null ? '<br/>' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.completed_price, true) : '']
@@ -11195,75 +11185,159 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
 
-function UserSettingsModal(props) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+
+
+
+function UserSettingsModal(_ref) {
+  var showPopup = _ref.showPopup;
+  var binanceApiKeyRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var binanceApiSeceretRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    'binance_api_key': '',
+    'binance_api_secret': ''
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      settings = _useState2[0],
+      setSettings = _useState2[1];
+
+  var onSaveClick = function onSaveClick() {
+    var data = new FormData();
+    data.append('binance_api_key', binanceApiKeyRef.current.value);
+    data.append('binance_api_secret', binanceApiSeceretRef.current.value);
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/user/settings', {
+      method: 'POST',
+      body: data
+    }, function (response) {
+      if (response.error) {
+        showPopup(response.message, 'danger');
+      } else {
+        showPopup(response.message);
+      }
+
+      jquery__WEBPACK_IMPORTED_MODULE_2___default()('#userSettingsModal .btn-close').trigger('click');
+    });
+  };
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/user/settings', {}, function (response) {
+      if (response.data !== undefined) {
+        setSettings(response.data);
+      }
+    });
+  }, []);
+
+  var onBinanceApiKeyChange = function onBinanceApiKeyChange(event) {
+    setSettings(_objectSpread(_objectSpread({}, settings), {}, {
+      binance_api_key: event.target.value
+    }));
+  };
+
+  var onBinanceApiSecretChange = function onBinanceApiSecretChange(event) {
+    setSettings(_objectSpread(_objectSpread({}, settings), {}, {
+      binance_api_secret: event.target.value
+    }));
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
     className: "modal fade",
     id: "userSettingsModal",
     tabIndex: "-1",
     "aria-labelledby": "userSettingsModalLabel",
     "aria-hidden": "true",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
       className: "modal-dialog",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
         className: "modal-content",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "modal-header",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h5", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
             className: "modal-title",
             id: "userSettingsModalLabel",
             children: "Settings"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
             type: "button",
             className: "btn-close",
             "data-bs-dismiss": "modal",
-            "aria-label": "Close"
+            "aria-label": "Close",
+            children: " "
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
           className: "modal-body",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("form", {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
               className: "input-group input-group-sm mb-4",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                 htmlFor: "price",
                 className: "input-group-text w-25 bg-dark text-white",
                 children: "API Key"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
                 type: "text",
-                name: "api_key",
-                id: "api_key",
-                defaultValue: "",
-                className: "form-control bg-dark text-white"
+                name: "binance_api_key",
+                id: "binance_api_key",
+                value: settings.binance_api_key,
+                onChange: function onChange(event) {
+                  return onBinanceApiKeyChange(event);
+                },
+                className: "form-control bg-dark text-white",
+                ref: binanceApiKeyRef
               })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
               className: "input-group input-group-sm mb-4",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
                 htmlFor: "volume",
                 className: "input-group-text w-25 bg-dark text-white",
                 children: "API secret"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
                 type: "text",
-                name: "api_secret",
-                id: "api_secret",
-                className: "form-control bg-dark text-white"
+                name: "binance_api_secret",
+                id: "binance_api_secret",
+                value: settings.binance_api_secret,
+                onChange: function onChange(event) {
+                  return onBinanceApiSecretChange(event);
+                },
+                className: "form-control bg-dark text-white",
+                ref: binanceApiSeceretRef
               })]
             })]
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
           className: "modal-footer",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
             type: "button",
             className: "btn btn-secondary",
             "data-bs-dismiss": "modal",
             children: "Close"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
             type: "button",
             className: "btn btn-primary",
-            children: "Save changes"
+            onClick: onSaveClick,
+            children: "Save"
           })]
         })]
       })
@@ -11297,7 +11371,7 @@ var REFRESH_INTERVAL = 15000;
 var POPUP_TIMEOUT = 3000;
 var ORDER_STATE_TITLES = {
   'new': 'New Order',
-  'ready': 'Order is bought/sold',
+  'ready': 'Waiting SL or TP.',
   'profit': 'Order completed (profit)',
   'loss': 'Order completed (loss)',
   'failed': 'Order failed',

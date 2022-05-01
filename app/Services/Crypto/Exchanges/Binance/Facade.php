@@ -1,9 +1,10 @@
 <?php
 namespace App\Services\Crypto\Exchanges\Binance;
 
-use App\Dto\CreateNewOrderDto;
-use App\Enums\OrderType;
-use App\Models\OrderInterface;
+use App\Dto\PlaceGoalOrderDto;
+use App\Dto\PlaceOrderDto;
+use App\Enums\OrderDirection;
+use App\Models\User;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Trade;
 use App\Services\Crypto\Helpers\TimeHelper;
@@ -14,6 +15,7 @@ use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class Facade extends AbstractFacade
 {
@@ -30,8 +32,23 @@ class Facade extends AbstractFacade
         TimeIntervals::ONE_DAY => BinanceTimeIntervals::ONE_DAY,
     ];
 
-    public function __construct(){
-        $this->api = new API(env('BINANCE_API_KEY'), env('BINANCE_API_SECRET'));
+    public function __construct(?int $userId = null){
+        if (!empty($userId)) {
+            /** @var User $user */
+            $user = User::find($userId);
+            if (empty($user)) {
+                throw new Exception('User not found');
+            }
+            if (!$user->isBinanceConnected()) {
+                throw new Exception('Binance is not connected');
+            }
+            $this->apiKey = $user->getBinanceApiKey();
+            $this->apiSecret = $user->getBinanceApiSecret();
+        } else {
+            $this->apiKey = env('BINANCE_API_KEY');
+            $this->apiSecret = env('BINANCE_API_SECRET');
+        }
+        $this->api = new API($this->apiKey, $this->apiSecret);
     }
 
     /**
@@ -128,15 +145,62 @@ class Facade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $order
+     * @param PlaceOrderDto $dto
+     * @return false|int
+     * @throws Exception
      */
-    public function placeOrder(OrderInterface $order): void
+    public function placeOrder(PlaceOrderDto $dto): false|int
     {
-        if ($order->getType() === OrderType::BUY) {
-            $this->api->buy($order->getSymbol(), $order->getAmount(), $order->getPrice(), $order->isMarket() ? 'MARKET' : 'LIMIT');
+        $params = [
+            'newClientOrderId' => $dto->getClientOrderId(),
+        ];
+        if ($dto->getOrderType() === 'STOP_LOSS_LIMIT') {
+            if ($dto->getDirection() === OrderDirection::SELL) {
+                $params['stopPrice'] = 1.005*$dto->getPrice();
+            }
+            if ($dto->getDirection() === OrderDirection::BUY) {
+                $params['stopPrice'] = 0.995*$dto->getPrice();
+            }
         }
-        if ($order->getType() === OrderType::SELL) {
-            $this->api->sell($order->getSymbol(), $order->getAmount(), $order->getPrice(), $order->isMarket() ? 'MARKET' : 'LIMIT');
+        $response = $this->api->order(strtoupper($dto->getDirection()), $dto->getSymbol(), $dto->getAmount(), $dto->getPrice(), $dto->getOrderType(), $params);
+        if (is_array($response) && isset($response['orderId'])) {
+            return $response['orderId'];
         }
+        return false;
+    }
+
+    public function userDataStream(callable $executionCallback)
+    {
+        $this->api->userDataStream($executionCallback);
+    }
+
+    /**
+     * @param PlaceGoalOrderDto $dto
+     * @return array
+     * @throws Exception
+     */
+    public function placeTakeProfitAndStopLossOrder(PlaceGoalOrderDto $dto): array|false
+    {
+        $result = false;
+        try {
+            $response = $this->api->orderOCO(strtoupper($dto->getDirection()), $dto->getSymbol(), $dto->getAmount(), $dto->getTp(), $dto->getSl(), [
+                'listClientOrderId' => $dto->getOrderId(),
+                'limitClientOrderId' => 'limit-'.$dto->getOrderId(),
+                'stopClientOrderId' => 'stop-'.$dto->getOrderId(),
+            ]);
+            if (is_array($response) && isset($response['orderReports'])) {
+                foreach ($response['orderReports'] as $orderReport) {
+                    if ($orderReport['type'] === 'LIMIT_MAKER') {
+                        $result[0] = $orderReport['orderId'];
+                    }
+                    if ($orderReport['type'] === 'STOP_LOSS_LIMIT') {
+                        $result[1] = $orderReport['orderId'];
+                    }
+                }
+            }
+        } catch (Throwable $e) {
+            Log::error($e);
+        }
+        return $result;
     }
 }

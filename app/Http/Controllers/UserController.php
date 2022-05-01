@@ -2,9 +2,13 @@
 declare(strict_types=1);
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserSettingsResource;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
+use Throwable;
 
 class UserController extends Controller
 {
@@ -27,5 +31,36 @@ class UserController extends Controller
             'access_token' => $token,
             'user_name' => auth('api')->user()->name,
         ]);
+    }
+
+    /**
+     *
+     */
+    public function getSettings()
+    {
+        try {
+            $user = Auth::user();
+            return new UserSettingsResource($user);
+        } catch (Throwable $e) {
+            return response()->json(['message' => $e->getMessage(), 'error' => true]);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function saveSettings(Request $request)
+    {
+        try {
+            /** @var User $user */
+            $user = Auth::user();
+            $data = $request->post();
+            $user->fill($data);
+            $user->save();
+            return response()->json(['message' => 'Settings saved']);
+        } catch (Throwable $e) {
+            return response()->json(['error' => true, 'message' => $e->getMessage()], 500);
+        }
     }
 }

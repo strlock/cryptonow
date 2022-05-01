@@ -2,6 +2,8 @@
 namespace App\Services\Crypto\Exchanges\Bitstamp;
 
 use App\Dto\CreateNewOrderDto;
+use App\Dto\PlaceGoalOrderDto;
+use App\Dto\PlaceOrderDto;
 use App\Models\OrderInterface;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Trade;
@@ -18,7 +20,7 @@ class Facade extends AbstractFacade
 
     protected int $delay = 0;
 
-    public function __construct(){
+    public function __construct(?int $userId = null){
         $this->api = new API(env('BITSTAMP_API_KEY'),env('BITSTAMP_API_SECRET'),env('BITSTAMP_CLIENT_ID'));
     }
 
@@ -101,9 +103,20 @@ class Facade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $order
+     * @param PlaceOrderDto $dto
+     * @return false|int
      */
-    public function placeOrder(OrderInterface $order): void
+    public function placeOrder(PlaceOrderDto $dto): false|int
     {
+        return false;
+    }
+
+
+    /**
+     * @param PlaceGoalOrderDto $dto
+     */
+    public function placeTakeProfitAndStopLossOrder(PlaceGoalOrderDto $dto): array|false
+    {
+        return false;
     }
 }

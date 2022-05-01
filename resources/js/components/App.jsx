@@ -127,6 +127,7 @@ const App = () => {
                     <OrderForm currentPrice={currentPrice} showPopup={showPopup} ordersList={ordersListRef.current} />
                 </div>
             </div>
+            <UserSettingsModal showPopup={showPopup} />
         </div>
     } else {
         loginButton = <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginForm">Login</button>;
@@ -149,7 +150,6 @@ const App = () => {
             <div id="middle">
                 {content}
             </div>
-            <UserSettingsModal />
         </div>
     );
 }

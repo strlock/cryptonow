@@ -26,7 +26,7 @@ class AddExchangeToOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->removeColumn('exchange');
+            $table->dropColumn('exchange');
         });
     }
 }

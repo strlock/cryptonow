@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements UserInterface, JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -23,6 +23,8 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'binance_api_key',
+        'binance_api_secret',
     ];
 
     /**
@@ -54,8 +56,38 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    private function getId()
+    public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $value): void
+    {
+        $this->id = $value;
+    }
+
+    public function getBinanceApiKey(): string
+    {
+        return $this->binance_api_key;
+    }
+
+    public function setBinanceApiKey(string $value): void
+    {
+        $this->binance_api_key = $value;
+    }
+
+    public function getBinanceApiSecret(): string
+    {
+        return $this->binance_api_secret;
+    }
+
+    public function setBinanceApiSecret(string $value): void
+    {
+        $this->binance_api_secret = $value;
+    }
+
+    public function isBinanceConnected(): bool
+    {
+        return !empty($this->binance_api_key) && !empty($this->binance_api_secret);
     }
 }

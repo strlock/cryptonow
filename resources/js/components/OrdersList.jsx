@@ -63,7 +63,7 @@ class OrdersList extends React.Component
                                                         <td className={"text-center order-amount"}>{FormatHelper.formatAmount(order.amount, true)}</td>
                                                         <td className={"text-center order-sl-tp"}>
                                                             {FormatHelper.formatPrice(order.sl, true)}/{FormatHelper.formatPrice(order.tp, true)}<br/>
-                                                            Ready: {FormatHelper.formatDate(order.ready_at)}{order.ready_price !== null ? '<br/>' + FormatHelper.formatPrice(order.ready_price, true) : ''}
+                                                            Ready: {FormatHelper.formatDate(order.ready_at)}{order.ready_price !== null ? ' ' + FormatHelper.formatPrice(order.ready_price, true) : ''}
                                                         </td>
                                                         <td className={"text-center order-completed-at"}>{FormatHelper.formatDate(order.completed_at)}{order.completed_price !== null ? '<br/>' + FormatHelper.formatPrice(order.completed_price, true) : ''}</td>
                                                         <td className={"text-center order-state"}>{ORDER_STATE_TITLES[order.state]}</td>

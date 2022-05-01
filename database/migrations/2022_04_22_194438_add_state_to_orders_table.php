@@ -26,7 +26,7 @@ class AddStateToOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->removeColumn('state');
+            $table->dropColumn('state');
         });
     }
 }

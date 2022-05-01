@@ -3,7 +3,7 @@ const POPUP_TIMEOUT = 3000;
 
 const ORDER_STATE_TITLES = {
     'new': 'New Order',
-    'ready': 'Order is bought/sold',
+    'ready': 'Waiting SL or TP.',
     'profit': 'Order completed (profit)',
     'loss': 'Order completed (loss)',
     'failed': 'Order failed',

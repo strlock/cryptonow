@@ -11,7 +11,7 @@ class CreateNewOrderDto implements Arrayable
 {
     public function __construct(
         private int $userId,
-        private string $type,
+        private string $direction,
         private float $price,
         private float $amount,
         private ?float $sl,
@@ -43,9 +43,9 @@ class CreateNewOrderDto implements Arrayable
     /**
      * @return int
      */
-    public function getType(): int
+    public function getDirection(): int
     {
-        return $this->type;
+        return $this->direction;
     }
 
     /**
@@ -100,7 +100,7 @@ class CreateNewOrderDto implements Arrayable
     {
         return [
             'user_id' => $this->userId,
-            'type' => $this->type,
+            'direction' => $this->direction,
             'price' => $this->price,
             'amount' => $this->amount,
             'sl' => $this->sl,

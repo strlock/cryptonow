@@ -17,10 +17,9 @@ class LoginForm extends React.Component {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title">Login</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div className="modal-body p-2">
-                            <div className="form-group mb-2">
+                        <div className="modal-body p-3">
+                            <div className="form-group mb-3">
                                 <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" ref={this.emailRef}/>
                             </div>
                             <div className="mb-2 form-group">
@@ -29,7 +28,6 @@ class LoginForm extends React.Component {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-primary form-control" onClick={this.login.bind(this)}>Login</button>
-                            <button type="button" className="btn btn-secondary form-control" data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>

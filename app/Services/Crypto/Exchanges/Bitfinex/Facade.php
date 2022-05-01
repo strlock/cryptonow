@@ -2,6 +2,8 @@
 namespace App\Services\Crypto\Exchanges\Bitfinex;
 
 use App\Dto\CreateNewOrderDto;
+use App\Dto\PlaceGoalOrderDto;
+use App\Dto\PlaceOrderDto;
 use App\Models\OrderInterface;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Trade;
@@ -21,7 +23,7 @@ class Facade extends AbstractFacade
 
     protected int $delay = 0;
 
-    public function __construct(){
+    public function __construct(?int $userId = null){
         $this->api = new API([
             'apiKey' => env('BITFINEX_API_KEY'),
             'apiSecret' => env('BITFINEX_API_SECRET'),
@@ -98,9 +100,20 @@ class Facade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $order
+     * @param PlaceOrderDto $order
+     * @return false|int
      */
-    public function placeOrder(OrderInterface $order): void
+    public function placeOrder(PlaceOrderDto $dto): false|int
     {
+        return false;
+    }
+
+    /**
+     * @param PlaceGoalOrderDto $dto
+     * @return array|false
+     */
+    public function placeTakeProfitAndStopLossOrder(PlaceGoalOrderDto $dto): array|false
+    {
+        return false;
     }
 }

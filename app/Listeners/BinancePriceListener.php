@@ -14,7 +14,7 @@ class BinancePriceListener
      *
      * @return void
      */
-    public function __construct(private OrdersServiceInterface $ordersService)
+    public function __construct()
     {
         //
     }
@@ -27,6 +27,5 @@ class BinancePriceListener
      */
     public function handle(BinancePrice $event)
     {
-        $this->ordersService->checkAndExecuteOrders('binance', $event->getPrice());
     }
 }

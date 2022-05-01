@@ -12,8 +12,8 @@ interface OrderInterface
     public function setId(int $value): void;
     public function getUserId(): int;
     public function setUserId(int $value): void;
-    public function getType(): string;
-    public function setType(string $value): void;
+    public function getDirection(): string;
+    public function setDirection(string $value): void;
     public function getPrice(): float;
     public function setPrice(float $value): void;
     public function getAmount(): float;
@@ -32,11 +32,9 @@ interface OrderInterface
     public function setReadyAt(?DateTime $value): void;
     public function getCompletedAt(): ?DateTime;
     public function setCompletedAt(?DateTime $value): void;
-    public function getReadyPrice(): float;
-    public function setReadyPrice(float $value): void;
-    public function getCompletedPrice(): float;
-    public function setCompletedPrice(float $value): void;
     public function getSymbol(): string;
     public function setSymbol(string $value): void;
-    public function isSimple(): bool;
+    public function hasGoal(): bool;
+    public function getExchangeOrderId(): string;
+    public function setExchangeOrderId(string $value): void;
 }

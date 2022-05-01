@@ -14,7 +14,7 @@ class AddFieldsToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->string('type');
+            $table->string('direction');
             $table->decimal('price', 18, 7, true);
             $table->decimal('amount', 18, 7, true);
             $table->decimal('sl', 18,7, true)->nullable();
@@ -31,12 +31,12 @@ class AddFieldsToOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->removeColumn('type');
-            $table->removeColumn('price');
-            $table->removeColumn('amount');
-            $table->removeColumn('sl');
-            $table->removeColumn('tp');
-            $table->removeColumn('market');
+            $table->dropColumn('direction');
+            $table->dropColumn('price');
+            $table->dropColumn('amount');
+            $table->dropColumn('sl');
+            $table->dropColumn('tp');
+            $table->dropColumn('market');
         });
     }
 }

@@ -27,8 +27,8 @@ class AddExtraTimestampFieldsToOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->removeColumn('ready_at');
-            $table->removeColumn('completed_at');
+            $table->dropColumn('ready_at');
+            $table->dropColumn('completed_at');
         });
     }
 }

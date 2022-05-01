@@ -5,100 +5,162 @@ namespace App\Services;
 
 
 use App\Dto\CreateNewOrderDto;
-use App\Enums\OrderDirection;
+use App\Dto\PlaceGoalOrderDto;
+use App\Dto\PlaceOrderDto;
 use App\Enums\OrderState;
-use App\Enums\OrderType;
+use App\Enums\OrderDirection;
 use App\Models\Order;
 use App\Models\OrderInterface;
+use App\Models\User;
 use App\Repositories\OrdersRepository;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class OrdersService implements OrdersServiceInterface
 {
-    public function __construct(private OrdersRepository $ordersRepository)
+    public function __construct()
     {
         //
     }
 
-    public function checkAndExecuteOrders(string $exchange, float $price): void
-    {
-        $orders = $this->ordersRepository->getAllOrders();
-        foreach ($orders as $order) {
-            /** @var OrderInterface $order */
-            if ($order->getExchange() !== $exchange) {
-                continue;
-            }
-            $this->checkAndExecuteOrder($order, $price);
-        }
-    }
-
-    private function checkAndExecuteOrder(OrderInterface $order, float $currentPrice = null): void
-    {
-        /*if ($order->getState() === OrderState::NEW) {
-            $newState = $order->isSimple() ? OrderState::COMPLETED : OrderState::READY;
-            if ($order->isMarket()) {
-                $this->executeOrderByMarket($order, $order->getType(), $newState);
-                return;
-            }
-            $priceDifference = $currentPrice - $order->getPrice();
-            if (($order->getType() === OrderType::BUY && $priceDifference <= 0) || ($order->getType() === OrderType::SELL && $priceDifference >= 0)) {
-                $this->executeOrderByMarket($order, $order->getType(), $newState);
-            }
-        }
-        if ($order->getState() === OrderState::READY) {
-            if ($order->getType() === OrderType::BUY) {
-                if (!empty($order->getTp()) && $currentPrice >= $order->getTp()) {
-                    $this->executeOrderByMarket($order, OrderType::SELL, OrderState::PROFIT);
-                }
-                if (!empty($order->getSl()) && $currentPrice <= $order->getSl()) {
-                    $this->executeOrderByMarket($order, OrderType::SELL, OrderState::LOSS);
-                }
-            }
-            if ($order->getType() === OrderType::SELL) {
-                if (!empty($order->getTp()) && $currentPrice <= $order->getTp()) {
-                    $this->executeOrderByMarket($order, OrderType::BUY, OrderState::PROFIT);
-                }
-                if (!empty($order->getSl()) && $currentPrice >= $order->getSl()) {
-                    $this->executeOrderByMarket($order, OrderType::BUY, OrderState::LOSS);
-                }
-            }
-        }*/
-    }
-
+    /**
+     * @param CreateNewOrderDto $dto
+     * @return OrderInterface
+     * @throws Exception
+     */
     public function createNewOrder(CreateNewOrderDto $dto): OrderInterface
     {
         $order = new Order();
         $order->fill($dto->toArray());
         $order->setState(OrderState::NEW);
         $order->save();
-        $exchange = ExchangesFactory::create($dto->getExchange());
-        $exchange->placeOrder($order);
-        $this->checkAndExecuteOrder($order);
+        $this->placeNewOrderToExchange($order);
         return $order;
     }
 
-    private function executeOrderByMarket(OrderInterface $order, string $direction, string $stateAfterExecute)
+    /**
+     * @param OrderInterface|Model $order
+     * @throws Exception
+     */
+    private function placeNewOrderToExchange(OrderInterface|Model $order)
     {
-        Log::info(ucfirst($direction)." order executed: ".$order->getId().'. Simple: '.($order->isSimple() ? 'Yes' : 'No').', Market: '.($order->isMarket() ? 'Yes' : 'No'));
-        $this->changeOrderState($order, $stateAfterExecute);
+        $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
+        $exchangeOrderId = $exchange->placeOrder(new PlaceOrderDto(
+            $order->getDirection(),
+            $order->getSymbol(),
+            $order->getAmount(),
+            $order->getPrice(),
+            $order->isMarket() ? 'MARKET' : 'LIMIT',
+            $order->getId(),
+        ));
+        if ($exchangeOrderId === false) {
+            throw new Exception('Cannot place order to exchange');
+        }
+        $order->setExchangeOrderId($exchangeOrderId);
+        $order->save();
     }
 
-    private function changeOrderState(OrderInterface|Model $order, string $newState)
+    /**
+     * @param OrderInterface|Model $order
+     * @return string
+     */
+    public function placeRevertMarketOrderToExchange(OrderInterface|Model $order): string
     {
+        $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
+        return $exchange->placeOrder(new PlaceOrderDto(
+            $order->getDirection() === OrderDirection::BUY ? OrderDirection::SELL : OrderDirection::BUY,
+            $order->getSymbol(),
+            $order->getAmount(),
+            $order->getPrice(),
+            'MARKET',
+            'revert-'.$order->getId(),
+        ));
+    }
+
+    /**
+     * @param OrderInterface|Model $order
+     * @param string $newState
+     */
+    public function changeOrderState(OrderInterface|Model $order, string $newState): void
+    {
+        $oldState = $order->getState();
+        if ($newState === $oldState) {
+            Log::info('Refusing to set same order state. State: '.$newState);
+            return;
+        }
         $now = Date::now();
-        Log::debug('Order state changed to: '.$newState);
-        $order->setState($newState);
         if ($newState === OrderState::READY) {
-            Log::debug('Order '.$order->id.' is ready at '.$now->format(config('crypto.dateFormat')));
+            Log::info('Order '.$order->getId().' is ready to achieve the goal');
             $order->setReadyAt($now);
         }
         if (in_array($newState, [OrderState::PROFIT, OrderState::LOSS, OrderState::FAILED, OrderState::COMPLETED])) {
-            Log::debug('Order '.$order->id.' is completed at '.$now->format(config('crypto.dateFormat')));
+            Log::info('Order '.$order->getId().' is closed. State: '.$newState);
             $order->setCompletedAt($now);
         }
+        $order->setState($newState);
         $order->save();
+        Log::info('Order state is changed to: '.$newState.', Order id: '.$order->getId());
+    }
+
+    /**
+     * @param OrderInterface $order
+     * @return bool
+     */
+    public function placeGoalOrder(OrderInterface $order): bool
+    {
+        $result = false;
+        $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
+        $newOrderDirection = $order->getDirection() === OrderDirection::BUY ? OrderDirection::SELL : OrderDirection::BUY;
+        if (!empty($order->getSl()) && !empty($order->getTp())) {
+            if ($order->getDirection() === OrderDirection::SELL) {
+                $amount = $order->getPrice()*$order->getAmount()/$order->getTp();
+            } else {
+                $amount = $order->getAmount();
+            }
+            $placedOrderIds = $exchange->placeTakeProfitAndStopLossOrder(new PlaceGoalOrderDto(
+               $newOrderDirection,
+                $order->getSymbol(),
+                $amount,
+                $order->getSl(),
+                $order->getTp(),
+                $order->getId(),
+            ));
+            if ($placedOrderIds !== false) {
+                Log::info('Goal order is placed to exchange. Order id: '.$order->getId().', Placed order ids: '.implode(',', $placedOrderIds));
+                $result = true;
+            } else {
+                Log::info('Goal order is not placed');
+            }
+        } else if (!empty($order->getSl())) {
+            $exchangeOrderId = $exchange->placeOrder(new PlaceOrderDto(
+                $newOrderDirection,
+                $order->getSymbol(),
+                $order->getAmount(),
+                $order->getSl(),
+                'STOP_LOSS_LIMIT',
+                'sl-'.$order->getId(),
+            ));
+            if ($exchangeOrderId !== false) {
+                $result = true;
+            }
+        } else if (!empty($order->getTp())) {
+            $exchangeOrderId = $exchange->placeOrder(new PlaceOrderDto(
+                $newOrderDirection,
+                $order->getSymbol(),
+                $order->getAmount(),
+                $order->getTp(),
+                'LIMIT',
+                'tp-'.$order->getId(),
+            ));
+            if ($exchangeOrderId !== false) {
+                $result = true;
+            }
+        }
+        return $result;
     }
 }

@@ -12,5 +12,5 @@ interface FactoryInterface
      * @param string $name
      * @return FacadeInterface
      */
-    public static function create(string $name): FacadeInterface;
+    public static function create(string $name, int $userId = null): FacadeInterface;
 }
