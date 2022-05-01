@@ -72,7 +72,7 @@ class BinanceWebsocketUserDataClient extends Command
                     $executionType = BinanceOrderExecutionType::memberByValue($report['executionType']);
                     $this->log('Execution type: '.$executionType->value().', Order id: '.$clientOrderId.', Binance order id: '.$report['exchangeOrderId'].
                                ', Direction: '.$report['side'].', Price:'.$report['price'].', Quantity: '.$report['quantity'].', Stop: '.($isStopReport ? 'Yes' : 'No').', Limit: '.($isLimitReport ? 'Yes' : 'No'));
-                    //$this->log('Report: '.var_export($report, true));
+                    $this->log('Report: '.var_export($report, true));
                     if (!is_numeric($clientOrderId)) {
                         $this->log('Ignoring report with client order id '.$clientOrderId);
                         return;
