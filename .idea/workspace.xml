@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Imporving">
-      <change afterPath="$PROJECT_DIR$/resources/js/components/CurrentPrice.jsx" afterDir="false" />
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Imporving orders list">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/BinanceWebsocketClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/BinanceWebsocketClient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/PriceChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/PriceChart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/OrdersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/OrdersRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -297,14 +287,7 @@
       <workItem from="1650814916598" duration="49395000" />
       <workItem from="1651040820492" duration="55579000" />
       <workItem from="1651217650558" duration="53800000" />
-      <workItem from="1651383837282" duration="47200000" />
-    </task>
-    <task id="LOCAL-00006" summary="adding">
-      <created>1648285268318</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1648285268318</updated>
+      <workItem from="1651383837282" duration="47728000" />
     </task>
     <task id="LOCAL-00007" summary="adding">
       <created>1648285407009</created>
@@ -642,7 +625,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651424250555</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="Imporving orders list">
+      <created>1651508212641</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1651508212641</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -688,7 +678,8 @@
     <MESSAGE value="Design, enumerations" />
     <MESSAGE value="Bugfix" />
     <MESSAGE value="Imporving" />
-    <option name="LAST_COMMIT_MESSAGE" value="Imporving" />
+    <MESSAGE value="Imporving orders list" />
+    <option name="LAST_COMMIT_MESSAGE" value="Imporving orders list" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

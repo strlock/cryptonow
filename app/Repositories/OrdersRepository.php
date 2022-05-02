@@ -18,7 +18,7 @@ class OrdersRepository
 
     public function getUserOrders(User $user): Collection
     {
-        return Order::where('user_id', '=', $user->id)->get();
+        return Order::where('user_id', '=', $user->id)->orderBy('created_at', 'DESC')->get();
     }
 
     public function getAllOrders(): Collection
