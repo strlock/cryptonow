@@ -81,7 +81,7 @@ const OrdersList = () => {
                                                             <td className={"text-center order-sl-tp"}>{FormatHelper.formatPrice(order.tp, true)}</td>
                                                             <td className={"text-center order-state"}>{ORDER_STATE_TITLES[order.state]}</td>
                                                             <td className={"text-end order-actions"}>
-                                                                <button className="btn btn-danger btn-delete btn-sm" id={'order-delete-button-' + order.id} onClick={() => onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"> </i></button>
+                                                                {tabAlias === 'active' ? <button className="btn btn-danger btn-delete btn-sm" id={'order-delete-button-' + order.id} onClick={() => onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"> </i></button> : ''}
                                                             </td>
                                                         </tr>
                                                     );

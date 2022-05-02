@@ -128,6 +128,9 @@ class OrdersService implements OrdersServiceInterface
                 $order->getId(),
             ));
             if ($placedOrderIds !== false) {
+                $order->setExchangeSlOrderId($placedOrderIds[0]);
+                $order->setExchangeTpOrderId($placedOrderIds[1]);
+                $order->save();
                 Log::info('Goal order is placed to exchange. Order id: '.$order->getId().', Placed order ids: '.implode(',', $placedOrderIds));
                 $result = true;
             } else {
@@ -159,5 +162,11 @@ class OrdersService implements OrdersServiceInterface
             }
         }
         return $result;
+    }
+
+    public function cancelOrder(OrderInterface|Model $order)
+    {
+        $order->setState(OrderState::CANCELED());
+        $order->save();
     }
 }

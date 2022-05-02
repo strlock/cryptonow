@@ -104,6 +104,23 @@ class PriceChart extends React.Component {
             grid: {
                 borderColor: this.props.linesColor,
             },
+            annotations: {
+                position: 'front',
+                yaxis: [
+                    {
+                        y: 38400,
+                        borderColor: '#00E396',
+                        label: {
+                            borderColor: '#00E396',
+                            style: {
+                                color: '#fff',
+                                background: '#00E396'
+                            },
+                            text: 'Y-axis annotation on 8800'
+                        }
+                    }
+                ]
+            }
         },
     };
 

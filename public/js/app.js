@@ -10941,7 +10941,7 @@ var OrdersList = function OrdersList() {
                         children: _constants__WEBPACK_IMPORTED_MODULE_2__.ORDER_STATE_TITLES[order.state]
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                         className: "text-end order-actions",
-                        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                        children: tabAlias === 'active' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
                           className: "btn btn-danger btn-delete btn-sm",
                           id: 'order-delete-button-' + order.id,
                           onClick: function onClick() {
@@ -10952,7 +10952,7 @@ var OrdersList = function OrdersList() {
                             "aria-hidden": "true",
                             children: " "
                           })
-                        })
+                        }) : ''
                       })]
                     }, order.id);
                   })
@@ -11133,6 +11133,21 @@ var PriceChart = /*#__PURE__*/function (_React$Component) {
         },
         grid: {
           borderColor: _this.props.linesColor
+        },
+        annotations: {
+          position: 'front',
+          yaxis: [{
+            y: 38400,
+            borderColor: '#00E396',
+            label: {
+              borderColor: '#00E396',
+              style: {
+                color: '#fff',
+                background: '#00E396'
+              },
+              text: 'Y-axis annotation on 8800'
+            }
+          }]
         }
       }
     });

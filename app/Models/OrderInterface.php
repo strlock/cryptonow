@@ -39,4 +39,8 @@ interface OrderInterface
     public function hasGoal(): bool;
     public function getExchangeOrderId(): string;
     public function setExchangeOrderId(string $value): void;
+    public function getExchangeSlOrderId(): ?string;
+    public function setExchangeSlOrderId(?string $value): void;
+    public function getExchangeTpOrderId(): ?string;
+    public function setExchangeTpOrderId(?string $value): void;
 }

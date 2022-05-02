@@ -253,4 +253,24 @@ class Order extends Model implements OrderInterface
     {
         $this->exchange_order_id = $value;
     }
+
+    public function getExchangeSlOrderId(): ?string
+    {
+        return $this->exchange_sl_order_id;
+    }
+
+    public function setExchangeSlOrderId(?string $value): void
+    {
+        $this->exchange_sl_order_id = $value;
+    }
+
+    public function getExchangeTpOrderId(): ?string
+    {
+        return $this->get_exchange_tp_order_id;
+    }
+
+    public function setExchangeTpOrderId(?string $value): void
+    {
+        $this->exchange_tp_order_id = $value;
+    }
 }
