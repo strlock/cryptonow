@@ -2,6 +2,8 @@ import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import RequestHelper from "../Helpers/RequestHelper";
 import FormatHelper from "../Helpers/FormatHelper";
+import { AdvancedChart } from "react-tradingview-embed";
+import CurrentPrice from "./CurrentPrice";
 
 class PriceChart extends React.Component {
     state = {
@@ -34,11 +36,15 @@ class PriceChart extends React.Component {
                     align: 'center',
                     style: {
                         fontWeight: 'bold',
+                        color: this.props.textColor,
                     },
                 },
                 labels: {
                     formatter: function (y) {
                         return y + ' USDT';
+                    },
+                    style: {
+                        colors: this.props.textColor,
                     }
                 },
                 forceNiceScale: true,
@@ -56,15 +62,27 @@ class PriceChart extends React.Component {
                     datetimeUTC: false,
                     minHeight: 50,
                     offsetY: 10,
+                    style: {
+                        colors: this.props.textColor,
+                    },
                     formatter: function (value, timestamp, opts) {
                         return opts.dateFormatter(new Date(timestamp), 'HH:mm')
                     },
                 },
                 axisTicks: {
                     show: true,
+                    borderType: 'solid',
+                    color: this.props.linesColor,
+                    height: 6,
+                    offsetX: 0,
+                    offsetY: 0
                 },
                 tooltip: {
                     enabled: false
+                },
+                axisBorder: {
+                    show: true,
+                    color: this.props.linesColor,
                 },
             },
             theme: {
@@ -78,13 +96,13 @@ class PriceChart extends React.Component {
                 offsetX: 0,
                 offsetY: 0,
                 style: {
-                    color: "#000000",
+                    color: this.props.textColor,
                     fontSize: '14px',
                     fontFamily: "Helvetica"
                 }
             },
             grid: {
-                borderColor: '#444',
+                borderColor: this.props.linesColor,
             },
         },
     };
@@ -105,8 +123,8 @@ class PriceChart extends React.Component {
     render() {
         return (
             <div className="card">
-                <div className="card-header">Price{this.props.currentPrice !== 0.0 ? ': ' + FormatHelper.formatPrice(this.props.currentPrice) : ''}</div>
-                <div className="card-body">
+                <div className="card-header">Price<CurrentPrice symbol={"BTCBUSD"} /></div>
+                <div className="card-body pt-0">
                     <div className="chart">
                         <ReactApexChart options={this.state.options} series={this.state.series} type="candlestick" height={this.props.height} />
                     </div>

@@ -49,11 +49,15 @@ class MarketDeltaChart extends React.Component {
                     align: 'center',
                     style: {
                         fontWeight: 'bold',
+                        color: this.props.textColor,
                     },
                 },
                 labels: {
                     formatter: function (y) {
                         return y + ' BTC';
+                    },
+                    style: {
+                        colors: this.props.textColor,
                     }
                 },
                 forceNiceScale: true,
@@ -71,15 +75,27 @@ class MarketDeltaChart extends React.Component {
                     datetimeUTC: false,
                     minHeight: 50,
                     offsetY: 10,
+                    style: {
+                        colors: this.props.textColor,
+                    },
                     formatter: function (value, timestamp, opts) {
                         return opts.dateFormatter(new Date(timestamp), 'HH:mm')
                     },
                 },
                 axisTicks: {
                     show: true,
+                    borderType: 'solid',
+                    color: this.props.linesColor,
+                    height: 6,
+                    offsetX: 0,
+                    offsetY: 0
                 },
                 tooltip: {
                     enabled: false
+                },
+                axisBorder: {
+                    show: true,
+                    color: this.props.linesColor,
                 },
             },
             theme: {
@@ -93,13 +109,13 @@ class MarketDeltaChart extends React.Component {
                 offsetX: 0,
                 offsetY: 0,
                 style: {
-                    color: "#000000",
+                    color: this.props.textColor,
                     fontSize: '14px',
                     fontFamily: "Helvetica"
                 }
             },
             grid: {
-                borderColor: '#666',
+                borderColor: this.props.linesColor,
             },
         },
     };

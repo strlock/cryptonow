@@ -28,6 +28,8 @@ const App = () => {
         message: 'TEST',
         title: '',
     };
+    const chartsTextColor = '#A39ED8';
+    const chartsLinesColor = '#635E98';
     let popupTimeout = null;
 
     FormatHelper.setFromSign('₿');
@@ -81,10 +83,6 @@ const App = () => {
         mdChart.refresh();
     }
 
-    new BinanceWebsocketClient(function(price) {
-        setCurrentPrice(1.0*price);
-    });
-
     useEffect(() => {
         const interval = setInterval(() => {
             refreshCharts();
@@ -114,13 +112,13 @@ const App = () => {
             {popup.show ? popupDom : ''}
             <div className="row justify-content-center">
                 <div className="col-md-10">
+                    <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} ref={priceChartRef} />
+                    <br/>
                     <IntervalSelector setChartsInterval={setChartsInterval} refreshCharts={refreshCharts} />
                     <br/>
-                    <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} ref={priceChartRef} />
+                    <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} ref={mdChartRef} />
                     <br/>
-                    <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} ref={mdChartRef} />
-                    <br/>
-                    <OrdersList ref={ordersListRef} />
+                    <OrdersList innerRef={ordersListRef} />
                 </div>
                 <div className="col-md-2 ps-3">
                     <OrderForm currentPrice={currentPrice} showPopup={showPopup} ordersList={ordersListRef.current} />

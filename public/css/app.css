@@ -2484,6 +2484,7 @@ textarea.form-control-lg {
      -moz-appearance: none;
           appearance: none;
   -webkit-print-color-adjust: exact;
+     -moz-print-color-adjust: exact;
           color-adjust: exact;
 }
 .form-check-input[type=checkbox] {
@@ -14317,18 +14318,19 @@ textarea.form-control-lg {
     --bg-color: #171430;
     --top-bg-color: #24204B;
     --card-bg-color: #24204B;
-    --card-text-color: #635E98;
+    --text-color: #A39ED8;
     --card-header-bg-color: transparent;
-    --table-text-color: #aaa;
     --table-border-color: #333742;
     --table-bg-color: transparent;
-    --active-tab-color: #232732;
-    --active-tab-text-color: #aaa;
+    --active-tab-color: #679CF6;
+    --active-tab-color-end: #477Cd6;
+    --active-tab-text-color: #C3BEF8;
     --tab-text-color: #635E98;
     --modal-bg-color: #24204B;
     --modal-text-color: #aaa;
     --modal-close-button-color: #aaa;
     --main-border-radius: 20px;
+    --button-color: #6D46FF;
 }
 
 *, :before, :after{
@@ -14421,13 +14423,9 @@ h1{
 
 .card {
     background-color: var(--card-bg-color);
-    color: var(--card-text-color);
+    color: var(--text-color);
     border-radius: var(--main-border-radius);
     border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.card.order-form {
-    min-height: 35.2em;
 }
 
 .card .card-header {
@@ -14442,16 +14440,21 @@ h1{
 }
 
 .table {
-    color: var(--table-text-color);
+    color: var(--text-color);
     background-color: var(--table-bg-color);
 }
 
-.table tbody {
+.table > :not(:first-child) {
     border-top: none;
 }
 
 .table tr {
     border-color: var(--table-border-color);
+}
+
+.table > :not(caption) > * > * {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
 }
 
 .overlay, .overlay:before {
@@ -14504,14 +14507,28 @@ h1{
     color: #1A791A;
 }
 
+.nav-tabs {
+    border-bottom: none;
+}
+
 .nav-tabs .nav-link {
     color: var(--tab-text-color);
+    margin-bottom: 0;
+    border-radius: 0.25rem;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: transparent;
 }
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-    background-color: var(--active-tab-color);
+    background: linear-gradient(var(--active-tab-color), var(--active-tab-color-end));
     color: var(--active-tab-text-color);
     border: none;
+}
+
+.tab-content > .tab-pane {
+    padding-top: 1rem;
 }
 
 .modal-content {
@@ -14526,6 +14543,16 @@ h1{
 #loginForm .modal-dialog {
     margin: 25vh auto;
 }
+
+.btn-delete {
+    background-color: var(--button-color);
+    border-color: var(--button-color);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+}
+
+
 
 @media(max-width: 1500px){
     #top .top-left{
