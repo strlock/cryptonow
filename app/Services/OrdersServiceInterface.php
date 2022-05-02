@@ -15,4 +15,5 @@ interface OrdersServiceInterface
     public function changeOrderState(OrderInterface|Model $order, OrderState $newState);
     public function placeGoalOrder(OrderInterface $order): bool;
     public function placeRevertMarketOrderToExchange(OrderInterface|Model $order): string;
+    public function cancelOrder(OrderInterface|Model $order): void;
 }

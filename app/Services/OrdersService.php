@@ -119,7 +119,7 @@ class OrdersService implements OrdersServiceInterface
             } else {
                 $amount = $order->getAmount();
             }
-            $placedOrderIds = $exchange->placeTakeProfitAndStopLossOrder(new PlaceGoalOrderDto(
+            $exchangeOrderIds = $exchange->placeTakeProfitAndStopLossOrder(new PlaceGoalOrderDto(
                 $newOrderDirection,
                 $order->getSymbol(),
                 $amount,
@@ -127,11 +127,11 @@ class OrdersService implements OrdersServiceInterface
                 $order->getTp(),
                 $order->getId(),
             ));
-            if ($placedOrderIds !== false) {
-                $order->setExchangeSlOrderId($placedOrderIds[0]);
-                $order->setExchangeTpOrderId($placedOrderIds[1]);
+            if ($exchangeOrderIds !== false) {
+                $order->setExchangeSlOrderId($exchangeOrderIds[1]);
+                $order->setExchangeTpOrderId($exchangeOrderIds[0]);
                 $order->save();
-                Log::info('Goal order is placed to exchange. Order id: '.$order->getId().', Placed order ids: '.implode(',', $placedOrderIds));
+                Log::info('Goal order is placed to exchange. Order id: '.$order->getId().', Placed order ids: '.implode(',', $exchangeOrderIds));
                 $result = true;
             } else {
                 Log::info('Goal order is not placed');
@@ -146,6 +146,8 @@ class OrdersService implements OrdersServiceInterface
                 'sl-'.$order->getId(),
             ));
             if ($exchangeOrderId !== false) {
+                $order->setExchangeSlOrderId($exchangeOrderId);
+                $order->save();
                 $result = true;
             }
         } else if (!empty($order->getTp())) {
@@ -158,13 +160,15 @@ class OrdersService implements OrdersServiceInterface
                 'tp-'.$order->getId(),
             ));
             if ($exchangeOrderId !== false) {
+                $order->setExchangeTpOrderId($exchangeOrderId);
+                $order->save();
                 $result = true;
             }
         }
         return $result;
     }
 
-    public function cancelOrder(OrderInterface|Model $order)
+    public function cancelOrder(OrderInterface|Model $order): void
     {
         $order->setState(OrderState::CANCELED());
         $order->save();
