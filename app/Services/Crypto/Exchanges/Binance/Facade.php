@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Crypto\Exchanges\Binance;
 
+use App\Dto\CancelOrderDto;
 use App\Dto\PlaceGoalOrderDto;
 use App\Dto\PlaceOrderDto;
 use App\Enums\BinanceOrderType;
@@ -209,7 +210,11 @@ class Facade extends AbstractFacade
         return $result;
     }
 
-    private function getBinanceOrderType(ExchangeOrderType $orderType)
+    /**
+     * @param ExchangeOrderType $orderType
+     * @return BinanceOrderType
+     */
+    private function getBinanceOrderType(ExchangeOrderType $orderType): BinanceOrderType
     {
         return match($orderType) {
             ExchangeOrderType::market() => BinanceOrderType::MARKET(),
@@ -217,5 +222,21 @@ class Facade extends AbstractFacade
             ExchangeOrderType::stop_loss() => BinanceOrderType::STOP_LOSS_LIMIT(),
             ExchangeOrderType::take_profit() => BinanceOrderType::TAKE_PROFIT(),
         };
+    }
+
+    /**
+     * @param CancelOrderDto $dto
+     * @return bool
+     */
+    public function cancelOrder(CancelOrderDto $dto): bool
+    {
+        $result = true;
+        try {
+            $this->api->cancel($dto->getSymbol(), $dto->getOrderId());
+        } catch (Throwable $e) {
+            Log::error($e);
+            $result = false;
+        }
+        return $result;
     }
 }

@@ -86,34 +86,4 @@ class Facade extends AbstractFacade
         );
         $this->delay += 2;
     }
-
-    /**
-     * @param string $symbol
-     * @param int $fromTime
-     * @param int|null $toTime
-     * @param int|float $interval
-     * @return Collection
-     */
-    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection
-    {
-        // TODO: Implement getCandlesticks() method.
-    }
-
-    /**
-     * @param PlaceOrderDto $order
-     * @return false|int
-     */
-    public function placeOrder(PlaceOrderDto $dto): false|int
-    {
-        return false;
-    }
-
-    /**
-     * @param PlaceGoalOrderDto $dto
-     * @return array|false
-     */
-    public function placeTakeProfitAndStopLossOrder(PlaceGoalOrderDto $dto): array|false
-    {
-        return false;
-    }
 }

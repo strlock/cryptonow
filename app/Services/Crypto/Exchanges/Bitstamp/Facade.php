@@ -24,6 +24,12 @@ class Facade extends AbstractFacade
         $this->api = new API(env('BITSTAMP_API_KEY'),env('BITSTAMP_API_SECRET'),env('BITSTAMP_CLIENT_ID'));
     }
 
+    /**
+     * @param string $symbol
+     * @param int $fromTime
+     * @param int|null $toTime
+     * @return Collection
+     */
     public function getTrades(string $symbol, int $fromTime, int $toTime = null): Collection
     {
         $result = collect();
@@ -77,7 +83,7 @@ class Facade extends AbstractFacade
      * @param $toTime
      * @return array
      */
-    private function getTransactions($symbol, $fromTime, $toTime)
+    private function getTransactions($symbol, $fromTime, $toTime): array
     {
         $result = [];
         $dayTransactions = $this->api->transactions('day', self::SYMBOL_MAP[$symbol]);
@@ -88,35 +94,5 @@ class Facade extends AbstractFacade
             }
         }
         return $result;
-    }
-
-    /**
-     * @param string $symbol
-     * @param int $fromTime
-     * @param int|null $toTime
-     * @param int|float $interval
-     * @return Collection
-     */
-    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection
-    {
-        // TODO: Implement getCandlesticks() method.
-    }
-
-    /**
-     * @param PlaceOrderDto $dto
-     * @return false|int
-     */
-    public function placeOrder(PlaceOrderDto $dto): false|int
-    {
-        return false;
-    }
-
-
-    /**
-     * @param PlaceGoalOrderDto $dto
-     */
-    public function placeTakeProfitAndStopLossOrder(PlaceGoalOrderDto $dto): array|false
-    {
-        return false;
     }
 }

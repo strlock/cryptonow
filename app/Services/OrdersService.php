@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Dto\CancelOrderDto;
 use App\Dto\CreateNewOrderDto;
 use App\Dto\PlaceGoalOrderDto;
 use App\Dto\PlaceOrderDto;
@@ -12,6 +13,7 @@ use App\Enums\OrderState;
 use App\Enums\OrderDirection;
 use App\Models\Order;
 use App\Models\OrderInterface;
+use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -105,10 +107,10 @@ class OrdersService implements OrdersServiceInterface
     }
 
     /**
-     * @param OrderInterface $order
+     * @param OrderInterface|Model $order
      * @return bool
      */
-    public function placeGoalOrder(OrderInterface $order): bool
+    public function placeGoalOrder(OrderInterface|Model $order): bool
     {
         $result = false;
         $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
@@ -168,9 +170,37 @@ class OrdersService implements OrdersServiceInterface
         return $result;
     }
 
+    /**
+     * @param OrderInterface|Model $order
+     */
     public function cancelOrder(OrderInterface|Model $order): void
     {
+        $this->cancelPlacedOrdersFromExchange($order);
         $order->setState(OrderState::CANCELED());
         $order->save();
+    }
+
+    /**
+     * @param OrderInterface $order
+     */
+    private function cancelPlacedOrdersFromExchange(OrderInterface $order): void
+    {
+        /** @var AbstractFacade $exchange */
+        $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
+        $placedOrderIds = collect();
+        if (!empty($order->getExchangeOrderId())) {
+            $placedOrderIds->push($order->getExchangeOrderId());
+        }
+        if (!empty($order->getExchangeSlOrderId())) {
+            $placedOrderIds->push($order->getExchangeSlOrderId());
+        }
+        if (!empty($order->getExchangeTpOrderId())) {
+            $placedOrderIds->push($order->getExchangeTpOrderId());
+        }
+        if (count($placedOrderIds) > 0) {
+            foreach ($placedOrderIds as $placedOrderId) {
+                $exchange->cancelOrder(new CancelOrderDto($order->getSymbol(), $placedOrderId));
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Crypto\Exchanges;
 
+use App\Dto\CancelOrderDto;
 use App\Dto\CreateNewOrderDto;
 use App\Dto\PlaceGoalOrderDto;
 use App\Dto\PlaceOrderDto;
@@ -15,11 +16,12 @@ use Illuminate\Support\Collection;
 interface FacadeInterface
 {
     public function __construct(?int $userId = null);
+
     /**
      * @param string $symbol
      * @param int $fromTime
      * @param int|null $toTime
-     * @return array
+     * @return Collection
      */
     public function getTrades(string $symbol, int $fromTime, int $toTime = null): Collection;
 
@@ -27,6 +29,7 @@ interface FacadeInterface
      * @param string $symbol
      * @param int $fromTime
      * @param int|null $toTime
+     * @param int $interval
      * @return Collection
      */
     public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection;
@@ -41,4 +44,10 @@ interface FacadeInterface
      * @param PlaceGoalOrderDto $dto
      */
     public function placeTakeProfitAndStopLossOrder(PlaceGoalOrderDto $dto): array|false;
+
+    /**
+     * @param CancelOrderDto $dto
+     * @return bool
+     */
+    public function cancelOrder(CancelOrderDto $dto): bool;
 }

@@ -1,16 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import FormatHelper from "../Helpers/FormatHelper";
-import BinanceWebsocketClient from "./BinanceWebsocketClient";
+import currentPriceContext from "../contexts/CurrentPriceContext";
 
-const CurrentPrice = ({symbol}) => {
-    const [currentPrice, setCurrentPrice] = useState(0.0);
-
-    useEffect(() => {
-        new BinanceWebsocketClient(function(price) {
-            setCurrentPrice(1.0*price);
-        }, symbol);
-    }, []);
-
+const CurrentPrice = () => {
+    let currentPrice = useContext(currentPriceContext);
     return (
         <span>{currentPrice !== 0.0 ? ': ' + FormatHelper.formatPrice(currentPrice) : ''}</span>
     );

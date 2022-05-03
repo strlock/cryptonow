@@ -1,6 +1,9 @@
 <?php
 namespace App\Services\Crypto\Exchanges;
 
+use App\Dto\CancelOrderDto;
+use App\Dto\PlaceGoalOrderDto;
+use App\Dto\PlaceOrderDto;
 use App\Dto\TimeIntervalChunkDto;
 use App\Services\Crypto\Helpers\TimeHelper;
 use Illuminate\Support\Collection;
@@ -97,5 +100,44 @@ abstract class AbstractFacade implements FacadeInterface
     {
         $components = explode('\\', get_class($this));
         return strtolower($components[count($components)-2]);
+    }
+
+    /**
+     * @param string $symbol
+     * @param int $fromTime
+     * @param int|null $toTime
+     * @param int $interval
+     * @return Collection
+     */
+    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection
+    {
+        return collect();
+    }
+
+    /**
+     * @param PlaceOrderDto $dto
+     * @return false|int
+     */
+    public function placeOrder(PlaceOrderDto $dto): false|int
+    {
+        return false;
+    }
+
+    /**
+     * @param PlaceGoalOrderDto $dto
+     * @return array|false
+     */
+    public function placeTakeProfitAndStopLossOrder(PlaceGoalOrderDto $dto): array|false
+    {
+        return false;
+    }
+
+    /**
+     * @param CancelOrderDto $dto
+     * @return bool
+     */
+    public function cancelOrder(CancelOrderDto $dto): bool
+    {
+        return false;
     }
 }

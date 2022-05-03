@@ -9586,7 +9586,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BinanceWebsocketClient */ "./resources/js/components/BinanceWebsocketClient.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
 /* harmony import */ var _LoginForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./LoginForm */ "./resources/js/components/LoginForm.jsx");
 /* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
 /* harmony import */ var _OrdersList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./OrdersList */ "./resources/js/components/OrdersList.jsx");
@@ -9594,7 +9594,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _IntervalSelector__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./IntervalSelector */ "./resources/js/components/IntervalSelector.jsx");
 /* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
 /* harmony import */ var _UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./UserSettingsModal */ "./resources/js/components/UserSettingsModal.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../contexts/CurrentPriceContext */ "./resources/js/contexts/CurrentPriceContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -9606,6 +9607,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -9647,7 +9649,7 @@ var App = function App() {
       chartsInterval = _useState2[0],
       setChartsInterval = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0.0),
       _useState4 = _slicedToArray(_useState3, 2),
       currentPrice = _useState4[0],
       setCurrentPrice = _useState4[1];
@@ -9665,6 +9667,11 @@ var App = function App() {
   var priceChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var mdChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var ordersListRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {
+      setCurrentPrice(1.0 * price);
+    }, 'BTCBUSD');
+  }, []);
 
   var showPopup = function showPopup(message, type, title) {
     setPopup({
@@ -9724,15 +9731,15 @@ var App = function App() {
   var fromTime = chartsInterval * parseInt(fromDate.getTime() / chartsInterval);
   var toTime = chartsInterval * (parseInt(toDate.getTime() / chartsInterval) + 1);
 
-  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_16__["default"], {
+  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_17__["default"], {
     variant: popup.type,
     onClose: function onClose() {
       return hidePopup();
     },
     dismissible: true,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_16__["default"].Heading, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_17__["default"].Heading, {
       children: popup.title
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("p", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {
       children: popup.message
     })]
   });
@@ -9742,7 +9749,7 @@ var App = function App() {
   var settingsButton = '';
 
   if (isLoggedIn) {
-    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("button", {
+    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("button", {
       type: "button",
       className: "btn btn-primary",
       onClick: function onClick() {
@@ -9750,32 +9757,35 @@ var App = function App() {
       },
       children: ["Logout (", _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].getLoggedInUserName(), ")"]
     });
-    settingsButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("button", {
+    settingsButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("button", {
       type: "button",
       className: "btn btn-secondary",
       "data-bs-toggle": "modal",
       "data-bs-target": "#userSettingsModal",
       children: "Settings"
     });
-    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
       className: "container",
-      children: [popup.show ? popupDom : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+      children: [popup.show ? popupDom : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
         className: "row justify-content-center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
           className: "col-md-10",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            fromTime: fromTime,
-            toTime: toTime,
-            interval: chartsInterval,
-            height: priceHeight,
-            currentPrice: currentPrice,
-            textColor: chartsTextColor,
-            linesColor: chartsLinesColor,
-            ref: priceChartRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_15__["default"].Provider, {
+            value: currentPrice,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+              fromTime: fromTime,
+              toTime: toTime,
+              interval: chartsInterval,
+              height: priceHeight,
+              currentPrice: currentPrice,
+              textColor: chartsTextColor,
+              linesColor: chartsLinesColor,
+              ref: priceChartRef
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {
             setChartsInterval: setChartsInterval,
             refreshCharts: refreshCharts
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
             fromTime: fromTime,
             toTime: toTime,
             interval: chartsInterval,
@@ -9784,53 +9794,56 @@ var App = function App() {
             textColor: chartsTextColor,
             linesColor: chartsLinesColor,
             ref: mdChartRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
             innerRef: ordersListRef
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
           className: "col-md-2 ps-3",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
-            currentPrice: currentPrice,
-            showPopup: showPopup,
-            ordersList: ordersListRef.current
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_15__["default"].Provider, {
+            value: currentPrice,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              currentPrice: currentPrice,
+              showPopup: showPopup,
+              ordersList: ordersListRef.current
+            })
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {
         showPopup: showPopup
       })]
     });
   } else {
-    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("button", {
+    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("button", {
       type: "button",
       className: "btn btn-primary",
       "data-bs-toggle": "modal",
       "data-bs-target": "#loginForm",
       children: "Login"
     });
-    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
       onSuccess: onLoginSuccess,
       onFail: onLoginFail
     });
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
     id: "page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
       id: "top",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
         className: "top-left",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("a", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("a", {
           href: "/",
           className: "logo-link",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("img", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("img", {
             src: "images/logo.png"
           })
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
         className: "top-right",
         children: [loginButton, "\xA0\xA0\xA0", settingsButton]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
       id: "middle",
       children: content
     })]
@@ -9838,7 +9851,7 @@ var App = function App() {
 };
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(App, {}), document.getElementById('app'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(App, {}), document.getElementById('app'));
 }
 
 /***/ }),
@@ -9892,38 +9905,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
-/* harmony import */ var _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BinanceWebsocketClient */ "./resources/js/components/BinanceWebsocketClient.js");
+/* harmony import */ var _contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../contexts/CurrentPriceContext */ "./resources/js/contexts/CurrentPriceContext.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
 
 
-
-var CurrentPrice = function CurrentPrice(_ref) {
-  var symbol = _ref.symbol;
-
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0.0),
-      _useState2 = _slicedToArray(_useState, 2),
-      currentPrice = _useState2[0],
-      setCurrentPrice = _useState2[1];
-
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_2__["default"](function (price) {
-      setCurrentPrice(1.0 * price);
-    }, symbol);
-  }, []);
+var CurrentPrice = function CurrentPrice() {
+  var currentPrice = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_2__["default"]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
     children: currentPrice !== 0.0 ? ': ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_1__["default"].formatPrice(currentPrice) : ''
   });
@@ -10423,7 +10413,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
 /* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../contexts/CurrentPriceContext */ "./resources/js/contexts/CurrentPriceContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -10435,6 +10426,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -10474,6 +10466,7 @@ var OrderForm = function OrderForm(props) {
       direction = _useState12[0],
       setDirection = _useState12[1];
 
+  var currentPrice = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_4__["default"]);
   var totalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var amountRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var priceRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -10609,14 +10602,14 @@ var OrderForm = function OrderForm(props) {
     setTpPercent(0);
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
     className: "card text-white mb-3 order-form",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
       className: "card-body",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("form", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "input-group input-group-sm mb-4 mt-3",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
             type: "button",
             name: "volume",
             className: "btn btn-success form-control",
@@ -10624,7 +10617,7 @@ var OrderForm = function OrderForm(props) {
               return onDirectionClick(_constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY);
             },
             children: "BUY"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
             type: "button",
             name: "volume",
             className: "btn btn-danger form-control",
@@ -10633,17 +10626,17 @@ var OrderForm = function OrderForm(props) {
             },
             children: "SELL"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "input-group input-group-sm mb-4",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
             htmlFor: "price",
             className: "input-group-text w-25 bg-dark text-white",
             children: "Price"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: "text",
             name: "price",
             id: "price",
-            defaultValue: market ? props.currentPrice : '',
+            defaultValue: market ? currentPrice : '',
             className: "form-control bg-dark text-white",
             disabled: market,
             ref: priceRef,
@@ -10651,13 +10644,13 @@ var OrderForm = function OrderForm(props) {
               return onPriceChange();
             }
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "input-group input-group-sm mb-4",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
             htmlFor: "volume",
             className: "input-group-text w-25 bg-dark text-white",
             children: "Amount"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: "text",
             name: "amount",
             id: "amount",
@@ -10667,13 +10660,13 @@ var OrderForm = function OrderForm(props) {
             },
             ref: amountRef
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "input-group input-group-sm mb-4",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
             htmlFor: "total",
             className: "input-group-text w-25 bg-dark text-white",
             children: "Total"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: "text",
             name: "total",
             id: "total",
@@ -10683,13 +10676,13 @@ var OrderForm = function OrderForm(props) {
             },
             ref: totalRef
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "input-group input-group-sm mb-3",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
             htmlFor: "tp",
             className: "input-group-text w-25 bg-dark text-white",
             children: "Take Profit"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: "text",
             name: "tp",
             id: "tp",
@@ -10699,7 +10692,7 @@ var OrderForm = function OrderForm(props) {
               return onTpChange(event);
             },
             ref: tpRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: "range",
             className: "form-range mt-1",
             min: "0",
@@ -10710,16 +10703,16 @@ var OrderForm = function OrderForm(props) {
             onChange: function onChange(event) {
               return onTpRangeChange(event);
             }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
             children: [direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? '+' : '-', tpPercent, "%"]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "input-group input-group-sm mb-3",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
             htmlFor: "sl",
             className: "input-group-text w-25 bg-dark text-white",
             children: "Stop Loss"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: "text",
             name: "sl",
             id: "sl",
@@ -10729,7 +10722,7 @@ var OrderForm = function OrderForm(props) {
               return onSlChange(event);
             },
             ref: slRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             type: "range",
             className: "form-range mt-1",
             min: "0",
@@ -10740,26 +10733,26 @@ var OrderForm = function OrderForm(props) {
             onChange: function onChange(event) {
               return onSlRangeChange(event);
             }
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("span", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("span", {
             children: [direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? '-' : '+', slPercent, "%"]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "form-check form-check-inline mb-4",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("input", {
             className: "form-check-input",
             type: "checkbox",
             id: "marketCheckbox",
             defaultChecked: market,
             onClick: onMarketChange,
             ref: marketRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("label", {
             className: "form-check-label",
             htmlFor: "marketCheckbox",
             children: "Market"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "input-group input-group-sm mb-4",
-          children: [direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+          children: [direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_BUY ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
             type: "button",
             name: "order",
             className: "btn btn-success form-control",
@@ -10767,7 +10760,7 @@ var OrderForm = function OrderForm(props) {
               return onBuyClick();
             },
             children: "BUY"
-          }) : '', direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_SELL ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+          }) : '', direction === _constants__WEBPACK_IMPORTED_MODULE_3__.ORDER_DIRECTION_SELL ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
             type: "button",
             name: "order",
             className: "btn btn-danger form-control",
@@ -11438,6 +11431,24 @@ var ORDER_LIST_TAB_ORDER_SATES = {
   'history': ['profit', 'loss', 'failed', 'canceled', 'completed']
 };
 
+
+/***/ }),
+
+/***/ "./resources/js/contexts/CurrentPriceContext.js":
+/*!******************************************************!*\
+  !*** ./resources/js/contexts/CurrentPriceContext.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var currentPriceContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(0.0);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (currentPriceContext);
 
 /***/ }),
 

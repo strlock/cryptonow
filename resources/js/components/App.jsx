@@ -17,6 +17,7 @@ import {
 import IntervalSelector from "./IntervalSelector";
 import FormatHelper from "../Helpers/FormatHelper";
 import UserSettingsModal from "./UserSettingsModal";
+import currentPriceContext from "../contexts/CurrentPriceContext";
 
 const App = () => {
     const updateInterval = 15000;
@@ -36,13 +37,19 @@ const App = () => {
     FormatHelper.setToSign('$');
 
     const [chartsInterval, setChartsInterval] = useState(5*60000);
-    const [currentPrice, setCurrentPrice] = useState(0);
+    const [currentPrice, setCurrentPrice] = useState(0.0);
     const [popup, setPopup] = useState(popupDefault);
     const [isLoggedIn, setIsLoggedIn] = useState(LoginHelper.isLoggedIn());
 
     const priceChartRef = useRef();
     const mdChartRef = useRef();
     const ordersListRef = useRef();
+
+    useEffect(() => {
+        new BinanceWebsocketClient(function(price) {
+            setCurrentPrice(1.0*price);
+        }, 'BTCBUSD');
+    }, []);
 
     const showPopup = (message, type, title) => {
         setPopup({
@@ -132,22 +139,24 @@ const App = () => {
     }
 
     return (
-        <div id="page">
-            <div id="top">
-                <div className="top-left">
-                    <a href="/" className="logo-link">
-                        <img src="images/logo.png" />
-                    </a>
+        <currentPriceContext.Provider value={currentPrice}>
+            <div id="page">
+                <div id="top">
+                    <div className="top-left">
+                        <a href="/" className="logo-link">
+                            <img src="images/logo.png" />
+                        </a>
+                    </div>
+                    <div className="top-right">
+                        {loginButton}&nbsp;&nbsp;&nbsp;
+                        {settingsButton}
+                    </div>
                 </div>
-                <div className="top-right">
-                    {loginButton}&nbsp;&nbsp;&nbsp;
-                    {settingsButton}
+                <div id="middle">
+                    {content}
                 </div>
             </div>
-            <div id="middle">
-                {content}
-            </div>
-        </div>
+        </currentPriceContext.Provider>
     );
 }
 

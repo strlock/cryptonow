@@ -266,7 +266,7 @@ class Order extends Model implements OrderInterface
 
     public function getExchangeTpOrderId(): ?string
     {
-        return $this->get_exchange_tp_order_id;
+        return $this->exchange_tp_order_id;
     }
 
     public function setExchangeTpOrderId(?string $value): void
