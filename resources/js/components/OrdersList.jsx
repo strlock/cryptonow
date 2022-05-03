@@ -1,18 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import RequestHelper from "../Helpers/RequestHelper";
 import {ORDER_STATE_TITLES, ORDER_DIRECTION_TITLES, ORDERS_LIST_TAB_TITLES, ORDER_LIST_TAB_ORDER_SATES} from "../constants";
 import FormatHelper from "../Helpers/FormatHelper";
 import $ from "jquery";
+import ordersContext from "../contexts/OrdersContext";
 
 const OrdersList = () => {
-    const [orders, setOrders] = useState([]);
+    const orders = useContext(ordersContext);
     const tabAliases = ['active', 'history'];
-
-    const refresh = () => {
-        return RequestHelper.fetch('/api/orders', {}, response => {
-            setOrders(response.data);
-        });
-    }
 
     const onDeleteClick = (order) => {
         const $button = $('#order-delete-button-' + order.id);
@@ -23,13 +18,6 @@ const OrdersList = () => {
             refresh();
         });
     }
-
-    useEffect(() => {
-        refresh();
-        setInterval(() => {
-            refresh();
-        }, 3000);
-    }, []);
 
     return (
         <div className="card">
@@ -67,7 +55,8 @@ const OrdersList = () => {
                                                     <th className={"text-center"}>Stop Loss</th>
                                                     <th className={"text-center"}>Take Profit</th>
                                                     <th className={"text-center"}>Status</th>
-                                                    <th className={"text-end"}></th>
+                                                    <th className={"text-center"} width={50}>ID</th>
+                                                    <th className={"text-end"} width={50}></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -80,6 +69,7 @@ const OrdersList = () => {
                                                             <td className={"text-center order-sl-tp"}>{FormatHelper.formatPrice(order.sl, true)}</td>
                                                             <td className={"text-center order-sl-tp"}>{FormatHelper.formatPrice(order.tp, true)}</td>
                                                             <td className={"text-center order-state"}>{ORDER_STATE_TITLES[order.state]}</td>
+                                                            <td className={"text-center order-symbol"}>{order.id}</td>
                                                             <td className={"text-end order-actions"}>
                                                                 {tabAlias === 'active' ? <button className="btn btn-danger btn-delete btn-sm" id={'order-delete-button-' + order.id} onClick={() => onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"> </i></button> : ''}
                                                             </td>

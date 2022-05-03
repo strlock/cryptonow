@@ -18,6 +18,8 @@ import IntervalSelector from "./IntervalSelector";
 import FormatHelper from "../Helpers/FormatHelper";
 import UserSettingsModal from "./UserSettingsModal";
 import currentPriceContext from "../contexts/CurrentPriceContext";
+import ordersContext from "../contexts/OrdersContext";
+import RequestHelper from "../Helpers/RequestHelper";
 
 const App = () => {
     const updateInterval = 15000;
@@ -40,6 +42,7 @@ const App = () => {
     const [currentPrice, setCurrentPrice] = useState(0.0);
     const [popup, setPopup] = useState(popupDefault);
     const [isLoggedIn, setIsLoggedIn] = useState(LoginHelper.isLoggedIn());
+    const [orders, setOrders] = useState([]);
 
     const priceChartRef = useRef();
     const mdChartRef = useRef();
@@ -50,6 +53,12 @@ const App = () => {
             setCurrentPrice(1.0*price);
         }, 'BTCBUSD');
     }, []);
+
+    const refreshOrders = () => {
+        RequestHelper.fetch('/api/orders', {}, response => {
+            setOrders(response.data);
+        });
+    }
 
     const showPopup = (message, type, title) => {
         setPopup({
@@ -86,8 +95,8 @@ const App = () => {
     const refreshCharts = () => {
         const priceChart = priceChartRef.current;
         const mdChart = mdChartRef.current;
-        priceChart.refresh();
-        mdChart.refresh();
+        //priceChart.refresh();
+        //mdChart.refresh();
     }
 
     useEffect(() => {
@@ -113,19 +122,31 @@ const App = () => {
     let content = '';
     let settingsButton = '';
     if (isLoggedIn) {
+
+        useEffect(() => {
+            refreshOrders();
+            setInterval(() => {
+                refreshOrders();
+            }, 3000);
+        }, []);
+
         loginButton = <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>Logout ({LoginHelper.getLoggedInUserName()})</button>;
         settingsButton = <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#userSettingsModal">Settings</button>;
         content = <div className="container">
             {popup.show ? popupDom : ''}
             <div className="row justify-content-center">
                 <div className="col-md-10">
-                    <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} ref={priceChartRef} />
+                    <ordersContext.Provider value={orders}>
+                        <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={priceChartRef} />
+                    </ordersContext.Provider>
                     <br/>
                     <IntervalSelector setChartsInterval={setChartsInterval} refreshCharts={refreshCharts} />
                     <br/>
                     <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} ref={mdChartRef} />
                     <br/>
-                    <OrdersList innerRef={ordersListRef} />
+                    <ordersContext.Provider value={orders}>
+                        <OrdersList innerRef={ordersListRef} />
+                    </ordersContext.Provider>
                 </div>
                 <div className="col-md-2 ps-3">
                     <OrderForm currentPrice={currentPrice} showPopup={showPopup} ordersList={ordersListRef.current} />

@@ -9586,7 +9586,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BinanceWebsocketClient */ "./resources/js/components/BinanceWebsocketClient.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
 /* harmony import */ var _LoginForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./LoginForm */ "./resources/js/components/LoginForm.jsx");
 /* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
 /* harmony import */ var _OrdersList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./OrdersList */ "./resources/js/components/OrdersList.jsx");
@@ -9595,7 +9595,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
 /* harmony import */ var _UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./UserSettingsModal */ "./resources/js/components/UserSettingsModal.jsx");
 /* harmony import */ var _contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../contexts/CurrentPriceContext */ "./resources/js/contexts/CurrentPriceContext.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _contexts_OrdersContext__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../contexts/OrdersContext */ "./resources/js/contexts/OrdersContext.js");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -9607,6 +9609,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -9664,6 +9668,11 @@ var App = function App() {
       isLoggedIn = _useState8[0],
       setIsLoggedIn = _useState8[1];
 
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState10 = _slicedToArray(_useState9, 2),
+      orders = _useState10[0],
+      setOrders = _useState10[1];
+
   var priceChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var mdChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var ordersListRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -9672,6 +9681,12 @@ var App = function App() {
       setCurrentPrice(1.0 * price);
     }, 'BTCBUSD');
   }, []);
+
+  var refreshOrders = function refreshOrders() {
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_17__["default"].fetch('/api/orders', {}, function (response) {
+      setOrders(response.data);
+    });
+  };
 
   var showPopup = function showPopup(message, type, title) {
     setPopup({
@@ -9707,9 +9722,8 @@ var App = function App() {
 
   var refreshCharts = function refreshCharts() {
     var priceChart = priceChartRef.current;
-    var mdChart = mdChartRef.current;
-    priceChart.refresh();
-    mdChart.refresh();
+    var mdChart = mdChartRef.current; //priceChart.refresh();
+    //mdChart.refresh();
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -9731,15 +9745,15 @@ var App = function App() {
   var fromTime = chartsInterval * parseInt(fromDate.getTime() / chartsInterval);
   var toTime = chartsInterval * (parseInt(toDate.getTime() / chartsInterval) + 1);
 
-  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_17__["default"], {
+  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_19__["default"], {
     variant: popup.type,
     onClose: function onClose() {
       return hidePopup();
     },
     dismissible: true,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_17__["default"].Heading, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_19__["default"].Heading, {
       children: popup.title
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("p", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("p", {
       children: popup.message
     })]
   });
@@ -9749,7 +9763,13 @@ var App = function App() {
   var settingsButton = '';
 
   if (isLoggedIn) {
-    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("button", {
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+      refreshOrders();
+      setInterval(function () {
+        refreshOrders();
+      }, 3000);
+    }, []);
+    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("button", {
       type: "button",
       className: "btn btn-primary",
       onClick: function onClick() {
@@ -9757,22 +9777,22 @@ var App = function App() {
       },
       children: ["Logout (", _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].getLoggedInUserName(), ")"]
     });
-    settingsButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("button", {
+    settingsButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("button", {
       type: "button",
       className: "btn btn-secondary",
       "data-bs-toggle": "modal",
       "data-bs-target": "#userSettingsModal",
       children: "Settings"
     });
-    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
       className: "container",
-      children: [popup.show ? popupDom : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+      children: [popup.show ? popupDom : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
         className: "row justify-content-center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
           className: "col-md-10",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_15__["default"].Provider, {
-            value: currentPrice,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_contexts_OrdersContext__WEBPACK_IMPORTED_MODULE_16__["default"].Provider, {
+            value: orders,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
               fromTime: fromTime,
               toTime: toTime,
               interval: chartsInterval,
@@ -9780,12 +9800,12 @@ var App = function App() {
               currentPrice: currentPrice,
               textColor: chartsTextColor,
               linesColor: chartsLinesColor,
-              ref: priceChartRef
+              innerRef: priceChartRef
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {
             setChartsInterval: setChartsInterval,
             refreshCharts: refreshCharts
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
             fromTime: fromTime,
             toTime: toTime,
             interval: chartsInterval,
@@ -9794,64 +9814,67 @@ var App = function App() {
             textColor: chartsTextColor,
             linesColor: chartsLinesColor,
             ref: mdChartRef
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
-            innerRef: ordersListRef
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
-          className: "col-md-2 ps-3",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_15__["default"].Provider, {
-            value: currentPrice,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
-              currentPrice: currentPrice,
-              showPopup: showPopup,
-              ordersList: ordersListRef.current
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_contexts_OrdersContext__WEBPACK_IMPORTED_MODULE_16__["default"].Provider, {
+            value: orders,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
+              innerRef: ordersListRef
             })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+          className: "col-md-2 ps-3",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            currentPrice: currentPrice,
+            showPopup: showPopup,
+            ordersList: ordersListRef.current
           })
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {
         showPopup: showPopup
       })]
     });
   } else {
-    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("button", {
+    loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("button", {
       type: "button",
       className: "btn btn-primary",
       "data-bs-toggle": "modal",
       "data-bs-target": "#loginForm",
       children: "Login"
     });
-    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
       onSuccess: onLoginSuccess,
       onFail: onLoginFail
     });
   }
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
-    id: "page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
-      id: "top",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
-        className: "top-left",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("a", {
-          href: "/",
-          className: "logo-link",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("img", {
-            src: "images/logo.png"
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_15__["default"].Provider, {
+    value: currentPrice,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+      id: "page",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+        id: "top",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+          className: "top-left",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("a", {
+            href: "/",
+            className: "logo-link",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("img", {
+              src: "images/logo.png"
+            })
           })
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("div", {
-        className: "top-right",
-        children: [loginButton, "\xA0\xA0\xA0", settingsButton]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+          className: "top-right",
+          children: [loginButton, "\xA0\xA0\xA0", settingsButton]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+        id: "middle",
+        children: content
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("div", {
-      id: "middle",
-      children: content
-    })]
+    })
   });
 };
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(App, {}), document.getElementById('app'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(App, {}), document.getElementById('app'));
 }
 
 /***/ }),
@@ -10796,18 +10819,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/* harmony import */ var _contexts_OrdersContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../contexts/OrdersContext */ "./resources/js/contexts/OrdersContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
@@ -10818,18 +10831,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var OrdersList = function OrdersList() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-      _useState2 = _slicedToArray(_useState, 2),
-      orders = _useState2[0],
-      setOrders = _useState2[1];
-
+  var orders = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_contexts_OrdersContext__WEBPACK_IMPORTED_MODULE_5__["default"]);
   var tabAliases = ['active', 'history'];
-
-  var refresh = function refresh() {
-    return _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/orders', {}, function (response) {
-      setOrders(response.data);
-    });
-  };
 
   var onDeleteClick = function onDeleteClick(order) {
     var $button = jquery__WEBPACK_IMPORTED_MODULE_4___default()('#order-delete-button-' + order.id);
@@ -10841,20 +10844,14 @@ var OrdersList = function OrdersList() {
     });
   };
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    refresh();
-    setInterval(function () {
-      refresh();
-    }, 3000);
-  }, []);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
     className: "card",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
       className: "card-body",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
         className: "table-responsive orders",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("nav", {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("nav", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
             className: "nav nav-tabs",
             id: "nav-tab",
             role: "tablist",
@@ -10863,7 +10860,7 @@ var OrdersList = function OrdersList() {
               var tabId = "nav-" + tabAlias + "-tab";
               var tabTarget = "#nav-" + tabAlias;
               var tabAriaControls = "nav-" + tabAlias;
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                 className: liClass,
                 id: tabId,
                 "data-bs-toggle": "tab",
@@ -10876,7 +10873,7 @@ var OrdersList = function OrdersList() {
               }, tabAlias);
             })
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           className: "tab-content",
           id: "myTabContent",
           children: tabAliases.map(function (tabAlias, i) {
@@ -10885,62 +10882,70 @@ var OrdersList = function OrdersList() {
             var tabOrders = orders.filter(function (order) {
               return _constants__WEBPACK_IMPORTED_MODULE_2__.ORDER_LIST_TAB_ORDER_SATES[tabAlias].indexOf(order.state) !== -1;
             });
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
               className: paneClass,
               id: paneId,
               role: "tabpanel",
-              children: tabOrders.length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("table", {
+              children: tabOrders.length > 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("table", {
                 className: "table",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("thead", {
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("thead", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("th", {
                       className: "text-start",
                       children: "Order"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("th", {
                       className: "text-center",
                       children: "Price"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("th", {
                       className: "text-center",
                       children: "Stop Loss"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("th", {
                       className: "text-center",
                       children: "Take Profit"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("th", {
                       className: "text-center",
                       children: "Status"
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
-                      className: "text-end"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("th", {
+                      className: "text-center",
+                      width: 50,
+                      children: "ID"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("th", {
+                      className: "text-end",
+                      width: 50
                     })]
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("tbody", {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("tbody", {
                   children: tabOrders.map(function (order) {
                     var orderClass = 'order order-' + order.state;
-                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
+                    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
                       className: orderClass,
-                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("td", {
                         className: "text-start order-symbol",
                         children: [_constants__WEBPACK_IMPORTED_MODULE_2__.ORDER_DIRECTION_TITLES[order.direction], " ", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatAmount(order.amount, true)]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                         className: "text-center order-price",
                         children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.price, true)
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                         className: "text-center order-sl-tp",
                         children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.sl, true)
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                         className: "text-center order-sl-tp",
                         children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.tp, true)
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                         className: "text-center order-state",
                         children: _constants__WEBPACK_IMPORTED_MODULE_2__.ORDER_STATE_TITLES[order.state]
-                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+                        className: "text-center order-symbol",
+                        children: order.id
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
                         className: "text-end order-actions",
-                        children: tabAlias === 'active' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+                        children: tabAlias === 'active' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                           className: "btn btn-danger btn-delete btn-sm",
                           id: 'order-delete-button-' + order.id,
                           onClick: function onClick() {
                             return onDeleteClick(order);
                           },
-                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("i", {
+                          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("i", {
                             className: "fa fa-times",
                             "aria-hidden": "true",
                             children: " "
@@ -10950,7 +10955,7 @@ var OrdersList = function OrdersList() {
                     }, order.id);
                   })
                 })]
-              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+              }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                 className: "text-center",
                 children: "No orders"
               })
@@ -10981,32 +10986,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_apexcharts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apexcharts */ "./node_modules/react-apexcharts/dist/react-apexcharts.min.js");
 /* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
 /* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
-/* harmony import */ var react_tradingview_embed__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-tradingview-embed */ "./node_modules/react-tradingview-embed/dist/index.js");
-/* harmony import */ var _CurrentPrice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./CurrentPrice */ "./resources/js/components/CurrentPrice.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+/* harmony import */ var _CurrentPrice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CurrentPrice */ "./resources/js/components/CurrentPrice.jsx");
+/* harmony import */ var _contexts_OrdersContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../contexts/OrdersContext */ "./resources/js/contexts/OrdersContext.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -11017,196 +11011,215 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var PriceChart = /*#__PURE__*/function (_React$Component) {
-  _inherits(PriceChart, _React$Component);
+var chartContext = null;
 
-  var _super = _createSuper(PriceChart);
+var PriceChart = function PriceChart(_ref) {
+  var fromTime = _ref.fromTime,
+      toTime = _ref.toTime,
+      interval = _ref.interval,
+      height = _ref.height,
+      textColor = _ref.textColor,
+      linesColor = _ref.linesColor;
+  var orders = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_contexts_OrdersContext__WEBPACK_IMPORTED_MODULE_5__["default"]);
 
-  function PriceChart(props) {
-    var _this;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      seriesData = _useState2[0],
+      setSeriesData = _useState2[1];
 
-    _classCallCheck(this, PriceChart);
-
-    _this = _super.call(this, props);
-
-    _defineProperty(_assertThisInitialized(_this), "state", {
-      series: [{
-        name: 'Price',
-        data: []
-      }],
-      options: {
-        chart: {
-          type: 'candlestick',
-          selection: {
-            enabled: false
-          },
-          sparkline: {
-            enabled: false
-          },
-          zoom: {
-            enabled: false
-          },
-          animations: {
-            enabled: false
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        yaxis: {
-          title: {
-            text: 'USDT',
-            align: 'center',
-            style: {
-              fontWeight: 'bold',
-              color: _this.props.textColor
-            }
-          },
-          labels: {
-            formatter: function formatter(y) {
-              return y + ' USDT';
-            },
-            style: {
-              colors: _this.props.textColor
-            }
-          },
-          forceNiceScale: true
-        },
-        xaxis: {
-          type: 'datetime',
-          categories: [],
-          tickAmount: 30,
-          tickPlacement: 'on',
-          labels: {
-            format: 'HH:mm',
-            rotate: -30,
-            rotateAlways: true,
-            hideOverlappingLabels: false,
-            datetimeUTC: false,
-            minHeight: 50,
-            offsetY: 10,
-            style: {
-              colors: _this.props.textColor
-            },
-            formatter: function formatter(value, timestamp, opts) {
-              return opts.dateFormatter(new Date(timestamp), 'HH:mm');
-            }
-          },
-          axisTicks: {
-            show: true,
-            borderType: 'solid',
-            color: _this.props.linesColor,
-            height: 6,
-            offsetX: 0,
-            offsetY: 0
-          },
-          tooltip: {
-            enabled: false
-          },
-          axisBorder: {
-            show: true,
-            color: _this.props.linesColor
-          }
-        },
-        theme: {
-          mode: 'dark',
-          palette: 'palette2'
-        },
-        noData: {
-          text: "Loading...",
-          align: 'center',
-          verticalAlign: 'middle',
-          offsetX: 0,
-          offsetY: 0,
-          style: {
-            color: _this.props.textColor,
-            fontSize: '14px',
-            fontFamily: "Helvetica"
-          }
-        },
-        grid: {
-          borderColor: _this.props.linesColor
-        },
-        annotations: {
-          position: 'front',
-          yaxis: [{
-            y: 38400,
-            borderColor: '#00E396',
-            label: {
-              borderColor: '#00E396',
-              style: {
-                color: '#fff',
-                background: '#00E396'
-              },
-              text: 'Y-axis annotation on 8800'
-            }
-          }]
-        }
-      }
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/price/BTCUSDT/' + fromTime + '/' + toTime + '/' + interval, {}, function (response) {
+      setSeriesData(response.data);
+    }, function (error) {
+      return console.log(error);
+    });
+  }, [fromTime, toTime, interval]);
+  var yAnnotations = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    var result = [];
+    var filteredOrders = orders.filter(function (order) {
+      return order.state === 'new' || order.state === 'ready';
     });
 
-    _defineProperty(_assertThisInitialized(_this), "chartContext", null);
+    for (var i in filteredOrders) {
+      var order = filteredOrders[i];
+      result.push({
+        y: order.price,
+        borderColor: order.direction === _constants__WEBPACK_IMPORTED_MODULE_6__.ORDER_DIRECTION_BUY ? '#00E396' : '#E30096',
+        strokeDashArray: 0,
+        label: {
+          borderColor: linesColor,
+          style: {
+            color: textColor,
+            background: 'transparent'
+          },
+          text: 'Order ' + order.id + ': ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.price)
+        }
+      });
 
-    var self = _assertThisInitialized(_this);
-
-    _this.state.options.chart.events = {
-      mounted: function mounted(chartContext, config) {
-        self.chartContext = chartContext;
+      if (order.sl) {
+        result.push({
+          y: order.sl,
+          borderColor: order.direction === _constants__WEBPACK_IMPORTED_MODULE_6__.ORDER_DIRECTION_BUY ? '#E30096' : '#00E396',
+          strokeDashArray: 5,
+          label: {
+            borderColor: linesColor,
+            style: {
+              color: textColor,
+              background: 'transparent'
+            },
+            text: 'Order ' + order.id + ' SL: ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.sl)
+          }
+        });
       }
-    };
 
-    _this.refresh();
-
-    return _this;
-  }
-
-  _createClass(PriceChart, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-        className: "card",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          className: "card-header",
-          children: ["Price", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_CurrentPrice__WEBPACK_IMPORTED_MODULE_5__["default"], {
-            symbol: "BTCBUSD"
-          })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-          className: "card-body pt-0",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            className: "chart",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_apexcharts__WEBPACK_IMPORTED_MODULE_1__["default"], {
-              options: this.state.options,
-              series: this.state.series,
-              type: "candlestick",
-              height: this.props.height
-            })
-          })
-        })]
-      });
+      if (order.tp) {
+        result.push({
+          y: order.tp,
+          borderColor: order.direction === _constants__WEBPACK_IMPORTED_MODULE_6__.ORDER_DIRECTION_BUY ? '#E30096' : '#00E396',
+          strokeDashArray: 5,
+          label: {
+            borderColor: linesColor,
+            style: {
+              color: textColor,
+              background: 'transparent'
+            },
+            text: 'Order ' + order.id + ' TP: ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(order.tp)
+          }
+        });
+      }
     }
-  }, {
-    key: "refresh",
-    value: function refresh() {
-      var self = this;
-      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/price/BTCUSDT/' + this.props.fromTime + '/' + this.props.toTime + '/' + this.props.interval, {}, function (response) {
-        self.chartContext.updateSeries([{
-          data: response.data
-        }]);
-      }, function (error) {
-        return console.log(error);
-      });
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.refresh();
-    }
-  }]);
 
-  return PriceChart;
-}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+    return result;
+  }, [orders]);
+  var options = {
+    chart: {
+      type: 'candlestick',
+      selection: {
+        enabled: false
+      },
+      sparkline: {
+        enabled: false
+      },
+      zoom: {
+        enabled: false
+      },
+      animations: {
+        enabled: false
+      },
+      events: {
+        mounted: function mounted(cc, config) {
+          chartContext = cc;
+        }
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    yaxis: {
+      title: {
+        text: 'USDT',
+        align: 'center',
+        style: {
+          fontWeight: 'bold',
+          color: textColor
+        }
+      },
+      labels: {
+        formatter: function formatter(y) {
+          return y + ' USDT';
+        },
+        style: {
+          colors: textColor
+        }
+      },
+      forceNiceScale: true
+    },
+    xaxis: {
+      type: 'datetime',
+      categories: [],
+      tickAmount: 30,
+      tickPlacement: 'on',
+      labels: {
+        format: 'HH:mm',
+        rotate: -30,
+        rotateAlways: true,
+        hideOverlappingLabels: false,
+        datetimeUTC: false,
+        minHeight: 50,
+        offsetY: 10,
+        style: {
+          colors: textColor
+        },
+        formatter: function formatter(value, timestamp, opts) {
+          return opts.dateFormatter(new Date(timestamp), 'HH:mm');
+        }
+      },
+      axisTicks: {
+        show: true,
+        borderType: 'solid',
+        color: linesColor,
+        height: 6,
+        offsetX: 0,
+        offsetY: 0
+      },
+      tooltip: {
+        enabled: false
+      },
+      axisBorder: {
+        show: true,
+        color: linesColor
+      }
+    },
+    theme: {
+      mode: 'dark',
+      palette: 'palette2'
+    },
+    noData: {
+      text: "Loading...",
+      align: 'center',
+      verticalAlign: 'middle',
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: textColor,
+        fontSize: '14px',
+        fontFamily: "Helvetica"
+      }
+    },
+    grid: {
+      borderColor: linesColor
+    },
+    annotations: {
+      position: 'front',
+      yaxis: yAnnotations
+    }
+  };
+  var series = [{
+    name: 'Price',
+    data: seriesData
+  }];
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+    className: "card",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
+      className: "card-header",
+      children: ["Price", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_CurrentPrice__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        symbol: "BTCBUSD"
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+      className: "card-body pt-0",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
+        className: "chart",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_apexcharts__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          options: options,
+          series: series,
+          type: "candlestick",
+          height: height
+        })
+      })
+    })]
+  });
+};
 
-;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PriceChart);
 
 /***/ }),
@@ -11449,6 +11462,24 @@ __webpack_require__.r(__webpack_exports__);
 
 var currentPriceContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(0.0);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (currentPriceContext);
+
+/***/ }),
+
+/***/ "./resources/js/contexts/OrdersContext.js":
+/*!************************************************!*\
+  !*** ./resources/js/contexts/OrdersContext.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var ordersContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(0.0);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ordersContext);
 
 /***/ }),
 
@@ -73773,1149 +73804,6 @@ function polyfill(Component) {
 
   return Component;
 }
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/AdvancedChart.js":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/AdvancedChart.js ***!
-  \*******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const AdvancedChart = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    let containerId = "advanced-chart-widget-container";
-    if (widgetProps === null || widgetProps === void 0 ? void 0 : widgetProps.container_id) {
-        containerId = widgetProps === null || widgetProps === void 0 ? void 0 : widgetProps.container_id;
-    }
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/tv.js";
-            script.async = true;
-            script.onload = () => {
-                if (typeof TradingView !== "undefined") {
-                    new TradingView.widget(Object.assign(Object.assign({ "width": "100%", "height": "640px", "symbol": "BITMEX:XBTUSD", "interval": "240", "range": "1M", "timezone": "Etc/UTC", "theme": "dark", "style": "9", "locale": "en", "toolbar_bg": "rgba(0, 0, 0, 0.8)", "hide_top_toolbar": false, "hide_side_toolbar": false, "withdateranges": true, "save_image": true, "enable_publishing": false, "container_id": containerId }, widgetProps), widgetPropsAny));
-                }
-            };
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny, containerId]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { id: containerId, ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AdvancedChart);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/CompanyProfile.js":
-/*!********************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/CompanyProfile.js ***!
-  \********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const CompanyProfile = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-symbol-profile.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "symbol": "NASDAQ:NVDA", "width": 480, "height": 650, "colorTheme": "dark", "isTransparent": false, "locale": "en" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CompanyProfile);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/CryptocurrencyMarket.js":
-/*!**************************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/CryptocurrencyMarket.js ***!
-  \**************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const CryptocurrencyMarket = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-screener.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "width": 1000, "height": 490, "defaultColumn": "overview", "screener_type": "crypto_mkt", "displayCurrency": "USD", "colorTheme": "dark", "locale": "en" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CryptocurrencyMarket);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/EconomicCalendar.js":
-/*!**********************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/EconomicCalendar.js ***!
-  \**********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const EconomicCalendar = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-events.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "colorTheme": "dark", "isTransparent": false, "width": "510", "height": "600", "locale": "en", "importanceFilter": "-1,0,1" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EconomicCalendar);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/ForexCrossRates.js":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/ForexCrossRates.js ***!
-  \*********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const ForexCrossRates = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-forex-cross-rates.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "width": 770, "height": 400, "currencies": [
-                    "EUR",
-                    "USD",
-                    "JPY",
-                    "GBP",
-                    "CHF",
-                    "AUD",
-                    "CAD",
-                    "NZD",
-                    "CNY"
-                ], "isTransparent": false, "colorTheme": "dark", "locale": "en" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ForexCrossRates);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/ForexHeatMap.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/ForexHeatMap.js ***!
-  \******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const ForexHeatMap = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-forex-heat-map.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "width": 770, "height": 400, "currencies": [
-                    "EUR",
-                    "USD",
-                    "JPY",
-                    "GBP",
-                    "CHF",
-                    "AUD",
-                    "CAD",
-                    "NZD",
-                    "CNY"
-                ], "isTransparent": false, "colorTheme": "dark", "locale": "en" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ForexHeatMap);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/FundamentalData.js":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/FundamentalData.js ***!
-  \*********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const FundamentalData = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-financials.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "symbol": "NASDAQ:NVDA", "colorTheme": "dark", "isTransparent": false, "largeChartUrl": "", "displayMode": "regular", "width": 480, "height": 830, "locale": "en" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FundamentalData);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/MarketData.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/MarketData.js ***!
-  \****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const MarketData = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-market-quotes.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "width": 770, "height": 450, "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": false, "locale": "en", "symbolsGroups": [
-                    {
-                        "name": "Indices",
-                        "originalName": "Indices",
-                        "symbols": [
-                            {
-                                "name": "FOREXCOM:SPXUSD",
-                                "displayName": "S&P 500"
-                            },
-                            {
-                                "name": "FOREXCOM:NSXUSD",
-                                "displayName": "Nasdaq 100"
-                            },
-                            {
-                                "name": "FOREXCOM:DJI",
-                                "displayName": "Dow 30"
-                            },
-                            {
-                                "name": "INDEX:NKY",
-                                "displayName": "Nikkei 225"
-                            },
-                            {
-                                "name": "INDEX:DEU30",
-                                "displayName": "DAX Index"
-                            },
-                            {
-                                "name": "FOREXCOM:UKXGBP",
-                                "displayName": "UK 100"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Commodities",
-                        "originalName": "Commodities",
-                        "symbols": [
-                            {
-                                "name": "CME_MINI:ES1!",
-                                "displayName": "S&P 500"
-                            },
-                            {
-                                "name": "CME:6E1!",
-                                "displayName": "Euro"
-                            },
-                            {
-                                "name": "COMEX:GC1!",
-                                "displayName": "Gold"
-                            },
-                            {
-                                "name": "NYMEX:CL1!",
-                                "displayName": "Crude Oil"
-                            },
-                            {
-                                "name": "NYMEX:NG1!",
-                                "displayName": "Natural Gas"
-                            },
-                            {
-                                "name": "CBOT:ZC1!",
-                                "displayName": "Corn"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Bonds",
-                        "originalName": "Bonds",
-                        "symbols": [
-                            {
-                                "name": "CME:GE1!",
-                                "displayName": "Eurodollar"
-                            },
-                            {
-                                "name": "CBOT:ZB1!",
-                                "displayName": "T-Bond"
-                            },
-                            {
-                                "name": "CBOT:UB1!",
-                                "displayName": "Ultra T-Bond"
-                            },
-                            {
-                                "name": "EUREX:FGBL1!",
-                                "displayName": "Euro Bund"
-                            },
-                            {
-                                "name": "EUREX:FBTP1!",
-                                "displayName": "Euro BTP"
-                            },
-                            {
-                                "name": "EUREX:FGBM1!",
-                                "displayName": "Euro BOBL"
-                            }
-                        ]
-                    },
-                    {
-                        "name": "Forex",
-                        "originalName": "Forex",
-                        "symbols": [
-                            {
-                                "name": "FX:EURUSD"
-                            },
-                            {
-                                "name": "FX:GBPUSD"
-                            },
-                            {
-                                "name": "FX:USDJPY"
-                            },
-                            {
-                                "name": "FX:USDCHF"
-                            },
-                            {
-                                "name": "FX:AUDUSD"
-                            },
-                            {
-                                "name": "FX:USDCAD"
-                            }
-                        ]
-                    }
-                ] }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MarketData);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/MarketOverview.js":
-/*!********************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/MarketOverview.js ***!
-  \********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const MarketOverview = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-market-overview.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "en", "largeChartUrl": "", "isTransparent": false, "showSymbolLogo": true, "width": "400", "height": "660", "plotLineColorGrowing": "rgba(25, 118, 210, 1)", "plotLineColorFalling": "rgba(25, 118, 210, 1)", "gridLineColor": "rgba(42, 46, 57, 1)", "scaleFontColor": "rgba(120, 123, 134, 1)", "belowLineFillColorGrowing": "rgba(33, 150, 243, 0.12)", "belowLineFillColorFalling": "rgba(33, 150, 243, 0.12)", "symbolActiveColor": "rgba(33, 150, 243, 0.12)" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MarketOverview);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/MiniChart.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/MiniChart.js ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const MiniChart = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-mini-symbol-overview.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "symbol": "BITMEX:XBTUSD", "width": 350, "height": 220, "locale": "en", "dateRange": "12M", "colorTheme": "dark", "trendLineColor": "#37a6ef", "underLineColor": "rgba(55, 166, 239, 0.15)", "isTransparent": false, "autosize": false, "largeChartUrl": "" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MiniChart);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/Screener.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/Screener.js ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const Screener = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-screener.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "width": 1100, "height": 512, "defaultColumn": "overview", "defaultScreen": "general", "market": "forex", "showToolbar": true, "colorTheme": "dark", "locale": "en" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Screener);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/SingleTicker.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/SingleTicker.js ***!
-  \******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const SingleTicker = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-single-quote.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "symbol": "BITMEX:XBTUSD", "width": 350, "colorTheme": "dark", "isTransparent": false, "locale": "en" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SingleTicker);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/StockMarket.js":
-/*!*****************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/StockMarket.js ***!
-  \*****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const StockMarket = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-hotlists.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "colorTheme": "dark", "dateRange": "12M", "exchange": "US", "showChart": true, "locale": "en", "largeChartUrl": "", "isTransparent": false, "showSymbolLogo": false, "width": "400", "height": "600", "plotLineColorGrowing": "rgba(25, 118, 210, 1)", "plotLineColorFalling": "rgba(25, 118, 210, 1)", "gridLineColor": "rgba(42, 46, 57, 1)", "scaleFontColor": "rgba(120, 123, 134, 1)", "belowLineFillColorGrowing": "rgba(33, 150, 243, 0.12)", "belowLineFillColorFalling": "rgba(33, 150, 243, 0.12)", "symbolActiveColor": "rgba(33, 150, 243, 0.12)" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (StockMarket);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/SymbolInfo.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/SymbolInfo.js ***!
-  \****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const SymbolInfo = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-symbol-info.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "symbol": "BITMEX:XBTUSD", "width": 1000, "locale": "en", "colorTheme": "dark", "isTransparent": false }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SymbolInfo);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/SymbolOverview.js":
-/*!********************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/SymbolOverview.js ***!
-  \********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const SymbolOverview = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    let containerId = "symbol-overview-widget-container";
-    if (widgetProps === null || widgetProps === void 0 ? void 0 : widgetProps.container_id) {
-        containerId = widgetProps === null || widgetProps === void 0 ? void 0 : widgetProps.container_id;
-    }
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/tv.js";
-            script.async = true;
-            script.onload = () => {
-                if (typeof TradingView !== "undefined") {
-                    new TradingView.MediumWidget(Object.assign(Object.assign({ "symbols": [
-                            [
-                                "Apple",
-                                "AAPL"
-                            ],
-                            [
-                                "Google",
-                                "GOOGL"
-                            ],
-                            [
-                                "Microsoft",
-                                "MSFT"
-                            ]
-                        ], "chartOnly": false, "width": "100%", "height": 400, "locale": "en", "colorTheme": "dark", "gridLineColor": "#2A2E39", "trendLineColor": "#1976D2", "fontColor": "#787B86", "underLineColor": "rgba(55, 166, 239, 0.15)", "isTransparent": false, "autosize": false, "container_id": containerId }, widgetProps), widgetPropsAny));
-                }
-            };
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny, containerId]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { id: containerId, ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SymbolOverview);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/TechnicalAnalysis.js":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/TechnicalAnalysis.js ***!
-  \***********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const TechnicalAnalysis = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-technical-analysis.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "symbol": "NASDAQ:NVDA", "showIntervalTabs": true, "interval": "1m", "width": 425, "height": 450, "isTransparent": false, "locale": "en", "colorTheme": "dark" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TechnicalAnalysis);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/Ticker.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/Ticker.js ***!
-  \************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const Ticker = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-tickers.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "colorTheme": "dark", "isTransparent": false, "showSymbolLogo": true, "locale": "en", "symbols": [
-                    {
-                        "proName": "FOREXCOM:SPXUSD",
-                        "title": "S&P 500"
-                    },
-                    {
-                        "proName": "FOREXCOM:NSXUSD",
-                        "title": "Nasdaq 100"
-                    },
-                    {
-                        "proName": "FX_IDC:EURUSD",
-                        "title": "EUR/USD"
-                    },
-                    {
-                        "proName": "BITSTAMP:BTCUSD",
-                        "title": "BTC/USD"
-                    },
-                    {
-                        "proName": "BITSTAMP:ETHUSD",
-                        "title": "ETH/USD"
-                    }
-                ] }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Ticker);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/TickerTape.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/TickerTape.js ***!
-  \****************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const TickerTape = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-ticker-tape.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": false, "displayMode": "adaptive", "locale": "en", "symbols": [
-                    {
-                        "proName": "FOREXCOM:SPXUSD",
-                        "title": "S&P 500"
-                    },
-                    {
-                        "proName": "FOREXCOM:NSXUSD",
-                        "title": "Nasdaq 100"
-                    },
-                    {
-                        "proName": "FX_IDC:EURUSD",
-                        "title": "EUR/USD"
-                    },
-                    {
-                        "proName": "BITSTAMP:BTCUSD",
-                        "title": "BTC/USD"
-                    },
-                    {
-                        "proName": "BITSTAMP:ETHUSD",
-                        "title": "ETH/USD"
-                    }
-                ] }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TickerTape);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/Timeline.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/Timeline.js ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const Timeline = (props) => {
-    const { widgetProps, widgetPropsAny } = props;
-    const ref = react__WEBPACK_IMPORTED_MODULE_0__.createRef();
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
-        let refValue;
-        if (ref.current) {
-            const script = document.createElement("script");
-            script.src = "https://s3.tradingview.com/external-embedding/"
-                + "embed-widget-timeline.js";
-            script.async = true;
-            script.type = "text/javascript";
-            script.innerHTML = JSON.stringify(Object.assign(Object.assign({ "colorTheme": "dark", "isTransparent": false, "displayMode": "regular", "width": 480, "height": 830, "locale": "en" }, widgetProps), widgetPropsAny));
-            ref.current.appendChild(script);
-            refValue = ref.current;
-        }
-        return () => {
-            if (refValue) {
-                while (refValue.firstChild) {
-                    refValue.removeChild(refValue.firstChild);
-                }
-            }
-        };
-    }, [ref, widgetProps, widgetPropsAny]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { ref: ref });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Timeline);
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/components/index.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/components/index.js ***!
-  \***********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AdvancedChart": () => (/* reexport safe */ _AdvancedChart__WEBPACK_IMPORTED_MODULE_0__["default"]),
-/* harmony export */   "CompanyProfile": () => (/* reexport safe */ _CompanyProfile__WEBPACK_IMPORTED_MODULE_17__["default"]),
-/* harmony export */   "CryptocurrencyMarket": () => (/* reexport safe */ _CryptocurrencyMarket__WEBPACK_IMPORTED_MODULE_15__["default"]),
-/* harmony export */   "EconomicCalendar": () => (/* reexport safe */ _EconomicCalendar__WEBPACK_IMPORTED_MODULE_5__["default"]),
-/* harmony export */   "ForexCrossRates": () => (/* reexport safe */ _ForexCrossRates__WEBPACK_IMPORTED_MODULE_12__["default"]),
-/* harmony export */   "ForexHeatMap": () => (/* reexport safe */ _ForexHeatMap__WEBPACK_IMPORTED_MODULE_13__["default"]),
-/* harmony export */   "FundamentalData": () => (/* reexport safe */ _FundamentalData__WEBPACK_IMPORTED_MODULE_16__["default"]),
-/* harmony export */   "MarketData": () => (/* reexport safe */ _MarketData__WEBPACK_IMPORTED_MODULE_3__["default"]),
-/* harmony export */   "MarketOverview": () => (/* reexport safe */ _MarketOverview__WEBPACK_IMPORTED_MODULE_2__["default"]),
-/* harmony export */   "MiniChart": () => (/* reexport safe */ _MiniChart__WEBPACK_IMPORTED_MODULE_9__["default"]),
-/* harmony export */   "Screener": () => (/* reexport safe */ _Screener__WEBPACK_IMPORTED_MODULE_14__["default"]),
-/* harmony export */   "SingleTicker": () => (/* reexport safe */ _SingleTicker__WEBPACK_IMPORTED_MODULE_8__["default"]),
-/* harmony export */   "StockMarket": () => (/* reexport safe */ _StockMarket__WEBPACK_IMPORTED_MODULE_4__["default"]),
-/* harmony export */   "SymbolInfo": () => (/* reexport safe */ _SymbolInfo__WEBPACK_IMPORTED_MODULE_11__["default"]),
-/* harmony export */   "SymbolOverview": () => (/* reexport safe */ _SymbolOverview__WEBPACK_IMPORTED_MODULE_10__["default"]),
-/* harmony export */   "TechnicalAnalysis": () => (/* reexport safe */ _TechnicalAnalysis__WEBPACK_IMPORTED_MODULE_1__["default"]),
-/* harmony export */   "Ticker": () => (/* reexport safe */ _Ticker__WEBPACK_IMPORTED_MODULE_6__["default"]),
-/* harmony export */   "TickerTape": () => (/* reexport safe */ _TickerTape__WEBPACK_IMPORTED_MODULE_7__["default"]),
-/* harmony export */   "Timeline": () => (/* reexport safe */ _Timeline__WEBPACK_IMPORTED_MODULE_18__["default"])
-/* harmony export */ });
-/* harmony import */ var _AdvancedChart__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdvancedChart */ "./node_modules/react-tradingview-embed/dist/components/AdvancedChart.js");
-/* harmony import */ var _TechnicalAnalysis__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TechnicalAnalysis */ "./node_modules/react-tradingview-embed/dist/components/TechnicalAnalysis.js");
-/* harmony import */ var _MarketOverview__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MarketOverview */ "./node_modules/react-tradingview-embed/dist/components/MarketOverview.js");
-/* harmony import */ var _MarketData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./MarketData */ "./node_modules/react-tradingview-embed/dist/components/MarketData.js");
-/* harmony import */ var _StockMarket__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./StockMarket */ "./node_modules/react-tradingview-embed/dist/components/StockMarket.js");
-/* harmony import */ var _EconomicCalendar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./EconomicCalendar */ "./node_modules/react-tradingview-embed/dist/components/EconomicCalendar.js");
-/* harmony import */ var _Ticker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Ticker */ "./node_modules/react-tradingview-embed/dist/components/Ticker.js");
-/* harmony import */ var _TickerTape__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TickerTape */ "./node_modules/react-tradingview-embed/dist/components/TickerTape.js");
-/* harmony import */ var _SingleTicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SingleTicker */ "./node_modules/react-tradingview-embed/dist/components/SingleTicker.js");
-/* harmony import */ var _MiniChart__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./MiniChart */ "./node_modules/react-tradingview-embed/dist/components/MiniChart.js");
-/* harmony import */ var _SymbolOverview__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./SymbolOverview */ "./node_modules/react-tradingview-embed/dist/components/SymbolOverview.js");
-/* harmony import */ var _SymbolInfo__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./SymbolInfo */ "./node_modules/react-tradingview-embed/dist/components/SymbolInfo.js");
-/* harmony import */ var _ForexCrossRates__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./ForexCrossRates */ "./node_modules/react-tradingview-embed/dist/components/ForexCrossRates.js");
-/* harmony import */ var _ForexHeatMap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./ForexHeatMap */ "./node_modules/react-tradingview-embed/dist/components/ForexHeatMap.js");
-/* harmony import */ var _Screener__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Screener */ "./node_modules/react-tradingview-embed/dist/components/Screener.js");
-/* harmony import */ var _CryptocurrencyMarket__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./CryptocurrencyMarket */ "./node_modules/react-tradingview-embed/dist/components/CryptocurrencyMarket.js");
-/* harmony import */ var _FundamentalData__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./FundamentalData */ "./node_modules/react-tradingview-embed/dist/components/FundamentalData.js");
-/* harmony import */ var _CompanyProfile__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./CompanyProfile */ "./node_modules/react-tradingview-embed/dist/components/CompanyProfile.js");
-/* harmony import */ var _Timeline__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Timeline */ "./node_modules/react-tradingview-embed/dist/components/Timeline.js");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/***/ }),
-
-/***/ "./node_modules/react-tradingview-embed/dist/index.js":
-/*!************************************************************!*\
-  !*** ./node_modules/react-tradingview-embed/dist/index.js ***!
-  \************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AdvancedChart": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.AdvancedChart),
-/* harmony export */   "CompanyProfile": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.CompanyProfile),
-/* harmony export */   "CryptocurrencyMarket": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.CryptocurrencyMarket),
-/* harmony export */   "EconomicCalendar": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.EconomicCalendar),
-/* harmony export */   "ForexCrossRates": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.ForexCrossRates),
-/* harmony export */   "ForexHeatMap": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.ForexHeatMap),
-/* harmony export */   "FundamentalData": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.FundamentalData),
-/* harmony export */   "MarketData": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.MarketData),
-/* harmony export */   "MarketOverview": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.MarketOverview),
-/* harmony export */   "MiniChart": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.MiniChart),
-/* harmony export */   "Screener": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.Screener),
-/* harmony export */   "SingleTicker": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.SingleTicker),
-/* harmony export */   "StockMarket": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.StockMarket),
-/* harmony export */   "SymbolInfo": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.SymbolInfo),
-/* harmony export */   "SymbolOverview": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.SymbolOverview),
-/* harmony export */   "TechnicalAnalysis": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.TechnicalAnalysis),
-/* harmony export */   "Ticker": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.Ticker),
-/* harmony export */   "TickerTape": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.TickerTape),
-/* harmony export */   "Timeline": () => (/* reexport safe */ _components__WEBPACK_IMPORTED_MODULE_0__.Timeline)
-/* harmony export */ });
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components */ "./node_modules/react-tradingview-embed/dist/components/index.js");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
