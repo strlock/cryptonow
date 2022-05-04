@@ -86,8 +86,6 @@ const OrderForm = (props) => {
             if (response.error !== undefined) {
                 props.showPopup(response.error, 'danger');
                 console.log(response.error);
-            } else {
-                props.showPopup('Order created!');
             }
             props.ordersList.refresh();
         });
@@ -184,8 +182,8 @@ const OrderForm = (props) => {
                         <label className="form-check-label" htmlFor="marketCheckbox">Market</label>
                     </div>
                     <div className="input-group input-group-sm mb-4">
-                        {direction === ORDER_DIRECTION_BUY ? (<button type="button" name="order" className="btn btn-success form-control" onClick={() => onBuyClick()}>BUY</button>) : ''}
-                        {direction === ORDER_DIRECTION_SELL ? (<button type="button" name="order" className="btn btn-danger form-control" onClick={() => onSellClick()}>SELL</button>) : ''}
+                        {direction === ORDER_DIRECTION_BUY ? (<button type="button" name="order" className="btn btn-success form-control" onClick={() => onBuyClick()}>Place Order</button>) : ''}
+                        {direction === ORDER_DIRECTION_SELL ? (<button type="button" name="order" className="btn btn-danger form-control" onClick={() => onSellClick()}>Place Order</button>) : ''}
                     </div>
                 </form>
             </div>

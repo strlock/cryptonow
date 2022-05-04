@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\SignalsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MarketDeltaController;
 use App\Http\Controllers\UserController;
@@ -29,5 +30,6 @@ Route::middleware('api')->group(function () {
         Route::resource('orders', OrdersController::class);
         Route::get('user/settings', [UserController::class, 'getSettings']);
         Route::post('user/settings', [UserController::class, 'saveSettings']);
+        Route::get('signals/{symbol}/{fromTime}/{toTime?}/{interval?}', [SignalsController::class, 'index']);
     });
 });

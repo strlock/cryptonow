@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\Exchange;
 use App\Services\OrdersService;
 use App\Services\OrdersServiceInterface;
+use App\Services\Strategy\AnomalousMarketDeltaBuyStrategy;
+use App\Services\Strategy\StrategyInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
             $class = 'App\\Services\\Crypto\\Exchanges\\'.ucfirst($parameters['name']).'\\Facade';
             return new $class();
         });
+        $this->app->bind(StrategyInterface::class, AnomalousMarketDeltaBuyStrategy::class);
     }
 
     /**

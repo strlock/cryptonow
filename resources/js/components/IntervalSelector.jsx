@@ -1,10 +1,9 @@
 import React from 'react';
 import TimeIntervals from "../TimeIntervals";
 
-function IntervalSelector(props) {
+const IntervalSelector = (props) => {
     const onChangeChartsInterval = (newInterval) => {
         props.setChartsInterval(newInterval);
-        props.refreshCharts();
     }
 
     return (

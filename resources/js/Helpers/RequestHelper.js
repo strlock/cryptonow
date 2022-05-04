@@ -17,6 +17,9 @@ class RequestHelper
                 LoginHelper.logout();
                 return;
             }
+            if (response.status && response.status === 'Authorization Token not found') {
+                return;
+            }
             if (success) {
                 success.call(this, response);
             }

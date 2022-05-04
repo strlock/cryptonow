@@ -2,7 +2,6 @@ import React, {useState,useContext, useEffect, useMemo} from 'react';
 import ReactApexChart from 'react-apexcharts';
 import RequestHelper from "../Helpers/RequestHelper";
 import FormatHelper from "../Helpers/FormatHelper";
-import CurrentPrice from "./CurrentPrice";
 import ordersContext from "../contexts/OrdersContext";
 import {
     ORDER_DIRECTION_BUY
@@ -10,7 +9,7 @@ import {
 
 let chartContext = null;
 
-const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor}) => {
+const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, xAnnotations}) => {
     const orders = useContext(ordersContext);
     const [seriesData, setSeriesData] = useState([]);
 
@@ -23,16 +22,22 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor})
         );
     }, [fromTime, toTime, interval]);
 
-    const yAnnotations = useMemo(() => {
-        const result = [];
-        const filteredOrders = orders.filter((order) => {
+    const getVisibleOrders = () => {
+        return orders.filter((order) => {
             return order.state === 'new' || order.state === 'ready';
         });
-        for(let i in filteredOrders) {
-            const order = filteredOrders[i];
+    }
+
+    const yAnnotations = useMemo(() => {
+        const result = [];
+        const visibleOrders = getVisibleOrders();
+        const buyColor = '#00E396';
+        const sellColor = '#E30096';
+        for(let i in visibleOrders) {
+            const order = visibleOrders[i];
             result.push({
                 y: order.price,
-                borderColor: order.direction === ORDER_DIRECTION_BUY ? '#00E396' : '#E30096',
+                borderColor: order.direction === ORDER_DIRECTION_BUY ? buyColor : sellColor,
                 strokeDashArray: 0,
                 label: {
                     borderColor: linesColor,
@@ -46,7 +51,7 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor})
             if (order.sl) {
                 result.push({
                     y: order.sl,
-                    borderColor: order.direction === ORDER_DIRECTION_BUY ? '#E30096' : '#00E396',
+                    borderColor: order.direction === ORDER_DIRECTION_BUY ? buyColor : sellColor,
                     strokeDashArray: 5,
                     label: {
                         borderColor: linesColor,
@@ -61,7 +66,7 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor})
             if (order.tp) {
                 result.push({
                     y: order.tp,
-                    borderColor: order.direction === ORDER_DIRECTION_BUY ? '#E30096' : '#00E396',
+                    borderColor: order.direction === ORDER_DIRECTION_BUY ? buyColor : sellColor,
                     strokeDashArray: 5,
                     label: {
                         borderColor: linesColor,
@@ -76,6 +81,26 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor})
         }
         return result;
     }, [orders]);
+
+    const yRange = useMemo(() => {
+        let prices = [];
+        const addPrice = (price) => {
+            price = parseFloat(price)
+            if (!isNaN(price) && price !== 0.0 && prices.indexOf(price) === -1) {
+                prices.push(price);
+            }
+        }
+        getVisibleOrders().forEach((order) => {
+            addPrice(order.price);
+            addPrice(order.sl);
+            addPrice(order.tp);
+        });
+        seriesData.forEach((item) => {
+            addPrice(item.y[1]);
+            addPrice(item.y[2]);
+        });
+        return {min: Math.min(...prices), max: Math.max(...prices)};
+    }, [orders, seriesData]);
 
     const options = {
         chart: {
@@ -111,6 +136,7 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor})
                 },
             },
             labels: {
+                minWidth: 80,
                 formatter: function (y) {
                     return y + ' USDT';
                 },
@@ -119,6 +145,8 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor})
                 }
             },
             forceNiceScale: true,
+            min: yRange.min,
+            max: yRange.max,
         },
         xaxis: {
             type: 'datetime',
@@ -178,20 +206,14 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor})
         annotations: {
             position: 'front',
             yaxis: yAnnotations,
+            xaxis: xAnnotations,
         }
     }
 
     const series = [{name: 'Price', data: seriesData}];
 
     return (
-        <div className="card">
-            <div className="card-header">Price<CurrentPrice symbol={"BTCBUSD"} /></div>
-            <div className="card-body pt-0">
-                <div className="chart">
-                    <ReactApexChart options={options} series={series} type="candlestick" height={height} />
-                </div>
-            </div>
-        </div>
+        <ReactApexChart options={options} series={series} type="candlestick" height={height} />
     );
 };
 

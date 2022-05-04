@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef, useMemo} from "react";
 import ReactDOM from 'react-dom';
 import MarketDeltaChart from './MarketDeltaChart';
 import PriceChart from './PriceChart';
@@ -12,7 +12,7 @@ import LoginHelper from "../Helpers/LoginHelper";
 import OrdersList from "./OrdersList";
 import {
     REFRESH_INTERVAL,
-    POPUP_TIMEOUT
+    POPUP_TIMEOUT, StrategySignals
 } from '../constants';
 import IntervalSelector from "./IntervalSelector";
 import FormatHelper from "../Helpers/FormatHelper";
@@ -20,6 +20,7 @@ import UserSettingsModal from "./UserSettingsModal";
 import currentPriceContext from "../contexts/CurrentPriceContext";
 import ordersContext from "../contexts/OrdersContext";
 import RequestHelper from "../Helpers/RequestHelper";
+import CurrentPrice from "./CurrentPrice";
 
 const App = () => {
     const updateInterval = 15000;
@@ -43,6 +44,7 @@ const App = () => {
     const [popup, setPopup] = useState(popupDefault);
     const [isLoggedIn, setIsLoggedIn] = useState(LoginHelper.isLoggedIn());
     const [orders, setOrders] = useState([]);
+    const [signals, setSignals] = useState([]);
 
     const priceChartRef = useRef();
     const mdChartRef = useRef();
@@ -56,7 +58,9 @@ const App = () => {
 
     const refreshOrders = () => {
         RequestHelper.fetch('/api/orders', {}, response => {
-            setOrders(response.data);
+            if (response.data !== undefined) {
+                setOrders(response.data);
+            }
         });
     }
 
@@ -92,19 +96,36 @@ const App = () => {
         setIsLoggedIn(LoginHelper.isLoggedIn());
     }
 
-    const refreshCharts = () => {
-        const priceChart = priceChartRef.current;
-        const mdChart = mdChartRef.current;
-        //priceChart.refresh();
-        //mdChart.refresh();
-    }
-
     useEffect(() => {
-        const interval = setInterval(() => {
-            refreshCharts();
-        }, REFRESH_INTERVAL);
-        return () => clearInterval(interval);
+        refreshOrders();
+        setInterval(() => {
+            refreshOrders();
+        }, 3000);
     }, []);
+
+    const xAnnotations = useMemo(() => {
+        var annotations = [];
+        const buyColor = '#00E396';
+        const sellColor = '#E30096';
+        if (signals.length === 0) {
+            return [];
+        }
+        signals.forEach((signal) => {
+            if (signal.signal === StrategySignals.BUY) {
+                const x = Math.round(signal.time - chartsInterval/2);
+                const x2 = x + chartsInterval;
+                annotations.push({
+                    x: x,
+                    x2: x2,
+                    strokeDashArray: 0,
+                    borderColor: chartsLinesColor,
+                    fillColor: '#244B4B',
+                    opacity: 0.7,
+                });
+            }
+        });
+        return annotations;
+    }, [signals]);
 
     let daysForInterval = TimeHelper.daysForInterval(chartsInterval)
     if (daysForInterval > 3) {
@@ -114,6 +135,13 @@ const App = () => {
     let toDate = new Date();
     let fromTime = chartsInterval*parseInt(fromDate.getTime()/chartsInterval);
     let toTime = chartsInterval*(parseInt(toDate.getTime()/chartsInterval)+1);
+
+    useEffect(() => {
+        RequestHelper.fetch('/api/signals/BTCUSDT/' + fromTime + '/' + toTime + '/' + chartsInterval, {}, response => {
+            setSignals(response.data);
+        });
+    }, [fromTime, toTime, chartsInterval]);
+
     const popupDom = <Alert variant={popup.type} onClose={() => hidePopup()} dismissible>
                          <Alert.Heading>{popup.title}</Alert.Heading>
                          <p>{popup.message}</p>
@@ -122,27 +150,25 @@ const App = () => {
     let content = '';
     let settingsButton = '';
     if (isLoggedIn) {
-
-        useEffect(() => {
-            refreshOrders();
-            setInterval(() => {
-                refreshOrders();
-            }, 3000);
-        }, []);
-
         loginButton = <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>Logout ({LoginHelper.getLoggedInUserName()})</button>;
         settingsButton = <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#userSettingsModal">Settings</button>;
         content = <div className="container">
             {popup.show ? popupDom : ''}
             <div className="row justify-content-center">
                 <div className="col-md-10">
-                    <ordersContext.Provider value={orders}>
-                        <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={priceChartRef} />
-                    </ordersContext.Provider>
+                    <div className="card">
+                        <div className="card-header">Price<CurrentPrice symbol={"BTCBUSD"} /></div>
+                        <div className="card-body pt-0">
+                            <div className="chart">
+                                <ordersContext.Provider value={orders}>
+                                    <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={priceChartRef} xAnnotations={xAnnotations} />
+                                </ordersContext.Provider>
+                                <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={mdChartRef} xAnnotations={xAnnotations} />
+                            </div>
+                        </div>
+                    </div>
                     <br/>
-                    <IntervalSelector setChartsInterval={setChartsInterval} refreshCharts={refreshCharts} />
-                    <br/>
-                    <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} ref={mdChartRef} />
+                    <IntervalSelector setChartsInterval={setChartsInterval} />
                     <br/>
                     <ordersContext.Provider value={orders}>
                         <OrdersList innerRef={ordersListRef} />
