@@ -128,21 +128,11 @@ const MarketDeltaChart = ({fromTime, toTime, interval, linesColor, textColor, he
         }
     };
 
-    const refresh = () => {
+    useEffect(() => {
         RequestHelper.fetch('/api/marketDelta/BTCUSDT/' + fromTime + '/' + toTime + '/' + interval, {}, response => {
             setSeriesData(response.data);
         }, error => console.log(error));
-    }
-
-    useEffect(() => {
-        refresh();
     }, [fromTime, toTime, interval]);
-
-    useEffect(() => {
-        setInterval(() => {
-            refresh();
-        }, 15000);
-    }, []);
 
     const series = [{
         name: 'Market Statistics',

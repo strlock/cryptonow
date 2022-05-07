@@ -199,7 +199,9 @@ const App = () => {
                     </ordersContext.Provider>
                 </div>
                 <div className="col-md-2 ps-3">
+                    <currentPriceContext.Provider value={currentPrice}>
                     <OrderForm currentPrice={currentPrice} showPopup={showPopup} ordersList={ordersListRef.current} />
+                    </currentPriceContext.Provider>
                 </div>
             </div>
             <UserSettingsModal showPopup={showPopup} />

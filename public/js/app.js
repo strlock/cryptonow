@@ -9902,10 +9902,13 @@ var App = function App() {
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
           className: "col-md-2 ps-3",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
-            currentPrice: currentPrice,
-            showPopup: showPopup,
-            ordersList: ordersListRef.current
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_15__["default"].Provider, {
+            value: currentPrice,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              currentPrice: currentPrice,
+              showPopup: showPopup,
+              ordersList: ordersListRef.current
+            })
           })
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {
@@ -10418,23 +10421,13 @@ var MarketDeltaChart = function MarketDeltaChart(_ref) {
       xaxis: xAnnotations
     }
   };
-
-  var refresh = function refresh() {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/marketDelta/BTCUSDT/' + fromTime + '/' + toTime + '/' + interval, {}, function (response) {
       setSeriesData(response.data);
     }, function (error) {
       return console.log(error);
     });
-  };
-
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    refresh();
   }, [fromTime, toTime, interval]);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    setInterval(function () {
-      refresh();
-    }, 15000);
-  }, []);
   var series = [{
     name: 'Market Statistics',
     data: seriesData
