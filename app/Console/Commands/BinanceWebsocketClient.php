@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\TimeInterval;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Factory;
-use App\Services\Crypto\Helpers\TimeHelper;
+use App\Helpers\TimeHelper;
 use App\Events\BinancePrice;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -68,7 +69,7 @@ class BinanceWebsocketClient extends Command
                     $price = $response->p;
                     event(new BinancePrice($price));
                     $mdQueueName = 'binance:md:'.$symbol;
-                    $fromTime = TimeHelper::roundTimestampMs((int)($response->E));
+                    $fromTime = TimeHelper::round((int)($response->E), TimeInterval::MINUTE());
                     $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($symbol, $fromTime);
                     Redis::zRem($mdQueueName, $fromTime.':'.$marketDelta);
                     $delta = $response->q*($response->m ? -1 : 1);

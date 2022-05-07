@@ -4,17 +4,16 @@
 namespace App\Services\Strategy;
 
 
+use App\Dto\MarketDeltaClusterDto;
 use App\Enums\StrategySignal;
-use App\Services\Crypto\Helpers\TimeHelper;
+use App\Enums\TimeInterval;
+use App\Helpers\TimeHelper;
 use App\Services\GetAggregateMarketStatService;
-use App\Services\Strategy\StrategyInterface;
+use Exception;
 use Illuminate\Support\Collection;
 
 class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
 {
-    private const PREV_PERIOD = TimeHelper::DAY_MS;
-    private const DOMINATION = 5.0;
-
     public function __construct(private GetAggregateMarketStatService $aggregateMarketStatService)
     {
         //
@@ -22,40 +21,88 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
 
     /**
      * @param string $symbol
-     * @param int $fromTime
-     * @param int|null $toTime
-     * @param int $interval
-     * @return Collection
+     * @param TimeInterval|null $interval
+     * @return StrategySignal
+     * @throws Exception
      */
-    public function getSignals(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection
+    public function getSignal(string $symbol, ?TimeInterval $interval = null): StrategySignal
     {
-        $result = collect();
-        $fromTime = TimeHelper::roundTimestampMs($fromTime);
-        $toTime = TimeHelper::roundTimestampMs($toTime);
-        $interval = TimeHelper::roundTimestampMs($interval);
-        $prevMdPeriod = intdiv(TimeHelper::roundTimestampMs(self::PREV_PERIOD), $interval)*$interval;
-        $marketDeltaByTime = $this->aggregateMarketStatService->getAggregateMarketDelta($symbol, $fromTime - $prevMdPeriod, $toTime, $interval);
-        for ($time=$fromTime; $time<$toTime; $time += $interval) {
-            $currentMarketDelta = $marketDeltaByTime[$time];
-            if ($currentMarketDelta <= 0.0) {
-                continue;
+        if (empty($interval)) {
+            $interval = TimeInterval::FIVE_MINUTES();
+        }
+        $toTime = TimeHelper::round(TimeHelper::time(), $interval);
+        $mdClusters = $this->getMarketDeltaClusters($symbol, $toTime, $interval);
+        $lastMdCluster = $mdClusters->last();
+        echo date('d.m.Y H:i:s', $lastMdCluster->getFromTime()/1000).'  '.date('d.m.Y H:i:s', $lastMdCluster->getToTime()/1000).'  '.$lastMdCluster->getMarketDelta().PHP_EOL;
+        foreach ($mdClusters as $mdCluster) {
+            /** @var MarketDeltaClusterDto $mdCluster */
+            if ($toTime >= $mdCluster->getFromTime() && $toTime <= $mdCluster->getToTime()) {
+                return StrategySignal::BUY();
             }
-            $prevMarketDelta = 0.0;
-            $count = 0;
-            for ($prevTime=$time-$prevMdPeriod; $prevTime < $time; $prevTime += $interval) {
-                if ($marketDeltaByTime[$prevTime] > 0.0) {
-                    $prevMarketDelta += $marketDeltaByTime[$prevTime];
-                    $count++;
+        }
+        return StrategySignal::NOTHING();
+    }
+
+    /**
+     * @param string $symbol
+     * @param int $toTime
+     * @param TimeInterval $interval
+     * @return Collection
+     * @throws Exception
+     */
+    public function getMarketDeltaClusters(string $symbol, int $toTime, TimeInterval $interval): Collection
+    {
+        $toTime = TimeHelper::round($toTime, $interval);
+        $fromTime = TimeHelper::round($toTime-(int)config('crypto.strategyPeriod'), $interval);
+        $marketDeltaByTime = $this->aggregateMarketStatService->getAggregateMarketDelta($symbol, $fromTime, $toTime, $interval);
+        $prevPositive = false;
+        $md = 0.0;
+        $mdFromTime = 0;
+        $clusters = collect();
+        for ($time=$fromTime; $time<$toTime; $time += $interval->value()) {
+            $currentMarketDelta = $marketDeltaByTime[$time];
+            $positive = $currentMarketDelta > 0;
+            if ($positive) {
+                if (!$prevPositive) {
+                    $md = 0.0;
+                    $mdFromTime = $time;
+                }
+                $md += $currentMarketDelta;
+            } else {
+                if ($prevPositive) {
+                    $mdToTime = $time;
+                    $clusters->push(new MarketDeltaClusterDto($md, $mdFromTime, $mdToTime));
                 }
             }
-            $prevMarketDeltaAvg = $prevMarketDelta/$count;
-            if ($currentMarketDelta/$prevMarketDeltaAvg > self::DOMINATION) {
-                $signal = StrategySignal::BUY();
-            } else {
-                $signal = StrategySignal::NOTHING();
-            }
-            $result->put($time, $signal);
+            $prevPositive = $positive;
         }
-        return $result;
+        if ($prevPositive) {
+            $clusters->push(new MarketDeltaClusterDto($md, $mdFromTime, $toTime));
+        }
+        $clusters = $clusters->sort(function ($first, $second) {
+            /** @var MarketDeltaClusterDto $first */
+            $first = $first->getMarketDelta();
+            /** @var MarketDeltaClusterDto $second */
+            $second = $second->getMarketDelta();
+            if ($first === $second) {
+                return 0;
+            }
+            return $first > $second ? -1 : 1;
+        });
+        $result = collect();
+        $prevMd = null;
+        foreach ($clusters as $cluster) {
+            /** @var MarketDeltaClusterDto $cluster */
+            $md = $cluster->getMarketDelta();
+            if ($md < (float)config('crypto.strategyMinMdCluster')) {
+                break;
+            }
+            if (!empty($prevMd) && $prevMd/$md >= (float)config('crypto.strategyMdClusterDomination')) {
+                break;
+            }
+            $result->push($cluster);
+            $prevMd = $md;
+        }
+        return $result->slice(0, 5);
     }
 }

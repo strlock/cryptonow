@@ -14,6 +14,11 @@ class TimeHelper
     {
         return interval/TimeIntervals.FIVE_MINUTES;
     }
+
+    static round(timestamp, interval)
+    {
+        return interval*Math.floor(timestamp/interval);
+    }
 }
 
 export default TimeHelper;

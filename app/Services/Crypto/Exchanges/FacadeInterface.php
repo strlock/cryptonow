@@ -2,11 +2,9 @@
 namespace App\Services\Crypto\Exchanges;
 
 use App\Dto\CancelOrderDto;
-use App\Dto\CreateNewOrderDto;
 use App\Dto\PlaceGoalOrderDto;
 use App\Dto\PlaceOrderDto;
-use App\Models\OrderInterface;
-use App\Services\Crypto\Helpers\TimeHelper;
+use App\Enums\TimeInterval;
 use Illuminate\Support\Collection;
 
 /**
@@ -29,10 +27,10 @@ interface FacadeInterface
      * @param string $symbol
      * @param int $fromTime
      * @param int|null $toTime
-     * @param int $interval
+     * @param TimeInterval|null $interval
      * @return Collection
      */
-    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection;
+    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, ?TimeInterval $interval = null): Collection;
 
     /**
      * @param PlaceOrderDto $dto

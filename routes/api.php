@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PriceController;
-use App\Http\Controllers\SignalsController;
+use App\Http\Controllers\SignalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MarketDeltaController;
 use App\Http\Controllers\UserController;
@@ -18,10 +18,6 @@ use App\Http\Controllers\UserController;
 |
 */
 
-/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
-
 Route::middleware('api')->group(function () {
     Route::post('login', [UserController::class, 'login']);
     Route::middleware('jwt.verify:api')->group(function () {
@@ -30,6 +26,6 @@ Route::middleware('api')->group(function () {
         Route::resource('orders', OrdersController::class);
         Route::get('user/settings', [UserController::class, 'getSettings']);
         Route::post('user/settings', [UserController::class, 'saveSettings']);
-        Route::get('signals/{symbol}/{fromTime}/{toTime?}/{interval?}', [SignalsController::class, 'index']);
+        Route::get('mdclusters/{symbol}/{toTime?}/{interval?}', [MarketDeltaController::class, 'getMdClusters']);
     });
 });

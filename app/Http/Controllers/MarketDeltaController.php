@@ -2,28 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Crypto\Exchanges\Aggregate\Facade as AggregateExchangeFacade;
-use App\Services\Crypto\Exchanges\FacadeInterface;
-use App\Services\Crypto\Helpers\TimeHelper;
+use App\Dto\MarketDeltaClusterDto;
+use App\Enums\TimeInterval;
 use App\Http\Resources\SeriesResource;
 use App\Services\GetAggregateMarketStatService;
+use App\Services\Strategy\StrategyInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Redis;
 
 class MarketDeltaController extends Controller
 {
-    public function __construct(private GetAggregateMarketStatService $aggregateMarketDeltaService)
+    public function __construct(
+        private GetAggregateMarketStatService $aggregateMarketDeltaService,
+        private StrategyInterface $strategy
+    )
     {
+        //
     }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function index(Request $request, string $symbol, int $fromTime, ?int $toTime = null, ?int $interval = TimeHelper::FIVE_MINUTE_MS)
+    public function index(Request $request, string $symbol, int $fromTime, ?int $toTime = null, ?int $interval = TimeInterval::FIVE_MINUTES)
     {
+        $interval = TimeInterval::memberByValue($interval);
         $data = collect();
         foreach ($this->aggregateMarketDeltaService->getAggregateMarketDelta($symbol, $fromTime, $toTime, $interval) as $time => $y) {
             $data->push([
@@ -32,6 +37,28 @@ class MarketDeltaController extends Controller
             ]);
         }
         return response()->json(new SeriesResource($data));
+    }
+
+    /**
+     * @param string $symbol
+     * @param int|null $toTime
+     * @param int|null $interval
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function getMdClusters(string $symbol, ?int $toTime = null, ?int $interval = TimeInterval::FIVE_MINUTES): JsonResponse
+    {
+        $interval = TimeInterval::memberByValue($interval);
+        $data = collect();
+        foreach ($this->strategy->getMarketDeltaClusters($symbol, $toTime, $interval) as $mdCluster) {
+            /** @var MarketDeltaClusterDto $mdCluster */
+            $data->push([
+                'fromTime' => $mdCluster->getFromTime(),
+                'toTime' => $mdCluster->getToTime(),
+                'marketDelta' => $mdCluster->getMarketDelta(),
+            ]);
+        }
+        return response()->json(['data' => $data]);
     }
 
     /**

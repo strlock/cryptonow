@@ -1,13 +1,8 @@
 <?php
 namespace App\Services\Crypto\Exchanges\Bitstamp;
 
-use App\Dto\CreateNewOrderDto;
-use App\Dto\PlaceGoalOrderDto;
-use App\Dto\PlaceOrderDto;
-use App\Models\OrderInterface;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Trade;
-use App\Services\Crypto\Helpers\TimeHelper;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;

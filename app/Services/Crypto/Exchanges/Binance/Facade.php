@@ -9,10 +9,9 @@ use App\Enums\ExchangeOrderType;
 use App\Models\User;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Trade;
-use App\Services\Crypto\Helpers\TimeHelper;
 use App\Dto\TimeIntervalChunkDto;
 use App\Enums\BinanceTimeIntervals;
-use App\Enums\TimeIntervals;
+use App\Enums\TimeInterval;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
@@ -25,13 +24,13 @@ class Facade extends AbstractFacade
     protected const CHUNK_INTERVAL = 60*60*1000;
 
     protected const INTERVALS_MAP = [
-        TimeIntervals::ONE_MINUTE => BinanceTimeIntervals::ONE_MINUTE,
-        TimeIntervals::FIVE_MINUTES => BinanceTimeIntervals::FIVE_MINUTES,
-        TimeIntervals::FIFTEEN_MINUTES => BinanceTimeIntervals::FIFTEEN_MINUTES,
-        TimeIntervals::THIRTEEN_MINUTES => BinanceTimeIntervals::THIRTEEN_MINUTES,
-        TimeIntervals::ONE_HOUR => BinanceTimeIntervals::ONE_HOUR,
-        TimeIntervals::FOUR_HOURS => BinanceTimeIntervals::FOUR_HOURS,
-        TimeIntervals::ONE_DAY => BinanceTimeIntervals::ONE_DAY,
+        TimeInterval::MINUTE => BinanceTimeIntervals::ONE_MINUTE,
+        TimeInterval::FIVE_MINUTES => BinanceTimeIntervals::FIVE_MINUTES,
+        TimeInterval::FIFTEEN_MINUTES => BinanceTimeIntervals::FIFTEEN_MINUTES,
+        TimeInterval::THIRTEEN_MINUTES => BinanceTimeIntervals::THIRTEEN_MINUTES,
+        TimeInterval::HOUR => BinanceTimeIntervals::ONE_HOUR,
+        TimeInterval::FOUR_HOURS => BinanceTimeIntervals::FOUR_HOURS,
+        TimeInterval::DAY => BinanceTimeIntervals::ONE_DAY,
     ];
 
     public function __construct(?int $userId = null){
@@ -123,17 +122,20 @@ class Facade extends AbstractFacade
      * @param string $symbol
      * @param int $fromTime
      * @param int|null $toTime
-     * @param int|float $interval
+     * @param TimeInterval|null $interval
      * @return Collection
      * @throws Exception
      */
-    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection
+    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, ?TimeInterval $interval = null): Collection
     {
+        if (empty($interval)) {
+            $interval = TimeInterval::FIVE_MINUTES();
+        }
         $result = collect();
-        if (!isset(static::INTERVALS_MAP[$interval])) {
+        if (!isset(static::INTERVALS_MAP[$interval->value()])) {
             throw new Exception('Unknown Binance time interval');
         }
-        $sInterval = static::INTERVALS_MAP[$interval];
+        $sInterval = static::INTERVALS_MAP[$interval->value()];
         foreach ($this->api->candlesticks($symbol, $sInterval, null, $fromTime, $toTime) as $candlestickData) {
             $tradeTime = (int)$candlestickData['openTime'];
             $result->put($candlestickData['openTime'], [

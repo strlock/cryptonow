@@ -2,11 +2,13 @@
 
 namespace App\Jobs;
 
+use App\Enums\TimeInterval;
 use App\Services\Crypto\Exchanges\AbstractFacade as ExchangeFacade;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use App\Services\Crypto\Exchanges\TradeInterface;
-use App\Services\Crypto\Helpers\TimeHelper;
+use App\Helpers\TimeHelper;
 use App\Dto\FetchMinuteMarketStatDto;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -35,12 +37,13 @@ class BitfinexFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
      * Execute the job.
      *
      * @return void
+     * @throws Exception
      */
     public function handle()
     {
         $symbol = $this->dto->getSymbol();
         $mdQueueName = 'bitfinex:md:'.$symbol;
-        $fromTime = TimeHelper::roundTimestampMs($this->dto->getFromTime());
+        $fromTime = TimeHelper::round($this->dto->getFromTime(), TimeInterval::MINUTE());
         $fromDate = Date::createFromTimestampMs($fromTime);
         $nowDate = Date::now();
         $nowDate->setSeconds(0);
@@ -56,7 +59,7 @@ class BitfinexFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
             Log::debug('BITFINEX: Minute market stat cannot be fetched for current minute.');
             return;
         }
-        $toTime = $fromTime+TimeHelper::MINUTE_MS;
+        $toTime = $fromTime+TimeInterval::MINUTE()->value();
         $marketDelta = 0.0;
         foreach ($exchange->getTrades($symbol, $fromTime, $toTime) as $trade) {
             /** @var TradeInterface $trade */

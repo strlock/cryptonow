@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\TimeInterval;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Factory;
-use App\Services\Crypto\Helpers\TimeHelper;
+use App\Helpers\TimeHelper;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use Throwable;
@@ -92,7 +92,7 @@ class BitstampWebsocketClient extends Command
                         continue;
                     }
                     $mdQueueName = 'bitstamp:md:'.$symbol;
-                    $fromTime = TimeHelper::roundTimestampMs((int)($tradeData->microtimestamp/1000));
+                    $fromTime = TimeHelper::round((int)($tradeData->microtimestamp/1000), TimeInterval::MINUTE());
                     $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($symbol, $fromTime);
                     Redis::zRem($mdQueueName, $fromTime.':'.$marketDelta);
                     $delta = $tradeData->amount*($tradeData->type === 1 ? -1 : 1);

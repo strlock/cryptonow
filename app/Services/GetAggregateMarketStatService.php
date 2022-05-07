@@ -4,9 +4,10 @@
 namespace App\Services;
 
 
-use App\Services\Crypto\Exchanges\FacadeInterface;
+use App\Enums\TimeInterval;
 use App\Services\Crypto\Exchanges\Factory;
-use App\Services\Crypto\Helpers\TimeHelper;
+use App\Helpers\TimeHelper;
+use Exception;
 use Illuminate\Support\Collection;
 
 class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInterface
@@ -21,31 +22,27 @@ class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInte
      * @param string $symbol
      * @param int $fromTime
      * @param int|null $toTime
-     * @param int|float $interval
+     * @param TimeInterval|null $interval
      * @return Collection
+     * @throws Exception
      */
-    public function getAggregateMarketDelta(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection
+    public function getAggregateMarketDelta(string $symbol, int $fromTime, int $toTime = null, ?TimeInterval $interval = null): Collection
     {
-        $result = collect();
-        $fromTime = TimeHelper::roundTimestampMs($fromTime);
-        $toTime = TimeHelper::roundTimestampMs($toTime);
-        $interval = TimeHelper::roundTimestampMs($interval);
-        if ($interval === 0) {
-            return $result;
+        if (empty($interval)) {
+            $interval = TimeInterval::FIVE_MINUTES();
         }
-        while ($fromTime < $toTime) {
+        $result = collect();
+        $fromTime = TimeHelper::round($fromTime, $interval);
+        $toTime = TimeHelper::round($toTime, $interval);
+        while ($fromTime <= $toTime) {
             $result[$fromTime] = 0.0;
             $nextTime = $fromTime;
-            while ($nextTime < $fromTime + $interval) {
+            while ($nextTime < $fromTime + $interval->value()) {
                 foreach ($this->exchangeNames as $exchangeName) {
                     $exchange = Factory::create($exchangeName);
-                    /** @var FacadeInterface $exchange */
-                    //$test = $exchange->getTrades($symbol, $fromTime, $toTime);
-                    //$job = new BitstampFetchMinuteMarketStat(new FetchMinuteMarketDeltaDto('BTCUSDT', strtotime('10.04.2022 13:00')*1000));
-                    //$job->handle();
                     $result[$fromTime] += $exchange->getMinuteMarketDelta($symbol, $nextTime);
                 }
-                $nextTime += TimeHelper::MINUTE_MS;
+                $nextTime += TimeInterval::MINUTE()->value();
             }
             $fromTime = $nextTime;
         }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TimeInterval;
 use App\Services\Crypto\Exchanges\Factory;
-use App\Services\Crypto\Helpers\TimeHelper;
+use App\Helpers\TimeHelper;
 use App\Http\Resources\SeriesResource;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,11 @@ class PriceController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request, string $symbol, int $fromTime, ?int $toTime = null, ?int $interval = TimeHelper::FIVE_MINUTE_MS)
+    public function index(Request $request, string $symbol, int $fromTime, ?int $toTime = null, ?TimeInterval $interval = null)
     {
+        if (empty($interval)) {
+            $interval = TimeInterval::FIVE_MINUTES();
+        }
         $data = collect();
         $exchange = Factory::create('binance');
         foreach ($exchange->getCandlesticks($symbol, $fromTime, $toTime, $interval) as $time => $candlestickData) {

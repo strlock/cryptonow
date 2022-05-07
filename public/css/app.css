@@ -14435,6 +14435,9 @@ h1{
     border-radius: var(--main-border-radius);
 }
 
+.card .card-body .chart {
+}
+
 .card .card-body .chart svg {
     background: none !important;
 }

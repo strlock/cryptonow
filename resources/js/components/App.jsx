@@ -21,6 +21,7 @@ import currentPriceContext from "../contexts/CurrentPriceContext";
 import ordersContext from "../contexts/OrdersContext";
 import RequestHelper from "../Helpers/RequestHelper";
 import CurrentPrice from "./CurrentPrice";
+import TimeIntervals from "../TimeIntervals";
 
 const App = () => {
     const updateInterval = 15000;
@@ -29,7 +30,7 @@ const App = () => {
     const popupDefault = {
         show: false,
         type: 'success',
-        message: 'TEST',
+        message: '',
         title: '',
     };
     const chartsTextColor = '#A39ED8';
@@ -39,16 +40,23 @@ const App = () => {
     FormatHelper.setFromSign('₿');
     FormatHelper.setToSign('$');
 
-    const [chartsInterval, setChartsInterval] = useState(5*60000);
+    const [interval, setChartsInterval] = useState(TimeIntervals.FIVE_MINUTES);
     const [currentPrice, setCurrentPrice] = useState(0.0);
     const [popup, setPopup] = useState(popupDefault);
     const [isLoggedIn, setIsLoggedIn] = useState(LoginHelper.isLoggedIn());
     const [orders, setOrders] = useState([]);
-    const [signals, setSignals] = useState([]);
+    const [mdClusters, setMdClusters] = useState([]);
 
     const priceChartRef = useRef();
     const mdChartRef = useRef();
     const ordersListRef = useRef();
+
+    let daysForInterval = TimeHelper.daysForInterval(interval)
+    if (daysForInterval > 3) {
+        daysForInterval = 3;
+    }
+    let fromTime = TimeHelper.round((TimeHelper.subDaysFromDate(new Date(), daysForInterval)).getTime(), interval);
+    let toTime = TimeHelper.round((new Date()).getTime(), interval);
 
     useEffect(() => {
         new BinanceWebsocketClient(function(price) {
@@ -97,50 +105,64 @@ const App = () => {
     }
 
     useEffect(() => {
+        RequestHelper.fetch('/api/mdclusters/BTCUSDT/' + toTime + '/' + interval, {}, response => {
+            setMdClusters(response.data);
+        });
+    }, [toTime, interval]);
+
+    const mdClustersAnnotations = useMemo(() => {
+        const annotations = [];
+        if (mdClusters === undefined || mdClusters.length === 0) {
+            return [];
+        }
+        mdClusters.forEach((mdCluster) => {
+            //console.log((new Date(mdCluster.fromTime)).toLocaleTimeString() + '-' + (new Date(mdCluster.toTime)).toLocaleTimeString());
+        //if (mdClusters.length > 0) {
+            //let mdCluster = mdClusters[0];
+            annotations.push({
+                x: Math.round(mdCluster.fromTime - interval / 2),
+                x2: Math.round(mdCluster.toTime - interval / 2),
+                strokeDashArray: 0,
+                borderColor: chartsLinesColor,
+                fillColor: '#244B4B',
+                opacity: 0.7,
+                label: {
+                    text: FormatHelper.formatAmount(mdCluster.marketDelta),
+                    borderColor: chartsLinesColor,
+                    style: {
+                        color: chartsTextColor,
+                        background: 'transparent'
+                    },
+                }
+            });
+        //}
+        });
+        return annotations;
+    }, [mdClusters]);
+
+    const getToTimeAnnotation = () => {
+        return {
+            x: Math.round(toTime - interval / 2),
+            x2: null,
+            strokeDashArray: 0,
+            borderColor: '#00ff00',
+            label: {
+                text: (new Date(toTime)).toLocaleTimeString(),
+                borderColor: chartsLinesColor,
+                style: {
+                    color: chartsTextColor,
+                    background: 'transparent'
+                },
+            }
+        };
+    }
+
+    useEffect(() => {
         refreshOrders();
         setInterval(() => {
             refreshOrders();
         }, 3000);
     }, []);
-
-    const xAnnotations = useMemo(() => {
-        var annotations = [];
-        const buyColor = '#00E396';
-        const sellColor = '#E30096';
-        if (signals.length === 0) {
-            return [];
-        }
-        signals.forEach((signal) => {
-            if (signal.signal === StrategySignals.BUY) {
-                const x = Math.round(signal.time - chartsInterval/2);
-                const x2 = x + chartsInterval;
-                annotations.push({
-                    x: x,
-                    x2: x2,
-                    strokeDashArray: 0,
-                    borderColor: chartsLinesColor,
-                    fillColor: '#244B4B',
-                    opacity: 0.7,
-                });
-            }
-        });
-        return annotations;
-    }, [signals]);
-
-    let daysForInterval = TimeHelper.daysForInterval(chartsInterval)
-    if (daysForInterval > 3) {
-        daysForInterval = 3;
-    }
-    let fromDate = TimeHelper.subDaysFromDate(new Date(), daysForInterval);
-    let toDate = new Date();
-    let fromTime = chartsInterval*parseInt(fromDate.getTime()/chartsInterval);
-    let toTime = chartsInterval*(parseInt(toDate.getTime()/chartsInterval)+1);
-
-    useEffect(() => {
-        RequestHelper.fetch('/api/signals/BTCUSDT/' + fromTime + '/' + toTime + '/' + chartsInterval, {}, response => {
-            setSignals(response.data);
-        });
-    }, [fromTime, toTime, chartsInterval]);
 
     const popupDom = <Alert variant={popup.type} onClose={() => hidePopup()} dismissible>
                          <Alert.Heading>{popup.title}</Alert.Heading>
@@ -157,18 +179,20 @@ const App = () => {
             <div className="row justify-content-center">
                 <div className="col-md-10">
                     <div className="card">
-                        <div className="card-header">Price<CurrentPrice symbol={"BTCBUSD"} /></div>
+                        <div className={"card-header"}>
+                            <IntervalSelector setChartsInterval={setChartsInterval} />
+                        </div>
                         <div className="card-body pt-0">
                             <div className="chart">
+                                <currentPriceContext.Provider value={currentPrice}>
                                 <ordersContext.Provider value={orders}>
-                                    <PriceChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={priceChartRef} xAnnotations={xAnnotations} />
+                                    <PriceChart fromTime={fromTime} toTime={toTime} interval={interval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={priceChartRef} />
                                 </ordersContext.Provider>
-                                <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={chartsInterval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={mdChartRef} xAnnotations={xAnnotations} />
+                                </currentPriceContext.Provider>
+                                <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={interval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={mdChartRef} xAnnotations={[...mdClustersAnnotations, getToTimeAnnotation()]} />
                             </div>
                         </div>
                     </div>
-                    <br/>
-                    <IntervalSelector setChartsInterval={setChartsInterval} />
                     <br/>
                     <ordersContext.Provider value={orders}>
                         <OrdersList innerRef={ordersListRef} />
@@ -186,24 +210,23 @@ const App = () => {
     }
 
     return (
-        <currentPriceContext.Provider value={currentPrice}>
-            <div id="page">
-                <div id="top">
-                    <div className="top-left">
-                        <a href="/" className="logo-link">
-                            <img src="images/logo.png" />
-                        </a>
-                    </div>
-                    <div className="top-right">
-                        {loginButton}&nbsp;&nbsp;&nbsp;
-                        {settingsButton}
-                    </div>
+        <div id="page">
+            {/*<span style={{color: '#fff'}}>{(new Date(fromTime)).toLocaleString()} - {(new Date(toTime)).toLocaleString()}</span>*/}
+            <div id="top">
+                <div className="top-left">
+                    <a href="/" className="logo-link">
+                        <img src="images/logo.png" />
+                    </a>
                 </div>
-                <div id="middle">
-                    {content}
+                <div className="top-right">
+                    {loginButton}&nbsp;&nbsp;&nbsp;
+                    {settingsButton}
                 </div>
             </div>
-        </currentPriceContext.Provider>
+            <div id="middle">
+                {content}
+            </div>
+        </div>
     );
 }
 

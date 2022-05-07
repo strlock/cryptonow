@@ -8,10 +8,12 @@ import {
 } from "../constants";
 
 let chartContext = null;
+import currentPriceContext from "../contexts/CurrentPriceContext";
 
-const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, xAnnotations}) => {
+const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor}) => {
     const orders = useContext(ordersContext);
     const [seriesData, setSeriesData] = useState([]);
+    const currentPrice = useContext(currentPriceContext);
 
     useEffect(() => {
         RequestHelper.fetch('/api/price/BTCUSDT/' + fromTime + '/' + toTime + '/' + interval, {},
@@ -81,6 +83,24 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, 
         }
         return result;
     }, [orders]);
+
+    const priceAnnotation = useMemo(() => {
+        return {
+            y: currentPrice,
+            borderColor: '#fff',
+            strokeDashArray: 1,
+            label: {
+                borderColor: linesColor,
+                position: 'right',
+                textAnchor: 'end',
+                style: {
+                    color: textColor,
+                    background: 'transparent'
+                },
+                text: FormatHelper.formatPrice(currentPrice)
+            }
+        };
+    }, [currentPrice]);
 
     const yRange = useMemo(() => {
         let prices = [];
@@ -205,8 +225,7 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, 
         },
         annotations: {
             position: 'front',
-            yaxis: yAnnotations,
-            xaxis: xAnnotations,
+            yaxis: [...yAnnotations, priceAnnotation],
         }
     }
 

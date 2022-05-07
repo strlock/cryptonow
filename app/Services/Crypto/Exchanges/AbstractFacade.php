@@ -5,7 +5,9 @@ use App\Dto\CancelOrderDto;
 use App\Dto\PlaceGoalOrderDto;
 use App\Dto\PlaceOrderDto;
 use App\Dto\TimeIntervalChunkDto;
-use App\Services\Crypto\Helpers\TimeHelper;
+use App\Enums\TimeInterval;
+use App\Helpers\TimeHelper;
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
 
@@ -25,10 +27,11 @@ abstract class AbstractFacade implements FacadeInterface
      * @param string $symbol
      * @param int $fromTime
      * @return float
+     * @throws Exception
      */
     final public function getMinuteMarketDelta(string $symbol, int $fromTime): float
     {
-        $fromTime = TimeHelper::roundTimestampMs($fromTime);
+        $fromTime = TimeHelper::round($fromTime, TimeInterval::MINUTE());
         $result = $this->getMinuteMarketDeltaFromDatabase($symbol, $fromTime);
         if ($result !== false) {
             return $result;
@@ -106,10 +109,10 @@ abstract class AbstractFacade implements FacadeInterface
      * @param string $symbol
      * @param int $fromTime
      * @param int|null $toTime
-     * @param int $interval
+     * @param TimeInterval|null $interval
      * @return Collection
      */
-    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, int $interval = TimeHelper::FIVE_MINUTE_MS): Collection
+    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, ?TimeInterval $interval = null): Collection
     {
         return collect();
     }
