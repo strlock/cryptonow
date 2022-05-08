@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Refactoring BTCUSDT -&gt; BTCUSD">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,14 +294,7 @@
       <workItem from="1651823523805" duration="3757000" />
       <workItem from="1651838337455" duration="17997000" />
       <workItem from="1651934193629" duration="9156000" />
-      <workItem from="1651991937948" duration="26572000" />
-    </task>
-    <task id="LOCAL-00018" summary="Updating orders list after add new order">
-      <created>1650922372099</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1650922372099</updated>
+      <workItem from="1651991937948" duration="27301000" />
     </task>
     <task id="LOCAL-00019" summary="Adding ready_at, completed_at and moving Crypto to Services">
       <created>1650960180736</created>
@@ -640,7 +632,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652040154915</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Refactoring BTCUSDT -&gt; BTCUSD">
+      <created>1652040460145</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1652040460145</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

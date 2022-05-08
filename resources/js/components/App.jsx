@@ -108,7 +108,7 @@ const App = () => {
         RequestHelper.fetch('/api/mdclusters/BTCUSD/' + interval, {}, response => {
             setMdClusters(response.data);
         });
-    }, [interval]);
+    }, [interval, isLoggedIn]);
 
     const mdClustersAnnotations = useMemo(() => {
         const annotations = [];

@@ -9760,7 +9760,7 @@ var App = function App() {
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_17__["default"].fetch('/api/mdclusters/BTCUSD/' + interval, {}, function (response) {
       setMdClusters(response.data);
     });
-  }, [interval]);
+  }, [interval, isLoggedIn]);
   var mdClustersAnnotations = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     var annotations = [];
 
