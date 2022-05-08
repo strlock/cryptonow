@@ -48,10 +48,11 @@ class BinanceWebsocketClient extends Command
      */
     public function handle()
     {
-        $symbol = trim($this->argument('symbol'));
-        $streamName = strtolower($symbol).'@aggTrade';
-        /** @var AbstractFacade $exchange */
         $exchange = Factory::create('binance');
+        $symbol = trim($this->argument('symbol'));
+        $exchangeSymbol = $exchange->getExchangeSymbol($symbol);
+        $streamName = strtolower($exchangeSymbol).'@aggTrade';
+        /** @var AbstractFacade $exchange */
         while (true) {
             try {
                 echo 'Retrieving '.self::CHUNK_SIZE.' trades'.PHP_EOL;
@@ -68,14 +69,14 @@ class BinanceWebsocketClient extends Command
                     }
                     $price = $response->p;
                     event(new BinancePrice($price));
-                    $mdQueueName = 'binance:md:'.$symbol;
+                    $mdKey = 'binance:md:'.$exchangeSymbol;
                     $fromTime = TimeHelper::round((int)($response->E), TimeInterval::MINUTE());
-                    $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($symbol, $fromTime);
-                    Redis::zRem($mdQueueName, $fromTime.':'.$marketDelta);
+                    $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
+                    Redis::zRem($mdKey, $fromTime.':'.$marketDelta);
                     $delta = $response->q*($response->m ? -1 : 1);
                     $marketDelta += $delta;
                     echo round($price, 2).': '.$marketDelta.PHP_EOL;
-                    Redis::zAdd($mdQueueName, $fromTime, $fromTime.':'.$marketDelta);
+                    Redis::zAdd($mdKey, $fromTime, $fromTime.':'.$marketDelta);
                     $i++;
                 }
                 $client->close();

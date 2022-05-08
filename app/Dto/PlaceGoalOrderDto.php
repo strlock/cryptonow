@@ -10,7 +10,7 @@ class PlaceGoalOrderDto
 {
     public function __construct(
         private OrderDirection $direction,
-        private string $symbol,
+        private string $exchangeSymbol,
         private float $amount,
         private ?float $sl,
         private ?float $tp,
@@ -31,9 +31,9 @@ class PlaceGoalOrderDto
     /**
      * @return string
      */
-    public function getSymbol(): string
+    public function getExchangeSymbol(): string
     {
-        return $this->symbol;
+        return $this->exchangeSymbol;
     }
 
     /**

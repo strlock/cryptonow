@@ -15,6 +15,9 @@ class Facade extends AbstractFacade
 {
     protected const LIMIT = 10000;
     protected const CHUNK_INTERVAL = 10*60*1000;
+    protected array $symbolMap = [
+        'BTCUSD' => ['tBTCUSD'],
+    ];
 
     protected int $delay = 0;
 
@@ -26,7 +29,7 @@ class Facade extends AbstractFacade
         ]);
     }
 
-    public function getTrades(string $symbol, int $fromTime, int $toTime = null): Collection
+    public function getTrades(string $exchangeSymbol, int $fromTime, int $toTime = null): Collection
     {
         $result = collect();
         try {
@@ -43,9 +46,9 @@ class Facade extends AbstractFacade
                     'Interval: ' . $fromTimeDate->format(config('crypto.dateFormat')) . '-' . $toTimeDate->format(
                         config('crypto.dateFormat')
                     ),
-                    compact('symbol', 'fromTime', 'toTime')
+                    compact('exchangeSymbol', 'fromTime', 'toTime')
                 );
-                $trades = $this->api->trades($symbol, $fromTime, $toTime, self::LIMIT);
+                $trades = $this->api->trades($exchangeSymbol, $fromTime, $toTime, self::LIMIT);
                 foreach ($trades ?? [] as $trade) {
                     $time = (int)$trade[1];
                     if ($time > $toTime) {
@@ -69,14 +72,14 @@ class Facade extends AbstractFacade
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      */
-    protected function dispatchMinuteMarketStatFetchJob(string $symbol, int $fromTime): void
+    protected function dispatchMinuteMarketStatFetchJob(string $exchangeSymbol, int $fromTime): void
     {
         dispatch(
             (new BitfinexFetchMinuteMarketStat(
-                new FetchMinuteMarketStatDto($symbol, $fromTime)
+                new FetchMinuteMarketStatDto($exchangeSymbol, $fromTime)
             ))->onQueue(QueueNames::BITFINEX_MARKET_STAT_CALCULATION)->delay($this->delay),
         );
         $this->delay += 2;

@@ -140,7 +140,8 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
         $cacheKey = md5(implode('.', [$symbol, $toTime, $interval->value()]));
         if (!Cache::has($cacheKey)) {
             $exchange = ExchangesFactory::create();
-            Cache::put($cacheKey, $exchange->getCandlesticks($symbol, $fromTime, $toTime, $interval));
+            $exchangeSymbol = $exchange->getExchangeSymbol($symbol);
+            Cache::put($cacheKey, $exchange->getCandlesticks($exchangeSymbol, $fromTime, $toTime, $interval));
         }
         $candlesticks = Cache::get($cacheKey);
         foreach ($candlesticks as $openTime => $candlestickData) {

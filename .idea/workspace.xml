@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Automatic orders">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Console/Commands/CheckSignalCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/CheckSignalCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Dto/CancelOrderDto.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Dto/CancelOrderDto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Dto/FetchMinuteMarketStatDto.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Dto/FetchMinuteMarketStatDto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Dto/PlaceGoalOrderDto.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Dto/PlaceGoalOrderDto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Dto/PlaceOrderDto.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Dto/PlaceOrderDto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PriceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PriceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BinanceFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BinanceFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BitstampFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BitstampFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/AbstractFacade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/AbstractFacade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Binance/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Binance/Facade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitfinex/API.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitfinex/API.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitfinex/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitfinex/Facade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitstamp/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitstamp/Facade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/FacadeInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/FacadeInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/OrderForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrderForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/PriceChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/PriceChart.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -293,14 +318,7 @@
       <workItem from="1651823523805" duration="3757000" />
       <workItem from="1651838337455" duration="17997000" />
       <workItem from="1651934193629" duration="9156000" />
-      <workItem from="1651991937948" duration="17250000" />
-    </task>
-    <task id="LOCAL-00016" summary="Renaming Delta to Stat">
-      <created>1650894708282</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1650894708282</updated>
+      <workItem from="1651991937948" duration="26228000" />
     </task>
     <task id="LOCAL-00017" summary="Updating charts by interval">
       <created>1650915969360</created>
@@ -638,7 +656,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652016684047</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="Improving">
+      <created>1652017243550</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1652017243550</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -689,22 +714,17 @@
     <MESSAGE value="Orders annotations" />
     <MESSAGE value="Signals and signal annotations" />
     <MESSAGE value="Signal and signal annotations. Refactoring." />
-    <MESSAGE value="Improving" />
     <MESSAGE value="Automatic orders" />
-    <option name="LAST_COMMIT_MESSAGE" value="Automatic orders" />
+    <MESSAGE value="Improving" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php</url>
-          <line>43</line>
+          <line>45</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Console/Commands/TestSomething.php</url>
-          <line>43</line>
-          <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php</url>

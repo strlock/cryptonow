@@ -58,9 +58,10 @@ class OrdersService implements OrdersServiceInterface
     private function placeNewOrderToExchange(OrderInterface|Model $order)
     {
         $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
+        $exchangeSymbol = $exchange->getExchangeOrderSymbol($order->getSymbol());
         $exchangeOrderId = $exchange->placeOrder(new PlaceOrderDto(
             $order->getDirection(),
-            $order->getSymbol(),
+            $exchangeSymbol,
             $order->getAmount(),
             round($order->getPrice(), 2),
             $order->isMarket() ? ExchangeOrderType::market() : ExchangeOrderType::limit(),
@@ -80,9 +81,10 @@ class OrdersService implements OrdersServiceInterface
     public function placeRevertMarketOrderToExchange(OrderInterface|Model $order): string
     {
         $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
+        $exchangeSymbol = $exchange->getExchangeOrderSymbol($order->getSymbol());
         return $exchange->placeOrder(new PlaceOrderDto(
             $order->getDirection()->isBUY() ? OrderDirection::SELL() : OrderDirection::BUY(),
-            $order->getSymbol(),
+            $exchangeSymbol,
             $order->getAmount(),
             $order->getPrice(),
             ExchangeOrderType::market(),
@@ -123,6 +125,7 @@ class OrdersService implements OrdersServiceInterface
     {
         $result = false;
         $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
+        $exchangeSymbol = $exchange->getExchangeOrderSymbol($order->getSymbol());
         $newOrderDirection = $order->getDirection()->isBUY() ? OrderDirection::SELL() : OrderDirection::BUY();
         if (!empty($order->getSl()) && !empty($order->getTp())) {
             if ($order->getDirection()->isSELL()) {
@@ -132,7 +135,7 @@ class OrdersService implements OrdersServiceInterface
             }
             $exchangeOrderIds = $exchange->placeTakeProfitAndStopLossOrder(new PlaceGoalOrderDto(
                 $newOrderDirection,
-                $order->getSymbol(),
+                $exchangeSymbol,
                 $amount,
                 $order->getSl(),
                 $order->getTp(),
@@ -150,7 +153,7 @@ class OrdersService implements OrdersServiceInterface
         } else if (!empty($order->getSl())) {
             $exchangeOrderId = $exchange->placeOrder(new PlaceOrderDto(
                 $newOrderDirection,
-                $order->getSymbol(),
+                $exchangeSymbol,
                 $order->getAmount(),
                 $order->getSl(),
                 ExchangeOrderType::stop_loss(),
@@ -164,7 +167,7 @@ class OrdersService implements OrdersServiceInterface
         } else if (!empty($order->getTp())) {
             $exchangeOrderId = $exchange->placeOrder(new PlaceOrderDto(
                 $newOrderDirection,
-                $order->getSymbol(),
+                $exchangeSymbol,
                 $order->getAmount(),
                 $order->getTp(),
                 ExchangeOrderType::limit(),
@@ -196,6 +199,7 @@ class OrdersService implements OrdersServiceInterface
     {
         /** @var AbstractFacade $exchange */
         $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
+        $exchangeSymbol = $exchange->getExchangeOrderSymbol($order->getSymbol());
         $placedOrderIds = collect();
         if (!empty($order->getExchangeOrderId())) {
             $placedOrderIds->push($order->getExchangeOrderId());
@@ -208,7 +212,7 @@ class OrdersService implements OrdersServiceInterface
         }
         if (count($placedOrderIds) > 0) {
             foreach ($placedOrderIds as $placedOrderId) {
-                $exchange->cancelOrder(new CancelOrderDto($order->getSymbol(), $placedOrderId));
+                $exchange->cancelOrder(new CancelOrderDto($exchangeSymbol, $placedOrderId));
             }
         }
     }

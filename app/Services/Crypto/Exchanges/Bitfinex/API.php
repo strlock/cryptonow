@@ -6,10 +6,6 @@ use Illuminate\Support\Facades\Log;
 
 class API extends BitfinexAPI
 {
-    private const SYMBOL_MAP = [
-        'BTCUSDT' => 'tBTCUSD',
-    ];
-
     /**
      * aggTrades get Market History / Aggregate Trades
      *
@@ -36,12 +32,11 @@ class API extends BitfinexAPI
         if (!empty($fromId)) {
             $params['fromId'] = $fromId;
         }
-        $symbol = self::SYMBOL_MAP[$symbol];
         $i = 0;
         $response = [];
         while ($i < 100) {
             try {
-                $response = $this->makePublicRequest('/v2/trades/' . $symbol . '/hist?' . http_build_query($params));
+                $response = $this->makePublicRequest('/v2/trades/'.$symbol.'/hist?'.http_build_query($params));
                 break;
             } catch (\Throwable $e) {
                 $sleepTime = rand(1,10)*3;

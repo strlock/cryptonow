@@ -14,10 +14,6 @@ use WebSocket\Client;
 
 class BitstampWebsocketClient extends Command
 {
-    private const SYMBOL_MAP = [
-        'BTCUSDT' => 'btcusd',
-    ];
-
     /**
      * The name and signature of the console command.
      *
@@ -51,11 +47,11 @@ class BitstampWebsocketClient extends Command
      */
     public function handle()
     {
-        $symbol = trim($this->argument('symbol'));
-        $currency_pair = self::SYMBOL_MAP[$symbol];
-        $channel = 'live_trades_'.$currency_pair;
-        /** @var AbstractFacade $exchange */
         $exchange = Factory::create('bitstamp');
+        $symbol = trim($this->argument('symbol'));
+        $exchangeSymbol = $exchange->getExchangeSymbol($symbol);
+        $channel = 'live_trades_'.$exchangeSymbol;
+        /** @var AbstractFacade $exchange */
         while (true) {
             try {
                 echo 'Retrieving '.self::CHUNK_SIZE.' trades'.PHP_EOL;
@@ -91,9 +87,9 @@ class BitstampWebsocketClient extends Command
                         Log::debug('BITSTAMP: Empty trade data!');
                         continue;
                     }
-                    $mdQueueName = 'bitstamp:md:'.$symbol;
+                    $mdQueueName = 'bitstamp:md:'.$exchangeSymbol;
                     $fromTime = TimeHelper::round((int)($tradeData->microtimestamp/1000), TimeInterval::MINUTE());
-                    $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($symbol, $fromTime);
+                    $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
                     Redis::zRem($mdQueueName, $fromTime.':'.$marketDelta);
                     $delta = $tradeData->amount*($tradeData->type === 1 ? -1 : 1);
                     $marketDelta += $delta;

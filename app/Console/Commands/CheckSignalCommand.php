@@ -48,7 +48,7 @@ class CheckSignalCommand extends Command
     {
         $symbol = $this->argument('symbol');
         while (true) {
-            $signal = $strategy->getSignal('BTCUSDT', TimeInterval::FIVE_MINUTES());
+            $signal = $strategy->getSignal($symbol, TimeInterval::FIVE_MINUTES());
             $toTime = TimeHelper::round(TimeHelper::time(), TimeInterval::FIVE_MINUTES());
             echo date('d.m.Y H:i:s', $toTime/1000).' '.$signal->key().PHP_EOL;
             if ($signal !== StrategySignal::NOTHING()) {

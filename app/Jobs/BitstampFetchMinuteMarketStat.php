@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Enums\TimeInterval;
+use App\Services\Crypto\Exchanges\FacadeInterface;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use App\Helpers\TimeHelper;
 use App\Dto\FetchMinuteMarketStatDto;
@@ -37,17 +38,17 @@ class BitstampFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
      */
     public function handle()
     {
-        $symbol = $this->dto->getSymbol();
-        $mdQueueName = 'bitstamp:md:'.$symbol;
+        $exchange = ExchangesFactory::create('bitstamp');
+        $exchangeSymbol = $this->dto->getExchangeSymbol();
+        $mdQueueName = 'bitstamp:md:'.$exchangeSymbol;
         $fromTime = TimeHelper::round($this->dto->getFromTime(), TimeInterval::MINUTE());
         $fromDate = Date::createFromTimestampMs($fromTime);
         $nowDate = Date::now();
         $nowDate->setSeconds(0);
         $nowDate->setMicroseconds(0);
-        $exchange = ExchangesFactory::create('bitstamp');
-        $marketDelta = $exchange->getMinuteMarketDeltaFromDatabase($symbol, $fromTime);
+        $marketDelta = $exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
         if ($marketDelta !== false) {
-            Log::debug('BITSTAMP: Minute market stat already fetched.', ['symbol' => $symbol, 'fromTime' => date('d.m.Y H:i:s', $fromTime/1000)]);
+            Log::debug('BITSTAMP: Minute market stat already fetched.', ['symbol' => $exchangeSymbol, 'fromTime' => date('d.m.Y H:i:s', $fromTime/1000)]);
             return;
         }
         if ($fromDate === $nowDate) {
@@ -56,10 +57,10 @@ class BitstampFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
         }
         $toTime = $fromTime+TimeInterval::MINUTE()->value();
         $marketDelta = 0.0;
-        foreach ($exchange->getTrades($symbol, $fromTime, $toTime) as $trade) {
+        foreach ($exchange->getTrades($exchangeSymbol, $fromTime, $toTime) as $trade) {
             $marketDelta += $trade->getVolume();
         }
-        Log::debug('BITSTAMP: Adding minute market stat to database. Market delta: '.$marketDelta, ['symbol' => $symbol, 'fromTime' => $fromTime]);
+        Log::debug('BITSTAMP: Adding minute market stat to database. Market delta: '.$marketDelta, ['symbol' => $exchangeSymbol, 'fromTime' => $fromTime]);
         Redis::zAdd($mdQueueName, $fromTime, $fromTime.':'.$marketDelta);
     }
 
@@ -68,6 +69,6 @@ class BitstampFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
      */
     public function uniqueId(): string
     {
-        return $this->dto->getSymbol().':'.$this->dto->getFromTime();
+        return $this->dto->getExchangeSymbol().':'.$this->dto->getFromTime();
     }
 }

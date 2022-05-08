@@ -5,7 +5,7 @@ namespace App\Dto;
 class FetchMinuteMarketStatDto
 {
     public function __construct(
-        private string $symbol,
+        private string $exchangeSymbol,
         private int $fromTime
     ) {
         //
@@ -14,9 +14,9 @@ class FetchMinuteMarketStatDto
     /**
      * @return string
      */
-    public function getSymbol(): string
+    public function getExchangeSymbol(): string
     {
-        return $this->symbol;
+        return $this->exchangeSymbol;
     }
 
     /**

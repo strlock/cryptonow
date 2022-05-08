@@ -20,7 +20,8 @@ class PriceController extends Controller
         $interval = TimeInterval::memberByValue($interval);
         $data = collect();
         $exchange = Factory::create('binance');
-        foreach ($exchange->getCandlesticks($symbol, $fromTime, $toTime, $interval) as $time => $candlestickData) {
+        $exchangeSymbol = $exchange->getExchangeSymbol($symbol);
+        foreach ($exchange->getCandlesticks($exchangeSymbol, $fromTime, $toTime, $interval) as $time => $candlestickData) {
             $data->push([
                 'x' => $time,
                 'y' => $candlestickData,

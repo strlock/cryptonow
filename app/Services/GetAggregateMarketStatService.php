@@ -13,9 +13,9 @@ use Illuminate\Support\Collection;
 class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInterface
 {
     private array $exchangeNames = [
-        'bitfinex',
+        //'bitfinex',
         'binance',
-        'bitstamp',
+        //'bitstamp',
     ];
 
     /**
@@ -40,7 +40,9 @@ class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInte
             while ($nextTime < $fromTime + $interval->value()) {
                 foreach ($this->exchangeNames as $exchangeName) {
                     $exchange = Factory::create($exchangeName);
-                    $result[$fromTime] += $exchange->getMinuteMarketDelta($symbol, $nextTime);
+                    foreach ($exchange->getExchangeSymbols($symbol) as $exchangeSymbol) {
+                        $result[$fromTime] += $exchange->getMinuteMarketDelta($exchangeSymbol, $nextTime);
+                    }
                 }
                 $nextTime += TimeInterval::MINUTE()->value();
             }

@@ -9757,7 +9757,7 @@ var App = function App() {
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_17__["default"].fetch('/api/mdclusters/BTCUSDT/' + interval, {}, function (response) {
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_17__["default"].fetch('/api/mdclusters/BTCUSD/' + interval, {}, function (response) {
       setMdClusters(response.data);
     });
   }, [interval]);
@@ -9771,19 +9771,21 @@ var App = function App() {
     mdClusters.forEach(function (mdCluster, i) {
       var borderColor = i !== 0 ? chartsLinesColor : '#00ff00';
       var relativePriceDiffPercent = 100 * (mdCluster.toPrice - mdCluster.fromPrice) / mdCluster.fromPrice;
+      var opacity = i === 0 ? 0.7 : 0.3;
       annotations.push({
         x: Math.round(mdCluster.fromTime - interval / 2),
         x2: Math.round(mdCluster.toTime - interval / 2),
         strokeDashArray: 0,
         borderColor: borderColor,
         fillColor: '#244B4B',
-        opacity: 0.7,
+        opacity: opacity,
         label: {
           text: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].formatAmount(mdCluster.marketDelta) + ', ' + Math.round(relativePriceDiffPercent * 100) / 100 + '%',
           borderColor: chartsLinesColor,
           style: {
             color: chartsTextColor,
-            background: 'transparent'
+            background: 'transparent',
+            opacity: opacity
           }
         }
       });
@@ -10451,7 +10453,7 @@ var MarketDeltaChart = function MarketDeltaChart(_ref) {
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/marketDelta/BTCUSDT/' + fromTime + '/' + toTime + '/' + interval, {}, function (response) {
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/marketDelta/BTCUSD/' + fromTime + '/' + toTime + '/' + interval, {}, function (response) {
       setSeriesData(response.data);
     }, function (error) {
       return console.log(error);
@@ -10603,7 +10605,7 @@ var OrderForm = function OrderForm(props) {
     data.append('market', 1 * marketRef.current.checked);
     data.append('direction', direction);
     data.append('exchange', 'binance');
-    data.append('symbol', 'BTCBUSD');
+    data.append('symbol', 'BTCUSD');
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/orders', {
       method: 'POST',
       body: data
@@ -11087,7 +11089,7 @@ var PriceChart = function PriceChart(_ref) {
 
   var currentPrice = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_contexts_CurrentPriceContext__WEBPACK_IMPORTED_MODULE_6__["default"]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/price/BTCUSDT/' + fromTime + '/' + toTime + '/' + interval, {}, function (response) {
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/price/BTCUSD/' + fromTime + '/' + toTime + '/' + interval, {}, function (response) {
       setSeriesData(response.data);
     }, function (error) {
       return console.log(error);

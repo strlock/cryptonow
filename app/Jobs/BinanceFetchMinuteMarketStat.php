@@ -41,18 +41,18 @@ class BinanceFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
      */
     public function handle()
     {
-        $symbol = $this->dto->getSymbol();
-        $mdQueueName = 'binance:md:'.$symbol;
+        /** @var ExchangeFacade $exchange */
+        $exchange = ExchangesFactory::create('binance');
+        $exchangeSymbol = $this->dto->getExchangeSymbol();
+        $mdQueueName = 'binance:md:'.$exchangeSymbol;
         $fromTime = TimeHelper::round($this->dto->getFromTime(), TimeInterval::MINUTE());
         $fromDate = Date::createFromTimestampMs($fromTime);
         $nowDate = Date::now();
         $nowDate->setSeconds(0);
         $nowDate->setMicroseconds(0);
-        /** @var ExchangeFacade $exchange */
-        $exchange = ExchangesFactory::create('binance');
-        $marketDelta = $exchange->getMinuteMarketDeltaFromDatabase($symbol, $fromTime);
+        $marketDelta = $exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
         if ($marketDelta !== false) {
-            Log::debug('BINANCE: Minute market stat already fetched.', ['symbol' => $symbol, 'fromTime' => date('d.m.Y H:i:s', $fromTime/1000)]);
+            Log::debug('BINANCE: Minute market stat already fetched.', ['symbol' => $exchangeSymbol, 'fromTime' => date('d.m.Y H:i:s', $fromTime/1000)]);
             return;
         }
         if ($fromDate === $nowDate) {
@@ -61,11 +61,11 @@ class BinanceFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
         }
         $toTime = $fromTime+TimeInterval::MINUTE()->value();
         $marketDelta = 0.0;
-        foreach ($exchange->getTrades($symbol, $fromTime, $toTime) as $trade) {
+        foreach ($exchange->getTrades($exchangeSymbol, $fromTime, $toTime) as $trade) {
             /** @var TradeInterface $trade */
             $marketDelta += $trade->getVolume();
         }
-        Log::debug('BINANCE: Adding minute market stat to database. Market delta: '.$marketDelta, ['symbol' => $symbol, 'fromTime' => $fromTime]);
+        Log::debug('BINANCE: Adding minute market stat to database. Market delta: '.$marketDelta, ['symbol' => $exchangeSymbol, 'fromTime' => $fromTime]);
         Redis::zAdd($mdQueueName, $fromTime, $fromTime.':'.$marketDelta);
     }
 
@@ -74,6 +74,6 @@ class BinanceFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
      */
     public function uniqueId(): string
     {
-        return $this->dto->getSymbol().':'.$this->dto->getFromTime();
+        return $this->dto->getExchangeSymbol().':'.$this->dto->getFromTime();
     }
 }

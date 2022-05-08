@@ -10,7 +10,7 @@ use App\Enums\OrderDirection;
 class CancelOrderDto
 {
     public function __construct(
-        private string $symbol,
+        private string $exchangeSymbol,
         private string $orderId,
     )
     {
@@ -20,9 +20,9 @@ class CancelOrderDto
     /**
      * @return string
      */
-    public function getSymbol(): string
+    public function getExchangeSymbol(): string
     {
-        return $this->symbol;
+        return $this->exchangeSymbol;
     }
 
     /**

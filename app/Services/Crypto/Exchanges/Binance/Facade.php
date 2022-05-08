@@ -22,6 +22,10 @@ class Facade extends AbstractFacade
 {
     protected const LIMIT = 1000;
     protected const CHUNK_INTERVAL = 60*60*1000;
+    protected array $symbolMap = [
+        'BTCUSD' => ['BTCUSDT', 'BTCBUSD'],
+    ];
+    protected int $orderSymbolIndex = 1;
 
     protected const INTERVALS_MAP = [
         TimeInterval::MINUTE => BinanceTimeIntervals::ONE_MINUTE,
@@ -53,12 +57,12 @@ class Facade extends AbstractFacade
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      * @param int|null $toTime
      * @return Collection
      */
-    public function getTrades(string $symbol, int $fromTime, int $toTime = null): Collection
+    public function getTrades(string $exchangeSymbol, int $fromTime, int $toTime = null): Collection
     {
         $result = collect();
         try {
@@ -74,11 +78,11 @@ class Facade extends AbstractFacade
                 for ($page=0; $page < self::MAX_PAGES; $page++) {
                     Log::debug('BINANCE: Fetching '.self::LIMIT.' trades from API. '.
                                'Interval: '.$fromTimeDate->format(config('crypto.dateFormat')).'-'.$toTimeDate->format(config('crypto.dateFormat')).' '.
-                               'Page: '.$page, compact('symbol', 'fromTime', 'toTime'));
+                               'Page: '.$page, compact('exchangeSymbol', 'fromTime', 'toTime'));
                     if (empty($fromId)) {
-                        $trades = $this->api->aggTrades($symbol, $fromTime, $toTime, self::LIMIT);
+                        $trades = $this->api->aggTrades($exchangeSymbol, $fromTime, $toTime, self::LIMIT);
                     } else {
-                        $trades = $this->api->aggTrades($symbol, null, null, self::LIMIT, $fromId);
+                        $trades = $this->api->aggTrades($exchangeSymbol, null, null, self::LIMIT, $fromId);
                     }
                     foreach ($trades ?? [] as $trade) {
                         $time = (int)$trade['timestamp'];
@@ -106,27 +110,27 @@ class Facade extends AbstractFacade
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      */
-    protected function dispatchMinuteMarketStatFetchJob(string $symbol, int $fromTime): void
+    protected function dispatchMinuteMarketStatFetchJob(string $exchangeSymbol, int $fromTime): void
     {
         /*dispatch(
             (new BinanceFetchMinuteMarketStat(
-                new FetchMinuteMarketStatDto($symbol, $fromTime)
+                new FetchMinuteMarketStatDto($exchangeSymbol, $fromTime)
             ))->onQueue(QueueNames::BINANCE_MARKET_STAT_CALCULATION),
         );*/
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      * @param int|null $toTime
      * @param TimeInterval|null $interval
      * @return Collection
      * @throws Exception
      */
-    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, ?TimeInterval $interval = null): Collection
+    public function getCandlesticks(string $exchangeSymbol, int $fromTime, int $toTime = null, ?TimeInterval $interval = null): Collection
     {
         if (empty($interval)) {
             $interval = TimeInterval::FIVE_MINUTES();
@@ -136,7 +140,7 @@ class Facade extends AbstractFacade
             throw new Exception('Unknown Binance time interval');
         }
         $sInterval = static::INTERVALS_MAP[$interval->value()];
-        foreach ($this->api->candlesticks($symbol, $sInterval, null, $fromTime, $toTime) as $candlestickData) {
+        foreach ($this->api->candlesticks($exchangeSymbol, $sInterval, null, $fromTime, $toTime) as $candlestickData) {
             $candlestickResultData = [
                 $candlestickData['open'],
                 $candlestickData['high'],
@@ -169,7 +173,7 @@ class Facade extends AbstractFacade
             }
         }
         try {
-            $response = $this->api->order(strtoupper($dto->getDirection()->value()), $dto->getSymbol(), $dto->getAmount(), $dto->getPrice(), $orderType, $params);
+            $response = $this->api->order(strtoupper($dto->getDirection()->value()), $dto->getExchangeSymbol(), $dto->getAmount(), $dto->getPrice(), $orderType, $params);
             if (is_array($response) && isset($response['orderId'])) {
                 $result = $response['orderId'];
             }
@@ -192,7 +196,7 @@ class Facade extends AbstractFacade
     {
         $result = false;
         try {
-            $response = $this->api->orderOCO(strtoupper($dto->getDirection()->value()), $dto->getSymbol(), $dto->getAmount(), $dto->getTp(), $dto->getSl(), [
+            $response = $this->api->orderOCO(strtoupper($dto->getDirection()->value()), $dto->getExchangeSymbol(), $dto->getAmount(), $dto->getTp(), $dto->getSl(), [
                 'listClientOrderId' => $dto->getOrderId(),
                 'limitClientOrderId' => 'limit-'.$dto->getOrderId(),
                 'stopClientOrderId' => 'stop-'.$dto->getOrderId(),
@@ -235,7 +239,7 @@ class Facade extends AbstractFacade
     {
         $result = true;
         try {
-            $this->api->cancel($dto->getSymbol(), $dto->getOrderId());
+            $this->api->cancel($dto->getExchangeSymbol(), $dto->getOrderId());
         } catch (Throwable $e) {
             Log::error($e);
             $result = false;
@@ -244,12 +248,12 @@ class Facade extends AbstractFacade
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @return float
      * @throws Exception
      */
-    public function getCurrentPrice(string $symbol): float
+    public function getCurrentPrice(string $exchangeSymbol): float
     {
-        return $this->api->price($symbol);
+        return $this->api->price($exchangeSymbol);
     }
 }

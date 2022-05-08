@@ -129,7 +129,7 @@ const MarketDeltaChart = ({fromTime, toTime, interval, linesColor, textColor, he
     };
 
     useEffect(() => {
-        RequestHelper.fetch('/api/marketDelta/BTCUSDT/' + fromTime + '/' + toTime + '/' + interval, {}, response => {
+        RequestHelper.fetch('/api/marketDelta/BTCUSD/' + fromTime + '/' + toTime + '/' + interval, {}, response => {
             setSeriesData(response.data);
         }, error => console.log(error));
     }, [fromTime, toTime, interval]);

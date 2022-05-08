@@ -14,39 +14,40 @@ use Illuminate\Support\Facades\Redis;
 abstract class AbstractFacade implements FacadeInterface
 {
     protected const MAX_PAGES = 100;
-
+    protected array $symbolMap = [];
     protected object $api;
+    protected int $orderSymbolIndex = 0;
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      */
-    abstract protected function dispatchMinuteMarketStatFetchJob(string $symbol, int $fromTime): void;
+    abstract protected function dispatchMinuteMarketStatFetchJob(string $exchangeSymbol, int $fromTime): void;
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      * @return float
      * @throws Exception
      */
-    final public function getMinuteMarketDelta(string $symbol, int $fromTime): float
+    final public function getMinuteMarketDelta(string $exchangeSymbol, int $fromTime): float
     {
         $fromTime = TimeHelper::round($fromTime, TimeInterval::MINUTE());
-        $result = $this->getMinuteMarketDeltaFromDatabase($symbol, $fromTime);
+        $result = $this->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
         if ($result !== false) {
             return $result;
         }
-        $this->dispatchMinuteMarketStatFetchJob($symbol, $fromTime);
+        $this->dispatchMinuteMarketStatFetchJob($exchangeSymbol, $fromTime);
         return 0.0;
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      * @return float|false
      */
-    final public function getMinuteMarketDeltaFromDatabase (string $symbol, int $fromTime): float|false {
-        $mdQueueName = strtolower($this->getExchangeName()).':md:'.$symbol;
+    final public function getMinuteMarketDeltaFromDatabase (string $exchangeSymbol, int $fromTime): float|false {
+        $mdQueueName = strtolower($this->getExchangeName()).':md:'.$exchangeSymbol;
         $value = Redis::zRangeByScore($mdQueueName, $fromTime, $fromTime);
         if (!empty($value)) {
             list(,$value) = explode(':', $value[0]);
@@ -66,13 +67,14 @@ abstract class AbstractFacade implements FacadeInterface
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      * @param int|null $toTime
      * @return Collection
      */
-    public function getTrades(string $symbol, int $fromTime, int $toTime = null): Collection
+    public function getTrades(string $exchangeSymbol, int $fromTime, int $toTime = null): Collection
     {
+        throw new Exception('getTrades is not implemented for this exchange');
         //
     }
 
@@ -106,52 +108,88 @@ abstract class AbstractFacade implements FacadeInterface
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      * @param int|null $toTime
      * @param TimeInterval|null $interval
      * @return Collection
      */
-    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, ?TimeInterval $interval = null): Collection
+    public function getCandlesticks(string $exchangeSymbol, int $fromTime, int $toTime = null, ?TimeInterval $interval = null): Collection
     {
+        throw new Exception('getCandlesticks is not implemented for this exchange');
         return collect();
     }
 
     /**
      * @param PlaceOrderDto $dto
      * @return false|int
+     * @throws Exception
      */
     public function placeOrder(PlaceOrderDto $dto): false|int
     {
+        throw new Exception('placeOrder is not implemented for this exchange');
         return false;
     }
 
     /**
      * @param PlaceGoalOrderDto $dto
      * @return array|false
+     * @throws Exception
      */
     public function placeTakeProfitAndStopLossOrder(PlaceGoalOrderDto $dto): array|false
     {
+        throw new Exception('placeTakeProfitAndStopLossOrder is not implemented for this exchange');
         return false;
     }
 
     /**
      * @param CancelOrderDto $dto
      * @return bool
+     * @throws Exception
      */
     public function cancelOrder(CancelOrderDto $dto): bool
     {
+        throw new Exception('cancelOrder is not implemented for this exchange');
         return false;
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @return float
      * @throws Exception
      */
-    public function getCurrentPrice(string $symbol): float
+    public function getCurrentPrice(string $exchangeSymbol): float
     {
         throw new Exception('getCurrentPrice is not implemented for this exchange');
         return 0.0;
+    }
+
+    /**
+     * @param string $symbol
+     * @return array
+     */
+    public function getExchangeSymbols(string $symbol): array
+    {
+        return $this->symbolMap[$symbol] ?? [];
+    }
+
+    /**
+     * @param string $symbol
+     * @param int $index
+     * @return string|null
+     */
+    public function getExchangeSymbol(string $symbol, $index = 0): ?string
+    {
+        $symbols = $this->getExchangeSymbols($symbol);
+        return count($symbols) > 0 ? $symbols[$index] : null;
+    }
+
+    /**
+     * @param string $symbol
+     * @return string|null
+     */
+    public function getExchangeOrderSymbol(string $symbol): ?string
+    {
+        return $this->getExchangeSymbol($symbol, $this->orderSymbolIndex);
     }
 }

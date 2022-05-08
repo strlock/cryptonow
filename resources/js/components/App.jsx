@@ -105,7 +105,7 @@ const App = () => {
     }
 
     useEffect(() => {
-        RequestHelper.fetch('/api/mdclusters/BTCUSDT/' + interval, {}, response => {
+        RequestHelper.fetch('/api/mdclusters/BTCUSD/' + interval, {}, response => {
             setMdClusters(response.data);
         });
     }, [interval]);
@@ -118,19 +118,21 @@ const App = () => {
         mdClusters.forEach((mdCluster, i) => {
             const borderColor = i !== 0 ? chartsLinesColor : '#00ff00';
             const relativePriceDiffPercent = 100*(mdCluster.toPrice-mdCluster.fromPrice)/mdCluster.fromPrice;
+            const opacity = i === 0 ? 0.7 : 0.3;
             annotations.push({
                 x: Math.round(mdCluster.fromTime - interval / 2),
                 x2: Math.round(mdCluster.toTime - interval / 2),
                 strokeDashArray: 0,
                 borderColor: borderColor,
                 fillColor: '#244B4B',
-                opacity: 0.7,
+                opacity: opacity,
                 label: {
                     text: FormatHelper.formatAmount(mdCluster.marketDelta) + ', ' + (Math.round(relativePriceDiffPercent*100)/100) + '%',
                     borderColor: chartsLinesColor,
                     style: {
                         color: chartsTextColor,
-                        background: 'transparent'
+                        background: 'transparent',
+                        opacity: opacity,
                     },
                 }
             });

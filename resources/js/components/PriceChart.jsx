@@ -16,7 +16,7 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, 
     const currentPrice = useContext(currentPriceContext);
 
     useEffect(() => {
-        RequestHelper.fetch('/api/price/BTCUSDT/' + fromTime + '/' + toTime + '/' + interval, {},
+        RequestHelper.fetch('/api/price/BTCUSD/' + fromTime + '/' + toTime + '/' + interval, {},
             response => {
                 setSeriesData(response.data);
             },

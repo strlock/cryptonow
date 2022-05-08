@@ -16,21 +16,21 @@ interface FacadeInterface
     public function __construct(?int $userId = null);
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      * @param int|null $toTime
      * @return Collection
      */
-    public function getTrades(string $symbol, int $fromTime, int $toTime = null): Collection;
+    public function getTrades(string $exchangeSymbol, int $fromTime, int $toTime = null): Collection;
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      * @param int|null $toTime
      * @param TimeInterval|null $interval
      * @return Collection
      */
-    public function getCandlesticks(string $symbol, int $fromTime, int $toTime = null, ?TimeInterval $interval = null): Collection;
+    public function getCandlesticks(string $exchangeSymbol, int $fromTime, int $toTime = null, ?TimeInterval $interval = null): Collection;
 
     /**
      * @param PlaceOrderDto $dto
@@ -50,8 +50,26 @@ interface FacadeInterface
     public function cancelOrder(CancelOrderDto $dto): bool;
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @return float
      */
-    public function getCurrentPrice(string $symbol): float;
+    public function getCurrentPrice(string $exchangeSymbol): float;
+
+    /**
+     * @param string $symbol
+     * @return array
+     */
+    public function getExchangeSymbols(string $symbol): array;
+
+    /**
+     * @param string $symbol
+     * @return string|null
+     */
+    public function getExchangeSymbol(string $symbol): ?string;
+
+    /**
+     * @param string $symbol
+     * @return string|null
+     */
+    public function getExchangeOrderSymbol(string $symbol): ?string;
 }

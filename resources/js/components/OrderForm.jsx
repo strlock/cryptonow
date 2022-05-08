@@ -77,7 +77,7 @@ const OrderForm = (props) => {
         data.append('market', 1*marketRef.current.checked);
         data.append('direction', direction);
         data.append('exchange', 'binance');
-        data.append('symbol', 'BTCBUSD');
+        data.append('symbol', 'BTCUSD');
         RequestHelper.fetch('/api/orders', {
             method: 'POST',
             body: data,

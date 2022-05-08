@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Log;
 
 class Facade extends AbstractFacade
 {
-    private const SYMBOL_MAP = [
-        'BTCUSDT' => 'btcusd',
+    protected array $symbolMap = [
+        'BTCUSD' => ['btcusd'],
     ];
 
     protected int $delay = 0;
@@ -20,12 +20,12 @@ class Facade extends AbstractFacade
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      * @param int|null $toTime
      * @return Collection
      */
-    public function getTrades(string $symbol, int $fromTime, int $toTime = null): Collection
+    public function getTrades(string $exchangeSymbol, int $fromTime, int $toTime = null): Collection
     {
         $result = collect();
         try {
@@ -37,9 +37,9 @@ class Facade extends AbstractFacade
                 'Interval: ' . $fromTimeDate->format(config('crypto.dateFormat')) . '-' . $toTimeDate->format(
                     config('crypto.dateFormat')
                 ),
-                compact('symbol', 'fromTime', 'toTime')
+                compact('exchangeSymbol', 'fromTime', 'toTime')
             );
-            $trades = $this->getTransactions($symbol, $fromTime, $toTime);
+            $trades = $this->getTransactions($exchangeSymbol, $fromTime, $toTime);
             foreach ($trades ?? [] as $trade) {
                 $time = $trade['date']*1000;
                 $result->push(
@@ -59,29 +59,29 @@ class Facade extends AbstractFacade
     }
 
     /**
-     * @param string $symbol
+     * @param string $exchangeSymbol
      * @param int $fromTime
      */
-    protected function dispatchMinuteMarketStatFetchJob(string $symbol, int $fromTime): void
+    protected function dispatchMinuteMarketStatFetchJob(string $exchangeSymbol, int $fromTime): void
     {
         /*dispatch(
             (new BitstampFetchMinuteMarketStat(
-                new FetchMinuteMarketStatDto($symbol, $fromTime)
+                new FetchMinuteMarketStatDto($exchangeSymbol, $fromTime)
             ))->onQueue(QueueNames::BITSTAMP_MARKET_STAT_CALCULATION)//->delay($this->delay),
         );*/
         //$this->delay += 2;
     }
 
     /**
-     * @param $symbol
+     * @param $exchangeSymbol
      * @param $fromTime
      * @param $toTime
      * @return array
      */
-    private function getTransactions($symbol, $fromTime, $toTime): array
+    private function getTransactions($exchangeSymbol, $fromTime, $toTime): array
     {
         $result = [];
-        $dayTransactions = $this->api->transactions('day', self::SYMBOL_MAP[$symbol]);
+        $dayTransactions = $this->api->transactions('day', $exchangeSymbol);
         foreach ($dayTransactions as $transaction) {
             $transactionTime = $transaction['date']*1000;
             if ($transactionTime >= $fromTime && $transactionTime <= $toTime) {
