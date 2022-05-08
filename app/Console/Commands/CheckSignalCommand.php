@@ -61,7 +61,7 @@ class CheckSignalCommand extends Command
                     $direction,
                 ));
             }
-            sleep(1);
+            sleep(60);
         }
         return 0;
     }
