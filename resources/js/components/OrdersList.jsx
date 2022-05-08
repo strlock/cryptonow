@@ -38,7 +38,7 @@ const OrdersList = () => {
                             })}
                         </div>
                     </nav>
-                    <div className="tab-content" id="myTabContent">
+                    <div className="tab-content" id="ordersListTabContent">
                         {tabAliases.map((tabAlias, i) => {
                             const paneClass = "tab-pane fade " + (i === 0 ? ' active show' : '');
                             const paneId = "nav-" + tabAlias;

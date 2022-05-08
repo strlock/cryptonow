@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Dto\CancelOrderDto;
 use App\Dto\CreateNewOrderDto;
+use App\Dto\CreateAutomaticOrdersDto;
 use App\Dto\PlaceGoalOrderDto;
 use App\Dto\PlaceOrderDto;
 use App\Enums\ExchangeOrderType;
@@ -13,16 +14,24 @@ use App\Enums\OrderState;
 use App\Enums\OrderDirection;
 use App\Models\Order;
 use App\Models\OrderInterface;
+use App\Models\UserInterface;
+use App\Notifications\TelegramNotification;
+use App\Repositories\OrdersRepository;
+use App\Repositories\UsersRepository;
 use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class OrdersService implements OrdersServiceInterface
 {
-    public function __construct()
+    public function __construct(
+        private OrdersRepository $ordersRepository,
+        private UsersRepository $usersRepository,
+    )
     {
         //
     }
@@ -53,7 +62,7 @@ class OrdersService implements OrdersServiceInterface
             $order->getDirection(),
             $order->getSymbol(),
             $order->getAmount(),
-            $order->getPrice(),
+            round($order->getPrice(), 2),
             $order->isMarket() ? ExchangeOrderType::market() : ExchangeOrderType::limit(),
             $order->getId(),
         ));
@@ -201,6 +210,60 @@ class OrdersService implements OrdersServiceInterface
             foreach ($placedOrderIds as $placedOrderId) {
                 $exchange->cancelOrder(new CancelOrderDto($order->getSymbol(), $placedOrderId));
             }
+        }
+    }
+
+    private function userHasOpenedOrder(UserInterface $user): bool
+    {
+        foreach($this->ordersRepository->getUserOrders($user) as $order) {
+            /** @var OrderInterface $order */
+            if (in_array($order->getState(), [OrderState::NEW(), OrderState::READY()])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function createUsersAutomaticOrders(CreateAutomaticOrdersDto $dto): void
+    {
+        $exchange = ExchangesFactory::create();
+        foreach ($this->usersRepository->getAllUsers() as $user) {
+            /** @var UserInterface $user */
+            if ($this->userHasOpenedOrder($user) || !$user->isAOEnabled()) {
+                continue;
+            }
+            $currentPrice = $exchange->getCurrentPrice($dto->getSymbol());
+            $sl = null;
+            $tp = null;
+            if ($dto->getDirection()->isBUY()) {
+                $price = $currentPrice*((100-$user->getAOLimitIndentPercent())/100);
+                $sl = $price*((100-$user->getAOSlPercent())/100);
+                $tp = $price*((100+$user->getAOTpPercent())/100);
+            }
+            if ($dto->getDirection()->isSELL()) {
+                $price = $currentPrice*((100+$user->getAOLimitIndentPercent())/100);
+                $sl = $price*((100+$user->getAOSlPercent())/100);
+                $tp = $price*((100-$user->getAOTpPercent())/100);
+            }
+            $amount = $user->getAOAmount();
+            $order = $this->createNewOrder(new CreateNewOrderDto(
+                $user->getId(),
+                $dto->getDirection(),
+                $price,
+                $amount,
+                $sl,
+                $tp,
+                false,
+                config('crypto.defaultExchange'),
+                $dto->getSymbol(),
+            ));
+            if (empty($order)) {
+                continue;
+            }
+            $message = $dto->getDirection()->key().' '.$dto->getSymbol().' '.$price.' '.$amount.', TP: '.$tp.', SL: '.$sl;
+            Log::info($message);
+            echo $message.PHP_EOL;
+            Notification::route('telegram', config('telegram.botChatId'))->notify(new TelegramNotification($message));
         }
     }
 }

@@ -1,20 +1,17 @@
 import React from 'react';
 import TimeIntervals from "../TimeIntervals";
+import IntervalSelectorButton from "./IntervalSelectorButton";
 
-const IntervalSelector = (props) => {
-    const onChangeChartsInterval = (newInterval) => {
-        props.setChartsInterval(newInterval);
-    }
-
+const IntervalSelector = ({chartsInterval, setChartsInterval}) => {
     return (
         <div>
-            <button onClick={() => onChangeChartsInterval(TimeIntervals.ONE_MINUTE)} className="btn btn-primary btn-sm">1m</button>&nbsp;
-            <button onClick={() => onChangeChartsInterval(TimeIntervals.FIVE_MINUTES)} className="btn btn-secondary btn-sm">5m</button>&nbsp;
-            <button onClick={() => onChangeChartsInterval(TimeIntervals.FIFTEEN_MINUTES)} className="btn btn-primary btn-sm">15m</button>&nbsp;
-            <button onClick={() => onChangeChartsInterval(TimeIntervals.THIRTEEN_MINUTES)} className="btn btn-secondary btn-sm">30m</button>&nbsp;
-            <button onClick={() => onChangeChartsInterval(TimeIntervals.ONE_HOUR)} className="btn btn-primary btn-sm">1h</button>&nbsp;
-            <button onClick={() => onChangeChartsInterval(TimeIntervals.FOUR_HOURS)} className="btn btn-secondary btn-sm">4h</button>&nbsp;
-            <button onClick={() => onChangeChartsInterval(TimeIntervals.ONE_DAY)} className="btn btn-primary btn-sm">1d</button>
+            <IntervalSelectorButton setChartsInterval={setChartsInterval} interval={TimeIntervals.ONE_MINUTE} currentInterval={chartsInterval}>1m</IntervalSelectorButton>&nbsp;
+            <IntervalSelectorButton setChartsInterval={setChartsInterval} interval={TimeIntervals.FIVE_MINUTES} currentInterval={chartsInterval}>5m</IntervalSelectorButton>&nbsp;
+            <IntervalSelectorButton setChartsInterval={setChartsInterval} interval={TimeIntervals.FIFTEEN_MINUTES} currentInterval={chartsInterval}>15m</IntervalSelectorButton>&nbsp;
+            <IntervalSelectorButton setChartsInterval={setChartsInterval} interval={TimeIntervals.THIRTEEN_MINUTES} currentInterval={chartsInterval}>30m</IntervalSelectorButton>&nbsp;
+            <IntervalSelectorButton setChartsInterval={setChartsInterval} interval={TimeIntervals.ONE_HOUR} currentInterval={chartsInterval}>1h</IntervalSelectorButton>&nbsp;
+            <IntervalSelectorButton setChartsInterval={setChartsInterval} interval={TimeIntervals.FOUR_HOURS} currentInterval={chartsInterval}>4h</IntervalSelectorButton>&nbsp;
+            <IntervalSelectorButton setChartsInterval={setChartsInterval} interval={TimeIntervals.ONE_DAY} currentInterval={chartsInterval}>1d</IntervalSelectorButton>
         </div>
     );
 }

@@ -137,13 +137,14 @@ class Facade extends AbstractFacade
         }
         $sInterval = static::INTERVALS_MAP[$interval->value()];
         foreach ($this->api->candlesticks($symbol, $sInterval, null, $fromTime, $toTime) as $candlestickData) {
-            $tradeTime = (int)$candlestickData['openTime'];
-            $result->put($candlestickData['openTime'], [
+            $candlestickResultData = [
                 $candlestickData['open'],
                 $candlestickData['high'],
                 $candlestickData['low'],
                 $candlestickData['close'],
-            ]);
+                $candlestickData['closeTime'],
+            ];
+            $result->put($candlestickData['openTime'], $candlestickResultData);
         }
         return $result;
     }
@@ -240,5 +241,15 @@ class Facade extends AbstractFacade
             $result = false;
         }
         return $result;
+    }
+
+    /**
+     * @param string $symbol
+     * @return float
+     * @throws Exception
+     */
+    public function getCurrentPrice(string $symbol): float
+    {
+        return $this->api->price($symbol);
     }
 }

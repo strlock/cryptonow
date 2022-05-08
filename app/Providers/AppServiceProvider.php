@@ -2,16 +2,13 @@
 
 namespace App\Providers;
 
-use App\Models\Exchange;
 use App\Services\OrdersService;
 use App\Services\OrdersServiceInterface;
 use App\Services\Strategy\AnomalousMarketDeltaBuyStrategy;
 use App\Services\Strategy\StrategyInterface;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
-use App\Services\Crypto\Exchanges\FacadeInterface as ExchangeInterface;
+use App\Services\Crypto\Exchanges\FactoryInterface as ExchangesFactoryInterface;
+use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,11 +20,12 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(OrdersServiceInterface::class, OrdersService::class);
-        $this->app->bind(ExchangeInterface::class, function ($app, $parameters) {
+        /*$this->app->bind(ExchangeInterface::class, function ($app, $parameters) {
             $class = 'App\\Services\\Crypto\\Exchanges\\'.ucfirst($parameters['name']).'\\Facade';
             return new $class();
-        });
+        });*/
         $this->app->bind(StrategyInterface::class, AnomalousMarketDeltaBuyStrategy::class);
+        $this->app->bind(ExchangesFactoryInterface::class, ExchangesFactory::class);
     }
 
     /**

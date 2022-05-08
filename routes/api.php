@@ -26,6 +26,6 @@ Route::middleware('api')->group(function () {
         Route::resource('orders', OrdersController::class);
         Route::get('user/settings', [UserController::class, 'getSettings']);
         Route::post('user/settings', [UserController::class, 'saveSettings']);
-        Route::get('mdclusters/{symbol}/{toTime?}/{interval?}', [MarketDeltaController::class, 'getMdClusters']);
+        Route::get('mdclusters/{symbol}/{interval?}', [MarketDeltaController::class, 'getMdClusters']);
     });
 });

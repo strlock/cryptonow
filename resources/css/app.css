@@ -4,6 +4,7 @@
     --top-bg-color: #24204B;
     --card-bg-color: #24204B;
     --text-color: #A39ED8;
+    --active-interval-color: #A39ED8;
     --card-header-bg-color: transparent;
     --table-border-color: #333742;
     --table-bg-color: transparent;
@@ -240,7 +241,9 @@ h1{
     height: 2rem;
 }
 
-
+.btn.active {
+    border: 3px solid var(--active-interval-color);
+}
 
 @media(max-width: 1500px){
     #top .top-left{

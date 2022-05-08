@@ -244,12 +244,12 @@ class Order extends Model implements OrderInterface
         return (float)$this->getSl() !== 0.0 || (float)$this->getTp() !== 0.0;
     }
 
-    public function getExchangeOrderId(): string
+    public function getExchangeOrderId(): ?string
     {
         return $this->exchange_order_id;
     }
 
-    public function setExchangeOrderId(string $value): void
+    public function setExchangeOrderId(?string $value): void
     {
         $this->exchange_order_id = $value;
     }

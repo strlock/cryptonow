@@ -20,6 +20,11 @@ class UserSettingsResource extends JsonResource
         return [
             'binance_api_key' => $user->getBinanceApiKey(),
             'binance_api_secret' => $user->getBinanceApiSecret(),
+            'ao_tp_percent' => $user->getAOTpPercent(),
+            'ao_sl_percent' => $user->getAOSlPercent(),
+            'ao_amount' => $user->getAOAmount(),
+            'ao_limit_indent_percent' => $user->getAOLimitIndentPercent(),
+            'ao_enabled' => $user->isAOEnabled(),
         ];
     }
 }

@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Models\Order;
 use App\Models\OrderInterface;
 use App\Models\User;
+use App\Models\UserInterface;
 use Illuminate\Support\Collection;
 
 class OrdersRepository
@@ -16,9 +17,9 @@ class OrdersRepository
 
     }
 
-    public function getUserOrders(User $user): Collection
+    public function getUserOrders(UserInterface $user): Collection
     {
-        return Order::where('user_id', '=', $user->id)->orderBy('created_at', 'DESC')->get();
+        return Order::where('user_id', '=', $user->getId())->orderBy('created_at', 'DESC')->get();
     }
 
     public function getAllOrders(): Collection

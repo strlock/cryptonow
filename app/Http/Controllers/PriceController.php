@@ -15,11 +15,9 @@ class PriceController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request, string $symbol, int $fromTime, ?int $toTime = null, ?TimeInterval $interval = null)
+    public function index(Request $request, string $symbol, int $fromTime, ?int $toTime = null, ?int $interval = null)
     {
-        if (empty($interval)) {
-            $interval = TimeInterval::FIVE_MINUTES();
-        }
+        $interval = TimeInterval::memberByValue($interval);
         $data = collect();
         $exchange = Factory::create('binance');
         foreach ($exchange->getCandlesticks($symbol, $fromTime, $toTime, $interval) as $time => $candlestickData) {

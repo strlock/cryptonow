@@ -10,7 +10,7 @@ import {
 let chartContext = null;
 import currentPriceContext from "../contexts/CurrentPriceContext";
 
-const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor}) => {
+const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, xAnnotations}) => {
     const orders = useContext(ordersContext);
     const [seriesData, setSeriesData] = useState([]);
     const currentPrice = useContext(currentPriceContext);
@@ -226,6 +226,7 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor})
         annotations: {
             position: 'front',
             yaxis: [...yAnnotations, priceAnnotation],
+            xaxis: xAnnotations,
         }
     }
 

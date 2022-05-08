@@ -10,6 +10,8 @@ class MarketDeltaClusterDto
         private float $marketDelta,
         private int $fromTime,
         private int $toTime,
+        private float $fromPrice,
+        private float $toPrice,
     )
     {
         //
@@ -39,5 +41,19 @@ class MarketDeltaClusterDto
         return $this->toTime;
     }
 
+    /**
+     * @return float
+     */
+    public function getFromPrice(): float
+    {
+        return $this->fromPrice;
+    }
 
+    /**
+     * @return float
+     */
+    public function getToPrice(): float
+    {
+        return $this->toPrice;
+    }
 }

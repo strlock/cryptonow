@@ -48,4 +48,10 @@ interface FacadeInterface
      * @return bool
      */
     public function cancelOrder(CancelOrderDto $dto): bool;
+
+    /**
+     * @param string $symbol
+     * @return float
+     */
+    public function getCurrentPrice(string $symbol): float;
 }

@@ -143,4 +143,15 @@ abstract class AbstractFacade implements FacadeInterface
     {
         return false;
     }
+
+    /**
+     * @param string $symbol
+     * @return float
+     * @throws Exception
+     */
+    public function getCurrentPrice(string $symbol): float
+    {
+        throw new Exception('getCurrentPrice is not implemented for this exchange');
+        return 0.0;
+    }
 }

@@ -9704,8 +9704,8 @@ var App = function App() {
   var ordersListRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var daysForInterval = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].daysForInterval(interval);
 
-  if (daysForInterval > 3) {
-    daysForInterval = 3;
+  if (daysForInterval > 10) {
+    daysForInterval = 10;
   }
 
   var fromTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(_Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].subDaysFromDate(new Date(), daysForInterval).getTime(), interval);
@@ -9757,10 +9757,10 @@ var App = function App() {
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_17__["default"].fetch('/api/mdclusters/BTCUSDT/' + toTime + '/' + interval, {}, function (response) {
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_17__["default"].fetch('/api/mdclusters/BTCUSDT/' + interval, {}, function (response) {
       setMdClusters(response.data);
     });
-  }, [toTime, interval]);
+  }, [interval]);
   var mdClustersAnnotations = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     var annotations = [];
 
@@ -9768,26 +9768,25 @@ var App = function App() {
       return [];
     }
 
-    mdClusters.forEach(function (mdCluster) {
-      //console.log((new Date(mdCluster.fromTime)).toLocaleTimeString() + '-' + (new Date(mdCluster.toTime)).toLocaleTimeString());
-      //if (mdClusters.length > 0) {
-      //let mdCluster = mdClusters[0];
+    mdClusters.forEach(function (mdCluster, i) {
+      var borderColor = i !== 0 ? chartsLinesColor : '#00ff00';
+      var relativePriceDiffPercent = 100 * (mdCluster.toPrice - mdCluster.fromPrice) / mdCluster.fromPrice;
       annotations.push({
         x: Math.round(mdCluster.fromTime - interval / 2),
         x2: Math.round(mdCluster.toTime - interval / 2),
         strokeDashArray: 0,
-        borderColor: chartsLinesColor,
+        borderColor: borderColor,
         fillColor: '#244B4B',
         opacity: 0.7,
         label: {
-          text: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].formatAmount(mdCluster.marketDelta),
+          text: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].formatAmount(mdCluster.marketDelta) + ', ' + Math.round(relativePriceDiffPercent * 100) / 100 + '%',
           borderColor: chartsLinesColor,
           style: {
             color: chartsTextColor,
             background: 'transparent'
           }
         }
-      }); //}
+      });
     });
     return annotations;
   }, [mdClusters]);
@@ -9809,6 +9808,7 @@ var App = function App() {
     };
   };
 
+  var annotations = [].concat(_toConsumableArray(mdClustersAnnotations), [getToTimeAnnotation()]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     refreshOrders();
     setInterval(function () {
@@ -9860,6 +9860,7 @@ var App = function App() {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
               className: "card-header",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {
+                chartsInterval: interval,
                 setChartsInterval: setChartsInterval
               })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)("div", {
@@ -9878,7 +9879,8 @@ var App = function App() {
                       currentPrice: currentPrice,
                       textColor: chartsTextColor,
                       linesColor: chartsLinesColor,
-                      innerRef: priceChartRef
+                      innerRef: priceChartRef,
+                      xAnnotations: annotations
                     })
                   })
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_20__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -9890,7 +9892,7 @@ var App = function App() {
                   textColor: chartsTextColor,
                   linesColor: chartsLinesColor,
                   innerRef: mdChartRef,
-                  xAnnotations: [].concat(_toConsumableArray(mdClustersAnnotations), [getToTimeAnnotation()])
+                  xAnnotations: annotations
                 })]
               })
             })]
@@ -10039,65 +10041,92 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _TimeIntervals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../TimeIntervals */ "./resources/js/TimeIntervals.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _IntervalSelectorButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IntervalSelectorButton */ "./resources/js/components/IntervalSelectorButton.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
 
 
-var IntervalSelector = function IntervalSelector(props) {
-  var onChangeChartsInterval = function onChangeChartsInterval(newInterval) {
-    props.setChartsInterval(newInterval);
-  };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-      onClick: function onClick() {
-        return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].ONE_MINUTE);
-      },
-      className: "btn btn-primary btn-sm",
+var IntervalSelector = function IntervalSelector(_ref) {
+  var chartsInterval = _ref.chartsInterval,
+      setChartsInterval = _ref.setChartsInterval;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_IntervalSelectorButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      setChartsInterval: setChartsInterval,
+      interval: _TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].ONE_MINUTE,
+      currentInterval: chartsInterval,
       children: "1m"
-    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-      onClick: function onClick() {
-        return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].FIVE_MINUTES);
-      },
-      className: "btn btn-secondary btn-sm",
+    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_IntervalSelectorButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      setChartsInterval: setChartsInterval,
+      interval: _TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].FIVE_MINUTES,
+      currentInterval: chartsInterval,
       children: "5m"
-    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-      onClick: function onClick() {
-        return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].FIFTEEN_MINUTES);
-      },
-      className: "btn btn-primary btn-sm",
+    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_IntervalSelectorButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      setChartsInterval: setChartsInterval,
+      interval: _TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].FIFTEEN_MINUTES,
+      currentInterval: chartsInterval,
       children: "15m"
-    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-      onClick: function onClick() {
-        return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].THIRTEEN_MINUTES);
-      },
-      className: "btn btn-secondary btn-sm",
+    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_IntervalSelectorButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      setChartsInterval: setChartsInterval,
+      interval: _TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].THIRTEEN_MINUTES,
+      currentInterval: chartsInterval,
       children: "30m"
-    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-      onClick: function onClick() {
-        return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].ONE_HOUR);
-      },
-      className: "btn btn-primary btn-sm",
+    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_IntervalSelectorButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      setChartsInterval: setChartsInterval,
+      interval: _TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].ONE_HOUR,
+      currentInterval: chartsInterval,
       children: "1h"
-    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-      onClick: function onClick() {
-        return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].FOUR_HOURS);
-      },
-      className: "btn btn-secondary btn-sm",
+    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_IntervalSelectorButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      setChartsInterval: setChartsInterval,
+      interval: _TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].FOUR_HOURS,
+      currentInterval: chartsInterval,
       children: "4h"
-    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-      onClick: function onClick() {
-        return onChangeChartsInterval(_TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].ONE_DAY);
-      },
-      className: "btn btn-primary btn-sm",
+    }), "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_IntervalSelectorButton__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      setChartsInterval: setChartsInterval,
+      interval: _TimeIntervals__WEBPACK_IMPORTED_MODULE_1__["default"].ONE_DAY,
+      currentInterval: chartsInterval,
       children: "1d"
     })]
   });
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IntervalSelector);
+
+/***/ }),
+
+/***/ "./resources/js/components/IntervalSelectorButton.jsx":
+/*!************************************************************!*\
+  !*** ./resources/js/components/IntervalSelectorButton.jsx ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+var IntervalSelectorButton = function IntervalSelectorButton(_ref) {
+  var setChartsInterval = _ref.setChartsInterval,
+      interval = _ref.interval,
+      currentInterval = _ref.currentInterval,
+      children = _ref.children;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+    onClick: function onClick() {
+      return setChartsInterval(interval);
+    },
+    className: "btn btn-primary btn-sm" + (interval === currentInterval ? ' active' : ''),
+    children: children
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IntervalSelectorButton);
 
 /***/ }),
 
@@ -10896,7 +10925,7 @@ var OrdersList = function OrdersList() {
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
           className: "tab-content",
-          id: "myTabContent",
+          id: "ordersListTabContent",
           children: tabAliases.map(function (tabAlias, i) {
             var paneClass = "tab-pane fade " + (i === 0 ? ' active show' : '');
             var paneId = "nav-" + tabAlias;
@@ -11047,7 +11076,8 @@ var PriceChart = function PriceChart(_ref) {
       interval = _ref.interval,
       height = _ref.height,
       textColor = _ref.textColor,
-      linesColor = _ref.linesColor;
+      linesColor = _ref.linesColor,
+      xAnnotations = _ref.xAnnotations;
   var orders = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_contexts_OrdersContext__WEBPACK_IMPORTED_MODULE_4__["default"]);
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
@@ -11272,7 +11302,8 @@ var PriceChart = function PriceChart(_ref) {
     },
     annotations: {
       position: 'front',
-      yaxis: [].concat(_toConsumableArray(yAnnotations), [priceAnnotation])
+      yaxis: [].concat(_toConsumableArray(yAnnotations), [priceAnnotation]),
+      xaxis: xAnnotations
     }
   };
   var series = [{
@@ -11335,10 +11366,20 @@ function UserSettingsModal(_ref) {
   var showPopup = _ref.showPopup;
   var binanceApiKeyRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var binanceApiSeceretRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var aoTpRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var aoSlRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var aoAmountRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var aoLimitIndentPercentRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var aoEnabledRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     'binance_api_key': '',
-    'binance_api_secret': ''
+    'binance_api_secret': '',
+    'ao_tp_percent': 0.0,
+    'ao_sl_percent': 0.0,
+    'ao_amount': 0.0,
+    'ao_limit_indent_percent': 0.0,
+    'ao_enabled': false
   }),
       _useState2 = _slicedToArray(_useState, 2),
       settings = _useState2[0],
@@ -11348,6 +11389,11 @@ function UserSettingsModal(_ref) {
     var data = new FormData();
     data.append('binance_api_key', binanceApiKeyRef.current.value);
     data.append('binance_api_secret', binanceApiSeceretRef.current.value);
+    data.append('ao_tp_percent', aoTpRef.current.value);
+    data.append('ao_sl_percent', aoSlRef.current.value);
+    data.append('ao_amount', aoAmountRef.current.value);
+    data.append('ao_limit_indent_percent', aoLimitIndentPercentRef.current.value);
+    data.append('ao_enabled', aoEnabledRef.current.checked ? 1 : 0);
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__["default"].fetch('/api/user/settings', {
       method: 'POST',
       body: data
@@ -11370,16 +11416,12 @@ function UserSettingsModal(_ref) {
     });
   }, []);
 
-  var onBinanceApiKeyChange = function onBinanceApiKeyChange(event) {
-    setSettings(_objectSpread(_objectSpread({}, settings), {}, {
-      binance_api_key: event.target.value
-    }));
+  var onFormFieldChange = function onFormFieldChange(event, field) {
+    setSettings(_objectSpread(_objectSpread({}, settings), {}, _defineProperty({}, field, event.target.value)));
   };
 
-  var onBinanceApiSecretChange = function onBinanceApiSecretChange(event) {
-    setSettings(_objectSpread(_objectSpread({}, settings), {}, {
-      binance_api_secret: event.target.value
-    }));
+  var onFormCheckboxFieldChange = function onFormCheckboxFieldChange(event, field) {
+    setSettings(_objectSpread(_objectSpread({}, settings), {}, _defineProperty({}, field, event.target.checked)));
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -11409,38 +11451,159 @@ function UserSettingsModal(_ref) {
           className: "modal-body",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("form", {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-4",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                htmlFor: "price",
-                className: "input-group-text w-25 bg-dark text-white",
-                children: "API Key"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "text",
-                name: "binance_api_key",
-                id: "binance_api_key",
-                value: settings.binance_api_key,
-                onChange: function onChange(event) {
-                  return onBinanceApiKeyChange(event);
-                },
-                className: "form-control bg-dark text-white",
-                ref: binanceApiKeyRef
+              className: "nav nav-tabs",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                type: "button",
+                id: "nav-credentials-tab",
+                className: "nav-link active",
+                role: "tab",
+                "data-bs-target": "#nav-credentials",
+                "data-bs-toggle": "tab",
+                "aria-controls": "nav-credentials",
+                children: "Binance"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                type: "button",
+                id: "nav-ao-tab",
+                className: "nav-link",
+                role: "tab",
+                "data-bs-target": "#nav-ao",
+                "data-bs-toggle": "tab",
+                "aria-controls": "nav-ao",
+                children: "Automatic orders"
               })]
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "input-group input-group-sm mb-4",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
-                htmlFor: "volume",
-                className: "input-group-text w-25 bg-dark text-white",
-                children: "API secret"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
-                type: "text",
-                name: "binance_api_secret",
-                id: "binance_api_secret",
-                value: settings.binance_api_secret,
-                onChange: function onChange(event) {
-                  return onBinanceApiSecretChange(event);
-                },
-                className: "form-control bg-dark text-white",
-                ref: binanceApiSeceretRef
+              className: "tab-content",
+              id: "settingsTabContent",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                className: "tab-pane fade active show",
+                id: "nav-credentials",
+                role: "tab-panel",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "input-group input-group-sm mb-4",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    htmlFor: "price",
+                    className: "input-group-text w-25 bg-dark text-white",
+                    children: "API Key"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    type: "text",
+                    name: "binance_api_key",
+                    id: "binance_api_key",
+                    value: settings.binance_api_key,
+                    onChange: function onChange(event) {
+                      return onFormFieldChange(event, 'binance_api_key');
+                    },
+                    className: "form-control bg-dark text-white",
+                    ref: binanceApiKeyRef
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "input-group input-group-sm mb-4",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    htmlFor: "volume",
+                    className: "input-group-text w-25 bg-dark text-white",
+                    children: "API secret"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    type: "text",
+                    name: "binance_api_secret",
+                    id: "binance_api_secret",
+                    value: settings.binance_api_secret,
+                    onChange: function onChange(event) {
+                      return onFormFieldChange(event, 'binance_api_secret');
+                    },
+                    className: "form-control bg-dark text-white",
+                    ref: binanceApiSeceretRef
+                  })]
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                className: "tab-pane fade",
+                id: "nav-ao",
+                role: "tab-panel",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "form-check form-switch mb-4",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    name: "ao_anabled",
+                    className: "form-check-input",
+                    type: "checkbox",
+                    role: "switch",
+                    id: "flexSwitchCheckDefault",
+                    checked: settings.ao_enabled,
+                    ref: aoEnabledRef,
+                    onChange: function onChange(event) {
+                      return onFormCheckboxFieldChange(event, 'ao_enabled');
+                    }
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    className: "form-check-label",
+                    htmlFor: "flexSwitchCheckDefault",
+                    children: "Enabled"
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "input-group input-group-sm mb-4",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    htmlFor: "volume",
+                    className: "input-group-text w-25 bg-dark text-white",
+                    children: "Amount"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    type: "text",
+                    name: "ao_amount",
+                    id: "ao_amount",
+                    value: settings.ao_amount,
+                    onChange: function onChange(event) {
+                      return onFormFieldChange(event, 'ao_amount');
+                    },
+                    className: "form-control bg-dark text-white",
+                    ref: aoAmountRef
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "input-group input-group-sm mb-4",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    htmlFor: "price",
+                    className: "input-group-text w-25 bg-dark text-white",
+                    children: "Take profit, %"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    type: "text",
+                    name: "ao_tp_percent",
+                    id: "ao_tp_percent",
+                    value: settings.ao_tp_percent,
+                    onChange: function onChange(event) {
+                      return onFormFieldChange(event, 'ao_tp_percent');
+                    },
+                    className: "form-control bg-dark text-white",
+                    ref: aoTpRef
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "input-group input-group-sm mb-4",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    htmlFor: "volume",
+                    className: "input-group-text w-25 bg-dark text-white",
+                    children: "Stop loss, %"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    type: "text",
+                    name: "ao_sl_percent",
+                    id: "ao_sl_percent",
+                    value: settings.ao_sl_percent,
+                    onChange: function onChange(event) {
+                      return onFormFieldChange(event, 'ao_sl_percent');
+                    },
+                    className: "form-control bg-dark text-white",
+                    ref: aoSlRef
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+                  className: "input-group input-group-sm mb-4",
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("label", {
+                    htmlFor: "volume",
+                    className: "input-group-text w-25 bg-dark text-white",
+                    children: "Limit indent, %"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+                    type: "text",
+                    name: "ao_limit_indent_percent",
+                    id: "ao_limit_indent_percent",
+                    value: settings.ao_limit_indent_percent,
+                    onChange: function onChange(event) {
+                      return onFormFieldChange(event, 'ao_limit_indent_percent');
+                    },
+                    className: "form-control bg-dark text-white",
+                    ref: aoLimitIndentPercentRef
+                  })]
+                })]
               })]
             })]
           })

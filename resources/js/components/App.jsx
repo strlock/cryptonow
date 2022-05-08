@@ -52,8 +52,8 @@ const App = () => {
     const ordersListRef = useRef();
 
     let daysForInterval = TimeHelper.daysForInterval(interval)
-    if (daysForInterval > 3) {
-        daysForInterval = 3;
+    if (daysForInterval > 10) {
+        daysForInterval = 10;
     }
     let fromTime = TimeHelper.round((TimeHelper.subDaysFromDate(new Date(), daysForInterval)).getTime(), interval);
     let toTime = TimeHelper.round((new Date()).getTime(), interval);
@@ -105,29 +105,28 @@ const App = () => {
     }
 
     useEffect(() => {
-        RequestHelper.fetch('/api/mdclusters/BTCUSDT/' + toTime + '/' + interval, {}, response => {
+        RequestHelper.fetch('/api/mdclusters/BTCUSDT/' + interval, {}, response => {
             setMdClusters(response.data);
         });
-    }, [toTime, interval]);
+    }, [interval]);
 
     const mdClustersAnnotations = useMemo(() => {
         const annotations = [];
         if (mdClusters === undefined || mdClusters.length === 0) {
             return [];
         }
-        mdClusters.forEach((mdCluster) => {
-            //console.log((new Date(mdCluster.fromTime)).toLocaleTimeString() + '-' + (new Date(mdCluster.toTime)).toLocaleTimeString());
-        //if (mdClusters.length > 0) {
-            //let mdCluster = mdClusters[0];
+        mdClusters.forEach((mdCluster, i) => {
+            const borderColor = i !== 0 ? chartsLinesColor : '#00ff00';
+            const relativePriceDiffPercent = 100*(mdCluster.toPrice-mdCluster.fromPrice)/mdCluster.fromPrice;
             annotations.push({
                 x: Math.round(mdCluster.fromTime - interval / 2),
                 x2: Math.round(mdCluster.toTime - interval / 2),
                 strokeDashArray: 0,
-                borderColor: chartsLinesColor,
+                borderColor: borderColor,
                 fillColor: '#244B4B',
                 opacity: 0.7,
                 label: {
-                    text: FormatHelper.formatAmount(mdCluster.marketDelta),
+                    text: FormatHelper.formatAmount(mdCluster.marketDelta) + ', ' + (Math.round(relativePriceDiffPercent*100)/100) + '%',
                     borderColor: chartsLinesColor,
                     style: {
                         color: chartsTextColor,
@@ -135,7 +134,6 @@ const App = () => {
                     },
                 }
             });
-        //}
         });
         return annotations;
     }, [mdClusters]);
@@ -156,6 +154,8 @@ const App = () => {
             }
         };
     }
+
+    const annotations = [...mdClustersAnnotations, getToTimeAnnotation()];
 
     useEffect(() => {
         refreshOrders();
@@ -180,16 +180,16 @@ const App = () => {
                 <div className="col-md-10">
                     <div className="card">
                         <div className={"card-header"}>
-                            <IntervalSelector setChartsInterval={setChartsInterval} />
+                            <IntervalSelector chartsInterval={interval} setChartsInterval={setChartsInterval} />
                         </div>
                         <div className="card-body pt-0">
                             <div className="chart">
                                 <currentPriceContext.Provider value={currentPrice}>
                                 <ordersContext.Provider value={orders}>
-                                    <PriceChart fromTime={fromTime} toTime={toTime} interval={interval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={priceChartRef} />
+                                    <PriceChart fromTime={fromTime} toTime={toTime} interval={interval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={priceChartRef} xAnnotations={annotations} />
                                 </ordersContext.Provider>
                                 </currentPriceContext.Provider>
-                                <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={interval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={mdChartRef} xAnnotations={[...mdClustersAnnotations, getToTimeAnnotation()]} />
+                                <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={interval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={mdChartRef} xAnnotations={annotations} />
                             </div>
                         </div>
                     </div>

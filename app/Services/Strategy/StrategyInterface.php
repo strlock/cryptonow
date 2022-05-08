@@ -6,6 +6,7 @@ namespace App\Services\Strategy;
 
 use App\Enums\StrategySignal;
 use App\Enums\TimeInterval;
+use Illuminate\Support\Collection;
 
 interface StrategyInterface
 {
@@ -15,4 +16,11 @@ interface StrategyInterface
      * @return StrategySignal
      */
     public function getSignal(string $symbol, ?TimeInterval $interval = null): StrategySignal;
+
+    /**
+     * @param string $symbol
+     * @param TimeInterval $interval
+     * @return Collection
+     */
+    public function getMarketDeltaClusters(string $symbol, TimeInterval $interval): Collection;
 }
