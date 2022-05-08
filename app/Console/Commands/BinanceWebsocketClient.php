@@ -49,8 +49,7 @@ class BinanceWebsocketClient extends Command
     public function handle()
     {
         $exchange = Factory::create('binance');
-        $symbol = trim($this->argument('symbol'));
-        $exchangeSymbol = $exchange->getExchangeSymbol($symbol);
+        $exchangeSymbol = trim($this->argument('symbol'));
         $streamName = strtolower($exchangeSymbol).'@aggTrade';
         /** @var AbstractFacade $exchange */
         while (true) {

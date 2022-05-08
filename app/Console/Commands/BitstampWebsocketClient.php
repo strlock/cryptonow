@@ -48,8 +48,7 @@ class BitstampWebsocketClient extends Command
     public function handle()
     {
         $exchange = Factory::create('bitstamp');
-        $symbol = trim($this->argument('symbol'));
-        $exchangeSymbol = $exchange->getExchangeSymbol($symbol);
+        $exchangeSymbol = trim($this->argument('symbol'));
         $channel = 'live_trades_'.$exchangeSymbol;
         /** @var AbstractFacade $exchange */
         while (true) {
