@@ -160,6 +160,9 @@ class Facade extends AbstractFacade
     public function placeOrder(PlaceOrderDto $dto): false|int
     {
         $result = false;
+        if (config('crypto.exchangesTestmode') === true) {
+            return true;
+        }
         $orderType = $this->getBinanceOrderType($dto->getOrderType())->value();
         $params = [
             'newClientOrderId' => $dto->getClientOrderId(),
@@ -196,6 +199,9 @@ class Facade extends AbstractFacade
     {
         $result = false;
         try {
+            if (config('crypto.exchangesTestmode') === true) {
+                return true;
+            }
             $response = $this->api->orderOCO(strtoupper($dto->getDirection()->value()), $dto->getExchangeSymbol(), $dto->getAmount(), $dto->getTp(), $dto->getSl(), [
                 'listClientOrderId' => $dto->getOrderId(),
                 'limitClientOrderId' => 'limit-'.$dto->getOrderId(),
@@ -239,6 +245,9 @@ class Facade extends AbstractFacade
     {
         $result = true;
         try {
+            if (config('crypto.exchangesTestmode') === true) {
+                return true;
+            }
             $this->api->cancel($dto->getExchangeSymbol(), $dto->getOrderId());
         } catch (Throwable $e) {
             Log::error($e);

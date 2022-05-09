@@ -9,4 +9,5 @@ return [
     'strategyMdClusterDomination' => 5,
     'strategyPeriod' => TimeInterval::THREE_HOURS,
     'strategyRelativePriceDiffPercent' => 1.5,
+    'exchangesTestmode' => env('EXCHANGES_TESTMODE', ''),
 ];
