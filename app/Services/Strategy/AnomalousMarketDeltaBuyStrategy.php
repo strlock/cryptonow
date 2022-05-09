@@ -32,8 +32,7 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
         if (empty($interval)) {
             $interval = TimeInterval::FIVE_MINUTES();
         }
-        /** @var MarketDeltaClusterDto $maxMdCluster */
-        $maxMdCluster = $this->getMarketDeltaClusters($symbol, $interval)->first();
+        $maxMdCluster = $this->getMaxMarketDeltaCluster($symbol, $interval);
         $relativePriceDiffPercent = 100*($maxMdCluster->getToPrice()-$maxMdCluster->getFromPrice())/$maxMdCluster->getFromPrice();
         echo date('d.m.Y H:i:s', $maxMdCluster->getFromTime()/1000).'  '.
             date('d.m.Y H:i:s', $maxMdCluster->getToTime()/1000).'  '.
@@ -48,6 +47,17 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
             return StrategySignal::BUY();
         }
         return StrategySignal::NOTHING();
+    }
+
+    /**
+     * @param string $symbol
+     * @param TimeInterval $interval
+     * @return MarketDeltaClusterDto
+     * @throws Exception
+     */
+    public function getMaxMarketDeltaCluster(string $symbol, TimeInterval $interval): MarketDeltaClusterDto
+    {
+        return $this->getMarketDeltaClusters($symbol, $interval)->first();
     }
 
     /**

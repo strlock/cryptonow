@@ -13,9 +13,9 @@ use Illuminate\Support\Collection;
 class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInterface
 {
     private array $exchangeNames = [
-        //'bitfinex',
+        'bitfinex',
         'binance',
-        //'bitstamp',
+        'bitstamp',
     ];
 
     /**

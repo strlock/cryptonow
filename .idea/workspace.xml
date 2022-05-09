@@ -1,31 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
-      <change afterPath="$PROJECT_DIR$/app/Http/Resources/UserResource.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Loading.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Loading.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/contexts/UserContext.js" afterDir="false" />
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving login. Refactoring">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/UserInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UserInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/crypto.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/crypto.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/css/app.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/css/bootstrap-select.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/Helpers/LoginHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Helpers/LoginHelper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/Helpers/RequestHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Helpers/RequestHelper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/LoginForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/LoginForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrderForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrderForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/UserSettingsModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UserSettingsModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -321,14 +300,7 @@
       <workItem from="1652074327322" duration="7672000" />
       <workItem from="1652105426320" duration="7487000" />
       <workItem from="1652117179412" duration="192000" />
-      <workItem from="1652117674746" duration="1572000" />
-    </task>
-    <task id="LOCAL-00020" summary="Improving price chart">
-      <created>1650960803833</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1650960803833</updated>
+      <workItem from="1652117674746" duration="2666000" />
     </task>
     <task id="LOCAL-00021" summary="Improving market delta chart">
       <created>1650960891242</created>
@@ -666,7 +638,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652041166858</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="Improving login. Refactoring">
+      <created>1652123467367</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1652123467367</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -694,7 +673,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="adding" />
     <MESSAGE value="Adding parameter data to response" />
     <MESSAGE value="Changes" />
     <MESSAGE value="Renaming Delta to Stat" />
@@ -719,7 +697,8 @@
     <MESSAGE value="Automatic orders" />
     <MESSAGE value="Refactoring BTCUSDT -&gt; BTCUSD" />
     <MESSAGE value="Improving" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
+    <MESSAGE value="Improving login. Refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving login. Refactoring" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
