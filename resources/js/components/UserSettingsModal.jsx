@@ -1,6 +1,7 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import RequestHelper from "../Helpers/RequestHelper";
 import $ from "jquery";
+import userContext from "../contexts/UserContext";
 
 function UserSettingsModal({showPopup}) {
     const binanceApiKeyRef = useRef();
@@ -10,16 +11,7 @@ function UserSettingsModal({showPopup}) {
     const aoAmountRef = useRef();
     const aoLimitIndentPercentRef = useRef();
     const aoEnabledRef = useRef();
-
-    const [settings, setSettings] = useState({
-        'binance_api_key': '',
-        'binance_api_secret': '',
-        'ao_tp_percent': 0.0,
-        'ao_sl_percent': 0.0,
-        'ao_amount': 0.0,
-        'ao_limit_indent_percent': 0.0,
-        'ao_enabled': false,
-    });
+    const [user, setUser] = useContext(userContext);
 
     const onSaveClick = () => {
         let data = new FormData();
@@ -30,7 +22,7 @@ function UserSettingsModal({showPopup}) {
         data.append('ao_amount', aoAmountRef.current.value);
         data.append('ao_limit_indent_percent', aoLimitIndentPercentRef.current.value);
         data.append('ao_enabled', aoEnabledRef.current.checked ? 1 : 0);
-        RequestHelper.fetch('/api/user/settings', {
+        RequestHelper.fetch('/api/user', {
             method: 'POST',
             body: data,
         }, response => {
@@ -43,25 +35,16 @@ function UserSettingsModal({showPopup}) {
         });
     }
 
-    useEffect(() => {
-        RequestHelper.fetch('/api/user/settings', {}, response => {
-            if (response.data !== undefined) {
-                setSettings(response.data);
-            }
-        });
-    }, []);
-
     const onFormFieldChange = (event, field) => {
-        setSettings({...settings, [field]: event.target.value})
+        setUser({...user, [field]: event.target.value})
     }
 
     const onFormCheckboxFieldChange = (event, field) => {
-        setSettings({...settings, [field]: event.target.checked})
+        setUser({...user, [field]: event.target.checked})
     }
 
     return (
-        <div className="modal fade" id="userSettingsModal" tabIndex="-1" aria-labelledby="userSettingsModalLabel"
-             aria-hidden="true">
+        <div className="modal fade" id="userSettingsModal" tabIndex="-1" aria-labelledby="userSettingsModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -78,33 +61,33 @@ function UserSettingsModal({showPopup}) {
                                 <div className={"tab-pane fade active show"} id={"nav-credentials"} role={"tab-panel"}>
                                     <div className="input-group input-group-sm mb-4">
                                         <label htmlFor="price" className="input-group-text w-25 bg-dark text-white">API Key</label>
-                                        <input type="text" name="binance_api_key" id="binance_api_key" value={settings.binance_api_key} onChange={event => onFormFieldChange(event, 'binance_api_key')} className="form-control bg-dark text-white" ref={binanceApiKeyRef} />
+                                        <input type="text" name="binance_api_key" id="binance_api_key" value={user.binance_api_key} onChange={event => onFormFieldChange(event, 'binance_api_key')} className="form-control bg-dark text-white" ref={binanceApiKeyRef} />
                                     </div>
                                     <div className="input-group input-group-sm mb-4">
                                         <label htmlFor="volume" className="input-group-text w-25 bg-dark text-white">API secret</label>
-                                        <input type="text" name="binance_api_secret" id="binance_api_secret" value={settings.binance_api_secret} onChange={event => onFormFieldChange(event, 'binance_api_secret')} className="form-control bg-dark text-white" ref={binanceApiSeceretRef} />
+                                        <input type="text" name="binance_api_secret" id="binance_api_secret" value={user.binance_api_secret} onChange={event => onFormFieldChange(event, 'binance_api_secret')} className="form-control bg-dark text-white" ref={binanceApiSeceretRef} />
                                     </div>
                                 </div>
                                 <div className={"tab-pane fade"} id={"nav-ao"} role={"tab-panel"}>
                                     <div className="form-check form-switch mb-4">
-                                        <input name={"ao_anabled"} className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked={settings.ao_enabled} ref={aoEnabledRef} onChange={event => onFormCheckboxFieldChange(event, 'ao_enabled')} />
+                                        <input name={"ao_anabled"} className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked={user.ao_enabled} ref={aoEnabledRef} onChange={event => onFormCheckboxFieldChange(event, 'ao_enabled')} />
                                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Enabled</label>
                                     </div>
                                     <div className="input-group input-group-sm mb-4">
                                         <label htmlFor="volume" className="input-group-text w-25 bg-dark text-white">Amount</label>
-                                        <input type="text" name="ao_amount" id="ao_amount" value={settings.ao_amount} onChange={event => onFormFieldChange(event, 'ao_amount')} className="form-control bg-dark text-white" ref={aoAmountRef} />
+                                        <input type="text" name="ao_amount" id="ao_amount" value={user.ao_amount} onChange={event => onFormFieldChange(event, 'ao_amount')} className="form-control bg-dark text-white" ref={aoAmountRef} />
                                     </div>
                                     <div className="input-group input-group-sm mb-4">
                                         <label htmlFor="price" className="input-group-text w-25 bg-dark text-white">Take profit, %</label>
-                                        <input type="text" name="ao_tp_percent" id="ao_tp_percent" value={settings.ao_tp_percent} onChange={event => onFormFieldChange(event, 'ao_tp_percent')} className="form-control bg-dark text-white" ref={aoTpRef} />
+                                        <input type="text" name="ao_tp_percent" id="ao_tp_percent" value={user.ao_tp_percent} onChange={event => onFormFieldChange(event, 'ao_tp_percent')} className="form-control bg-dark text-white" ref={aoTpRef} />
                                     </div>
                                     <div className="input-group input-group-sm mb-4">
                                         <label htmlFor="volume" className="input-group-text w-25 bg-dark text-white">Stop loss, %</label>
-                                        <input type="text" name="ao_sl_percent" id="ao_sl_percent" value={settings.ao_sl_percent} onChange={event => onFormFieldChange(event, 'ao_sl_percent')} className="form-control bg-dark text-white" ref={aoSlRef} />
+                                        <input type="text" name="ao_sl_percent" id="ao_sl_percent" value={user.ao_sl_percent} onChange={event => onFormFieldChange(event, 'ao_sl_percent')} className="form-control bg-dark text-white" ref={aoSlRef} />
                                     </div>
                                     <div className="input-group input-group-sm mb-4">
                                         <label htmlFor="volume" className="input-group-text w-25 bg-dark text-white">Limit indent, %</label>
-                                        <input type="text" name="ao_limit_indent_percent" id="ao_limit_indent_percent" value={settings.ao_limit_indent_percent} onChange={event => onFormFieldChange(event, 'ao_limit_indent_percent')} className="form-control bg-dark text-white" ref={aoLimitIndentPercentRef} />
+                                        <input type="text" name="ao_limit_indent_percent" id="ao_limit_indent_percent" value={user.ao_limit_indent_percent} onChange={event => onFormFieldChange(event, 'ao_limit_indent_percent')} className="form-control bg-dark text-white" ref={aoLimitIndentPercentRef} />
                                     </div>
                                 </div>
                             </div>

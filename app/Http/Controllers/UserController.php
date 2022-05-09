@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Http\Resources\UserSettingsResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,7 +30,19 @@ class UserController extends Controller
         }
         return response()->json([
             'access_token' => $token,
-            'user_name' => auth('api')->user()->name,
+            'user' => new UserResource(auth('api')->user()),
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function logout(Request $request): JsonResponse
+    {
+        auth('api')->logout();
+        return response()->json([
+            'success' => true,
         ]);
     }
 
@@ -47,10 +60,23 @@ class UserController extends Controller
     }
 
     /**
+     *
+     */
+    public function getUser()
+    {
+        try {
+            $user = Auth::user();
+            return new UserResource($user);
+        } catch (Throwable $e) {
+            return response()->json(['message' => $e->getMessage(), 'error' => true]);
+        }
+    }
+
+    /**
      * @param Request $request
      * @return JsonResponse
      */
-    public function saveSettings(Request $request)
+    public function saveUser(Request $request)
     {
         try {
             /** @var User $user */

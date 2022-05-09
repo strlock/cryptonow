@@ -4,6 +4,8 @@ const syncFetch = require('sync-fetch');
 
 class RequestHelper
 {
+    static expiredTokenCallback = null
+
     static fetch(url, options, success, failed)
     {
         const accessToken = LoginHelper.getAccessToken();
@@ -13,11 +15,10 @@ class RequestHelper
             };
         }
         return fetch(url, options).then(response => response.json()).then(function (response) {
-            if (response.status && response.status === 'Token is Expired') {
-                LoginHelper.logout();
-                return;
-            }
-            if (response.status && response.status === 'Authorization Token not found') {
+            if (response.status !== undefined && response.status === 'Token is Expired') {
+                if (RequestHelper.expiredTokenCallback !== null) {
+                    RequestHelper.expiredTokenCallback();
+                }
                 return;
             }
             if (success) {
@@ -32,6 +33,11 @@ class RequestHelper
 
     static syncFetch(url, options) {
         return syncFetch(url, options).json();
+    }
+
+    static setExpiredTokenCallback (callback)
+    {
+        RequestHelper.expiredTokenCallback = callback;
     }
 }
 

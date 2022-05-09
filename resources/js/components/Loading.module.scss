@@ -1,0 +1,20 @@
+.loading{
+    z-index: 65534;
+    background: url('/images/loading.gif') no-repeat center center #24204B;
+    background-size: 200px auto;
+    background-blend-mode: screen;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading:after{
+    content: "Loading...";
+    color: #fff;
+    font-size: 0.7rem;
+}

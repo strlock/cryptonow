@@ -12,6 +12,16 @@ interface UserInterface
     public function getId(): int;
 
     /**
+     * @return string
+     */
+    public function getName(): string;
+
+    /**
+     * @param string $value
+     */
+    public function setName(string $value): void;
+
+    /**
      * @param int $value
      */
     public function setId(int $value): void;

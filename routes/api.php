@@ -24,8 +24,9 @@ Route::middleware('api')->group(function () {
         Route::get('marketDelta/{symbol}/{fromTime}/{toTime?}/{interval?}', [MarketDeltaController::class, 'index']);
         Route::get('price/{symbol}/{fromTime}/{toTime?}/{interval?}', [PriceController::class, 'index']);
         Route::resource('orders', OrdersController::class);
-        Route::get('user/settings', [UserController::class, 'getSettings']);
-        Route::post('user/settings', [UserController::class, 'saveSettings']);
+        Route::get('user', [UserController::class, 'getUser']);
+        Route::post('user', [UserController::class, 'saveUser']);
         Route::get('mdclusters/{symbol}/{interval?}', [MarketDeltaController::class, 'getMdClusters']);
+        Route::post('logout', [UserController::class, 'logout']);
     });
 });

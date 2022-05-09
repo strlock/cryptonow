@@ -2,10 +2,9 @@ import LocalStorageHelper from "./LocalStorageHelper";
 
 class LoginHelper
 {
-    static login(accessToken, userName)
+    static setAccessToken(accessToken, userName)
     {
         LocalStorageHelper.set('userAccessToken', accessToken);
-        LocalStorageHelper.set('userName', userName);
     }
 
     static getAccessToken()
@@ -13,22 +12,9 @@ class LoginHelper
         return LocalStorageHelper.get('userAccessToken');
     }
 
-    static isLoggedIn()
-    {
-        let accessToken = this.getAccessToken();
-        return accessToken !== null && accessToken != '';
-    }
-
-    static getLoggedInUserName()
-    {
-        return LocalStorageHelper.get('userName');
-    }
-
-    static logout()
+    static clearAccessToken()
     {
         LocalStorageHelper.remove('userAccessToken');
-        LocalStorageHelper.remove('userName');
-        document.location.reload();
     }
 }
 

@@ -68,6 +68,23 @@ class User extends Authenticatable implements UserInterface, JWTSubject
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $value
+     * @return void
+     */
+    public function setName(string $value): void
+    {
+        $this->name = $value;
+    }
+
+    /**
      * @return int
      */
     public function getId(): int

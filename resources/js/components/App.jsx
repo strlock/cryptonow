@@ -12,7 +12,9 @@ import LoginHelper from "../Helpers/LoginHelper";
 import OrdersList from "./OrdersList";
 import {
     REFRESH_INTERVAL,
-    POPUP_TIMEOUT, StrategySignals
+    POPUP_TIMEOUT,
+    StrategySignals,
+    ORDERS_REFRESH_INTERVAL,
 } from '../constants';
 import IntervalSelector from "./IntervalSelector";
 import FormatHelper from "../Helpers/FormatHelper";
@@ -22,6 +24,8 @@ import ordersContext from "../contexts/OrdersContext";
 import RequestHelper from "../Helpers/RequestHelper";
 import CurrentPrice from "./CurrentPrice";
 import TimeIntervals from "../TimeIntervals";
+import Loading from "./Loading";
+import userContext from "../contexts/UserContext";
 
 const App = () => {
     const updateInterval = 15000;
@@ -37,19 +41,35 @@ const App = () => {
     const chartsLinesColor = '#635E98';
     let popupTimeout = null;
 
-    FormatHelper.setFromSign('₿');
-    FormatHelper.setToSign('$');
-
+    const [user, setUser] = useState(null);
     const [interval, setChartsInterval] = useState(TimeIntervals.FIVE_MINUTES);
     const [currentPrice, setCurrentPrice] = useState(0.0);
     const [popup, setPopup] = useState(popupDefault);
-    const [isLoggedIn, setIsLoggedIn] = useState(LoginHelper.isLoggedIn());
     const [orders, setOrders] = useState([]);
     const [mdClusters, setMdClusters] = useState([]);
 
     const priceChartRef = useRef();
     const mdChartRef = useRef();
     const ordersListRef = useRef();
+
+    useEffect(() => {
+        RequestHelper.setExpiredTokenCallback(() => {
+            LoginHelper.clearAccessToken();
+            setUser(false);
+        })
+        RequestHelper.fetch('/api/user', {}, response => {
+            if (response.data !== undefined) {
+                setUser(response.data);
+            } else {
+                setUser(false);
+            }
+        });
+    }, []);
+
+    // Initialized
+
+    FormatHelper.setFromSign('₿');
+    FormatHelper.setToSign('$');
 
     let daysForInterval = TimeHelper.daysForInterval(interval)
     if (daysForInterval > 10) {
@@ -89,26 +109,28 @@ const App = () => {
         setPopup(popupDefault);
     }
 
-    const onLoginSuccess = (accessToken, userName) => {
-        LoginHelper.login(accessToken, userName);
-        setIsLoggedIn(LoginHelper.isLoggedIn());
+    const onLoginSuccess = (user) => {
+        setUser(user);
     }
 
     const onLoginFail = (message) => {
         showPopup(message, 'danger');
-        setIsLoggedIn(LoginHelper.isLoggedIn());
     }
 
     const onLogoutClick = () => {
-        LoginHelper.logout();
-        setIsLoggedIn(LoginHelper.isLoggedIn());
+        RequestHelper.fetch('/api/logout', {method: 'POST'}, response => {
+            if (response.success) {
+                LoginHelper.clearAccessToken();
+                setUser(false);
+            }
+        });
     }
 
     useEffect(() => {
         RequestHelper.fetch('/api/mdclusters/BTCUSD/' + interval, {}, response => {
             setMdClusters(response.data);
         });
-    }, [interval, isLoggedIn]);
+    }, [interval, user]);
 
     const mdClustersAnnotations = useMemo(() => {
         const annotations = [];
@@ -163,7 +185,7 @@ const App = () => {
         refreshOrders();
         setInterval(() => {
             refreshOrders();
-        }, 3000);
+        }, ORDERS_REFRESH_INTERVAL);
     }, []);
 
     const popupDom = <Alert variant={popup.type} onClose={() => hidePopup()} dismissible>
@@ -173,64 +195,73 @@ const App = () => {
     let loginButton = '';
     let content = '';
     let settingsButton = '';
-    if (isLoggedIn) {
-        loginButton = <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>Logout ({LoginHelper.getLoggedInUserName()})</button>;
-        settingsButton = <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#userSettingsModal">Settings</button>;
-        content = <div className="container">
-            {popup.show ? popupDom : ''}
-            <div className="row justify-content-center">
-                <div className="col-md-10">
-                    <div className="card">
-                        <div className={"card-header"}>
-                            <IntervalSelector chartsInterval={interval} setChartsInterval={setChartsInterval} />
+    if (user !== null) {
+        if (user !== false) {
+            loginButton = <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>{user.name}&nbsp;<i className="fa fa-arrow-right"></i></button>;
+            settingsButton = <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#userSettingsModal"><i className="fa fa-gear"></i></button>;
+            content = <userContext.Provider value={[user, setUser]}>
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <div className="col-xl-12">
+                            {popup.show ? popupDom : ''}
                         </div>
-                        <div className="card-body pt-0">
-                            <div className="chart">
-                                <currentPriceContext.Provider value={currentPrice}>
-                                <ordersContext.Provider value={orders}>
-                                    <PriceChart fromTime={fromTime} toTime={toTime} interval={interval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={priceChartRef} xAnnotations={annotations} />
-                                </ordersContext.Provider>
-                                </currentPriceContext.Provider>
-                                <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={interval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={mdChartRef} xAnnotations={annotations} />
+                        <div className="col-xl-12">
+                            <div className="card">
+                                <div className={"card-header"}>
+                                    <IntervalSelector chartsInterval={interval} setChartsInterval={setChartsInterval} />
+                                </div>
+                                <div className="card-body pt-0">
+                                    <div className="chart">
+                                        <currentPriceContext.Provider value={currentPrice}>
+                                            <ordersContext.Provider value={orders}>
+                                                <PriceChart fromTime={fromTime} toTime={toTime} interval={interval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={priceChartRef} xAnnotations={annotations} />
+                                            </ordersContext.Provider>
+                                        </currentPriceContext.Provider>
+                                        <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={interval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={mdChartRef} xAnnotations={annotations} />
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div className="card">
+                                <div className="card-body">
+                                    <ordersContext.Provider value={orders}>
+                                        <OrdersList innerRef={ordersListRef} />
+                                    </ordersContext.Provider>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <br/>
-                    <ordersContext.Provider value={orders}>
-                        <OrdersList innerRef={ordersListRef} />
-                    </ordersContext.Provider>
-                </div>
-                <div className="col-md-2 ps-3">
+                    <UserSettingsModal showPopup={showPopup} />
                     <currentPriceContext.Provider value={currentPrice}>
-                    <OrderForm currentPrice={currentPrice} showPopup={showPopup} ordersList={ordersListRef.current} />
+                        <OrderForm currentPrice={currentPrice} showPopup={showPopup} ordersList={ordersListRef.current} />
                     </currentPriceContext.Provider>
                 </div>
-            </div>
-            <UserSettingsModal showPopup={showPopup} />
-        </div>
-    } else {
-        loginButton = <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginForm">Login</button>;
-        content = <LoginForm onSuccess={onLoginSuccess} onFail={onLoginFail} />
+            </userContext.Provider>
+        } else {
+            loginButton = <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginForm">Login</button>;
+            content = <LoginForm onSuccess={onLoginSuccess} onFail={onLoginFail} />
+        }
     }
-
     return (
-        <div id="page">
-            {/*<span style={{color: '#fff'}}>{(new Date(fromTime)).toLocaleString()} - {(new Date(toTime)).toLocaleString()}</span>*/}
-            <div id="top">
-                <div className="top-left">
-                    <a href="/" className="logo-link">
-                        <img src="images/logo.png" />
-                    </a>
+        user !== null ?
+            <div id="page">
+                {/*<span style={{color: '#fff'}}>{(new Date(fromTime)).toLocaleString()} - {(new Date(toTime)).toLocaleString()}</span>*/}
+                <div id="top">
+                    <div className="top-left">
+                        <a href="/" className="logo-link">
+                            <img src="images/logo.png" />
+                        </a>
+                    </div>
+                    <div className="top-right">
+                        {loginButton}&nbsp;&nbsp;&nbsp;
+                        {settingsButton}
+                    </div>
                 </div>
-                <div className="top-right">
-                    {loginButton}&nbsp;&nbsp;&nbsp;
-                    {settingsButton}
+                <div id="middle">
+                    {content}
                 </div>
             </div>
-            <div id="middle">
-                {content}
-            </div>
-        </div>
+        : <Loading />
     );
 }
 

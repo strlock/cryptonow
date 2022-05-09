@@ -6,6 +6,7 @@ import {
     ORDER_DIRECTION_SELL,
 } from "../constants";
 import currentPriceContext from "../contexts/CurrentPriceContext";
+import $ from "jquery";
 
 const OrderForm = (props) => {
     const [market, setMarket] = useState(false);
@@ -83,6 +84,7 @@ const OrderForm = (props) => {
             body: data,
         }, response => {
             clearForm();
+            closeModal();
             if (response.error !== undefined) {
                 props.showPopup(response.error, 'danger');
                 console.log(response.error);
@@ -145,47 +147,59 @@ const OrderForm = (props) => {
         setTpPercent(0);
     }
 
+    const closeModal = () => {
+        $('#newOrderModal .btn-close').trigger('click');
+    }
+
     return (
-        <div className="card text-white mb-3 order-form">
-            <div className="card-body">
-                <form>
-                    <div className="input-group input-group-sm mb-4 mt-3">
-                        <button type="button" name="volume" className="btn btn-success form-control" onClick={() => onDirectionClick(ORDER_DIRECTION_BUY)}>BUY</button>
-                        <button type="button" name="volume" className="btn btn-danger form-control" onClick={() => onDirectionClick(ORDER_DIRECTION_SELL)}>SELL</button>
+        <div className="modal fade" id="newOrderModal" tabIndex="-1" aria-labelledby="newOrderModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="newOrderModalLabel">Settings</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                     </div>
-                    <div className="input-group input-group-sm mb-4">
-                        <label htmlFor="price" className="input-group-text w-25 bg-dark text-white">Price</label>
-                        <input type="text" name="price" id="price" defaultValue={market ? currentPrice : ''} className="form-control bg-dark text-white" disabled={market} ref={priceRef} onChange={() => onPriceChange()} />
+                    <div className="modal-body">
+                        <form>
+                            <div className="input-group input-group-sm mb-4 mt-3">
+                                <button type="button" name="volume" className="btn btn-success form-control" onClick={() => onDirectionClick(ORDER_DIRECTION_BUY)}>BUY</button>
+                                <button type="button" name="volume" className="btn btn-danger form-control" onClick={() => onDirectionClick(ORDER_DIRECTION_SELL)}>SELL</button>
+                            </div>
+                            <div className="input-group input-group-sm mb-4">
+                                <label htmlFor="price" className="input-group-text w-25 bg-dark text-white">Price</label>
+                                <input type="text" name="price" id="price" defaultValue={market ? currentPrice : ''} className="form-control bg-dark text-white" disabled={market} ref={priceRef} onChange={() => onPriceChange()} />
+                            </div>
+                            <div className="input-group input-group-sm mb-4">
+                                <label htmlFor="volume" className="input-group-text w-25 bg-dark text-white">Amount</label>
+                                <input type="text" name="amount" id="amount" className="form-control bg-dark text-white" onChange={() => onAmountChange()} ref={amountRef} />
+                            </div>
+                            <div className="input-group input-group-sm mb-4">
+                                <label htmlFor="total" className="input-group-text w-25 bg-dark text-white">Total</label>
+                                <input type="text" name="total" id="total" className="form-control bg-dark text-white" onChange={() => onTotalChange()} ref={totalRef} />
+                            </div>
+                            <div className="input-group input-group-sm mb-3">
+                                <label htmlFor="tp" className="input-group-text w-25 bg-dark text-white">Take Profit</label>
+                                <input type="text" name="tp" id="tp" className="form-control bg-dark text-white" value={tp} onChange={event => onTpChange(event)} ref={tpRef} />
+                                <input type="range" className="form-range mt-1" min="0" max="200" step="1" id="tpRange" value={tpPercent} onChange={event => onTpRangeChange(event)} />
+                                <span>{direction === ORDER_DIRECTION_BUY ? '+' : '-'}{tpPercent}%</span>
+                            </div>
+                            <div className="input-group input-group-sm mb-3">
+                                <label htmlFor="sl" className="input-group-text w-25 bg-dark text-white">Stop Loss</label>
+                                <input type="text" name="sl" id="sl" className="form-control bg-dark text-white" value={sl} onChange={event => onSlChange(event)} ref={slRef} />
+                                <input type="range" className="form-range mt-1" min="0" max="50" step="1" id="slRange" value={slPercent} onChange={event => onSlRangeChange(event)} />
+                                <span>{direction === ORDER_DIRECTION_BUY ? '-' : '+'}{slPercent}%</span>
+                            </div>
+                            <div className="form-check form-check-inline mb-4">
+                                <input className="form-check-input" type="checkbox" id="marketCheckbox" defaultChecked={market} onClick={onMarketChange} ref={marketRef} />
+                                <label className="form-check-label" htmlFor="marketCheckbox">Market</label>
+                            </div>
+                            <div className="input-group input-group-sm mb-4">
+                                {direction === ORDER_DIRECTION_BUY ? (<button type="button" name="order" className="btn btn-success form-control" onClick={() => onBuyClick()}>Place Order</button>) : ''}
+                                {direction === ORDER_DIRECTION_SELL ? (<button type="button" name="order" className="btn btn-danger form-control" onClick={() => onSellClick()}>Place Order</button>) : ''}
+                            </div>
+                        </form>
                     </div>
-                    <div className="input-group input-group-sm mb-4">
-                        <label htmlFor="volume" className="input-group-text w-25 bg-dark text-white">Amount</label>
-                        <input type="text" name="amount" id="amount" className="form-control bg-dark text-white" onChange={() => onAmountChange()} ref={amountRef} />
-                    </div>
-                    <div className="input-group input-group-sm mb-4">
-                        <label htmlFor="total" className="input-group-text w-25 bg-dark text-white">Total</label>
-                        <input type="text" name="total" id="total" className="form-control bg-dark text-white" onChange={() => onTotalChange()} ref={totalRef} />
-                    </div>
-                    <div className="input-group input-group-sm mb-3">
-                        <label htmlFor="tp" className="input-group-text w-25 bg-dark text-white">Take Profit</label>
-                        <input type="text" name="tp" id="tp" className="form-control bg-dark text-white" value={tp} onChange={event => onTpChange(event)} ref={tpRef} />
-                        <input type="range" className="form-range mt-1" min="0" max="200" step="1" id="tpRange" value={tpPercent} onChange={event => onTpRangeChange(event)} />
-                        <span>{direction === ORDER_DIRECTION_BUY ? '+' : '-'}{tpPercent}%</span>
-                    </div>
-                    <div className="input-group input-group-sm mb-3">
-                        <label htmlFor="sl" className="input-group-text w-25 bg-dark text-white">Stop Loss</label>
-                        <input type="text" name="sl" id="sl" className="form-control bg-dark text-white" value={sl} onChange={event => onSlChange(event)} ref={slRef} />
-                        <input type="range" className="form-range mt-1" min="0" max="50" step="1" id="slRange" value={slPercent} onChange={event => onSlRangeChange(event)} />
-                        <span>{direction === ORDER_DIRECTION_BUY ? '-' : '+'}{slPercent}%</span>
-                    </div>
-                    <div className="form-check form-check-inline mb-4">
-                        <input className="form-check-input" type="checkbox" id="marketCheckbox" defaultChecked={market} onClick={onMarketChange} ref={marketRef} />
-                        <label className="form-check-label" htmlFor="marketCheckbox">Market</label>
-                    </div>
-                    <div className="input-group input-group-sm mb-4">
-                        {direction === ORDER_DIRECTION_BUY ? (<button type="button" name="order" className="btn btn-success form-control" onClick={() => onBuyClick()}>Place Order</button>) : ''}
-                        {direction === ORDER_DIRECTION_SELL ? (<button type="button" name="order" className="btn btn-danger form-control" onClick={() => onSellClick()}>Place Order</button>) : ''}
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     );
