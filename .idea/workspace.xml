@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Testmode for exchanges">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug. Improving logs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/CheckSignalCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/CheckSignalCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/crypto.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/crypto.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +37,7 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="PhpDebugGeneral" xdebug_debug_port="11003" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
+  <component name="PhpDebugGeneral" xdebug_debug_port="11003" listening_started="true" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
     <xdebug_debug_ports port="11003" />
   </component>
   <component name="PhpServers">
@@ -303,14 +300,7 @@
       <workItem from="1652105426320" duration="7487000" />
       <workItem from="1652117179412" duration="192000" />
       <workItem from="1652117674746" duration="3959000" />
-      <workItem from="1652158933360" duration="1384000" />
-    </task>
-    <task id="LOCAL-00023" summary="Adding ready_price and completed_price">
-      <created>1650961670625</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1650961670625</updated>
+      <workItem from="1652158933360" duration="2339000" />
     </task>
     <task id="LOCAL-00024" summary="Improving">
       <created>1650962137617</created>
@@ -648,7 +638,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652125412766</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="Fixing bug. Improving logs">
+      <created>1652161140991</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1652161140992</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -676,7 +673,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Renaming Delta to Stat" />
     <MESSAGE value="Updating charts by interval" />
     <MESSAGE value="Updating orders list after add new order" />
     <MESSAGE value="Adding ready_at, completed_at and moving Crypto to Services" />
@@ -701,7 +697,8 @@
     <MESSAGE value="Improving login. Refactoring" />
     <MESSAGE value="Improving. Fixing bug" />
     <MESSAGE value="Testmode for exchanges" />
-    <option name="LAST_COMMIT_MESSAGE" value="Testmode for exchanges" />
+    <MESSAGE value="Fixing bug. Improving logs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug. Improving logs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -720,6 +717,11 @@
           <url>file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Notifications/NotificationSender.php</url>
           <line>199</line>
           <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Services/OrdersService.php</url>
+          <line>232</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

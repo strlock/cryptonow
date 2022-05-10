@@ -231,12 +231,13 @@ class OrdersService implements OrdersServiceInterface
     public function createUsersAutomaticOrders(CreateAutomaticOrdersDto $dto): void
     {
         $exchange = ExchangesFactory::create();
+        $exchangeSymbol = $exchange->getExchangeOrderSymbol($dto->getSymbol());
         foreach ($this->usersRepository->getAllUsers() as $user) {
             /** @var UserInterface $user */
             if ($this->userHasOpenedOrder($user) || !$user->isAOEnabled()) {
                 continue;
             }
-            $currentPrice = $exchange->getCurrentPrice($dto->getSymbol());
+            $currentPrice = $exchange->getCurrentPrice($exchangeSymbol);
             $sl = null;
             $tp = null;
             if ($dto->getDirection()->isBUY()) {
@@ -259,7 +260,7 @@ class OrdersService implements OrdersServiceInterface
                 $tp,
                 false,
                 config('crypto.defaultExchange'),
-                $dto->getSymbol(),
+                $exchangeSymbol,
             ));
             if (empty($order)) {
                 continue;
