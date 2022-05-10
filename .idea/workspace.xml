@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving. Fixing bug">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Testmode for exchanges">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Binance/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Binance/Facade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/CheckSignalCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/CheckSignalCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/crypto.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/crypto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,14 +302,8 @@
       <workItem from="1652074327322" duration="7672000" />
       <workItem from="1652105426320" duration="7487000" />
       <workItem from="1652117179412" duration="192000" />
-      <workItem from="1652117674746" duration="3289000" />
-    </task>
-    <task id="LOCAL-00022" summary="Improving">
-      <created>1650961360642</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1650961360642</updated>
+      <workItem from="1652117674746" duration="3959000" />
+      <workItem from="1652158933360" duration="1384000" />
     </task>
     <task id="LOCAL-00023" summary="Adding ready_price and completed_price">
       <created>1650961670625</created>
@@ -645,7 +641,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652124784500</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="Testmode for exchanges">
+      <created>1652125412766</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1652125412766</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -673,7 +676,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changes" />
     <MESSAGE value="Renaming Delta to Stat" />
     <MESSAGE value="Updating charts by interval" />
     <MESSAGE value="Updating orders list after add new order" />
@@ -698,7 +700,8 @@
     <MESSAGE value="Improving" />
     <MESSAGE value="Improving login. Refactoring" />
     <MESSAGE value="Improving. Fixing bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improving. Fixing bug" />
+    <MESSAGE value="Testmode for exchanges" />
+    <option name="LAST_COMMIT_MESSAGE" value="Testmode for exchanges" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

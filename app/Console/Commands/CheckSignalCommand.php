@@ -10,6 +10,7 @@ use App\Helpers\TimeHelper;
 use App\Services\OrdersService;
 use App\Services\Strategy\StrategyInterface;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class CheckSignalCommand extends Command
 {
@@ -50,7 +51,7 @@ class CheckSignalCommand extends Command
         while (true) {
             $signal = $strategy->getSignal($symbol, TimeInterval::FIVE_MINUTES());
             $toTime = TimeHelper::round(TimeHelper::time(), TimeInterval::FIVE_MINUTES());
-            echo date('d.m.Y H:i:s', $toTime/1000).' '.$signal->key().PHP_EOL;
+            Log::debug(date('d.m.Y H:i:s', $toTime/1000).' '.$signal->key());
             if ($signal !== StrategySignal::NOTHING()) {
                 $direction = match($signal) {
                     StrategySignal::BUY() => OrderDirection::BUY(),

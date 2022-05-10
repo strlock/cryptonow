@@ -13,6 +13,7 @@ use App\Services\GetAggregateMarketStatService;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
 {
@@ -33,13 +34,17 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
             $interval = TimeInterval::FIVE_MINUTES();
         }
         $maxMdCluster = $this->getMaxMarketDeltaCluster($symbol, $interval);
+        if (empty($maxMdCluster)) {
+            Log::debug('No maximum cluster right now');
+            return StrategySignal::NOTHING();
+        }
         $relativePriceDiffPercent = 100*($maxMdCluster->getToPrice()-$maxMdCluster->getFromPrice())/$maxMdCluster->getFromPrice();
-        echo date('d.m.Y H:i:s', $maxMdCluster->getFromTime()/1000).'  '.
+        Log::debug(date('d.m.Y H:i:s', $maxMdCluster->getFromTime()/1000).'  '.
             date('d.m.Y H:i:s', $maxMdCluster->getToTime()/1000).'  '.
             $maxMdCluster->getMarketDelta().' '.
             $maxMdCluster->getFromPrice().'-'.
             $maxMdCluster->getToPrice().' '.
-            round($relativePriceDiffPercent, 2).'%'.PHP_EOL;
+            round($relativePriceDiffPercent, 2).'%');
         $toTime = TimeHelper::round(TimeHelper::time(), $interval);
         if ($toTime >= $maxMdCluster->getFromTime() &&
                 $toTime <= $maxMdCluster->getToTime() &&
@@ -52,10 +57,10 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
     /**
      * @param string $symbol
      * @param TimeInterval $interval
-     * @return MarketDeltaClusterDto
+     * @return MarketDeltaClusterDto|null
      * @throws Exception
      */
-    public function getMaxMarketDeltaCluster(string $symbol, TimeInterval $interval): MarketDeltaClusterDto
+    public function getMaxMarketDeltaCluster(string $symbol, TimeInterval $interval): ?MarketDeltaClusterDto
     {
         return $this->getMarketDeltaClusters($symbol, $interval)->first();
     }
