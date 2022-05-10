@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug. Improving logs">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/OrdersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/OrdersRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +38,7 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="PhpDebugGeneral" xdebug_debug_port="11003" listening_started="true" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
+  <component name="PhpDebugGeneral" xdebug_debug_port="11003" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
     <xdebug_debug_ports port="11003" />
   </component>
   <component name="PhpServers">
@@ -300,14 +301,7 @@
       <workItem from="1652105426320" duration="7487000" />
       <workItem from="1652117179412" duration="192000" />
       <workItem from="1652117674746" duration="3959000" />
-      <workItem from="1652158933360" duration="2339000" />
-    </task>
-    <task id="LOCAL-00024" summary="Improving">
-      <created>1650962137617</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1650962137617</updated>
+      <workItem from="1652158933360" duration="3852000" />
     </task>
     <task id="LOCAL-00025" summary="Improving">
       <created>1650962271442</created>
@@ -645,7 +639,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652161140992</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="Fixing bug">
+      <created>1652163917532</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1652163917532</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -673,7 +674,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updating charts by interval" />
     <MESSAGE value="Updating orders list after add new order" />
     <MESSAGE value="Adding ready_at, completed_at and moving Crypto to Services" />
     <MESSAGE value="Improving price chart" />
@@ -698,7 +698,8 @@
     <MESSAGE value="Improving. Fixing bug" />
     <MESSAGE value="Testmode for exchanges" />
     <MESSAGE value="Fixing bug. Improving logs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug. Improving logs" />
+    <MESSAGE value="Fixing bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

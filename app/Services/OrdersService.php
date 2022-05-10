@@ -260,7 +260,7 @@ class OrdersService implements OrdersServiceInterface
                 $tp,
                 false,
                 config('crypto.defaultExchange'),
-                $exchangeSymbol,
+                $dto->getSymbol(),
             ));
             if (empty($order)) {
                 continue;
