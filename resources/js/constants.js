@@ -2,7 +2,6 @@ const REFRESH_INTERVAL = 15000;
 const POPUP_TIMEOUT = 15000;
 export const ORDERS_REFRESH_INTERVAL = 3000;
 const ONE_MINUTE_MS = 60*1000;
-const FIVE_MINUTES_MS = 5*ONE_MINUTE_MS;
 
 const ORDER_STATE_TITLES = {
     'new': 'New Order',
@@ -23,13 +22,8 @@ const ORDER_DIRECTION_TITLES = {
 };
 
 const ORDERS_LIST_TAB_TITLES = {
-    'active': 'Active Orders',
+    'orders': '',
     'history': 'History',
-};
-
-const ORDER_LIST_TAB_ORDER_SATES = {
-    'active': ['new', 'ready'],
-    'history': ['profit','loss','failed','canceled','completed'],
 };
 
 const StrategySignals = {
@@ -44,7 +38,6 @@ export {
     ORDER_STATE_TITLES,
     ORDER_DIRECTION_TITLES,
     ORDERS_LIST_TAB_TITLES,
-    ORDER_LIST_TAB_ORDER_SATES,
     ORDER_DIRECTION_BUY,
     ORDER_DIRECTION_SELL,
     StrategySignals,

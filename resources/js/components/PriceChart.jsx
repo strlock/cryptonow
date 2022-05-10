@@ -2,18 +2,13 @@ import React, {useState,useContext, useEffect, useMemo} from 'react';
 import ReactApexChart from 'react-apexcharts';
 import RequestHelper from "../Helpers/RequestHelper";
 import FormatHelper from "../Helpers/FormatHelper";
-import ordersContext from "../contexts/OrdersContext";
-import {
-    ORDER_DIRECTION_BUY
-} from "../constants";
+import {stateContext} from "./StateProvider";
 
 let chartContext = null;
-import currentPriceContext from "../contexts/CurrentPriceContext";
 
-const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, xAnnotations}) => {
-    const orders = useContext(ordersContext);
+const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, xAnnotations, yAnnotations, orders}) => {
     const [seriesData, setSeriesData] = useState([]);
-    const currentPrice = useContext(currentPriceContext);
+    const [state, actions] = useContext(stateContext);
 
     useEffect(() => {
         RequestHelper.fetch('/api/price/BTCUSD/' + fromTime + '/' + toTime + '/' + interval, {},
@@ -24,69 +19,9 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, 
         );
     }, [fromTime, toTime, interval]);
 
-    const getVisibleOrders = () => {
-        return orders.filter((order) => {
-            return order.state === 'new' || order.state === 'ready';
-        });
-    }
-
-    const yAnnotations = useMemo(() => {
-        const result = [];
-        const visibleOrders = getVisibleOrders();
-        const buyColor = '#00E396';
-        const sellColor = '#E30096';
-        for(let i in visibleOrders) {
-            const order = visibleOrders[i];
-            result.push({
-                y: order.price,
-                borderColor: order.direction === ORDER_DIRECTION_BUY ? buyColor : sellColor,
-                strokeDashArray: 0,
-                label: {
-                    borderColor: linesColor,
-                    style: {
-                        color: textColor,
-                        background: 'transparent'
-                    },
-                    text: 'Order ' + order.id + ': ' + FormatHelper.formatPrice(order.price)
-                }
-            });
-            if (order.sl) {
-                result.push({
-                    y: order.sl,
-                    borderColor: order.direction === ORDER_DIRECTION_BUY ? buyColor : sellColor,
-                    strokeDashArray: 5,
-                    label: {
-                        borderColor: linesColor,
-                        style: {
-                            color: textColor,
-                            background: 'transparent'
-                        },
-                        text: 'Order ' + order.id + ' SL: ' + FormatHelper.formatPrice(order.sl)
-                    }
-                });
-            }
-            if (order.tp) {
-                result.push({
-                    y: order.tp,
-                    borderColor: order.direction === ORDER_DIRECTION_BUY ? buyColor : sellColor,
-                    strokeDashArray: 5,
-                    label: {
-                        borderColor: linesColor,
-                        style: {
-                            color: textColor,
-                            background: 'transparent'
-                        },
-                        text: 'Order ' + order.id + ' TP: ' + FormatHelper.formatPrice(order.tp)
-                    }
-                });
-            }
-        }
-        return result;
-    }, [orders]);
-
     const priceAnnotation = useMemo(() => {
         return {
-            y: currentPrice,
+            y: state.currentPrice,
             borderColor: '#fff',
             strokeDashArray: 1,
             label: {
@@ -97,10 +32,10 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, 
                     color: textColor,
                     background: 'transparent'
                 },
-                text: FormatHelper.formatPrice(currentPrice)
+                text: FormatHelper.formatPrice(state.currentPrice)
             }
         };
-    }, [currentPrice]);
+    }, [state.currentPrice]);
 
     const yRange = useMemo(() => {
         let prices = [];
@@ -110,7 +45,7 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, 
                 prices.push(price);
             }
         }
-        getVisibleOrders().forEach((order) => {
+        orders.forEach((order) => {
             addPrice(order.price);
             addPrice(order.sl);
             addPrice(order.tp);

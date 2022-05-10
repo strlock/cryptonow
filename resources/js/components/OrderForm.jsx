@@ -5,8 +5,8 @@ import {
     ORDER_DIRECTION_BUY,
     ORDER_DIRECTION_SELL,
 } from "../constants";
-import currentPriceContext from "../contexts/CurrentPriceContext";
 import $ from "jquery";
+import {stateContext} from "./StateProvider";
 
 const OrderForm = (props) => {
     const [market, setMarket] = useState(false);
@@ -15,8 +15,7 @@ const OrderForm = (props) => {
     const [slPercent, setSlPercent] = useState(0);
     const [tpPercent, setTpPercent] = useState(0);
     const [direction, setDirection] = useState(ORDER_DIRECTION_BUY);
-
-    let currentPrice = useContext(currentPriceContext);
+    const [state, actions] = useContext(stateContext)
 
     const totalRef = useRef();
     const amountRef = useRef();
@@ -167,7 +166,7 @@ const OrderForm = (props) => {
                             </div>
                             <div className="input-group input-group-sm mb-4">
                                 <label htmlFor="price" className="input-group-text w-25 bg-dark text-white">Price</label>
-                                <input type="text" name="price" id="price" defaultValue={market ? currentPrice : ''} className="form-control bg-dark text-white" disabled={market} ref={priceRef} onChange={() => onPriceChange()} />
+                                <input type="text" name="price" id="price" defaultValue={market ? state.currentPrice : ''} className="form-control bg-dark text-white" disabled={market} ref={priceRef} onChange={() => onPriceChange()} />
                             </div>
                             <div className="input-group input-group-sm mb-4">
                                 <label htmlFor="volume" className="input-group-text w-25 bg-dark text-white">Amount</label>

@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Dto\CreateNewOrderDto;
 use App\Enums\OrderDirection;
+use App\Enums\OrderState;
 use App\Http\Resources\OrdersResource;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Repositories\OrdersRepository;
 use App\Services\OrdersService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
 
@@ -20,11 +22,26 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(OrdersRepository $ordersRepository)
+    public function index(OrdersRepository $ordersRepository, Request $request)
     {
         try {
             $user = Auth::user();
-            $orders = $ordersRepository->getUserOrders($user);
+            $history = (bool)$request->get('history', 0);
+            if ($history) {
+                $states = [
+                    OrderState::CANCELED(),
+                    OrderState::FAILED(),
+                    OrderState::COMPLETED(),
+                    OrderState::PROFIT(),
+                    OrderState::LOSS(),
+                ];
+            } else {
+                $states = [
+                    OrderState::NEW(),
+                    OrderState::READY(),
+                ];
+            }
+            $orders = $ordersRepository->getUserOrders($user, $states);
             return OrdersResource::collection($orders);
         } catch (Throwable $e) {
             return response()->json(['error' => $e->getMessage()]);

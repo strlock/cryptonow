@@ -2,9 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug">
+      <change afterPath="$PROJECT_DIR$/resources/js/components/OrdersList.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/OrdersListTable.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/js/components/StateProvider.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/OrdersRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/OrdersRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/CurrentPrice.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CurrentPrice.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/OrderForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrderForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/PriceChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/PriceChart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/UserSettingsModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UserSettingsModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/contexts/CurrentPriceContext.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/contexts/OrdersContext.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/contexts/UserContext.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,11 +242,11 @@
       <recent name="E:\coding\OpenServer\domains\crypto\config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\coding\OpenServer\domains\crypto\resources\js\components" />
       <recent name="E:\coding\OpenServer\domains\crypto\app" />
       <recent name="E:\coding\OpenServer\domains\crypto\app\Services\Strategy" />
       <recent name="E:\coding\OpenServer\domains\crypto\app\Services\Strategy\MarketDelta" />
       <recent name="E:\coding\OpenServer\domains\crypto\app\Services" />
-      <recent name="E:\coding\OpenServer\domains\crypto\resources\js\Helpers" />
     </key>
   </component>
   <component name="RunManager" selected="PHP Script.artisan">
@@ -301,14 +316,8 @@
       <workItem from="1652105426320" duration="7487000" />
       <workItem from="1652117179412" duration="192000" />
       <workItem from="1652117674746" duration="3959000" />
-      <workItem from="1652158933360" duration="3852000" />
-    </task>
-    <task id="LOCAL-00025" summary="Improving">
-      <created>1650962271442</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1650962271442</updated>
+      <workItem from="1652158933360" duration="12107000" />
+      <workItem from="1652185052023" duration="13446000" />
     </task>
     <task id="LOCAL-00026" summary="Improving">
       <created>1650962318200</created>
@@ -646,7 +655,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652163917532</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="Fixing bug">
+      <created>1652165998071</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1652165998071</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

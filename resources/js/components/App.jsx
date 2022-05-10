@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useMemo} from "react";
+import React, {useState, useEffect, useRef, useMemo, useReducer, useContext} from "react";
 import ReactDOM from 'react-dom';
 import MarketDeltaChart from './MarketDeltaChart';
 import PriceChart from './PriceChart';
@@ -11,21 +11,17 @@ import LoginForm from "./LoginForm";
 import LoginHelper from "../Helpers/LoginHelper";
 import OrdersList from "./OrdersList";
 import {
-    REFRESH_INTERVAL,
     POPUP_TIMEOUT,
-    StrategySignals,
     ORDERS_REFRESH_INTERVAL,
+    ORDER_DIRECTION_BUY,
 } from '../constants';
 import IntervalSelector from "./IntervalSelector";
 import FormatHelper from "../Helpers/FormatHelper";
 import UserSettingsModal from "./UserSettingsModal";
-import currentPriceContext from "../contexts/CurrentPriceContext";
-import ordersContext from "../contexts/OrdersContext";
 import RequestHelper from "../Helpers/RequestHelper";
-import CurrentPrice from "./CurrentPrice";
 import TimeIntervals from "../TimeIntervals";
 import Loading from "./Loading";
-import userContext from "../contexts/UserContext";
+import StateProvider, {stateContext} from "./StateProvider";
 
 const App = () => {
     const updateInterval = 15000;
@@ -41,12 +37,10 @@ const App = () => {
     const chartsLinesColor = '#635E98';
     let popupTimeout = null;
 
-    const [user, setUser] = useState(null);
     const [interval, setChartsInterval] = useState(TimeIntervals.FIVE_MINUTES);
-    const [currentPrice, setCurrentPrice] = useState(0.0);
     const [popup, setPopup] = useState(popupDefault);
-    const [orders, setOrders] = useState([]);
     const [mdClusters, setMdClusters] = useState([]);
+    const [state, actions] = useContext(stateContext)
 
     const priceChartRef = useRef();
     const mdChartRef = useRef();
@@ -55,18 +49,16 @@ const App = () => {
     useEffect(() => {
         RequestHelper.setExpiredTokenCallback(() => {
             LoginHelper.clearAccessToken();
-            setUser(false);
+            actions.setUser(false);
         })
         RequestHelper.fetch('/api/user', {}, response => {
             if (response.data !== undefined) {
-                setUser(response.data);
+                actions.setUser(response.data);
             } else {
-                setUser(false);
+                actions.setUser(false);
             }
         });
     }, []);
-
-    // Initialized
 
     FormatHelper.setFromSign('₿');
     FormatHelper.setToSign('$');
@@ -80,17 +72,9 @@ const App = () => {
 
     useEffect(() => {
         new BinanceWebsocketClient(function(price) {
-            setCurrentPrice(1.0*price);
+            actions.setCurrentPrice(1.0*price);
         }, 'BTCBUSD');
     }, []);
-
-    const refreshOrders = () => {
-        RequestHelper.fetch('/api/orders', {}, response => {
-            if (response.data !== undefined) {
-                setOrders(response.data);
-            }
-        });
-    }
 
     const showPopup = (message, type, title) => {
         setPopup({
@@ -110,7 +94,7 @@ const App = () => {
     }
 
     const onLoginSuccess = (user) => {
-        setUser(user);
+        actions.setUser(user);
     }
 
     const onLoginFail = (message) => {
@@ -121,7 +105,7 @@ const App = () => {
         RequestHelper.fetch('/api/logout', {method: 'POST'}, response => {
             if (response.success) {
                 LoginHelper.clearAccessToken();
-                setUser(false);
+                actions.setUser(false);
             }
         });
     }
@@ -130,7 +114,7 @@ const App = () => {
         RequestHelper.fetch('/api/mdclusters/BTCUSD/' + interval, {}, response => {
             setMdClusters(response.data);
         });
-    }, [interval, user]);
+    }, [interval, state.user]);
 
     const mdClustersAnnotations = useMemo(() => {
         const annotations = [];
@@ -179,15 +163,72 @@ const App = () => {
         };
     }
 
-    const annotations = [...mdClustersAnnotations, getToTimeAnnotation()];
+    const yAnnotations = useMemo(() => {
+        const result = [];
+        const buyColor = '#00E396';
+        const sellColor = '#E30096';
+        for(let i in state.orders) {
+            const order = state.orders[i];
+            result.push({
+                y: order.price,
+                borderColor: order.direction === ORDER_DIRECTION_BUY ? buyColor : sellColor,
+                strokeDashArray: 0,
+                label: {
+                    borderColor: chartsLinesColor,
+                    style: {
+                        color: chartsTextColor,
+                        background: 'transparent'
+                    },
+                    text: 'Order ' + order.id + ': ' + FormatHelper.formatPrice(order.price)
+                }
+            });
+            if (order.sl) {
+                result.push({
+                    y: order.sl,
+                    borderColor: order.direction === ORDER_DIRECTION_BUY ? buyColor : sellColor,
+                    strokeDashArray: 5,
+                    label: {
+                        borderColor: chartsLinesColor,
+                        style: {
+                            color: chartsTextColor,
+                            background: 'transparent'
+                        },
+                        text: 'Order ' + order.id + ' SL: ' + FormatHelper.formatPrice(order.sl)
+                    }
+                });
+            }
+            if (order.tp) {
+                result.push({
+                    y: order.tp,
+                    borderColor: order.direction === ORDER_DIRECTION_BUY ? buyColor : sellColor,
+                    strokeDashArray: 5,
+                    label: {
+                        borderColor: chartsLinesColor,
+                        style: {
+                            color: chartsTextColor,
+                            background: 'transparent'
+                        },
+                        text: 'Order ' + order.id + ' TP: ' + FormatHelper.formatPrice(order.tp)
+                    }
+                });
+            }
+        }
+        return result;
+    }, [state.orders]);
 
     useEffect(() => {
-        refreshOrders();
-        setInterval(() => {
-            refreshOrders();
-        }, ORDERS_REFRESH_INTERVAL);
-    }, []);
+        RequestHelper.fetch('/api/orders?page=' + state.ordersPage, {}, response => {
+            actions.setOrders(response.data, response.meta.current_page, response.meta.last_page);
+        });
+    }, [state.ordersPage, state.ordersPagesTotal]);
 
+    useEffect(() => {
+        RequestHelper.fetch('/api/orders?history=1&page=' + state.ordersHistoryPage, {}, response => {
+            actions.setOrdersHistory(response.data, response.meta.current_page, response.meta.last_page);
+        });
+    }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal]);
+
+    const annotations = [...mdClustersAnnotations, getToTimeAnnotation()];
     const popupDom = <Alert variant={popup.type} onClose={() => hidePopup()} dismissible>
                          <Alert.Heading>{popup.title}</Alert.Heading>
                          <p>{popup.message}</p>
@@ -195,12 +236,11 @@ const App = () => {
     let loginButton = '';
     let content = '';
     let settingsButton = '';
-    if (user !== null) {
-        if (user !== false) {
-            loginButton = <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>{user.name}&nbsp;<i className="fa fa-arrow-right"></i></button>;
+    if (state.user !== null) {
+        if (state.user !== false) {
+            loginButton = <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>{state.user.name}&nbsp;<i className="fa fa-arrow-right"></i></button>;
             settingsButton = <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#userSettingsModal"><i className="fa fa-gear"></i></button>;
-            content = <userContext.Provider value={[user, setUser]}>
-                <div className="container">
+            content = <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-xl-12">
                             {popup.show ? popupDom : ''}
@@ -212,40 +252,57 @@ const App = () => {
                                 </div>
                                 <div className="card-body pt-0">
                                     <div className="chart">
-                                        <currentPriceContext.Provider value={currentPrice}>
-                                            <ordersContext.Provider value={orders}>
-                                                <PriceChart fromTime={fromTime} toTime={toTime} interval={interval} height={priceHeight} currentPrice={currentPrice} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={priceChartRef} xAnnotations={annotations} />
-                                            </ordersContext.Provider>
-                                        </currentPriceContext.Provider>
-                                        <MarketDeltaChart fromTime={fromTime} toTime={toTime} interval={interval} height={mdHeight} updateInterval={updateInterval} textColor={chartsTextColor} linesColor={chartsLinesColor} innerRef={mdChartRef} xAnnotations={annotations} />
+                                        <PriceChart
+                                            fromTime={fromTime}
+                                            toTime={toTime}
+                                            interval={interval}
+                                            height={priceHeight}
+                                            textColor={chartsTextColor}
+                                            linesColor={chartsLinesColor}
+                                            innerRef={priceChartRef}
+                                            xAnnotations={annotations}
+                                            yAnnotations={yAnnotations}
+                                            orders={state.orders} />
+                                        <MarketDeltaChart
+                                            fromTime={fromTime}
+                                            toTime={toTime}
+                                            interval={interval}
+                                            height={mdHeight}
+                                            updateInterval={updateInterval}
+                                            textColor={chartsTextColor}
+                                            linesColor={chartsLinesColor}
+                                            innerRef={mdChartRef}
+                                            xAnnotations={annotations} />
                                     </div>
                                 </div>
                             </div>
                             <br/>
                             <div className="card">
                                 <div className="card-body">
-                                    <ordersContext.Provider value={orders}>
-                                        <OrdersList innerRef={ordersListRef} />
-                                    </ordersContext.Provider>
+                                    <OrdersList
+                                        innerRef={ordersListRef}
+                                        orders={state.orders}
+                                        ordersHistory={state.ordersHistory}
+                                        ordersPage={state.ordersPage}
+                                        ordersHistoryPage={state.ordersHistoryPage}
+                                        ordersPagesTotal={state.ordersPagesTotal}
+                                        ordersHistoryPagesTotal={state.ordersHistoryPagesTotal}
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <UserSettingsModal showPopup={showPopup} />
-                    <currentPriceContext.Provider value={currentPrice}>
-                        <OrderForm currentPrice={currentPrice} showPopup={showPopup} ordersList={ordersListRef.current} />
-                    </currentPriceContext.Provider>
+                    <OrderForm showPopup={showPopup} ordersList={ordersListRef.current} />
                 </div>
-            </userContext.Provider>
         } else {
             loginButton = <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginForm">Login</button>;
             content = <LoginForm onSuccess={onLoginSuccess} onFail={onLoginFail} />
         }
     }
     return (
-        user !== null ?
+        state.user !== null ?
             <div id="page">
-                {/*<span style={{color: '#fff'}}>{(new Date(fromTime)).toLocaleString()} - {(new Date(toTime)).toLocaleString()}</span>*/}
                 <div id="top">
                     <div className="top-left">
                         <a href="/" className="logo-link">
@@ -261,10 +318,15 @@ const App = () => {
                     {content}
                 </div>
             </div>
-        : <Loading />
+            : <Loading />
     );
 }
 
 if (document.getElementById('app')) {
-    ReactDOM.render(<App/>, document.getElementById('app'));
+    ReactDOM.render(
+        <StateProvider>
+            <App/>
+        </StateProvider>,
+        document.getElementById('app')
+    );
 }

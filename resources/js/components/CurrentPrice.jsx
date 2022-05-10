@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react';
 import FormatHelper from "../Helpers/FormatHelper";
-import currentPriceContext from "../contexts/CurrentPriceContext";
+import {stateContext} from "./StateProvider";
 
 const CurrentPrice = () => {
-    let currentPrice = useContext(currentPriceContext);
+    const [state, actions] = useContext(stateContext);
     return (
-        <span>{currentPrice !== 0.0 ? ': ' + FormatHelper.formatPrice(currentPrice) : ''}</span>
+        <span>{state.currentPrice !== 0.0 ? ': ' + FormatHelper.formatPrice(state.currentPrice) : ''}</span>
     );
 };
 
