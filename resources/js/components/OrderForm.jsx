@@ -8,7 +8,7 @@ import {
 import $ from "jquery";
 import {stateContext} from "./StateProvider";
 
-const OrderForm = (props) => {
+const OrderForm = ({showPopup}) => {
     const [market, setMarket] = useState(false);
     const [sl, setSl] = useState(0);
     const [tp, setTp] = useState(0);
@@ -85,10 +85,11 @@ const OrderForm = (props) => {
             clearForm();
             closeModal();
             if (response.error !== undefined) {
-                props.showPopup(response.error, 'danger');
+                showPopup(response.error, 'danger');
                 console.log(response.error);
+            } else {
+                actions.setChangedOrderId(response.id);
             }
-            props.ordersList.refresh();
         });
     }
 

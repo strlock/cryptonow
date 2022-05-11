@@ -1,4 +1,5 @@
 import React, {useReducer} from "react";
+import TimeIntervals from "../TimeIntervals";
 
 export const stateContext = React.createContext()
 
@@ -7,10 +8,19 @@ const initialState = {
     ordersPage: 1,
     ordersPagesTotal: 1,
     ordersHistory: [],
+    changedOrderId: 0,
     ordersHistoryPage: 1,
     ordersHistoryPagesTotal: 1,
     user: null,
     currentPrice: 0.0,
+    interval: TimeIntervals.FIVE_MINUTES,
+    mdClusters: [],
+    popup: {
+        show: false,
+        type: 'success',
+        message: '',
+        title: '',
+    },
 }
 
 const stateReducer = (state, action) => {
@@ -41,8 +51,26 @@ const stateReducer = (state, action) => {
             }}
         case 'setCurrentPrice':
             return {...state, ...{
-                currentPrice: action.currentPrice
+                currentPrice: action.price
             }}
+        case 'setChangedOrderId':
+            return {...state, ...{
+                changedOrderId: action.id
+            }}
+        case 'setInterval':
+            return {...state, ...{
+                interval: action.interval
+            }}
+        case 'setMdClusters':
+            return {...state, ...{
+                mdClusters: action.mdClusters
+            }}
+        case 'setPopup':
+            return {...state, ...{
+                popup: action.popup
+            }}
+        case 'resetPopup':
+            return {...state, ...initialState.popup}
         default:
             return state;
     }
@@ -75,9 +103,28 @@ function StateProvider({children}) {
             type: 'setUser',
             user: user,
         }),
-        setCurrentPrice: (currentPrice) => dispatch({
+        setCurrentPrice: (price) => dispatch({
             type: 'setCurrentPrice',
-            currentPrice: currentPrice,
+            price: price,
+        }),
+        setChangedOrderId: (id) => dispatch({
+            type: 'setChangedOrderId',
+            id: id,
+        }),
+        setInterval: (interval) => dispatch({
+            type: 'setInterval',
+            interval: interval,
+        }),
+        setMdClusters: (mdClusters) => dispatch({
+            type: 'setMdClusters',
+            mdClusters: mdClusters,
+        }),
+        setPopup: (popup) => dispatch({
+            type: 'setPopup',
+            popup: popup,
+        }),
+        resetPopup: () => dispatch({
+            type: 'resetPopup',
         }),
     }
     return (

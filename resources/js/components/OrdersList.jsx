@@ -1,6 +1,8 @@
 import React, {useContext} from "react";
 import OrdersListTable from "./OrdersListTable";
 import {stateContext} from "./StateProvider";
+import $ from "jquery";
+import RequestHelper from "../Helpers/RequestHelper";
 
 const OrdersList = () => {
     const [state, actions] = useContext(stateContext);
@@ -11,6 +13,16 @@ const OrdersList = () => {
 
     const onHistoryPageSelected = (page) => {
         actions.setOrdersHistoryPage(page);
+    }
+
+    const onDeleteClick = (order) => {
+        const $button = $('#order-delete-button-' + order.id);
+        $button.addClass('spinner-border');
+        RequestHelper.fetch('/api/orders/' + order.id, {
+            method: 'DELETE',
+        }, () => {
+            actions.setChangedOrderId(order.id);
+        });
     }
 
     return (
@@ -24,10 +36,10 @@ const OrdersList = () => {
             </nav>
             <div className="tab-content" id="ordersListTabContent">
                 <div className={"tab-pane fade active show"} id={"nav-orders"} role="tabpanel">
-                    <OrdersListTable orders={state.orders} page={state.ordersPage} pagesTotal={state.ordersPagesTotal} showDeleteButton={true} onPageSelected={page => onActivePageSelected(page)} />
+                    <OrdersListTable orders={state.orders} page={state.ordersPage} pagesTotal={state.ordersPagesTotal} onDeleteClick={order => onDeleteClick(order)} onPageSelected={page => onActivePageSelected(page)} />
                 </div>
                 <div className={"tab-pane fade"} id={"nav-history"} role="tabpanel">
-                    <OrdersListTable orders={state.ordersHistory} page={state.ordersHistoryPage} pagesTotal={state.ordersHistoryPagesTotal} showDeleteButton={false} onPageSelected={page => onHistoryPageSelected(page)} />
+                    <OrdersListTable orders={state.ordersHistory} page={state.ordersHistoryPage} pagesTotal={state.ordersHistoryPagesTotal} onPageSelected={page => onHistoryPageSelected(page)} />
                 </div>
             </div>
         </div>

@@ -12,35 +12,24 @@ import LoginHelper from "../Helpers/LoginHelper";
 import OrdersList from "./OrdersList";
 import {
     POPUP_TIMEOUT,
-    ORDERS_REFRESH_INTERVAL,
     ORDER_DIRECTION_BUY,
 } from '../constants';
 import IntervalSelector from "./IntervalSelector";
 import FormatHelper from "../Helpers/FormatHelper";
 import UserSettingsModal from "./UserSettingsModal";
 import RequestHelper from "../Helpers/RequestHelper";
-import TimeIntervals from "../TimeIntervals";
 import Loading from "./Loading";
 import StateProvider, {stateContext} from "./StateProvider";
 
 const App = () => {
+    const [state, actions] = useContext(stateContext)
+
     const updateInterval = 15000;
     const priceHeight = 400;
     const mdHeight = 250;
-    const popupDefault = {
-        show: false,
-        type: 'success',
-        message: '',
-        title: '',
-    };
     const chartsTextColor = '#A39ED8';
     const chartsLinesColor = '#635E98';
     let popupTimeout = null;
-
-    const [interval, setChartsInterval] = useState(TimeIntervals.FIVE_MINUTES);
-    const [popup, setPopup] = useState(popupDefault);
-    const [mdClusters, setMdClusters] = useState([]);
-    const [state, actions] = useContext(stateContext)
 
     const priceChartRef = useRef();
     const mdChartRef = useRef();
@@ -63,12 +52,12 @@ const App = () => {
     FormatHelper.setFromSign('₿');
     FormatHelper.setToSign('$');
 
-    let daysForInterval = TimeHelper.daysForInterval(interval)
+    let daysForInterval = TimeHelper.daysForInterval(state.interval)
     if (daysForInterval > 10) {
         daysForInterval = 10;
     }
-    let fromTime = TimeHelper.round((TimeHelper.subDaysFromDate(new Date(), daysForInterval)).getTime(), interval);
-    let toTime = TimeHelper.round((new Date()).getTime(), interval);
+    let fromTime = TimeHelper.round((TimeHelper.subDaysFromDate(new Date(), daysForInterval)).getTime(), state.interval);
+    let toTime = TimeHelper.round((new Date()).getTime(), state.interval);
 
     useEffect(() => {
         new BinanceWebsocketClient(function(price) {
@@ -77,7 +66,7 @@ const App = () => {
     }, []);
 
     const showPopup = (message, type, title) => {
-        setPopup({
+        actions.setPopup({
             show: true,
             type: type,
             message: message,
@@ -85,12 +74,12 @@ const App = () => {
         });
         clearTimeout(popupTimeout);
         popupTimeout = setTimeout(function() {
-            setPopup(popupDefault);
+            actions.resetPopup();
         }, POPUP_TIMEOUT);
     }
 
     const hidePopup = () => {
-        setPopup(popupDefault);
+        actions.resetPopup();
     }
 
     const onLoginSuccess = (user) => {
@@ -111,23 +100,23 @@ const App = () => {
     }
 
     useEffect(() => {
-        RequestHelper.fetch('/api/mdclusters/BTCUSD/' + interval, {}, response => {
-            setMdClusters(response.data);
+        RequestHelper.fetch('/api/mdclusters/BTCUSD/' + state.interval, {}, response => {
+            actions.setMdClusters(response.data);
         });
-    }, [interval, state.user]);
+    }, [state.interval, state.user]);
 
     const mdClustersAnnotations = useMemo(() => {
         const annotations = [];
-        if (mdClusters === undefined || mdClusters.length === 0) {
+        if (state.mdClusters === undefined || state.mdClusters.length === 0) {
             return [];
         }
-        mdClusters.forEach((mdCluster, i) => {
+        state.mdClusters.forEach((mdCluster, i) => {
             const borderColor = i !== 0 ? chartsLinesColor : '#00ff00';
             const relativePriceDiffPercent = 100*(mdCluster.toPrice-mdCluster.fromPrice)/mdCluster.fromPrice;
             const opacity = i === 0 ? 0.7 : 0.3;
             annotations.push({
-                x: Math.round(mdCluster.fromTime - interval / 2),
-                x2: Math.round(mdCluster.toTime - interval / 2),
+                x: Math.round(mdCluster.fromTime - state.interval / 2),
+                x2: Math.round(mdCluster.toTime - state.interval / 2),
                 strokeDashArray: 0,
                 borderColor: borderColor,
                 fillColor: '#244B4B',
@@ -144,11 +133,11 @@ const App = () => {
             });
         });
         return annotations;
-    }, [mdClusters]);
+    }, [state.mdClusters]);
 
     const getToTimeAnnotation = () => {
         return {
-            x: Math.round(toTime - interval / 2),
+            x: Math.round(toTime - state.interval / 2),
             x2: null,
             strokeDashArray: 0,
             borderColor: '#00ff00',
@@ -220,18 +209,18 @@ const App = () => {
         RequestHelper.fetch('/api/orders?page=' + state.ordersPage, {}, response => {
             actions.setOrders(response.data, response.meta.current_page, response.meta.last_page);
         });
-    }, [state.ordersPage, state.ordersPagesTotal]);
+    }, [state.ordersPage, state.ordersPagesTotal, state.changedOrderId]);
 
     useEffect(() => {
         RequestHelper.fetch('/api/orders?history=1&page=' + state.ordersHistoryPage, {}, response => {
             actions.setOrdersHistory(response.data, response.meta.current_page, response.meta.last_page);
         });
-    }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal]);
+    }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.changedOrderId]);
 
     const annotations = [...mdClustersAnnotations, getToTimeAnnotation()];
-    const popupDom = <Alert variant={popup.type} onClose={() => hidePopup()} dismissible>
-                         <Alert.Heading>{popup.title}</Alert.Heading>
-                         <p>{popup.message}</p>
+    const popupDom = <Alert variant={state.popup.type} onClose={() => hidePopup()} dismissible>
+                         <Alert.Heading>{state.popup.title}</Alert.Heading>
+                         <p>{state.popup.message}</p>
                      </Alert>;
     let loginButton = '';
     let content = '';
@@ -243,19 +232,18 @@ const App = () => {
             content = <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-xl-12">
-                            {popup.show ? popupDom : ''}
+                            {state.popup.show ? popupDom : ''}
                         </div>
                         <div className="col-xl-12">
                             <div className="card">
                                 <div className={"card-header"}>
-                                    <IntervalSelector chartsInterval={interval} setChartsInterval={setChartsInterval} />
+                                    <IntervalSelector />
                                 </div>
                                 <div className="card-body pt-0">
                                     <div className="chart">
                                         <PriceChart
                                             fromTime={fromTime}
                                             toTime={toTime}
-                                            interval={interval}
                                             height={priceHeight}
                                             textColor={chartsTextColor}
                                             linesColor={chartsLinesColor}
@@ -266,7 +254,6 @@ const App = () => {
                                         <MarketDeltaChart
                                             fromTime={fromTime}
                                             toTime={toTime}
-                                            interval={interval}
                                             height={mdHeight}
                                             updateInterval={updateInterval}
                                             textColor={chartsTextColor}
@@ -293,7 +280,7 @@ const App = () => {
                         </div>
                     </div>
                     <UserSettingsModal showPopup={showPopup} />
-                    <OrderForm showPopup={showPopup} ordersList={ordersListRef.current} />
+                    <OrderForm showPopup={showPopup} />
                 </div>
         } else {
             loginButton = <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginForm">Login</button>;

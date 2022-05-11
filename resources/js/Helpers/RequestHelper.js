@@ -8,6 +8,9 @@ class RequestHelper
 
     static fetch(url, options, success, failed)
     {
+        if (options === undefined) {
+            options = {}
+        }
         const accessToken = LoginHelper.getAccessToken();
         if (accessToken) {
             options.headers = {
@@ -21,7 +24,7 @@ class RequestHelper
                 }
                 return;
             }
-            if (success) {
+            if (success !== undefined) {
                 success.call(this, response);
             }
         }).catch(function (error) {
@@ -31,8 +34,24 @@ class RequestHelper
         });
     }
 
-    static syncFetch(url, options) {
-        return syncFetch(url, options).json();
+    static async syncFetch(url, options) {
+        if (options === undefined) {
+            options = {}
+        }
+        const accessToken = LoginHelper.getAccessToken();
+        if (accessToken) {
+            options.headers = {
+                'Authorization': 'Bearer ' + accessToken,
+            };
+        }
+        const _response = await fetch(url, options);
+        const response = await _response.json();
+        if (response.status !== undefined && response.status === 'Token is Expired') {
+            if (RequestHelper.expiredTokenCallback !== null) {
+                RequestHelper.expiredTokenCallback();
+            }
+        }
+        return response;
     }
 
     static setExpiredTokenCallback (callback)

@@ -1,12 +1,13 @@
 import React, {useState, useEffect, useMemo, useContext} from 'react';
 import ReactApexChart from 'react-apexcharts';
 import RequestHelper from "../Helpers/RequestHelper";
-import {StrategySignals} from "../constants";
+import {stateContext} from "./StateProvider";
 
 let chartContext = null
 
-const MarketDeltaChart = ({fromTime, toTime, interval, linesColor, textColor, height, xAnnotations}) => {
+const MarketDeltaChart = ({fromTime, toTime, linesColor, textColor, height, xAnnotations}) => {
     const [seriesData, setSeriesData] = useState([]);
+    const [state, actions] = useContext(stateContext)
 
     const options = {
         chart: {
@@ -129,10 +130,10 @@ const MarketDeltaChart = ({fromTime, toTime, interval, linesColor, textColor, he
     };
 
     useEffect(() => {
-        RequestHelper.fetch('/api/marketDelta/BTCUSD/' + fromTime + '/' + toTime + '/' + interval, {}, response => {
+        RequestHelper.fetch('/api/marketDelta/BTCUSD/' + fromTime + '/' + toTime + '/' + state.interval, {}, response => {
             setSeriesData(response.data);
         }, error => console.log(error));
-    }, [fromTime, toTime, interval]);
+    }, [fromTime, toTime, state.interval]);
 
     const series = [{
         name: 'Market Statistics',

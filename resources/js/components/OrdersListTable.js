@@ -6,18 +6,7 @@ import $ from "jquery";
 import RequestHelper from "../Helpers/RequestHelper";
 import styles from "./OrdersList.module.scss";
 
-function OrdersListTable({orders, page, pagesTotal, showDeleteButton, onPageSelected}) {
-
-    const onDeleteClick = (order) => {
-        const $button = $('#order-delete-button-' + order.id);
-        $button.addClass('spinner-border');
-        RequestHelper.fetch('/api/orders/' + order.id, {
-            method: 'DELETE',
-        }, () => {
-            refresh();
-        });
-    }
-
+function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClick}) {
     const table = <table className="table">
         <thead>
         <tr>
@@ -42,7 +31,7 @@ function OrdersListTable({orders, page, pagesTotal, showDeleteButton, onPageSele
                     <td className={"text-center order-state"}>{ORDER_STATE_TITLES[order.state]}</td>
                     <td className={"text-center order-symbol"}>{order.id}</td>
                     <td className={"text-end order-actions"}>
-                        {showDeleteButton
+                        {onDeleteClick !== undefined
                             ? <button className="btn btn-danger btn-delete btn-sm" id={'order-delete-button-' + order.id} onClick={() => onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"> </i></button>
                             : ''
                         }
@@ -51,11 +40,11 @@ function OrdersListTable({orders, page, pagesTotal, showDeleteButton, onPageSele
             );
         })}
         </tbody>
-        <tfoot>
-            <tr>
-                <td colSpan={7}>
-                    <div className={styles.paginationContainer}>
-                        {pagesTotal > 1 ? (
+        {pagesTotal > 1 ? (
+            <tfoot>
+                <tr>
+                    <td colSpan={7}>
+                        <div className={styles.paginationContainer}>
                             <ReactPaginate
                                 onPageChange={event => onPageSelected(event.selected + 1)}
                                 pageRangeDisplayed={pagesTotal}
@@ -69,11 +58,11 @@ function OrdersListTable({orders, page, pagesTotal, showDeleteButton, onPageSele
                                 previousLinkClassName={"page-link"}
                                 nextLinkClassName={"page-link"}
                                 activeClassName={"active"} />
-                        ) : ''}
-                    </div>
-                </td>
-            </tr>
-        </tfoot>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        ) : null}
     </table>;
     return orders.length > 0 ? table : <div className={"text-center"}>No orders</div>;
 }

@@ -286,6 +286,17 @@ h1{
     right: 0;
 }
 
+.page-item .page-link, .page-item.disabled .page-link {
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.page-item.active .page-link {
+    background-color: var(--text-color);
+    color: var(--card-bg-color);
+    border: none;
+}
+
 @media(max-width: 1500px){
     #top .top-left{
         padding: 1.25em 1.875em;
