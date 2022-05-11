@@ -88,7 +88,7 @@ const OrderForm = ({showPopup}) => {
                 showPopup(response.error, 'danger');
                 console.log(response.error);
             } else {
-                actions.setChangedOrderId(response.id);
+                actions.ordersReRender();
             }
         });
     }

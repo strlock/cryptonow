@@ -8,7 +8,7 @@ const initialState = {
     ordersPage: 1,
     ordersPagesTotal: 1,
     ordersHistory: [],
-    changedOrderId: 0,
+    ordersReRender: 0,
     ordersHistoryPage: 1,
     ordersHistoryPagesTotal: 1,
     user: null,
@@ -27,51 +27,63 @@ const stateReducer = (state, action) => {
     console.log('ACTION: ' + action.type, action);
     switch (action.type) {
         case 'setOrders' :
-            return {...state, ...{
+            return {
+                ...state,
                 orders: action.orders,
                 ordersPage: action.page,
                 ordersPagesTotal: action.pagesTotal,
-            }}
+            }
         case 'setOrdersHistory':
-            return {...state, ...{
+            return {
+                ...state,
                 ordersHistory: action.orders,
                 ordersHistoryPage: action.page,
                 ordersHistoryPagesTotal: action.pagesTotal,
-            }}
+            }
         case 'setOrdersPage':
-            return {...state, ...{
+            return {
+                ...state,
                 ordersPage: action.page
-            }}
+            }
         case 'setOrdersHistoryPage':
-            return {...state, ...{
+            return {
+                ...state,
                 ordersHistoryPage: action.page
-            }}
+            }
         case 'setUser':
-            return {...state, ...{
+            return {
+                ...state,
                 user: action.user
-            }}
+            }
         case 'setCurrentPrice':
-            return {...state, ...{
-                currentPrice: action.price
-            }}
-        case 'setChangedOrderId':
-            return {...state, ...{
-                changedOrderId: action.id
-            }}
+            return {
+                ...state,
+                currentPrice: action.price}
+        case 'ordersReRender':
+            return {
+                ...state,
+                ordersReRender: state.ordersReRender+1
+            }
         case 'setInterval':
-            return {...state, ...{
+            return {
+                ...state,
                 interval: action.interval
-            }}
+            }
         case 'setMdClusters':
-            return {...state, ...{
+            return {
+                ...state,
                 mdClusters: action.mdClusters
-            }}
+            }
         case 'setPopup':
-            return {...state, ...{
+            return {
+                ...state,
                 popup: action.popup
-            }}
+            }
         case 'resetPopup':
-            return {...state, ...initialState.popup}
+            return {
+                ...state,
+                ...initialState.popup
+            }
         default:
             return state;
     }
@@ -108,9 +120,9 @@ function StateProvider({children}) {
             type: 'setCurrentPrice',
             price: price,
         }),
-        setChangedOrderId: (id) => dispatch({
-            type: 'setChangedOrderId',
-            id: id,
+        ordersReRender: (time) => dispatch({
+            type: 'ordersReRender',
+            time: time,
         }),
         setInterval: (interval) => dispatch({
             type: 'setInterval',

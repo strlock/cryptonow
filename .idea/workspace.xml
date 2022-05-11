@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing Bugs. Refactoring">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/CurrentPrice.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/CurrentPrice/CurrentPrice.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/IntervalSelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/IntervalSelector/IntervalSelector.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/IntervalSelectorButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/IntervalSelector/IntervalSelectorButton.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Loading.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Loading/Loading.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Loading.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Loading/Loading.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/LoginForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Login/LoginForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart/MarketDeltaChart.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/MarketDeltaSeriesData.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart/MarketDeltaSeriesData.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrderForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrderForm/OrderForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersListTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Overlay.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Overlay/Overlay.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/PriceChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/PriceChart/PriceChart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/OrderForm/OrderForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrderForm/OrderForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/StateProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/StateProvider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/UserSettingsModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UserSettings/UserSettingsModal.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -321,14 +307,7 @@
       <workItem from="1652158933360" duration="12107000" />
       <workItem from="1652185052023" duration="14146000" />
       <workItem from="1652248410767" duration="6578000" />
-      <workItem from="1652267919605" duration="3838000" />
-    </task>
-    <task id="LOCAL-00028" summary="Improving">
-      <created>1650962461001</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1650962461001</updated>
+      <workItem from="1652267919605" duration="6414000" />
     </task>
     <task id="LOCAL-00029" summary="Improving">
       <created>1650962528349</created>
@@ -666,7 +645,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652255003048</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Improving">
+      <created>1652277477783</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1652277477783</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -711,7 +697,6 @@
     <MESSAGE value="Signal and signal annotations. Refactoring." />
     <MESSAGE value="Automatic orders" />
     <MESSAGE value="Refactoring BTCUSDT -&gt; BTCUSD" />
-    <MESSAGE value="Improving" />
     <MESSAGE value="Improving login. Refactoring" />
     <MESSAGE value="Improving. Fixing bug" />
     <MESSAGE value="Testmode for exchanges" />
@@ -719,7 +704,8 @@
     <MESSAGE value="Fixing bug" />
     <MESSAGE value="Common state. Pagination." />
     <MESSAGE value="Fixing Bugs. Refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing Bugs. Refactoring" />
+    <MESSAGE value="Improving" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

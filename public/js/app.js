@@ -9910,12 +9910,12 @@ var App = function App() {
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/orders?page=' + state.ordersPage, {}, function (response) {
       actions.setOrders(response.data, response.meta.current_page, response.meta.last_page);
     });
-  }, [state.ordersPage, state.ordersPagesTotal, state.changedOrderId]);
+  }, [state.ordersPage, state.ordersPagesTotal, state.ordersReRender]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/orders?history=1&page=' + state.ordersHistoryPage, {}, function (response) {
       actions.setOrdersHistory(response.data, response.meta.current_page, response.meta.last_page);
     });
-  }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.changedOrderId]);
+  }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender]);
   var annotations = [].concat(_toConsumableArray(mdClustersAnnotations), [getToTimeAnnotation()]);
 
   var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_19__["default"], {
@@ -10697,7 +10697,7 @@ var OrderForm = function OrderForm(_ref) {
         showPopup(response.error, 'danger');
         console.log(response.error);
       } else {
-        actions.setChangedOrderId(response.id);
+        actions.ordersReRender();
       }
     });
   };
@@ -11020,7 +11020,7 @@ var OrdersList = function OrdersList() {
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_4__["default"].fetch('/api/orders/' + order.id, {
       method: 'DELETE'
     }, function () {
-      actions.setChangedOrderId(order.id);
+      actions.ordersReRender();
     });
   };
 
@@ -11528,7 +11528,7 @@ var initialState = {
   ordersPage: 1,
   ordersPagesTotal: 1,
   ordersHistory: [],
-  changedOrderId: 0,
+  ordersReRender: 0,
   ordersHistoryPage: 1,
   ordersHistoryPagesTotal: 1,
   user: null,
@@ -11548,56 +11548,56 @@ var stateReducer = function stateReducer(state, action) {
 
   switch (action.type) {
     case 'setOrders':
-      return _objectSpread(_objectSpread({}, state), {
+      return _objectSpread(_objectSpread({}, state), {}, {
         orders: action.orders,
         ordersPage: action.page,
         ordersPagesTotal: action.pagesTotal
       });
 
     case 'setOrdersHistory':
-      return _objectSpread(_objectSpread({}, state), {
+      return _objectSpread(_objectSpread({}, state), {}, {
         ordersHistory: action.orders,
         ordersHistoryPage: action.page,
         ordersHistoryPagesTotal: action.pagesTotal
       });
 
     case 'setOrdersPage':
-      return _objectSpread(_objectSpread({}, state), {
+      return _objectSpread(_objectSpread({}, state), {}, {
         ordersPage: action.page
       });
 
     case 'setOrdersHistoryPage':
-      return _objectSpread(_objectSpread({}, state), {
+      return _objectSpread(_objectSpread({}, state), {}, {
         ordersHistoryPage: action.page
       });
 
     case 'setUser':
-      return _objectSpread(_objectSpread({}, state), {
+      return _objectSpread(_objectSpread({}, state), {}, {
         user: action.user
       });
 
     case 'setCurrentPrice':
-      return _objectSpread(_objectSpread({}, state), {
+      return _objectSpread(_objectSpread({}, state), {}, {
         currentPrice: action.price
       });
 
-    case 'setChangedOrderId':
-      return _objectSpread(_objectSpread({}, state), {
-        changedOrderId: action.id
+    case 'ordersReRender':
+      return _objectSpread(_objectSpread({}, state), {}, {
+        ordersReRender: state.ordersReRender + 1
       });
 
     case 'setInterval':
-      return _objectSpread(_objectSpread({}, state), {
+      return _objectSpread(_objectSpread({}, state), {}, {
         interval: action.interval
       });
 
     case 'setMdClusters':
-      return _objectSpread(_objectSpread({}, state), {
+      return _objectSpread(_objectSpread({}, state), {}, {
         mdClusters: action.mdClusters
       });
 
     case 'setPopup':
-      return _objectSpread(_objectSpread({}, state), {
+      return _objectSpread(_objectSpread({}, state), {}, {
         popup: action.popup
       });
 
@@ -11658,10 +11658,10 @@ function StateProvider(_ref) {
         price: price
       });
     },
-    setChangedOrderId: function setChangedOrderId(id) {
+    ordersReRender: function ordersReRender(time) {
       return dispatch({
-        type: 'setChangedOrderId',
-        id: id
+        type: 'ordersReRender',
+        time: time
       });
     },
     setInterval: function setInterval(interval) {

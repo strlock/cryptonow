@@ -21,7 +21,7 @@ const OrdersList = () => {
         RequestHelper.fetch('/api/orders/' + order.id, {
             method: 'DELETE',
         }, () => {
-            actions.setChangedOrderId(order.id);
+            actions.ordersReRender();
         });
     }
 

@@ -209,13 +209,13 @@ const App = () => {
         RequestHelper.fetch('/api/orders?page=' + state.ordersPage, {}, response => {
             actions.setOrders(response.data, response.meta.current_page, response.meta.last_page);
         });
-    }, [state.ordersPage, state.ordersPagesTotal, state.changedOrderId]);
+    }, [state.ordersPage, state.ordersPagesTotal, state.ordersReRender]);
 
     useEffect(() => {
         RequestHelper.fetch('/api/orders?history=1&page=' + state.ordersHistoryPage, {}, response => {
             actions.setOrdersHistory(response.data, response.meta.current_page, response.meta.last_page);
         });
-    }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.changedOrderId]);
+    }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender]);
 
     const annotations = [...mdClustersAnnotations, getToTimeAnnotation()];
     const popupDom = <Alert variant={state.popup.type} onClose={() => hidePopup()} dismissible>
