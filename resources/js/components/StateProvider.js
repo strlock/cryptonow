@@ -24,6 +24,7 @@ const initialState = {
 }
 
 const stateReducer = (state, action) => {
+    console.log('ACTION: ' + action.type, action);
     switch (action.type) {
         case 'setOrders' :
             return {...state, ...{

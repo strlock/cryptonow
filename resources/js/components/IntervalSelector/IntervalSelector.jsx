@@ -1,5 +1,5 @@
 import React from 'react';
-import TimeIntervals from "../TimeIntervals";
+import TimeIntervals from "../../TimeIntervals";
 import IntervalSelectorButton from "./IntervalSelectorButton";
 
 const IntervalSelector = () => {

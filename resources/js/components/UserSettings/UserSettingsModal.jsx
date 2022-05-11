@@ -1,7 +1,7 @@
 import React, {useRef, useContext} from 'react';
-import RequestHelper from "../Helpers/RequestHelper";
+import RequestHelper from "../../Helpers/RequestHelper";
 import $ from "jquery";
-import {stateContext} from "./StateProvider";
+import {stateContext} from "../StateProvider";
 
 function UserSettingsModal({showPopup}) {
     const binanceApiKeyRef = useRef();

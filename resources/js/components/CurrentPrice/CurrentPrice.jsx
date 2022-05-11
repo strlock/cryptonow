@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
-import FormatHelper from "../Helpers/FormatHelper";
-import {stateContext} from "./StateProvider";
+import FormatHelper from "../../Helpers/FormatHelper";
+import {stateContext} from "../StateProvider";
 
 const CurrentPrice = () => {
     const [state, actions] = useContext(stateContext);

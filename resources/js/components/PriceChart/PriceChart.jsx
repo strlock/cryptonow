@@ -1,17 +1,65 @@
-import React, {useState, useEffect, useMemo, useContext} from 'react';
+import React, {useState,useContext, useEffect, useMemo} from 'react';
 import ReactApexChart from 'react-apexcharts';
-import RequestHelper from "../Helpers/RequestHelper";
-import {stateContext} from "./StateProvider";
+import RequestHelper from "../../Helpers/RequestHelper";
+import FormatHelper from "../../Helpers/FormatHelper";
+import {stateContext} from "../StateProvider";
 
-let chartContext = null
+let chartContext = null;
 
-const MarketDeltaChart = ({fromTime, toTime, linesColor, textColor, height, xAnnotations}) => {
+const PriceChart = ({fromTime, toTime, height, textColor, linesColor, xAnnotations, yAnnotations, orders}) => {
     const [seriesData, setSeriesData] = useState([]);
-    const [state, actions] = useContext(stateContext)
+    const [state, actions] = useContext(stateContext);
+
+    useEffect(() => {
+        RequestHelper.fetch('/api/price/BTCUSD/' + fromTime + '/' + toTime + '/' + state.interval, {},
+            response => {
+                setSeriesData(response.data);
+            },
+            error => console.log(error)
+        );
+    }, [fromTime, toTime, state.interval]);
+
+    const priceAnnotation = useMemo(() => {
+        return {
+            y: state.currentPrice,
+            borderColor: '#fff',
+            strokeDashArray: 1,
+            label: {
+                borderColor: linesColor,
+                position: 'right',
+                textAnchor: 'end',
+                style: {
+                    color: textColor,
+                    background: 'transparent'
+                },
+                text: FormatHelper.formatPrice(state.currentPrice)
+            }
+        };
+    }, [state.currentPrice]);
+
+    const yRange = useMemo(() => {
+        let prices = [];
+        const addPrice = (price) => {
+            price = parseFloat(price)
+            if (!isNaN(price) && price !== 0.0 && prices.indexOf(price) === -1) {
+                prices.push(price);
+            }
+        }
+        orders.forEach((order) => {
+            addPrice(order.price);
+            addPrice(order.sl);
+            addPrice(order.tp);
+        });
+        seriesData.forEach((item) => {
+            addPrice(item.y[1]);
+            addPrice(item.y[2]);
+        });
+        return {min: Math.min(...prices), max: Math.max(...prices)};
+    }, [orders, seriesData]);
 
     const options = {
         chart: {
-            type: 'bar',
+            type: 'candlestick',
             selection: {
                 enabled: false,
             },
@@ -27,31 +75,15 @@ const MarketDeltaChart = ({fromTime, toTime, linesColor, textColor, height, xAnn
             events: {
                 mounted: function (cc, config) {
                     chartContext = cc;
-                }
-            },
-        },
-        plotOptions: {
-            bar: {
-                colors: {
-                    ranges: [{
-                        from: -999999,
-                        to: 0,
-                        color: 'rgba(239,64,60,1)'
-                    }, {
-                        from: 0,
-                        to: 999999,
-                        color: 'rgba(0,183,70,1)'
-                    }]
                 },
-                columnWidth: '80%',
-            }
+            },
         },
         dataLabels: {
             enabled: false,
         },
         yaxis: {
             title: {
-                text: 'BTC',
+                text: 'USDT',
                 align: 'center',
                 style: {
                     fontWeight: 'bold',
@@ -61,13 +93,15 @@ const MarketDeltaChart = ({fromTime, toTime, linesColor, textColor, height, xAnn
             labels: {
                 minWidth: 80,
                 formatter: function (y) {
-                    return y + ' BTC';
+                    return y + ' USDT';
                 },
                 style: {
                     colors: textColor,
                 }
             },
             forceNiceScale: true,
+            min: yRange.min,
+            max: yRange.max,
         },
         xaxis: {
             type: 'datetime',
@@ -107,7 +141,7 @@ const MarketDeltaChart = ({fromTime, toTime, linesColor, textColor, height, xAnn
         },
         theme: {
             mode: 'dark',
-            palette: 'palette1',
+            palette: 'palette2',
         },
         noData: {
             text: "Loading...",
@@ -125,24 +159,17 @@ const MarketDeltaChart = ({fromTime, toTime, linesColor, textColor, height, xAnn
             borderColor: linesColor,
         },
         annotations: {
+            position: 'front',
+            yaxis: [...yAnnotations, priceAnnotation],
             xaxis: xAnnotations,
         }
-    };
+    }
 
-    useEffect(() => {
-        RequestHelper.fetch('/api/marketDelta/BTCUSD/' + fromTime + '/' + toTime + '/' + state.interval, {}, response => {
-            setSeriesData(response.data);
-        }, error => console.log(error));
-    }, [fromTime, toTime, state.interval]);
-
-    const series = [{
-        name: 'Market Statistics',
-        data: seriesData,
-    }];
+    const series = [{name: 'Price', data: seriesData}];
 
     return (
-        <ReactApexChart options={options} series={series} type="bar" height={height} />
+        <ReactApexChart options={options} series={series} type="candlestick" height={height} />
     );
 };
 
-export default MarketDeltaChart;
+export default PriceChart;

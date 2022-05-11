@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
 
 class OrdersService implements OrdersServiceInterface
 {
@@ -265,9 +266,8 @@ class OrdersService implements OrdersServiceInterface
             if (empty($order)) {
                 continue;
             }
-            $message = $dto->getDirection()->key().' '.$dto->getSymbol().' '.$price.' '.$amount.', TP: '.$tp.', SL: '.$sl;
-            Log::info($message);
-            echo $message.PHP_EOL;
+            $message = 'New order created: '.Str::studly($dto->getDirection()->key()).' '.$amount.' '.$dto->getSymbol().'. Price: '.$price.', Take profit: '.$tp.', Stop loss: '.$sl;
+            Log::debug($message);
             Notification::route('telegram', config('telegram.botChatId'))->notify(new TelegramNotification($message));
         }
     }

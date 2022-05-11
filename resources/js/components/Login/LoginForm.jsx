@@ -1,7 +1,7 @@
 import React, {useRef, useContext} from 'react';
 import $ from "jquery";
-import RequestHelper from "../Helpers/RequestHelper";
-import LoginHelper from "../Helpers/LoginHelper";
+import RequestHelper from "../../Helpers/RequestHelper";
+import LoginHelper from "../../Helpers/LoginHelper";
 
 const LoginForm = ({onFail, onSuccess}) => {
     const emailRef = useRef();

@@ -1,9 +1,9 @@
 import React from 'react';
-import {ORDER_DIRECTION_TITLES, ORDER_STATE_TITLES} from "../constants";
-import FormatHelper from "../Helpers/FormatHelper";
+import {ORDER_DIRECTION_TITLES, ORDER_STATE_TITLES} from "../../constants";
+import FormatHelper from "../../Helpers/FormatHelper";
 import ReactPaginate from "react-paginate";
 import $ from "jquery";
-import RequestHelper from "../Helpers/RequestHelper";
+import RequestHelper from "../../Helpers/RequestHelper";
 import styles from "./OrdersList.module.scss";
 
 function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClick}) {
@@ -15,6 +15,7 @@ function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClic
             <th className={"text-center"}>Stop Loss</th>
             <th className={"text-center"}>Take Profit</th>
             <th className={"text-center"}>Status</th>
+            <th className={"text-center"}>Date</th>
             <th className={"text-center"} width={50}>ID</th>
             <th className={"text-end"} width={50}> </th>
         </tr>
@@ -29,6 +30,7 @@ function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClic
                     <td className={"text-center order-sl-tp"}>{FormatHelper.formatPrice(order.sl, true)}</td>
                     <td className={"text-center order-sl-tp"}>{FormatHelper.formatPrice(order.tp, true)}</td>
                     <td className={"text-center order-state"}>{ORDER_STATE_TITLES[order.state]}</td>
+                    <td className={"text-center order-symbol"}>{(new Date(order.created_at)).toLocaleString()}</td>
                     <td className={"text-center order-symbol"}>{order.id}</td>
                     <td className={"text-end order-actions"}>
                         {onDeleteClick !== undefined

@@ -1,24 +1,24 @@
 import React, {useState, useEffect, useRef, useMemo, useReducer, useContext} from "react";
 import ReactDOM from 'react-dom';
-import MarketDeltaChart from './MarketDeltaChart';
-import PriceChart from './PriceChart';
+import MarketDeltaChart from './MarketDeltaChart/MarketDeltaChart';
+import PriceChart from './PriceChart/PriceChart';
 import TimeHelper from "../Helpers/TimeHelper";
-import OrderForm from "./OrderForm";
+import OrderForm from "./OrderForm/OrderForm";
 import BinanceWebsocketClient from "./BinanceWebsocketClient";
 import "regenerator-runtime/runtime";
 import Alert from 'react-bootstrap/Alert';
-import LoginForm from "./LoginForm";
+import LoginForm from "./Login/LoginForm";
 import LoginHelper from "../Helpers/LoginHelper";
-import OrdersList from "./OrdersList";
+import OrdersList from "./OrdersList/OrdersList";
 import {
     POPUP_TIMEOUT,
     ORDER_DIRECTION_BUY,
 } from '../constants';
-import IntervalSelector from "./IntervalSelector";
+import IntervalSelector from "./IntervalSelector/IntervalSelector";
 import FormatHelper from "../Helpers/FormatHelper";
-import UserSettingsModal from "./UserSettingsModal";
+import UserSettingsModal from "./UserSettings/UserSettingsModal";
 import RequestHelper from "../Helpers/RequestHelper";
-import Loading from "./Loading";
+import Loading from "./Loading/Loading";
 import StateProvider, {stateContext} from "./StateProvider";
 
 const App = () => {

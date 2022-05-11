@@ -1,8 +1,8 @@
 import React, {useContext} from "react";
 import OrdersListTable from "./OrdersListTable";
-import {stateContext} from "./StateProvider";
+import {stateContext} from "../StateProvider";
 import $ from "jquery";
-import RequestHelper from "../Helpers/RequestHelper";
+import RequestHelper from "../../Helpers/RequestHelper";
 
 const OrdersList = () => {
     const [state, actions] = useContext(stateContext);

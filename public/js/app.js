@@ -9655,23 +9655,23 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var _MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MarketDeltaChart */ "./resources/js/components/MarketDeltaChart.jsx");
-/* harmony import */ var _PriceChart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PriceChart */ "./resources/js/components/PriceChart.jsx");
+/* harmony import */ var _MarketDeltaChart_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MarketDeltaChart/MarketDeltaChart */ "./resources/js/components/MarketDeltaChart/MarketDeltaChart.jsx");
+/* harmony import */ var _PriceChart_PriceChart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PriceChart/PriceChart */ "./resources/js/components/PriceChart/PriceChart.jsx");
 /* harmony import */ var _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Helpers/TimeHelper */ "./resources/js/Helpers/TimeHelper.js");
-/* harmony import */ var _OrderForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./OrderForm */ "./resources/js/components/OrderForm.jsx");
+/* harmony import */ var _OrderForm_OrderForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./OrderForm/OrderForm */ "./resources/js/components/OrderForm/OrderForm.jsx");
 /* harmony import */ var _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BinanceWebsocketClient */ "./resources/js/components/BinanceWebsocketClient.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
-/* harmony import */ var _LoginForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./LoginForm */ "./resources/js/components/LoginForm.jsx");
+/* harmony import */ var _Login_LoginForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Login/LoginForm */ "./resources/js/components/Login/LoginForm.jsx");
 /* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
-/* harmony import */ var _OrdersList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./OrdersList */ "./resources/js/components/OrdersList.jsx");
+/* harmony import */ var _OrdersList_OrdersList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./OrdersList/OrdersList */ "./resources/js/components/OrdersList/OrdersList.jsx");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
-/* harmony import */ var _IntervalSelector__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./IntervalSelector */ "./resources/js/components/IntervalSelector.jsx");
+/* harmony import */ var _IntervalSelector_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./IntervalSelector/IntervalSelector */ "./resources/js/components/IntervalSelector/IntervalSelector.jsx");
 /* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
-/* harmony import */ var _UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./UserSettingsModal */ "./resources/js/components/UserSettingsModal.jsx");
+/* harmony import */ var _UserSettings_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./UserSettings/UserSettingsModal */ "./resources/js/components/UserSettings/UserSettingsModal.jsx");
 /* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
-/* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Loading */ "./resources/js/components/Loading.jsx");
+/* harmony import */ var _Loading_Loading__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Loading/Loading */ "./resources/js/components/Loading/Loading.jsx");
 /* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./StateProvider */ "./resources/js/components/StateProvider.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -9969,12 +9969,12 @@ var App = function App() {
               className: "card",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
                 className: "card-header",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {})
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_IntervalSelector_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {})
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
                 className: "card-body pt-0",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
                   className: "chart",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_PriceChart_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
                     fromTime: fromTime,
                     toTime: toTime,
                     height: priceHeight,
@@ -9984,7 +9984,7 @@ var App = function App() {
                     xAnnotations: annotations,
                     yAnnotations: yAnnotations,
                     orders: state.orders
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_MarketDeltaChart_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
                     fromTime: fromTime,
                     toTime: toTime,
                     height: mdHeight,
@@ -10000,7 +10000,7 @@ var App = function App() {
               className: "card",
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
                 className: "card-body",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_OrdersList_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
                   innerRef: ordersListRef,
                   orders: state.orders,
                   ordersHistory: state.ordersHistory,
@@ -10012,9 +10012,9 @@ var App = function App() {
               })
             })]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_UserSettings_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {
           showPopup: showPopup
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_OrderForm_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
           showPopup: showPopup
         })]
       });
@@ -10026,7 +10026,7 @@ var App = function App() {
         "data-bs-target": "#loginForm",
         children: "Login"
       });
-      content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_Login_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
         onSuccess: onLoginSuccess,
         onFail: onLoginFail
       });
@@ -10054,7 +10054,7 @@ var App = function App() {
       id: "middle",
       children: content
     })]
-  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_Loading__WEBPACK_IMPORTED_MODULE_16__["default"], {});
+  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_Loading_Loading__WEBPACK_IMPORTED_MODULE_16__["default"], {});
 };
 
 if (document.getElementById('app')) {
@@ -10101,10 +10101,10 @@ var BinanceWebsocketClient = /*#__PURE__*/_createClass(function BinanceWebsocket
 
 /***/ }),
 
-/***/ "./resources/js/components/IntervalSelector.jsx":
-/*!******************************************************!*\
-  !*** ./resources/js/components/IntervalSelector.jsx ***!
-  \******************************************************/
+/***/ "./resources/js/components/IntervalSelector/IntervalSelector.jsx":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/IntervalSelector/IntervalSelector.jsx ***!
+  \***********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10113,8 +10113,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _TimeIntervals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../TimeIntervals */ "./resources/js/TimeIntervals.js");
-/* harmony import */ var _IntervalSelectorButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IntervalSelectorButton */ "./resources/js/components/IntervalSelectorButton.jsx");
+/* harmony import */ var _TimeIntervals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../TimeIntervals */ "./resources/js/TimeIntervals.js");
+/* harmony import */ var _IntervalSelectorButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IntervalSelectorButton */ "./resources/js/components/IntervalSelector/IntervalSelectorButton.jsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -10153,10 +10153,10 @@ var IntervalSelector = function IntervalSelector() {
 
 /***/ }),
 
-/***/ "./resources/js/components/IntervalSelectorButton.jsx":
-/*!************************************************************!*\
-  !*** ./resources/js/components/IntervalSelectorButton.jsx ***!
-  \************************************************************/
+/***/ "./resources/js/components/IntervalSelector/IntervalSelectorButton.jsx":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/IntervalSelector/IntervalSelectorButton.jsx ***!
+  \*****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10165,7 +10165,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StateProvider */ "./resources/js/components/StateProvider.js");
+/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../StateProvider */ "./resources/js/components/StateProvider.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -10205,10 +10205,10 @@ var IntervalSelectorButton = function IntervalSelectorButton(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/components/Loading.jsx":
-/*!*********************************************!*\
-  !*** ./resources/js/components/Loading.jsx ***!
-  \*********************************************/
+/***/ "./resources/js/components/Loading/Loading.jsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/Loading/Loading.jsx ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10217,7 +10217,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Loading_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Loading.module.scss */ "./resources/js/components/Loading.module.scss");
+/* harmony import */ var _Loading_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Loading.module.scss */ "./resources/js/components/Loading/Loading.module.scss");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -10235,10 +10235,10 @@ var Loading = function Loading() {
 
 /***/ }),
 
-/***/ "./resources/js/components/LoginForm.jsx":
-/*!***********************************************!*\
-  !*** ./resources/js/components/LoginForm.jsx ***!
-  \***********************************************/
+/***/ "./resources/js/components/Login/LoginForm.jsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/Login/LoginForm.jsx ***!
+  \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10249,8 +10249,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
-/* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -10351,10 +10351,10 @@ var LoginForm = function LoginForm(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/components/MarketDeltaChart.jsx":
-/*!******************************************************!*\
-  !*** ./resources/js/components/MarketDeltaChart.jsx ***!
-  \******************************************************/
+/***/ "./resources/js/components/MarketDeltaChart/MarketDeltaChart.jsx":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/MarketDeltaChart/MarketDeltaChart.jsx ***!
+  \***********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10364,8 +10364,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_apexcharts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apexcharts */ "./node_modules/react-apexcharts/dist/react-apexcharts.min.js");
-/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
-/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./StateProvider */ "./resources/js/components/StateProvider.js");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../StateProvider */ "./resources/js/components/StateProvider.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -10546,10 +10546,10 @@ var MarketDeltaChart = function MarketDeltaChart(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/components/OrderForm.jsx":
-/*!***********************************************!*\
-  !*** ./resources/js/components/OrderForm.jsx ***!
-  \***********************************************/
+/***/ "./resources/js/components/OrderForm/OrderForm.jsx":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/OrderForm/OrderForm.jsx ***!
+  \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10558,12 +10558,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
-/* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./StateProvider */ "./resources/js/components/StateProvider.js");
+/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../StateProvider */ "./resources/js/components/StateProvider.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -10962,10 +10962,10 @@ var OrderForm = function OrderForm(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/components/OrdersList.jsx":
-/*!************************************************!*\
-  !*** ./resources/js/components/OrdersList.jsx ***!
-  \************************************************/
+/***/ "./resources/js/components/OrdersList/OrdersList.jsx":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/OrdersList/OrdersList.jsx ***!
+  \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10974,11 +10974,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _OrdersListTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OrdersListTable */ "./resources/js/components/OrdersListTable.js");
-/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./StateProvider */ "./resources/js/components/StateProvider.js");
+/* harmony import */ var _OrdersListTable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OrdersListTable */ "./resources/js/components/OrdersList/OrdersListTable.js");
+/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../StateProvider */ "./resources/js/components/StateProvider.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -11098,10 +11098,10 @@ var OrdersList = function OrdersList() {
 
 /***/ }),
 
-/***/ "./resources/js/components/OrdersListTable.js":
-/*!****************************************************!*\
-  !*** ./resources/js/components/OrdersListTable.js ***!
-  \****************************************************/
+/***/ "./resources/js/components/OrdersList/OrdersListTable.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/OrdersList/OrdersListTable.js ***!
+  \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11110,14 +11110,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../constants */ "./resources/js/constants.js");
-/* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../constants */ "./resources/js/constants.js");
+/* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
 /* harmony import */ var react_paginate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-paginate */ "./node_modules/react-paginate/dist/react-paginate.js");
 /* harmony import */ var react_paginate__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_paginate__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
-/* harmony import */ var _OrdersList_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./OrdersList.module.scss */ "./resources/js/components/OrdersList.module.scss");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _OrdersList_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./OrdersList.module.scss */ "./resources/js/components/OrdersList/OrdersList.module.scss");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -11157,6 +11157,9 @@ function OrdersListTable(_ref) {
           children: "Status"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("th", {
           className: "text-center",
+          children: "Date"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("th", {
+          className: "text-center",
           width: 50,
           children: "ID"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("th", {
@@ -11185,6 +11188,9 @@ function OrdersListTable(_ref) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
             className: "text-center order-state",
             children: _constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[order.state]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
+            className: "text-center order-symbol",
+            children: new Date(order.created_at).toLocaleString()
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
             className: "text-center order-symbol",
             children: order.id
@@ -11243,10 +11249,10 @@ function OrdersListTable(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/components/PriceChart.jsx":
-/*!************************************************!*\
-  !*** ./resources/js/components/PriceChart.jsx ***!
-  \************************************************/
+/***/ "./resources/js/components/PriceChart/PriceChart.jsx":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/PriceChart/PriceChart.jsx ***!
+  \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11256,9 +11262,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_apexcharts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apexcharts */ "./node_modules/react-apexcharts/dist/react-apexcharts.min.js");
-/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
-/* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
-/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./StateProvider */ "./resources/js/components/StateProvider.js");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Helpers/FormatHelper */ "./resources/js/Helpers/FormatHelper.js");
+/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../StateProvider */ "./resources/js/components/StateProvider.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -11538,6 +11544,8 @@ var initialState = {
 };
 
 var stateReducer = function stateReducer(state, action) {
+  console.log('ACTION: ' + action.type, action);
+
   switch (action.type) {
     case 'setOrders':
       return _objectSpread(_objectSpread({}, state), {
@@ -11690,10 +11698,10 @@ function StateProvider(_ref) {
 
 /***/ }),
 
-/***/ "./resources/js/components/UserSettingsModal.jsx":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/UserSettingsModal.jsx ***!
-  \*******************************************************/
+/***/ "./resources/js/components/UserSettings/UserSettingsModal.jsx":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/UserSettings/UserSettingsModal.jsx ***!
+  \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -11702,10 +11710,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
+/* harmony import */ var _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Helpers/RequestHelper */ "./resources/js/Helpers/RequestHelper.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./StateProvider */ "./resources/js/components/StateProvider.js");
+/* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../StateProvider */ "./resources/js/components/StateProvider.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -17290,10 +17298,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/Loading.module.scss":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/Loading.module.scss ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/Loading/Loading.module.scss":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/Loading/Loading.module.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -17301,26 +17309,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
 // Imports
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".hcOzdk1CquEaQ-2AA7Gl4g\\=\\= {\n  z-index: 65534;\n  background: url(\"/images/loading.gif\") no-repeat center center #24204B;\n  background-size: 200px auto;\n  background-blend-mode: screen;\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.hcOzdk1CquEaQ-2AA7Gl4g\\=\\=:after {\n  content: \"Loading...\";\n  color: #fff;\n  font-size: 0.7rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".gr29At8c\\+mrkTx3ABBH44A\\=\\= {\n  z-index: 65534;\n  background: url(\"/images/loading.gif\") no-repeat center center #24204B;\n  background-size: 200px auto;\n  background-blend-mode: screen;\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.gr29At8c\\+mrkTx3ABBH44A\\=\\=:after {\n  content: \"Loading...\";\n  color: #fff;\n  font-size: 0.7rem;\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"loading": "hcOzdk1CquEaQ-2AA7Gl4g=="
+	"loading": "gr29At8c+mrkTx3ABBH44A=="
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/OrdersList.module.scss":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/OrdersList.module.scss ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/OrdersList/OrdersList.module.scss":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/OrdersList/OrdersList.module.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -17328,16 +17336,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
 // Imports
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".NwmKeMKZ6tAucBSbTD\\+giQ\\=\\= {\n  display: flex;\n  justify-content: center;\n  margin-top: 1rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".HCixcg2q5Ns7jLFJubNbyQ\\=\\= {\n  display: flex;\n  justify-content: center;\n  margin-top: 1rem;\n}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"paginationContainer": "NwmKeMKZ6tAucBSbTD+giQ=="
+	"paginationContainer": "HCixcg2q5Ns7jLFJubNbyQ=="
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -80622,10 +80630,10 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./resources/js/components/Loading.module.scss":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/Loading.module.scss ***!
-  \*****************************************************/
+/***/ "./resources/js/components/Loading/Loading.module.scss":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/Loading/Loading.module.scss ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -80633,9 +80641,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_Loading_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./Loading.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/Loading.module.scss");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_Loading_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./Loading.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/Loading/Loading.module.scss");
 
             
 
@@ -80652,10 +80660,10 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./resources/js/components/OrdersList.module.scss":
-/*!********************************************************!*\
-  !*** ./resources/js/components/OrdersList.module.scss ***!
-  \********************************************************/
+/***/ "./resources/js/components/OrdersList/OrdersList.module.scss":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/OrdersList/OrdersList.module.scss ***!
+  \*******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -80663,9 +80671,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_OrdersList_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./OrdersList.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/OrdersList.module.scss");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_2_node_modules_sass_loader_dist_cjs_js_ruleSet_1_rules_7_oneOf_1_use_3_OrdersList_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!../../../../node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./OrdersList.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[7].oneOf[1].use[3]!./resources/js/components/OrdersList/OrdersList.module.scss");
 
             
 

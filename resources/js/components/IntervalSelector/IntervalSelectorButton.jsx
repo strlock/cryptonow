@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {stateContext} from "./StateProvider";
+import {stateContext} from "../StateProvider";
 
 const IntervalSelectorButton = ({interval, children}) => {
     const [state, actions] = useContext(stateContext);

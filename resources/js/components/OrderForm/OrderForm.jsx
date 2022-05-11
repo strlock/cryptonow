@@ -1,12 +1,12 @@
 import React, {useState, useRef, useContext} from "react";
-import RequestHelper from "../Helpers/RequestHelper";
-import FormatHelper from "../Helpers/FormatHelper";
+import RequestHelper from "../../Helpers/RequestHelper";
+import FormatHelper from "../../Helpers/FormatHelper";
 import {
     ORDER_DIRECTION_BUY,
     ORDER_DIRECTION_SELL,
-} from "../constants";
+} from "../../constants";
 import $ from "jquery";
-import {stateContext} from "./StateProvider";
+import {stateContext} from "../StateProvider";
 
 const OrderForm = ({showPopup}) => {
     const [market, setMarket] = useState(false);
