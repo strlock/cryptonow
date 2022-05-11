@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug. Refactoring">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/login-background.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/login-background.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrderForm/OrderForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrderForm/OrderForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/BinanceWebsocketClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/BinanceWebsocketClient.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Login/LoginForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Login/LoginForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/StateProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/StateProvider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -307,14 +310,7 @@
       <workItem from="1652158933360" duration="12107000" />
       <workItem from="1652185052023" duration="14146000" />
       <workItem from="1652248410767" duration="6578000" />
-      <workItem from="1652267919605" duration="6414000" />
-    </task>
-    <task id="LOCAL-00029" summary="Improving">
-      <created>1650962528349</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1650962528349</updated>
+      <workItem from="1652267919605" duration="12946000" />
     </task>
     <task id="LOCAL-00030" summary="Improving">
       <created>1650962626634</created>
@@ -652,7 +648,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652277477783</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="Fixing bug. Refactoring">
+      <created>1652280289241</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1652280289241</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -680,7 +683,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Improving price chart" />
     <MESSAGE value="Improving market delta chart" />
     <MESSAGE value="Adding ready_price and completed_price" />
     <MESSAGE value="Set completed at when simple order completed" />
@@ -705,7 +707,8 @@
     <MESSAGE value="Common state. Pagination." />
     <MESSAGE value="Fixing Bugs. Refactoring" />
     <MESSAGE value="Improving" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
+    <MESSAGE value="Fixing bug. Refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug. Refactoring" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

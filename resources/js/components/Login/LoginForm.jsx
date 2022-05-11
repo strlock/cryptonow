@@ -29,17 +29,14 @@ const LoginForm = ({onFail, onSuccess}) => {
     }
 
     return (
-        <div className="modal bg-secondary show" id="loginForm" tabIndex="-1" aria-labelledby="loginForm" aria-hidden="true" onClick={(event) => event.stopPropagation()}>
+        <div className="modal bg-transparent show" id="loginForm" tabIndex="-1" aria-labelledby="loginForm" aria-hidden="true" onClick={(event) => event.stopPropagation()}>
             <div className="modal-dialog">
                 <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">Login</h5>
-                    </div>
-                    <div className="modal-body p-3">
+                    <div className="modal-body">
                         <div className="form-group mb-3">
                             <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email" ref={emailRef}/>
                         </div>
-                        <div className="mb-2 form-group">
+                        <div className="form-group">
                             <input type="password" name="password" className="form-control" id="exampleInputPass1" aria-describedby="passHelp" placeholder="Password" ref={passwordRef}/>
                         </div>
                     </div>

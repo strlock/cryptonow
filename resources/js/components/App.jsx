@@ -23,6 +23,7 @@ import StateProvider, {stateContext} from "./StateProvider";
 
 const App = () => {
     const [state, actions] = useContext(stateContext)
+    const isLoggedIn = state.user !== null;
 
     const updateInterval = 15000;
     const priceHeight = 400;
@@ -38,14 +39,13 @@ const App = () => {
     useEffect(() => {
         RequestHelper.setExpiredTokenCallback(() => {
             LoginHelper.clearAccessToken();
-            actions.setUser(false);
+            actions.setUser(null);
         })
         RequestHelper.fetch('/api/user', {}, response => {
             if (response.data !== undefined) {
                 actions.setUser(response.data);
-            } else {
-                actions.setUser(false);
             }
+            actions.setInitialized(true);
         });
     }, []);
 
@@ -60,10 +60,16 @@ const App = () => {
     let toTime = TimeHelper.round((new Date()).getTime(), state.interval);
 
     useEffect(() => {
-        new BinanceWebsocketClient(function(price) {
-            actions.setCurrentPrice(1.0*price);
-        }, 'BTCBUSD');
-    }, []);
+        if (isLoggedIn) {
+            actions.setWSClient(new BinanceWebsocketClient(function(price) {
+                actions.setCurrentPrice(1.0*price);
+            }, 'BTCBUSD'));
+        } else if (state.wsClient !== null) {
+            state.wsClient.close()
+            actions.setWSClient(null)
+        }
+        return null;
+    }, [isLoggedIn]);
 
     const showPopup = (message, type, title) => {
         actions.setPopup({
@@ -94,16 +100,18 @@ const App = () => {
         RequestHelper.fetch('/api/logout', {method: 'POST'}, response => {
             if (response.success) {
                 LoginHelper.clearAccessToken();
-                actions.setUser(false);
+                actions.setUser(null);
             }
         });
     }
 
     useEffect(() => {
-        RequestHelper.fetch('/api/mdclusters/BTCUSD/' + state.interval, {}, response => {
-            actions.setMdClusters(response.data);
-        });
-    }, [state.interval, state.user]);
+        if (isLoggedIn) {
+            RequestHelper.fetch('/api/mdclusters/BTCUSD/' + state.interval, {}, response => {
+                actions.setMdClusters(response.data);
+            });
+        }
+    }, [state.interval, isLoggedIn]);
 
     const mdClustersAnnotations = useMemo(() => {
         const annotations = [];
@@ -206,107 +214,106 @@ const App = () => {
     }, [state.orders]);
 
     useEffect(() => {
-        RequestHelper.fetch('/api/orders?page=' + state.ordersPage, {}, response => {
-            actions.setOrders(response.data, response.meta.current_page, response.meta.last_page);
-        });
-    }, [state.ordersPage, state.ordersPagesTotal, state.ordersReRender]);
+        if (isLoggedIn) {
+            RequestHelper.fetch('/api/orders?page=' + state.ordersPage, {}, response => {
+                actions.setOrders(response.data, response.meta.current_page, response.meta.last_page);
+            });
+        }
+    }, [state.ordersPage, state.ordersPagesTotal, state.ordersReRender, isLoggedIn]);
 
     useEffect(() => {
-        RequestHelper.fetch('/api/orders?history=1&page=' + state.ordersHistoryPage, {}, response => {
-            actions.setOrdersHistory(response.data, response.meta.current_page, response.meta.last_page);
-        });
-    }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender]);
+        if (isLoggedIn) {
+            RequestHelper.fetch('/api/orders?history=1&page=' + state.ordersHistoryPage, {}, response => {
+                actions.setOrdersHistory(response.data, response.meta.current_page, response.meta.last_page);
+            });
+        }
+    }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender, isLoggedIn]);
+
+    if (state.initialized === false) {
+        return <Loading />
+    }
 
     const annotations = [...mdClustersAnnotations, getToTimeAnnotation()];
     const popupDom = <Alert variant={state.popup.type} onClose={() => hidePopup()} dismissible>
                          <Alert.Heading>{state.popup.title}</Alert.Heading>
                          <p>{state.popup.message}</p>
                      </Alert>;
-    let loginButton = '';
     let content = '';
-    let settingsButton = '';
-    if (state.user !== null) {
-        if (state.user !== false) {
-            loginButton = <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>{state.user.name}&nbsp;<i className="fa fa-arrow-right"></i></button>;
-            settingsButton = <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#userSettingsModal"><i className="fa fa-gear"></i></button>;
-            content = <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-xl-12">
-                            {state.popup.show ? popupDom : ''}
-                        </div>
-                        <div className="col-xl-12">
-                            <div className="card">
-                                <div className={"card-header"}>
-                                    <IntervalSelector />
-                                </div>
-                                <div className="card-body pt-0">
-                                    <div className="chart">
-                                        <PriceChart
-                                            fromTime={fromTime}
-                                            toTime={toTime}
-                                            height={priceHeight}
-                                            textColor={chartsTextColor}
-                                            linesColor={chartsLinesColor}
-                                            innerRef={priceChartRef}
-                                            xAnnotations={annotations}
-                                            yAnnotations={yAnnotations}
-                                            orders={state.orders} />
-                                        <MarketDeltaChart
-                                            fromTime={fromTime}
-                                            toTime={toTime}
-                                            height={mdHeight}
-                                            updateInterval={updateInterval}
-                                            textColor={chartsTextColor}
-                                            linesColor={chartsLinesColor}
-                                            innerRef={mdChartRef}
-                                            xAnnotations={annotations} />
-                                    </div>
+    if (isLoggedIn) {
+        content = <div className="container">
+                <div className="row justify-content-center">
+                    <div className="col-xl-12">
+                        {state.popup.show ? popupDom : ''}
+                    </div>
+                    <div className="col-xl-12">
+                        <div className="card">
+                            <div className={"card-header"}>
+                                <IntervalSelector />
+                            </div>
+                            <div className="card-body pt-0">
+                                <div className="chart">
+                                    <PriceChart
+                                        fromTime={fromTime}
+                                        toTime={toTime}
+                                        height={priceHeight}
+                                        textColor={chartsTextColor}
+                                        linesColor={chartsLinesColor}
+                                        innerRef={priceChartRef}
+                                        xAnnotations={annotations}
+                                        yAnnotations={yAnnotations}
+                                        orders={state.orders} />
+                                    <MarketDeltaChart
+                                        fromTime={fromTime}
+                                        toTime={toTime}
+                                        height={mdHeight}
+                                        updateInterval={updateInterval}
+                                        textColor={chartsTextColor}
+                                        linesColor={chartsLinesColor}
+                                        innerRef={mdChartRef}
+                                        xAnnotations={annotations} />
                                 </div>
                             </div>
-                            <br/>
-                            <div className="card">
-                                <div className="card-body">
-                                    <OrdersList
-                                        innerRef={ordersListRef}
-                                        orders={state.orders}
-                                        ordersHistory={state.ordersHistory}
-                                        ordersPage={state.ordersPage}
-                                        ordersHistoryPage={state.ordersHistoryPage}
-                                        ordersPagesTotal={state.ordersPagesTotal}
-                                        ordersHistoryPagesTotal={state.ordersHistoryPagesTotal}
-                                    />
-                                </div>
+                        </div>
+                        <br/>
+                        <div className="card">
+                            <div className="card-body">
+                                <OrdersList
+                                    innerRef={ordersListRef}
+                                    orders={state.orders}
+                                    ordersHistory={state.ordersHistory}
+                                    ordersPage={state.ordersPage}
+                                    ordersHistoryPage={state.ordersHistoryPage}
+                                    ordersPagesTotal={state.ordersPagesTotal}
+                                    ordersHistoryPagesTotal={state.ordersHistoryPagesTotal}
+                                />
                             </div>
                         </div>
                     </div>
-                    <UserSettingsModal showPopup={showPopup} />
-                    <OrderForm showPopup={showPopup} />
                 </div>
-        } else {
-            loginButton = <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginForm">Login</button>;
-            content = <LoginForm onSuccess={onLoginSuccess} onFail={onLoginFail} />
-        }
+                <UserSettingsModal showPopup={showPopup} />
+                <OrderForm showPopup={showPopup} />
+            </div>
+    } else {
+        content = <LoginForm onSuccess={onLoginSuccess} onFail={onLoginFail} />
     }
-    return (
-        state.user !== null ?
-            <div id="page">
-                <div id="top">
-                    <div className="top-left">
-                        <a href="/" className="logo-link">
-                            <img src="images/logo.png" />
-                        </a>
+    return ( <div id="page">
+                {isLoggedIn ? (
+                    <div id="top">
+                        <div className="top-left">
+                            <a href="/" className="logo-link">
+                                <img src="images/logo.png" />
+                            </a>
+                        </div>
+                        <div className="top-right">
+                            <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>{state.user.name}&nbsp;<i className="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#userSettingsModal"><i className="fa fa-gear"></i></button>
+                        </div>
                     </div>
-                    <div className="top-right">
-                        {loginButton}&nbsp;&nbsp;&nbsp;
-                        {settingsButton}
-                    </div>
-                </div>
+                ) : ''}
                 <div id="middle">
                     {content}
                 </div>
-            </div>
-            : <Loading />
-    );
+            </div> );
 }
 
 if (document.getElementById('app')) {

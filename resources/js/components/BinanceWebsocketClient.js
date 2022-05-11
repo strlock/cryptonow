@@ -10,6 +10,10 @@ class BinanceWebsocketClient
         }
 
     }
+
+    close() {
+        this.websocket.close();
+    }
 }
 
 export default BinanceWebsocketClient;

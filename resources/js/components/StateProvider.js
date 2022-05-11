@@ -1,9 +1,10 @@
 import React, {useReducer} from "react";
 import TimeIntervals from "../TimeIntervals";
 
-export const stateContext = React.createContext()
+export const stateContext = React.createContext(null)
 
 const initialState = {
+    initialized: false,
     orders: [],
     ordersPage: 1,
     ordersPagesTotal: 1,
@@ -21,11 +22,17 @@ const initialState = {
         message: '',
         title: '',
     },
+    wsClient: null,
 }
 
 const stateReducer = (state, action) => {
     console.log('ACTION: ' + action.type, action);
     switch (action.type) {
+        case 'setInitialized' :
+            return {
+                ...state,
+                initialized: action.value,
+            }
         case 'setOrders' :
             return {
                 ...state,
@@ -82,7 +89,12 @@ const stateReducer = (state, action) => {
         case 'resetPopup':
             return {
                 ...state,
-                ...initialState.popup
+                popup: initialState.popup
+            }
+        case 'setWSClient':
+            return {
+                ...state,
+                wsClient: action.wsClient
             }
         default:
             return state;
@@ -92,6 +104,10 @@ const stateReducer = (state, action) => {
 function StateProvider({children}) {
     const [state, dispatch] = useReducer(stateReducer, initialState);
     const actions = {
+        setInitialized: (value) => dispatch({
+            type: 'setInitialized',
+            initialized: value,
+        }),
         setOrders: (orders, page, pagesTotal) => dispatch({
             type: 'setOrders',
             orders: orders,
@@ -138,6 +154,10 @@ function StateProvider({children}) {
         }),
         resetPopup: () => dispatch({
             type: 'resetPopup',
+        }),
+        setWSClient: (wsClient) => dispatch({
+            type: 'setWSClient',
+            wsClient: wsClient,
         }),
     }
     return (

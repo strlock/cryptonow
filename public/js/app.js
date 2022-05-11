@@ -9722,6 +9722,7 @@ var App = function App() {
       state = _useContext2[0],
       actions = _useContext2[1];
 
+  var isLoggedIn = state.user !== null;
   var updateInterval = 15000;
   var priceHeight = 400;
   var mdHeight = 250;
@@ -9734,14 +9735,14 @@ var App = function App() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].setExpiredTokenCallback(function () {
       _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].clearAccessToken();
-      actions.setUser(false);
+      actions.setUser(null);
     });
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/user', {}, function (response) {
       if (response.data !== undefined) {
         actions.setUser(response.data);
-      } else {
-        actions.setUser(false);
       }
+
+      actions.setInitialized(true);
     });
   }, []);
   _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].setFromSign('₿');
@@ -9755,10 +9756,17 @@ var App = function App() {
   var fromTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(_Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].subDaysFromDate(new Date(), daysForInterval).getTime(), state.interval);
   var toTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(new Date().getTime(), state.interval);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {
-      actions.setCurrentPrice(1.0 * price);
-    }, 'BTCBUSD');
-  }, []);
+    if (isLoggedIn) {
+      actions.setWSClient(new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {
+        actions.setCurrentPrice(1.0 * price);
+      }, 'BTCBUSD'));
+    } else if (state.wsClient !== null) {
+      state.wsClient.close();
+      actions.setWSClient(null);
+    }
+
+    return null;
+  }, [isLoggedIn]);
 
   var showPopup = function showPopup(message, type, title) {
     actions.setPopup({
@@ -9791,16 +9799,18 @@ var App = function App() {
     }, function (response) {
       if (response.success) {
         _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].clearAccessToken();
-        actions.setUser(false);
+        actions.setUser(null);
       }
     });
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/mdclusters/BTCUSD/' + state.interval, {}, function (response) {
-      actions.setMdClusters(response.data);
-    });
-  }, [state.interval, state.user]);
+    if (isLoggedIn) {
+      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/mdclusters/BTCUSD/' + state.interval, {}, function (response) {
+        actions.setMdClusters(response.data);
+      });
+    }
+  }, [state.interval, isLoggedIn]);
   var mdClustersAnnotations = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     var annotations = [];
 
@@ -9907,15 +9917,24 @@ var App = function App() {
     return result;
   }, [state.orders]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/orders?page=' + state.ordersPage, {}, function (response) {
-      actions.setOrders(response.data, response.meta.current_page, response.meta.last_page);
-    });
-  }, [state.ordersPage, state.ordersPagesTotal, state.ordersReRender]);
+    if (isLoggedIn) {
+      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/orders?page=' + state.ordersPage, {}, function (response) {
+        actions.setOrders(response.data, response.meta.current_page, response.meta.last_page);
+      });
+    }
+  }, [state.ordersPage, state.ordersPagesTotal, state.ordersReRender, isLoggedIn]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/orders?history=1&page=' + state.ordersHistoryPage, {}, function (response) {
-      actions.setOrdersHistory(response.data, response.meta.current_page, response.meta.last_page);
-    });
-  }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender]);
+    if (isLoggedIn) {
+      _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/orders?history=1&page=' + state.ordersHistoryPage, {}, function (response) {
+        actions.setOrdersHistory(response.data, response.meta.current_page, response.meta.last_page);
+      });
+    }
+  }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender, isLoggedIn]);
+
+  if (state.initialized === false) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_Loading_Loading__WEBPACK_IMPORTED_MODULE_16__["default"], {});
+  }
+
   var annotations = [].concat(_toConsumableArray(mdClustersAnnotations), [getToTimeAnnotation()]);
 
   var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_19__["default"], {
@@ -9931,111 +9950,81 @@ var App = function App() {
     })]
   });
 
-  var loginButton = '';
   var content = '';
-  var settingsButton = '';
 
-  if (state.user !== null) {
-    if (state.user !== false) {
-      loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("button", {
-        type: "button",
-        className: "btn btn-primary",
-        onClick: function onClick() {
-          return onLogoutClick();
-        },
-        children: [state.user.name, "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("i", {
-          className: "fa fa-arrow-right"
-        })]
-      });
-      settingsButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("button", {
-        type: "button",
-        className: "btn btn-secondary",
-        "data-bs-toggle": "modal",
-        "data-bs-target": "#userSettingsModal",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("i", {
-          className: "fa fa-gear"
-        })
-      });
-      content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
-        className: "container",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
-          className: "row justify-content-center",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
-            className: "col-xl-12",
-            children: state.popup.show ? popupDom : ''
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
-            className: "col-xl-12",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
-              className: "card",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
-                className: "card-header",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_IntervalSelector_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {})
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
-                className: "card-body pt-0",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
-                  className: "chart",
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_PriceChart_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                    fromTime: fromTime,
-                    toTime: toTime,
-                    height: priceHeight,
-                    textColor: chartsTextColor,
-                    linesColor: chartsLinesColor,
-                    innerRef: priceChartRef,
-                    xAnnotations: annotations,
-                    yAnnotations: yAnnotations,
-                    orders: state.orders
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_MarketDeltaChart_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                    fromTime: fromTime,
-                    toTime: toTime,
-                    height: mdHeight,
-                    updateInterval: updateInterval,
-                    textColor: chartsTextColor,
-                    linesColor: chartsLinesColor,
-                    innerRef: mdChartRef,
-                    xAnnotations: annotations
-                  })]
-                })
-              })]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
-              className: "card",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
-                className: "card-body",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_OrdersList_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
-                  innerRef: ordersListRef,
-                  orders: state.orders,
-                  ordersHistory: state.ordersHistory,
-                  ordersPage: state.ordersPage,
-                  ordersHistoryPage: state.ordersHistoryPage,
-                  ordersPagesTotal: state.ordersPagesTotal,
-                  ordersHistoryPagesTotal: state.ordersHistoryPagesTotal
-                })
+  if (isLoggedIn) {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+      className: "container",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+        className: "row justify-content-center",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+          className: "col-xl-12",
+          children: state.popup.show ? popupDom : ''
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+          className: "col-xl-12",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+            className: "card",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+              className: "card-header",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_IntervalSelector_IntervalSelector__WEBPACK_IMPORTED_MODULE_12__["default"], {})
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+              className: "card-body pt-0",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+                className: "chart",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_PriceChart_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+                  fromTime: fromTime,
+                  toTime: toTime,
+                  height: priceHeight,
+                  textColor: chartsTextColor,
+                  linesColor: chartsLinesColor,
+                  innerRef: priceChartRef,
+                  xAnnotations: annotations,
+                  yAnnotations: yAnnotations,
+                  orders: state.orders
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_MarketDeltaChart_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
+                  fromTime: fromTime,
+                  toTime: toTime,
+                  height: mdHeight,
+                  updateInterval: updateInterval,
+                  textColor: chartsTextColor,
+                  linesColor: chartsLinesColor,
+                  innerRef: mdChartRef,
+                  xAnnotations: annotations
+                })]
               })
             })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+            className: "card",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+              className: "card-body",
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_OrdersList_OrdersList__WEBPACK_IMPORTED_MODULE_10__["default"], {
+                innerRef: ordersListRef,
+                orders: state.orders,
+                ordersHistory: state.ordersHistory,
+                ordersPage: state.ordersPage,
+                ordersHistoryPage: state.ordersHistoryPage,
+                ordersPagesTotal: state.ordersPagesTotal,
+                ordersHistoryPagesTotal: state.ordersHistoryPagesTotal
+              })
+            })
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_UserSettings_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {
-          showPopup: showPopup
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_OrderForm_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          showPopup: showPopup
         })]
-      });
-    } else {
-      loginButton = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("button", {
-        type: "button",
-        className: "btn btn-primary",
-        "data-bs-toggle": "modal",
-        "data-bs-target": "#loginForm",
-        children: "Login"
-      });
-      content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_Login_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
-        onSuccess: onLoginSuccess,
-        onFail: onLoginFail
-      });
-    }
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_UserSettings_UserSettingsModal__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        showPopup: showPopup
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_OrderForm_OrderForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        showPopup: showPopup
+      })]
+    });
+  } else {
+    content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_Login_LoginForm__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      onSuccess: onLoginSuccess,
+      onFail: onLoginFail
+    });
   }
 
-  return state.user !== null ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
     id: "page",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
+    children: [isLoggedIn ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
       id: "top",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
         className: "top-left",
@@ -10048,13 +10037,30 @@ var App = function App() {
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("div", {
         className: "top-right",
-        children: [loginButton, "\xA0\xA0\xA0", settingsButton]
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsxs)("button", {
+          type: "button",
+          className: "btn btn-primary",
+          onClick: function onClick() {
+            return onLogoutClick();
+          },
+          children: [state.user.name, "\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("i", {
+            className: "fa fa-arrow-right"
+          })]
+        }), "\xA0\xA0\xA0", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("button", {
+          type: "button",
+          className: "btn btn-secondary",
+          "data-bs-toggle": "modal",
+          "data-bs-target": "#userSettingsModal",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("i", {
+            className: "fa fa-gear"
+          })
+        })]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
+    }) : '', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)("div", {
       id: "middle",
       children: content
     })]
-  }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_Loading_Loading__WEBPACK_IMPORTED_MODULE_16__["default"], {});
+  });
 };
 
 if (document.getElementById('app')) {
@@ -10076,26 +10082,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var BinanceWebsocketClient = /*#__PURE__*/_createClass(function BinanceWebsocketClient(callback, symbol) {
-  _classCallCheck(this, BinanceWebsocketClient);
+var BinanceWebsocketClient = /*#__PURE__*/function () {
+  function BinanceWebsocketClient(callback, symbol) {
+    _classCallCheck(this, BinanceWebsocketClient);
 
-  _defineProperty(this, "websocket", null);
+    _defineProperty(this, "websocket", null);
 
-  this.websocket = new WebSocket('wss://stream.binance.com:9443/ws/' + symbol.toLowerCase() + '@miniTicker');
+    this.websocket = new WebSocket('wss://stream.binance.com:9443/ws/' + symbol.toLowerCase() + '@miniTicker');
 
-  this.websocket.onmessage = function (event) {
-    var data = JSON.parse(event.data);
-    callback.call(this, data.c);
-  };
-});
+    this.websocket.onmessage = function (event) {
+      var data = JSON.parse(event.data);
+      callback.call(this, data.c);
+    };
+  }
+
+  _createClass(BinanceWebsocketClient, [{
+    key: "close",
+    value: function close() {
+      this.websocket.close();
+    }
+  }]);
+
+  return BinanceWebsocketClient;
+}();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BinanceWebsocketClient);
 
@@ -10288,7 +10305,7 @@ var LoginForm = function LoginForm(_ref) {
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-    className: "modal bg-secondary show",
+    className: "modal bg-transparent show",
     id: "loginForm",
     tabIndex: "-1",
     "aria-labelledby": "loginForm",
@@ -10300,14 +10317,8 @@ var LoginForm = function LoginForm(_ref) {
       className: "modal-dialog",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         className: "modal-content",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-          className: "modal-header",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h5", {
-            className: "modal-title",
-            children: "Login"
-          })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          className: "modal-body p-3",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "modal-body",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
             className: "form-group mb-3",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
@@ -10320,7 +10331,7 @@ var LoginForm = function LoginForm(_ref) {
               ref: emailRef
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-            className: "mb-2 form-group",
+            className: "form-group",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
               type: "password",
               name: "password",
@@ -11522,8 +11533,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var stateContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext();
+var stateContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(null);
 var initialState = {
+  initialized: false,
   orders: [],
   ordersPage: 1,
   ordersPagesTotal: 1,
@@ -11540,13 +11552,19 @@ var initialState = {
     type: 'success',
     message: '',
     title: ''
-  }
+  },
+  wsClient: null
 };
 
 var stateReducer = function stateReducer(state, action) {
   console.log('ACTION: ' + action.type, action);
 
   switch (action.type) {
+    case 'setInitialized':
+      return _objectSpread(_objectSpread({}, state), {}, {
+        initialized: action.value
+      });
+
     case 'setOrders':
       return _objectSpread(_objectSpread({}, state), {}, {
         orders: action.orders,
@@ -11602,7 +11620,14 @@ var stateReducer = function stateReducer(state, action) {
       });
 
     case 'resetPopup':
-      return _objectSpread(_objectSpread({}, state), initialState.popup);
+      return _objectSpread(_objectSpread({}, state), {}, {
+        popup: initialState.popup
+      });
+
+    case 'setWSClient':
+      return _objectSpread(_objectSpread({}, state), {}, {
+        wsClient: action.wsClient
+      });
 
     default:
       return state;
@@ -11618,6 +11643,12 @@ function StateProvider(_ref) {
       dispatch = _useReducer2[1];
 
   var actions = {
+    setInitialized: function setInitialized(value) {
+      return dispatch({
+        type: 'setInitialized',
+        initialized: value
+      });
+    },
     setOrders: function setOrders(orders, page, pagesTotal) {
       return dispatch({
         type: 'setOrders',
@@ -11685,6 +11716,12 @@ function StateProvider(_ref) {
     resetPopup: function resetPopup() {
       return dispatch({
         type: 'resetPopup'
+      });
+    },
+    setWSClient: function setWSClient(wsClient) {
+      return dispatch({
+        type: 'setWSClient',
+        wsClient: wsClient
       });
     }
   };
