@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug. Refactoring">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Adding loading GIF">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/login-background.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/login-background.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/BinanceWebsocketClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/BinanceWebsocketClient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Login/LoginForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Login/LoginForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/StateProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/StateProvider.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -310,28 +304,7 @@
       <workItem from="1652158933360" duration="12107000" />
       <workItem from="1652185052023" duration="14146000" />
       <workItem from="1652248410767" duration="6578000" />
-      <workItem from="1652267919605" duration="12946000" />
-    </task>
-    <task id="LOCAL-00030" summary="Improving">
-      <created>1650962626634</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1650962626634</updated>
-    </task>
-    <task id="LOCAL-00031" summary="Improving">
-      <created>1650962666561</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1650962666561</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Improving">
-      <created>1650979560554</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1650979560554</updated>
+      <workItem from="1652267919605" duration="14140000" />
     </task>
     <task id="LOCAL-00033" summary="Improving">
       <created>1650980937107</created>
@@ -655,7 +628,28 @@
       <option name="project" value="LOCAL" />
       <updated>1652280289241</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="Fixing bugs. Refactoring.">
+      <created>1652288290330</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1652288290330</updated>
+    </task>
+    <task id="LOCAL-00080" summary="Adding background">
+      <created>1652288346498</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1652288346498</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Adding loading GIF">
+      <created>1652288392716</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1652288392716</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -683,9 +677,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Improving market delta chart" />
-    <MESSAGE value="Adding ready_price and completed_price" />
-    <MESSAGE value="Set completed at when simple order completed" />
     <MESSAGE value="Debug" />
     <MESSAGE value="Orders with stop-loss and take-profit" />
     <MESSAGE value="Design, enumerations" />
@@ -708,7 +699,10 @@
     <MESSAGE value="Fixing Bugs. Refactoring" />
     <MESSAGE value="Improving" />
     <MESSAGE value="Fixing bug. Refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug. Refactoring" />
+    <MESSAGE value="Fixing bugs. Refactoring." />
+    <MESSAGE value="Adding background" />
+    <MESSAGE value="Adding loading GIF" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding loading GIF" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
