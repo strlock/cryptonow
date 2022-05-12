@@ -11277,7 +11277,6 @@ function OrdersListTable(_ref) {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("tbody", {
       children: orders.map(function (order) {
         var orderClass = 'order order-' + order.state;
-        var orderIsOpened = order.state === 'new' || order.state === 'ready';
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("tr", {
           className: orderClass,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("td", {
@@ -11296,8 +11295,8 @@ function OrdersListTable(_ref) {
             className: "text-center order-state",
             children: [_constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[order.state], !isHistory ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
-                animated: orderIsOpened,
-                striped: orderIsOpened,
+                animated: true,
+                striped: true,
                 now: Math.min(Math.abs(order.diff_percent), 100.0),
                 label: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPercent(order.diff_percent),
                 variant: order.diff_percent >= 0 ? "success" : "danger",
