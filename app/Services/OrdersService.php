@@ -309,7 +309,7 @@ class OrdersService implements OrdersServiceInterface
         $nextPrice = $priceDiff > 0 ? $order->getTp() : $order->getSl();
         return match ($order->getState()) {
             OrderState::NEW() => 100*($currentPrice/$order->getPrice()),
-            OrderState::READY() => 100*($currentPrice-$nextPrice)/abs($prevPrice-$nextPrice),
+            OrderState::READY() => 100*($nextPrice-$currentPrice)/abs($prevPrice-$nextPrice),
             default => false,
         };
     }
