@@ -9,7 +9,6 @@ use App\Http\Resources\OrdersResource;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
-use App\Models\OrderInterface;
 use App\Repositories\OrdersRepository;
 use App\Services\OrdersService;
 use App\Services\OrdersServiceInterface;
@@ -22,7 +21,7 @@ class OrdersController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(OrdersRepository $ordersRepository, Request $request, OrdersServiceInterface $ordersService)
     {
@@ -37,16 +36,14 @@ class OrdersController extends Controller
                     OrderState::PROFIT(),
                     OrderState::LOSS(),
                 ];
+                $orders = $ordersRepository->getUserOrders($user, $states);
             } else {
                 $states = [
                     OrderState::NEW(),
                     OrderState::READY(),
                 ];
-            }
-            $orders = $ordersRepository->getUserOrders($user, $states);
-            foreach ($orders as &$order) {
-                /** @var OrderInterface $order */
-                $order->setDiffPercent($ordersService->getDifferenceToNextPricePercent($order));
+                $orders = $ordersRepository->getUserOrders($user, $states);
+                $ordersService->setOrdersDiffPercent($orders);
             }
             return OrdersResource::collection($orders);
         } catch (Throwable $e) {

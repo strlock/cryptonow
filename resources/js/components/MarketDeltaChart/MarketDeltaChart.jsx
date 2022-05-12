@@ -123,6 +123,9 @@ const MarketDeltaChart = ({fromTime, toTime, linesColor, textColor, height, xAnn
         },
         grid: {
             borderColor: linesColor,
+            padding: {
+                right: 60,
+            },
         },
         annotations: {
             xaxis: xAnnotations,

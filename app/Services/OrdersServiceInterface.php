@@ -6,11 +6,11 @@ namespace App\Services;
 
 use App\Dto\CreateNewOrderDto;
 use App\Dto\CreateAutomaticOrdersDto;
-use App\Enums\OrderDirection;
 use App\Enums\OrderState;
 use App\Models\OrderInterface;
-use App\Models\UserInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 interface OrdersServiceInterface
 {
@@ -20,5 +20,5 @@ interface OrdersServiceInterface
     public function placeRevertMarketOrderToExchange(OrderInterface|Model $order): string;
     public function cancelOrder(OrderInterface|Model $order): void;
     public function createUsersAutomaticOrders(CreateAutomaticOrdersDto $dto): void;
-    public function getDifferenceToNextPricePercent(OrderInterface $order): float;
+    public function setOrdersDiffPercent(Collection|LengthAwarePaginator $orders): void;
 }

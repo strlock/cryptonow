@@ -27,10 +27,10 @@ const PriceChart = ({fromTime, toTime, height, textColor, linesColor, xAnnotatio
             label: {
                 borderColor: linesColor,
                 position: 'right',
-                textAnchor: 'end',
+                textAnchor: 'start',
                 style: {
                     color: textColor,
-                    background: 'transparent'
+                    background: linesColor,
                 },
                 text: FormatHelper.formatPrice(state.currentPrice)
             }
@@ -157,6 +157,9 @@ const PriceChart = ({fromTime, toTime, height, textColor, linesColor, xAnnotatio
         },
         grid: {
             borderColor: linesColor,
+            padding: {
+                right: 60,
+            },
         },
         annotations: {
             position: 'front',

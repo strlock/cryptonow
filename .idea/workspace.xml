@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/OrdersServiceInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersServiceInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart/MarketDeltaChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart/MarketDeltaChart.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/PriceChart/PriceChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/PriceChart/PriceChart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/constants.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -304,14 +311,7 @@
       <workItem from="1652185052023" duration="14146000" />
       <workItem from="1652248410767" duration="6578000" />
       <workItem from="1652267919605" duration="15226000" />
-      <workItem from="1652332477877" duration="17300000" />
-    </task>
-    <task id="LOCAL-00044" summary="Improving">
-      <created>1651044209118</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1651044209118</updated>
+      <workItem from="1652332477877" duration="20633000" />
     </task>
     <task id="LOCAL-00045" summary="Improving">
       <created>1651091439479</created>
@@ -649,7 +649,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652361821607</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="Improving">
+      <created>1652361874377</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1652361874377</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

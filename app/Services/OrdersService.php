@@ -22,10 +22,12 @@ use App\Services\Crypto\Exchanges\AbstractFacade;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 
 class OrdersService implements OrdersServiceInterface
 {
@@ -292,25 +294,32 @@ class OrdersService implements OrdersServiceInterface
     }
 
     /**
-     * @param OrderInterface $order
-     * @return float
+     * @param Collection|LengthAwarePaginator $orders
+     * @return void
      */
-    public function getDifferenceToNextPricePercent(OrderInterface $order): float
+    public function setOrdersDiffPercent(Collection|LengthAwarePaginator $orders): void
     {
         $exchange = ExchangesFactory::create();
-        $exchangeSymbol = $exchange->getExchangeOrderSymbol($order->getSymbol());
-        $currentPrice = $exchange->getCurrentPrice($exchangeSymbol);
-        $prevPrice = match ($order->getState()) {
-            OrderState::NEW() => 0,//$order->getCreatedPrice(),
-            OrderState::READY() => $order->getReadyPrice(),
-            default => false,
-        };
-        $priceDiff = $currentPrice-$order->getPrice();
-        $nextPrice = $priceDiff > 0 ? $order->getTp() : $order->getSl();
-        return match ($order->getState()) {
-            OrderState::NEW() => 100*($currentPrice/$order->getPrice()),
-            OrderState::READY() => 100*($nextPrice-$currentPrice)/abs($prevPrice-$nextPrice),
-            default => false,
-        };
+        $currentPrices = [];
+        foreach ($orders as &$order) {
+            /** @var OrderInterface $order */
+            if (!in_array($order->getState(), [OrderState::NEW(), OrderState::READY()])) {
+                continue;
+            }
+            if (!isset($currentPrices[$order->getSymbol()])) {
+                $exchangeSymbol = $exchange->getExchangeOrderSymbol($order->getSymbol());
+                $currentPrices[$order->getSymbol()] = $exchange->getCurrentPrice($exchangeSymbol);
+            }
+            $currentPrice = $currentPrices[$order->getSymbol()];
+            $priceDiff = $currentPrice - $order->getReadyPrice();
+            $nextPrice = $priceDiff > 0 ? $order->getTp() : $order->getSl();
+            $diffPercent = 0.0;
+            if ($order->getState() === OrderState::NEW()) {
+                $diffPercent = 100 * ($currentPrice / $order->getPrice());
+            } else if ($order->getState() === OrderState::READY()) {
+                $diffPercent = 100 * ($currentPrice - $order->getReadyPrice()) / abs($nextPrice - $order->getReadyPrice());
+            }
+            $order->setDiffPercent($diffPercent);
+        }
     }
 }

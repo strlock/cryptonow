@@ -25,6 +25,7 @@ function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClic
         <tbody>
         {orders.map((order) => {
             const orderClass = 'order order-' + order.state;
+            const absDiffPercent = Math.abs(order.diff_percent);
             return (
                 <tr key={order.id} className={orderClass}>
                     <td className={"text-start order-symbol"}>{ORDER_DIRECTION_TITLES[order.direction]} {FormatHelper.formatAmount(order.amount, true)}</td>
@@ -35,7 +36,7 @@ function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClic
                         {ORDER_STATE_TITLES[order.state]}
                         {!isHistory
                             ? ( <span>
-                                    <ProgressBar striped={false} now={Math.min(Math.abs(order.diff_percent), 100.0)} label={FormatHelper.formatPercent(order.diff_percent)} variant={order.diff_percent >= 0 ? "success" : "danger"} className={"small-progress"} />
+                                    <ProgressBar striped={false} now={Math.min(absDiffPercent, 100.0)} label={absDiffPercent >= 10.0 ? FormatHelper.formatPercent(absDiffPercent) : ''} variant={order.diff_percent >= 0 ? "success" : "danger"} className={"small-progress"} />
                                     {ORDER_STATE_TITLES[OrderStateHelper.getNextOrderState(order.state, order.diff_percent)]}
                                 </span> ) : null}
                     </td>

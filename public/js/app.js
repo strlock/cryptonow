@@ -10617,7 +10617,10 @@ var MarketDeltaChart = function MarketDeltaChart(_ref) {
       }
     },
     grid: {
-      borderColor: linesColor
+      borderColor: linesColor,
+      padding: {
+        right: 60
+      }
     },
     annotations: {
       xaxis: xAnnotations
@@ -11277,6 +11280,7 @@ function OrdersListTable(_ref) {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("tbody", {
       children: orders.map(function (order) {
         var orderClass = 'order order-' + order.state;
+        var absDiffPercent = Math.abs(order.diff_percent);
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("tr", {
           className: orderClass,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("td", {
@@ -11296,8 +11300,8 @@ function OrdersListTable(_ref) {
             children: [_constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[order.state], !isHistory ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
                 striped: false,
-                now: Math.min(Math.abs(order.diff_percent), 100.0),
-                label: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPercent(order.diff_percent),
+                now: Math.min(absDiffPercent, 100.0),
+                label: absDiffPercent >= 10.0 ? _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPercent(absDiffPercent) : '',
                 variant: order.diff_percent >= 0 ? "success" : "danger",
                 className: "small-progress"
               }), _constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[_Helpers_OrderStatusHelper__WEBPACK_IMPORTED_MODULE_7__["default"].getNextOrderState(order.state, order.diff_percent)]]
@@ -11443,10 +11447,10 @@ var PriceChart = function PriceChart(_ref) {
       label: {
         borderColor: linesColor,
         position: 'right',
-        textAnchor: 'end',
+        textAnchor: 'start',
         style: {
           color: textColor,
-          background: 'transparent'
+          background: linesColor
         },
         text: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_3__["default"].formatPrice(state.currentPrice)
       }
@@ -11576,7 +11580,10 @@ var PriceChart = function PriceChart(_ref) {
       }
     },
     grid: {
-      borderColor: linesColor
+      borderColor: linesColor,
+      padding: {
+        right: 60
+      }
     },
     annotations: {
       position: 'front',
@@ -12152,7 +12159,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var REFRESH_INTERVAL = 15000;
 var POPUP_TIMEOUT = 15000;
-var ORDERS_REFRESH_INTERVAL = 15000;
+var ORDERS_REFRESH_INTERVAL = 3000;
 var ONE_MINUTE_MS = 60 * 1000;
 var ORDER_STATE_TITLES = {
   'new': 'New',
