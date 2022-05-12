@@ -14504,6 +14504,16 @@ h1, .h1 {
   display: block !important;
 }
 
+.progress.small-progress {
+  height: 1rem;
+}
+
+.orders .progress {
+  width: 50%;
+  display: inline-block;
+  margin: 0 1rem;
+}
+
 .orders .order.order-new .order-state {
   color: #888;
 }
