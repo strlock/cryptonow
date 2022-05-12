@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/CheckSignalCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/CheckSignalCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/TimeHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/TimeHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/StrategyInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/StrategyInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,14 +312,7 @@
       <workItem from="1652185052023" duration="14146000" />
       <workItem from="1652248410767" duration="6578000" />
       <workItem from="1652267919605" duration="15226000" />
-      <workItem from="1652332477877" duration="11746000" />
-    </task>
-    <task id="LOCAL-00038" summary="Set completed at when simple order completed">
-      <created>1651000329376</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1651000329376</updated>
+      <workItem from="1652332477877" duration="13964000" />
     </task>
     <task id="LOCAL-00039" summary="Set completed at when simple order completed">
       <created>1651001081563</created>
@@ -651,7 +650,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652351653616</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="Fixing bug">
+      <created>1652351903333</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1652351903333</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -701,10 +707,10 @@
     <MESSAGE value="Adding loading GIF" />
     <MESSAGE value="Improving background" />
     <MESSAGE value="Orders diff percent" />
-    <MESSAGE value="Fixing bug" />
     <MESSAGE value="Percent progress bar" />
     <MESSAGE value="Improving" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
+    <MESSAGE value="Fixing bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -25,6 +25,7 @@ function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClic
         <tbody>
         {orders.map((order) => {
             const orderClass = 'order order-' + order.state;
+            const orderIsOpened = order.state === 'new' || order.state === 'ready';
             return (
                 <tr key={order.id} className={orderClass}>
                     <td className={"text-start order-symbol"}>{ORDER_DIRECTION_TITLES[order.direction]} {FormatHelper.formatAmount(order.amount, true)}</td>
@@ -35,16 +36,16 @@ function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClic
                         {ORDER_STATE_TITLES[order.state]}
                         {!isHistory
                             ? ( <span>
-                                    <ProgressBar animated striped now={Math.min(Math.abs(order.diff_percent), 100.0)} label={FormatHelper.formatPercent(order.diff_percent)} variant={order.diff_percent >= 0 ? "success" : "danger"} className={"small-progress"} />
+                                    <ProgressBar animated={orderIsOpened} striped={orderIsOpened} now={Math.min(Math.abs(order.diff_percent), 100.0)} label={FormatHelper.formatPercent(order.diff_percent)} variant={order.diff_percent >= 0 ? "success" : "danger"} className={"small-progress"} />
                                     {ORDER_STATE_TITLES[OrderStateHelper.getNextOrderState(order.state, order.diff_percent)]}
-                            </span> ) : null}
+                                </span> ) : null}
                     </td>
                     <td className={"text-center order-symbol"}>{(new Date(order.created_at)).toLocaleString()}</td>
                     <td className={"text-center order-symbol"}>{order.id}</td>
                     <td className={"text-end order-actions"}>
                         {onDeleteClick !== undefined
                             ? <button className="btn btn-danger btn-delete btn-sm" id={'order-delete-button-' + order.id} onClick={() => onDeleteClick(order)}><i className="fa fa-times" aria-hidden="true"> </i></button>
-                            : ''
+                            : null
                         }
                     </td>
                 </tr>

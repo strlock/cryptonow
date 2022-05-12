@@ -11,11 +11,11 @@ abstract class TimeHelper
 {
     /**
      * @param int $timestamp
-     * @param TimeInterval|null $interval
+     * @param TimeInterval $interval
      * @return int
      * @throws Exception
      */
-    public static function round(int $timestamp, ?TimeInterval $interval): int
+    public static function round(int $timestamp, TimeInterval $interval): int
     {
         return $interval->value()*intdiv($timestamp, $interval->value());
     }

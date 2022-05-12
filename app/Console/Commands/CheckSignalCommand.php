@@ -49,8 +49,8 @@ class CheckSignalCommand extends Command
     {
         $symbol = $this->argument('symbol');
         while (true) {
-            $signal = $strategy->getSignal($symbol, TimeInterval::FIVE_MINUTES());
-            $toTime = TimeHelper::round(TimeHelper::time(), TimeInterval::FIVE_MINUTES());
+            $signal = $strategy->getSignal($symbol);
+            $toTime = TimeHelper::round(TimeHelper::time(), TimeInterval::MINUTE());
             Log::debug(date('d.m.Y H:i:s', $toTime/1000).' '.$signal->key());
             if ($signal !== StrategySignal::NOTHING()) {
                 $direction = match($signal) {

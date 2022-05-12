@@ -12,15 +12,13 @@ interface StrategyInterface
 {
     /**
      * @param string $symbol
-     * @param TimeInterval|null $interval
      * @return StrategySignal
      */
-    public function getSignal(string $symbol, ?TimeInterval $interval = null): StrategySignal;
+    public function getSignal(string $symbol): StrategySignal;
 
     /**
      * @param string $symbol
-     * @param TimeInterval $interval
      * @return Collection
      */
-    public function getMarketDeltaClusters(string $symbol, TimeInterval $interval): Collection;
+    public function getMarketDeltaClusters(string $symbol): Collection;
 }

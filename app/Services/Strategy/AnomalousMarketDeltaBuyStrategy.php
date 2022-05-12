@@ -24,16 +24,12 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
 
     /**
      * @param string $symbol
-     * @param TimeInterval|null $interval
      * @return StrategySignal
      * @throws Exception
      */
-    public function getSignal(string $symbol, ?TimeInterval $interval = null): StrategySignal
+    public function getSignal(string $symbol): StrategySignal
     {
-        if (empty($interval)) {
-            $interval = TimeInterval::FIVE_MINUTES();
-        }
-        $maxMdCluster = $this->getMaxMarketDeltaCluster($symbol, $interval);
+        $maxMdCluster = $this->getMaxMarketDeltaCluster($symbol);
         if (empty($maxMdCluster)) {
             Log::debug('No maximum cluster right now');
             return StrategySignal::NOTHING();
@@ -45,7 +41,7 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
             $maxMdCluster->getFromPrice().'-'.
             $maxMdCluster->getToPrice().' '.
             round($relativePriceDiffPercent, 2).'%');
-        $toTime = TimeHelper::round(TimeHelper::time(), $interval);
+        $toTime = TimeHelper::round(TimeHelper::time(), TimeInterval::MINUTE());
         if ($toTime >= $maxMdCluster->getFromTime() &&
                 $toTime <= $maxMdCluster->getToTime() &&
                     abs($relativePriceDiffPercent) < (float)config('crypto.strategyRelativePriceDiffPercent')) {
@@ -56,23 +52,22 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
 
     /**
      * @param string $symbol
-     * @param TimeInterval $interval
      * @return MarketDeltaClusterDto|null
      * @throws Exception
      */
-    public function getMaxMarketDeltaCluster(string $symbol, TimeInterval $interval): ?MarketDeltaClusterDto
+    public function getMaxMarketDeltaCluster(string $symbol): ?MarketDeltaClusterDto
     {
-        return $this->getMarketDeltaClusters($symbol, $interval)->first();
+        return $this->getMarketDeltaClusters($symbol)->first();
     }
 
     /**
      * @param string $symbol
-     * @param TimeInterval $interval
      * @return Collection
      * @throws Exception
      */
-    public function getMarketDeltaClusters(string $symbol, TimeInterval $interval): Collection
+    public function getMarketDeltaClusters(string $symbol): Collection
     {
+        $interval = TimeInterval::MINUTE();
         $toTime = TimeHelper::round(TimeHelper::time(), $interval);
         $fromTime = TimeHelper::round($toTime-(int)config('crypto.strategyPeriod'), $interval);
         $marketDeltaByTime = $this->aggregateMarketStatService->getAggregateMarketDelta($symbol, $fromTime, $toTime, $interval);
@@ -98,8 +93,8 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
                         $md,
                         $mdFromTime,
                         $mdToTime,
-                        $this->getMDClusterPriceAtTime($symbol, $mdFromTime, $interval),
-                        $this->getMDClusterPriceAtTime($symbol, $mdToTime, $interval),
+                        $this->getMDClusterPriceAtTime($symbol, $mdFromTime),
+                        $this->getMDClusterPriceAtTime($symbol, $mdToTime),
                     ));
                 }
             }
@@ -110,8 +105,8 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
                 $md,
                 $mdFromTime,
                 $toTime,
-                $this->getMDClusterPriceAtTime($symbol, $mdFromTime, $interval),
-                $this->getMDClusterPriceAtTime($symbol, $toTime, $interval),
+                $this->getMDClusterPriceAtTime($symbol, $mdFromTime),
+                $this->getMDClusterPriceAtTime($symbol, $toTime),
             ));
         }
         $clusters = $clusters->sort(function ($first, $second) {
@@ -144,12 +139,12 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
     /**
      * @param string $symbol
      * @param int $time
-     * @param TimeInterval $interval
      * @return float
      * @throws Exception
      */
-    private function getMDClusterPriceAtTime(string $symbol, int $time, TimeInterval $interval): float
+    private function getMDClusterPriceAtTime(string $symbol, int $time): float
     {
+        $interval = TimeInterval::MINUTE();
         $toTime = TimeHelper::round(TimeHelper::time(), $interval);
         $fromTime = TimeHelper::round($toTime-(int)config('crypto.strategyPeriod'), $interval);
         $cacheKey = md5(implode('.', [$symbol, $toTime, $interval->value()]));

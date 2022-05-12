@@ -26,7 +26,7 @@ Route::middleware('api')->group(function () {
         Route::resource('orders', OrdersController::class);
         Route::get('user', [UserController::class, 'getUser']);
         Route::post('user', [UserController::class, 'saveUser']);
-        Route::get('mdclusters/{symbol}/{interval?}', [MarketDeltaController::class, 'getMdClusters']);
+        Route::get('mdclusters/{symbol}', [MarketDeltaController::class, 'getMdClusters']);
         Route::post('logout', [UserController::class, 'logout']);
     });
 });

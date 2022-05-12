@@ -41,14 +41,12 @@ class MarketDeltaController extends Controller
 
     /**
      * @param string $symbol
-     * @param int|null $interval
      * @return JsonResponse
      */
-    public function getMdClusters(string $symbol, ?int $interval = TimeInterval::FIVE_MINUTES): JsonResponse
+    public function getMdClusters(string $symbol): JsonResponse
     {
-        $interval = TimeInterval::memberByValue($interval);
         $data = collect();
-        foreach ($this->strategy->getMarketDeltaClusters($symbol, $interval) as $mdCluster) {
+        foreach ($this->strategy->getMarketDeltaClusters($symbol) as $mdCluster) {
             /** @var MarketDeltaClusterDto $mdCluster */
             $data->push([
                 'fromTime' => $mdCluster->getFromTime(),

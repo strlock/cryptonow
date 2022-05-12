@@ -20,6 +20,7 @@ import UserSettingsModal from "./UserSettings/UserSettingsModal";
 import RequestHelper from "../Helpers/RequestHelper";
 import Loading from "./Loading/Loading";
 import StateProvider, {stateContext} from "./StateProvider";
+import TimeIntervals from "../TimeIntervals";
 
 const App = () => {
     const [state, actions] = useContext(stateContext)
@@ -107,7 +108,7 @@ const App = () => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            RequestHelper.fetch('/api/mdclusters/BTCUSD/' + state.interval, {}, response => {
+            RequestHelper.fetch('/api/mdclusters/BTCUSD', {}, response => {
                 actions.setMdClusters(response.data);
             });
         }
@@ -123,8 +124,8 @@ const App = () => {
             const relativePriceDiffPercent = 100*(mdCluster.toPrice-mdCluster.fromPrice)/mdCluster.fromPrice;
             const opacity = i === 0 ? 0.7 : 0.3;
             let annotation = {
-                x: Math.round(mdCluster.fromTime - state.interval / 2),
-                x2: Math.round(mdCluster.toTime - state.interval / 2),
+                x: Math.round(mdCluster.fromTime - TimeIntervals.ONE_MINUTE / 2),
+                x2: Math.round(mdCluster.toTime - TimeIntervals.ONE_MINUTE / 2),
                 strokeDashArray: 0,
                 borderColor: borderColor,
                 fillColor: '#244B4B',
