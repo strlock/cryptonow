@@ -11301,7 +11301,7 @@ function OrdersListTable(_ref) {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
                 striped: false,
                 now: Math.min(absDiffPercent, 100.0),
-                label: absDiffPercent >= 10.0 ? _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPercent(absDiffPercent) : '',
+                label: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPercent(absDiffPercent),
                 variant: order.diff_percent >= 0 ? "success" : "danger",
                 className: "small-progress"
               }), _constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[_Helpers_OrderStatusHelper__WEBPACK_IMPORTED_MODULE_7__["default"].getNextOrderState(order.state, order.diff_percent)]]

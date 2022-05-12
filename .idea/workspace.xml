@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/StrategyInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/StrategyInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/crypto.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/crypto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +41,7 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="PhpDebugGeneral" xdebug_debug_port="11003" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
+  <component name="PhpDebugGeneral" xdebug_debug_port="11003" listening_started="true" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
     <xdebug_debug_ports port="11003" />
   </component>
   <component name="PhpServers">
@@ -304,14 +308,7 @@
       <workItem from="1652185052023" duration="14146000" />
       <workItem from="1652248410767" duration="6578000" />
       <workItem from="1652267919605" duration="15226000" />
-      <workItem from="1652332477877" duration="21716000" />
-    </task>
-    <task id="LOCAL-00046" summary="Improving">
-      <created>1651383853572</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1651383853572</updated>
+      <workItem from="1652332477877" duration="25048000" />
     </task>
     <task id="LOCAL-00047" summary="Orders with stop-loss and take-profit">
       <created>1651383939608</created>
@@ -649,7 +646,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652365623902</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="Improving">
+      <created>1652366914998</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1652366914998</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -733,6 +737,7 @@
         <watch expression="$order-&gt;getState()" language="PHP" />
         <watch expression="date('d.m.Y H:i:s', $toTime/1000)" language="PHP" />
         <watch expression="OrderState::NEW()" language="PHP" />
+        <watch expression="$this-&gt;strategy-&gt;getMarketDeltaClusters($symbol)" language="PHP" />
         <watch expression="$order-&gt;getCreatedPrice()" language="PHP" />
       </configuration>
       <configuration name="artisan">

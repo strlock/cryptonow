@@ -46,16 +46,15 @@ class MarketDeltaController extends Controller
     public function getMdClusters(string $symbol): JsonResponse
     {
         $data = collect();
-        foreach ($this->strategy->getMarketDeltaClusters($symbol) as $mdCluster) {
-            /** @var MarketDeltaClusterDto $mdCluster */
-            $data->push([
-                'fromTime' => $mdCluster->getFromTime(),
-                'toTime' => $mdCluster->getToTime(),
-                'marketDelta' => $mdCluster->getMarketDelta(),
-                'fromPrice' => $mdCluster->getFromPrice(),
-                'toPrice' => $mdCluster->getToPrice(),
-            ]);
-        }
+        /** @var MarketDeltaClusterDto $mdCluster */
+        $mdCluster = $this->strategy->getMaxMarketDeltaCluster($symbol);
+        $data->push([
+            'fromTime' => $mdCluster->getFromTime(),
+            'toTime' => $mdCluster->getToTime(),
+            'marketDelta' => $mdCluster->getMarketDelta(),
+            'fromPrice' => $mdCluster->getFromPrice(),
+            'toPrice' => $mdCluster->getToPrice(),
+        ]);
         return response()->json(['data' => $data]);
     }
 

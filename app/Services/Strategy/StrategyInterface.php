@@ -4,9 +4,8 @@
 namespace App\Services\Strategy;
 
 
+use App\Dto\MarketDeltaClusterDto;
 use App\Enums\StrategySignal;
-use App\Enums\TimeInterval;
-use Illuminate\Support\Collection;
 
 interface StrategyInterface
 {
@@ -18,7 +17,7 @@ interface StrategyInterface
 
     /**
      * @param string $symbol
-     * @return Collection
+     * @return MarketDeltaClusterDto|null
      */
-    public function getMarketDeltaClusters(string $symbol): Collection;
+    public function getMaxMarketDeltaCluster(string $symbol): ?MarketDeltaClusterDto;
 }
