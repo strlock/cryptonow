@@ -11185,7 +11185,8 @@ var OrdersList = function OrdersList() {
           pagesTotal: state.ordersHistoryPagesTotal,
           onPageSelected: function onPageSelected(page) {
             return onHistoryPageSelected(page);
-          }
+          },
+          isHistory: true
         })
       })]
     })]
@@ -11236,7 +11237,8 @@ function OrdersListTable(_ref) {
       page = _ref.page,
       pagesTotal = _ref.pagesTotal,
       onPageSelected = _ref.onPageSelected,
-      onDeleteClick = _ref.onDeleteClick;
+      onDeleteClick = _ref.onDeleteClick,
+      isHistory = _ref.isHistory;
 
   var table = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("table", {
     className: "table",
@@ -11289,14 +11291,16 @@ function OrdersListTable(_ref) {
             children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(order.tp, true)
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("td", {
             className: "text-center order-state",
-            children: [_constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[order.state], /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
-              animated: true,
-              striped: true,
-              now: Math.min(Math.abs(order.diff_percent), 100.0),
-              label: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPercent(order.diff_percent),
-              variant: order.diff_percent >= 0 ? "success" : "danger",
-              className: "small-progress"
-            }), _constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[_Helpers_OrderStatusHelper__WEBPACK_IMPORTED_MODULE_7__["default"].getNextOrderState(order.state, order.diff_percent)]]
+            children: [_constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[order.state], !isHistory ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_9__["default"], {
+                animated: true,
+                striped: true,
+                now: Math.min(Math.abs(order.diff_percent), 100.0),
+                label: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPercent(order.diff_percent),
+                variant: order.diff_percent >= 0 ? "success" : "danger",
+                className: "small-progress"
+              }), _constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[_Helpers_OrderStatusHelper__WEBPACK_IMPORTED_MODULE_7__["default"].getNextOrderState(order.state, order.diff_percent)]]
+            }) : null]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("td", {
             className: "text-center order-symbol",
             children: new Date(order.created_at).toLocaleString()

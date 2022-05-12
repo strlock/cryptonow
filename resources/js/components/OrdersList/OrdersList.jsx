@@ -39,7 +39,7 @@ const OrdersList = () => {
                     <OrdersListTable orders={state.orders} page={state.ordersPage} pagesTotal={state.ordersPagesTotal} onDeleteClick={order => onDeleteClick(order)} onPageSelected={page => onActivePageSelected(page)} />
                 </div>
                 <div className={"tab-pane fade"} id={"nav-history"} role="tabpanel">
-                    <OrdersListTable orders={state.ordersHistory} page={state.ordersHistoryPage} pagesTotal={state.ordersHistoryPagesTotal} onPageSelected={page => onHistoryPageSelected(page)} />
+                    <OrdersListTable orders={state.ordersHistory} page={state.ordersHistoryPage} pagesTotal={state.ordersHistoryPagesTotal} onPageSelected={page => onHistoryPageSelected(page)} isHistory={true} />
                 </div>
             </div>
         </div>

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Percent progress bar">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -304,14 +306,7 @@
       <workItem from="1652185052023" duration="14146000" />
       <workItem from="1652248410767" duration="6578000" />
       <workItem from="1652267919605" duration="15226000" />
-      <workItem from="1652332477877" duration="11396000" />
-    </task>
-    <task id="LOCAL-00037" summary="Improving">
-      <created>1651000085751</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1651000085751</updated>
+      <workItem from="1652332477877" duration="11746000" />
     </task>
     <task id="LOCAL-00038" summary="Set completed at when simple order completed">
       <created>1651000329376</created>
@@ -649,7 +644,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652347917849</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="Improving">
+      <created>1652351653616</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1652351653616</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -693,7 +695,6 @@
     <MESSAGE value="Fixing bug. Improving logs" />
     <MESSAGE value="Common state. Pagination." />
     <MESSAGE value="Fixing Bugs. Refactoring" />
-    <MESSAGE value="Improving" />
     <MESSAGE value="Fixing bug. Refactoring" />
     <MESSAGE value="Fixing bugs. Refactoring." />
     <MESSAGE value="Adding background" />
@@ -702,7 +703,8 @@
     <MESSAGE value="Orders diff percent" />
     <MESSAGE value="Fixing bug" />
     <MESSAGE value="Percent progress bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Percent progress bar" />
+    <MESSAGE value="Improving" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

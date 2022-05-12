@@ -8,7 +8,7 @@ import styles from "./OrdersList.module.scss";
 import {ProgressBar} from "react-bootstrap";
 import OrderStateHelper from "../../Helpers/OrderStatusHelper";
 
-function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClick}) {
+function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClick, isHistory}) {
     const table = <table className="table">
         <thead>
         <tr>
@@ -33,8 +33,11 @@ function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClic
                     <td className={"text-center order-sl-tp"}>{FormatHelper.formatPrice(order.tp, true)}</td>
                     <td className={"text-center order-state"}>
                         {ORDER_STATE_TITLES[order.state]}
-                        <ProgressBar animated striped now={Math.min(Math.abs(order.diff_percent), 100.0)} label={FormatHelper.formatPercent(order.diff_percent)} variant={order.diff_percent >= 0 ? "success" : "danger"} className={"small-progress"} />
-                        {ORDER_STATE_TITLES[OrderStateHelper.getNextOrderState(order.state, order.diff_percent)]}
+                        {!isHistory
+                            ? ( <span>
+                                    <ProgressBar animated striped now={Math.min(Math.abs(order.diff_percent), 100.0)} label={FormatHelper.formatPercent(order.diff_percent)} variant={order.diff_percent >= 0 ? "success" : "danger"} className={"small-progress"} />
+                                    {ORDER_STATE_TITLES[OrderStateHelper.getNextOrderState(order.state, order.diff_percent)]}
+                            </span> ) : null}
                     </td>
                     <td className={"text-center order-symbol"}>{(new Date(order.created_at)).toLocaleString()}</td>
                     <td className={"text-center order-symbol"}>{order.id}</td>
