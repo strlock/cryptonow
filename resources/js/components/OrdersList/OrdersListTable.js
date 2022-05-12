@@ -35,7 +35,7 @@ function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClic
                         {ORDER_STATE_TITLES[order.state]}
                         {!isHistory
                             ? ( <span>
-                                    <ProgressBar now={Math.min(Math.abs(order.diff_percent), 100.0)} label={FormatHelper.formatPercent(order.diff_percent)} variant={order.diff_percent >= 0 ? "success" : "danger"} className={"small-progress"} />
+                                    <ProgressBar striped={false} now={Math.min(Math.abs(order.diff_percent), 100.0)} label={FormatHelper.formatPercent(order.diff_percent)} variant={order.diff_percent >= 0 ? "success" : "danger"} className={"small-progress"} />
                                     {ORDER_STATE_TITLES[OrderStateHelper.getNextOrderState(order.state, order.diff_percent)]}
                                 </span> ) : null}
                     </td>
