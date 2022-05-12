@@ -11716,10 +11716,9 @@ function StateProvider(_ref) {
         price: price
       });
     },
-    ordersReRender: function ordersReRender(time) {
+    ordersReRender: function ordersReRender() {
       return dispatch({
-        type: 'ordersReRender',
-        time: time
+        type: 'ordersReRender'
       });
     },
     setInterval: function setInterval(interval) {

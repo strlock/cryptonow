@@ -136,9 +136,8 @@ function StateProvider({children}) {
             type: 'setCurrentPrice',
             price: price,
         }),
-        ordersReRender: (time) => dispatch({
+        ordersReRender: () => dispatch({
             type: 'ordersReRender',
-            time: time,
         }),
         setInterval: (interval) => dispatch({
             type: 'setInterval',
