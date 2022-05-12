@@ -200,7 +200,7 @@ class Facade extends AbstractFacade
         $result = false;
         try {
             if (config('crypto.exchangesTestmode') === true) {
-                return [];
+                return false;
             }
             $response = $this->api->orderOCO(strtoupper($dto->getDirection()->value()), $dto->getExchangeSymbol(), $dto->getAmount(), $dto->getTp(), $dto->getSl(), [
                 'listClientOrderId' => $dto->getOrderId(),

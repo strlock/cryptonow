@@ -50,7 +50,7 @@ class BinanceWebsocketUserDataClient extends Command
         $userId = (int)$this->argument('userId');
         $user = User::find($userId);
         if (empty($user)) {
-            $this->log('User not found');
+            Log::debug('User not found');
             return 0;
         }
         /** @var BinanceExchange $exchange */
@@ -73,24 +73,24 @@ class BinanceWebsocketUserDataClient extends Command
                     $clientOrderId = str_replace(['stop-', 'limit-'], '', $clientOrderId);
                     $executionType = BinanceOrderExecutionType::memberByValue($report['executionType']);
                     $lastExecutedPrice = $report['lastExecutedPrice'];
-                    $this->log('Execution type: '.$executionType->value().', Order id: '.$clientOrderId.', Binance order id: '.$report['exchangeOrderId'].
+                    Log::debug('Execution type: '.$executionType->value().', Order id: '.$clientOrderId.', Binance order id: '.$report['exchangeOrderId'].
                                ', Direction: '.$report['side'].', Price:'.$lastExecutedPrice.', Quantity: '.$report['quantity'].', Stop: '.($isStopReport ? 'Yes' : 'No').', Limit: '.($isLimitReport ? 'Yes' : 'No'));
-                    $this->log('Report: '.var_export($report, true));
+                    Log::debug('Report: '.var_export($report, true));
                     if (!is_numeric($clientOrderId)) {
-                        $this->log('Ignoring report with client order id '.$clientOrderId);
+                        Log::debug('Ignoring report with client order id '.$clientOrderId);
                         return;
                     }
                     $order = $ordersRepository->getOrder($clientOrderId);
-                    $this->log('Order: Symbol: '.$order->getSymbol().', Direction: '.$order->getDirection()->value().
+                    Log::debug('Order: Symbol: '.$order->getSymbol().', Direction: '.$order->getDirection()->value().
                                ', Price: '.$order->getPrice().', Amount: '.$order->getAmount().', SL: '.$order->getSl().
                                ', TP: '.$order->getTp().', Market: '.($order->isMarket() ? 'Yes' : 'No').
                                ', State: '.$order->getState()->value());
                     if (empty($order)) {
-                        $this->log('Order not found. Client order id: '.$clientOrderId);
+                        Log::debug('Order not found. Client order id: '.$clientOrderId);
                         return;
                     }
                     if (!$order->getState()->isNEW() && !$order->getState()->isREADY()) {
-                        $this->log('Order already has state: '.$order->getState()->value().'. Ignoring.');
+                        Log::debug('Order already has state: '.$order->getState()->value().'. Ignoring.');
                         return;
                     }
                     if ($executionType->isCANCELED()) {
@@ -100,7 +100,7 @@ class BinanceWebsocketUserDataClient extends Command
                         if (!$isStopReport && !$isLimitReport) {
                             if ($order->hasGoal()) {
                                 if (!$ordersService->placeGoalOrder($order)) {
-                                    $this->log('Reverting initial order');
+                                    Log::debug('Reverting initial order');
                                     $ordersService->placeRevertMarketOrderToExchange($order);
                                     $ordersService->changeOrderState($order, OrderState::CANCELED(), $lastExecutedPrice);
                                 } else {
@@ -110,23 +110,17 @@ class BinanceWebsocketUserDataClient extends Command
                                 $ordersService->changeOrderState($order, OrderState::COMPLETED(), $lastExecutedPrice);
                             }
                         } else {
-                            $this->log('Order '.$order->getId().' is completed');
+                            Log::debug('Order '.$order->getId().' is completed');
                             $ordersService->changeOrderState($order, OrderState::COMPLETED(), $lastExecutedPrice);
                         }
                     }
                 });
             } catch (Throwable $e) {
-                $this->log($e->getMessage());
+                Log::debug($e->getMessage());
             }
             sleep(5);
-            $this->log('Retrying to start user data stream');
+            Log::debug('Retrying to start user data stream');
         }
         return 0;
-    }
-
-    private function log(string $message): void
-    {
-        echo $message.PHP_EOL;
-        Log::info($message);
     }
 }
