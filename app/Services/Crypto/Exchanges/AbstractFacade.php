@@ -122,10 +122,10 @@ abstract class AbstractFacade implements FacadeInterface
 
     /**
      * @param PlaceOrderDto $dto
-     * @return false|int
+     * @return false|int|null
      * @throws Exception
      */
-    public function placeOrder(PlaceOrderDto $dto): false|int
+    public function placeOrder(PlaceOrderDto $dto): null|false|int
     {
         throw new Exception('placeOrder is not implemented for this exchange');
         return false;

@@ -7,7 +7,6 @@ namespace App\Repositories;
 use App\Enums\OrderState;
 use App\Models\Order;
 use App\Models\OrderInterface;
-use App\Models\User;
 use App\Models\UserInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;

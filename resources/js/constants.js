@@ -1,14 +1,14 @@
 const REFRESH_INTERVAL = 15000;
 const POPUP_TIMEOUT = 15000;
-export const ORDERS_REFRESH_INTERVAL = 3000;
+export const ORDERS_REFRESH_INTERVAL = 15000;
 const ONE_MINUTE_MS = 60*1000;
 
 const ORDER_STATE_TITLES = {
-    'new': 'New Order',
-    'ready': 'Waiting SL or TP.',
-    'profit': 'Order completed (profit)',
-    'loss': 'Order completed (loss)',
-    'failed': 'Order failed',
+    'new': 'New',
+    'ready': 'Waiting',
+    'profit': 'Profit',
+    'loss': 'Loss',
+    'failed': 'Failed',
     'canceled': 'Canceled',
     'completed': 'Completed',
 };

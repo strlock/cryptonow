@@ -34,9 +34,9 @@ interface FacadeInterface
 
     /**
      * @param PlaceOrderDto $dto
-     * @return false|int
+     * @return false|int|null
      */
-    public function placeOrder(PlaceOrderDto $dto): false|int;
+    public function placeOrder(PlaceOrderDto $dto): null|false|int;
 
     /**
      * @param PlaceGoalOrderDto $dto

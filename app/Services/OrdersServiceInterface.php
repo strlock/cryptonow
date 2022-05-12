@@ -15,9 +15,10 @@ use Illuminate\Database\Eloquent\Model;
 interface OrdersServiceInterface
 {
     public function createNewOrder(CreateNewOrderDto $dto): OrderInterface;
-    public function changeOrderState(OrderInterface|Model $order, OrderState $newState);
+    public function changeOrderState(OrderInterface|Model $order, OrderState $newState, ?float $price = null): void;
     public function placeGoalOrder(OrderInterface $order): bool;
     public function placeRevertMarketOrderToExchange(OrderInterface|Model $order): string;
     public function cancelOrder(OrderInterface|Model $order): void;
     public function createUsersAutomaticOrders(CreateAutomaticOrdersDto $dto): void;
+    public function getDifferenceToNextPricePercent(OrderInterface $order): float;
 }

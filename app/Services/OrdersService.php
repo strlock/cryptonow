@@ -71,6 +71,8 @@ class OrdersService implements OrdersServiceInterface
         if ($exchangeOrderId === false) {
             throw new Exception('Cannot place order to exchange');
         }
+        $currentPrice = $exchange->getCurrentPrice($exchangeSymbol);
+        $order->setCreatedPrice($currentPrice);
         $order->setExchangeOrderId($exchangeOrderId);
         $order->save();
     }
@@ -95,9 +97,10 @@ class OrdersService implements OrdersServiceInterface
 
     /**
      * @param OrderInterface|Model $order
-     * @param string $newState
+     * @param OrderState $newState
+     * @param float|null $price
      */
-    public function changeOrderState(OrderInterface|Model $order, OrderState $newState): void
+    public function changeOrderState(OrderInterface|Model $order, OrderState $newState, ?float $price = null): void
     {
         $oldState = $order->getState();
         if ($newState === $oldState) {
@@ -108,10 +111,16 @@ class OrdersService implements OrdersServiceInterface
         if ($newState->isREADY()) {
             Log::info('Order '.$order->getId().' is ready to achieve the goal');
             $order->setReadyAt($now);
+            if (!empty($price)) {
+                $order->setReadyPrice($price);
+            }
         }
         if (in_array($newState, [OrderState::PROFIT(), OrderState::LOSS(), OrderState::FAILED(), OrderState::COMPLETED()])) {
             Log::info('Order '.$order->getId().' is closed. State: '.$newState);
             $order->setCompletedAt($now);
+            if (!empty($price)) {
+                $order->setClosedPrice($price);
+            }
         }
         $order->setState($newState);
         $order->save();
@@ -185,6 +194,7 @@ class OrdersService implements OrdersServiceInterface
 
     /**
      * @param OrderInterface|Model $order
+     * @throws Exception
      */
     public function cancelOrder(OrderInterface|Model $order): void
     {
@@ -195,6 +205,7 @@ class OrdersService implements OrdersServiceInterface
 
     /**
      * @param OrderInterface $order
+     * @throws Exception
      */
     private function cancelPlacedOrdersFromExchange(OrderInterface $order): void
     {
@@ -218,6 +229,10 @@ class OrdersService implements OrdersServiceInterface
         }
     }
 
+    /**
+     * @param UserInterface $user
+     * @return bool
+     */
     private function userHasOpenedOrder(UserInterface $user): bool
     {
         foreach($this->ordersRepository->getUserOrders($user) as $order) {
@@ -229,6 +244,10 @@ class OrdersService implements OrdersServiceInterface
         return false;
     }
 
+    /**
+     * @param CreateAutomaticOrdersDto $dto
+     * @throws Exception
+     */
     public function createUsersAutomaticOrders(CreateAutomaticOrdersDto $dto): void
     {
         $exchange = ExchangesFactory::create();
@@ -270,5 +289,30 @@ class OrdersService implements OrdersServiceInterface
             Log::debug($message);
             Notification::route('telegram', config('telegram.botChatId'))->notify(new TelegramNotification($message));
         }
+    }
+
+    /**
+     * @param OrderInterface $order
+     * @return float
+     */
+    public function getDifferenceToNextPricePercent(OrderInterface $order): float
+    {
+        $exchange = ExchangesFactory::create();
+        $exchangeSymbol = $exchange->getExchangeOrderSymbol($order->getSymbol());
+        $currentPrice = $exchange->getCurrentPrice($exchangeSymbol);
+        $nextPrice = match ($order->getState()) {
+            OrderState::NEW() => $order->getPrice(),
+            OrderState::READY() => $currentPrice-$order->getPrice() > 0 ? $order->getTp() : $order->getSl(),
+            default => false,
+        };
+        $prevPrice = match ($order->getState()) {
+            OrderState::NEW() => $order->getCreatedPrice(),
+            OrderState::READY() => $order->getReadyPrice(),
+            default => false,
+        };
+        if ($nextPrice === false) {
+            return 0.0;
+        }
+        return 100*($currentPrice-$nextPrice)/abs($prevPrice-$nextPrice);
     }
 }

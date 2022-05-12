@@ -59,10 +59,12 @@ class BinanceWebsocketUserDataClient extends Command
             try {
                 $exchange->userDataStream(function ($report) use($ordersService, $ordersRepository) {
                     /*$report = [
-                        'clientOrderId' => '161',
+                        'clientOrderId' => '140',
                         'executionType' => 'TRADE',
                         'exchangeOrderId' => '4842488533',
                         'side'          => 'BUY',
+                        'lastExecutedPrice' => 25432.34,
+                        'quantity' => 0.00041,
                     ];*/
                     /** @var OrderInterface $order */
                     $clientOrderId = $report['clientOrderId'];
@@ -70,8 +72,9 @@ class BinanceWebsocketUserDataClient extends Command
                     $isLimitReport = str_starts_with($clientOrderId, 'limit-');
                     $clientOrderId = str_replace(['stop-', 'limit-'], '', $clientOrderId);
                     $executionType = BinanceOrderExecutionType::memberByValue($report['executionType']);
+                    $lastExecutedPrice = $report['lastExecutedPrice'];
                     $this->log('Execution type: '.$executionType->value().', Order id: '.$clientOrderId.', Binance order id: '.$report['exchangeOrderId'].
-                               ', Direction: '.$report['side'].', Price:'.$report['price'].', Quantity: '.$report['quantity'].', Stop: '.($isStopReport ? 'Yes' : 'No').', Limit: '.($isLimitReport ? 'Yes' : 'No'));
+                               ', Direction: '.$report['side'].', Price:'.$lastExecutedPrice.', Quantity: '.$report['quantity'].', Stop: '.($isStopReport ? 'Yes' : 'No').', Limit: '.($isLimitReport ? 'Yes' : 'No'));
                     $this->log('Report: '.var_export($report, true));
                     if (!is_numeric($clientOrderId)) {
                         $this->log('Ignoring report with client order id '.$clientOrderId);
@@ -91,7 +94,7 @@ class BinanceWebsocketUserDataClient extends Command
                         return;
                     }
                     if ($executionType->isCANCELED()) {
-                        $ordersService->changeOrderState($order, OrderState::CANCELED());
+                        $ordersService->changeOrderState($order, OrderState::CANCELED(), $lastExecutedPrice);
                     }
                     if ($executionType->isTRADE()) {
                         if (!$isStopReport && !$isLimitReport) {
@@ -99,16 +102,16 @@ class BinanceWebsocketUserDataClient extends Command
                                 if (!$ordersService->placeGoalOrder($order)) {
                                     $this->log('Reverting initial order');
                                     $ordersService->placeRevertMarketOrderToExchange($order);
-                                    $ordersService->changeOrderState($order,OrderState::CANCELED());
+                                    $ordersService->changeOrderState($order, OrderState::CANCELED(), $lastExecutedPrice);
                                 } else {
-                                    $ordersService->changeOrderState($order, OrderState::READY());
+                                    $ordersService->changeOrderState($order, OrderState::READY(), $lastExecutedPrice);
                                 }
                             } else {
-                                $ordersService->changeOrderState($order, OrderState::COMPLETED());
+                                $ordersService->changeOrderState($order, OrderState::COMPLETED(), $lastExecutedPrice);
                             }
                         } else {
                             $this->log('Order '.$order->getId().' is completed');
-                            $ordersService->changeOrderState($order, OrderState::COMPLETED());
+                            $ordersService->changeOrderState($order, OrderState::COMPLETED(), $lastExecutedPrice);
                         }
                     }
                 });

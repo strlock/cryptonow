@@ -12,7 +12,7 @@ import LoginHelper from "../Helpers/LoginHelper";
 import OrdersList from "./OrdersList/OrdersList";
 import {
     POPUP_TIMEOUT,
-    ORDER_DIRECTION_BUY,
+    ORDER_DIRECTION_BUY, ORDERS_REFRESH_INTERVAL,
 } from '../constants';
 import IntervalSelector from "./IntervalSelector/IntervalSelector";
 import FormatHelper from "../Helpers/FormatHelper";
@@ -122,14 +122,16 @@ const App = () => {
             const borderColor = i !== 0 ? chartsLinesColor : '#00ff00';
             const relativePriceDiffPercent = 100*(mdCluster.toPrice-mdCluster.fromPrice)/mdCluster.fromPrice;
             const opacity = i === 0 ? 0.7 : 0.3;
-            annotations.push({
+            let annotation = {
                 x: Math.round(mdCluster.fromTime - state.interval / 2),
                 x2: Math.round(mdCluster.toTime - state.interval / 2),
                 strokeDashArray: 0,
                 borderColor: borderColor,
                 fillColor: '#244B4B',
                 opacity: opacity,
-                label: {
+            };
+            if (i === 0) {
+                annotation.label = {
                     text: FormatHelper.formatAmount(mdCluster.marketDelta) + ', ' + (Math.round(relativePriceDiffPercent*100)/100) + '%',
                     borderColor: chartsLinesColor,
                     style: {
@@ -137,8 +139,9 @@ const App = () => {
                         background: 'transparent',
                         opacity: opacity,
                     },
-                }
-            });
+                };
+            }
+            annotations.push(annotation);
         });
         return annotations;
     }, [state.mdClusters]);
@@ -160,7 +163,7 @@ const App = () => {
         };
     }
 
-    const yAnnotations = useMemo(() => {
+    const orderAnnotations = useMemo(() => {
         const result = [];
         const buyColor = '#00E396';
         const sellColor = '#E30096';
@@ -176,7 +179,9 @@ const App = () => {
                         color: chartsTextColor,
                         background: 'transparent'
                     },
-                    text: 'Order ' + order.id + ': ' + FormatHelper.formatPrice(order.price)
+                    text: 'Order ' + order.id + ': ' + FormatHelper.formatPrice(order.price),
+                    textAnchor: 'start',
+                    position: 'left',
                 }
             });
             if (order.sl) {
@@ -190,7 +195,9 @@ const App = () => {
                             color: chartsTextColor,
                             background: 'transparent'
                         },
-                        text: 'Order ' + order.id + ' SL: ' + FormatHelper.formatPrice(order.sl)
+                        text: 'Order ' + order.id + ' SL: ' + FormatHelper.formatPrice(order.sl),
+                        textAnchor: 'start',
+                        position: 'left',
                     }
                 });
             }
@@ -205,7 +212,9 @@ const App = () => {
                             color: chartsTextColor,
                             background: 'transparent'
                         },
-                        text: 'Order ' + order.id + ' TP: ' + FormatHelper.formatPrice(order.tp)
+                        text: 'Order ' + order.id + ' TP: ' + FormatHelper.formatPrice(order.tp),
+                        textAnchor: 'start',
+                        position: 'left',
                     }
                 });
             }
@@ -228,6 +237,12 @@ const App = () => {
             });
         }
     }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender, isLoggedIn]);
+
+    useEffect(() => {
+        setInterval(() => {
+            actions.ordersReRender();
+        }, ORDERS_REFRESH_INTERVAL);
+    }, []);
 
     if (state.initialized === false) {
         return <Loading />
@@ -260,7 +275,7 @@ const App = () => {
                                         linesColor={chartsLinesColor}
                                         innerRef={priceChartRef}
                                         xAnnotations={annotations}
-                                        yAnnotations={yAnnotations}
+                                        yAnnotations={orderAnnotations}
                                         orders={state.orders} />
                                     <MarketDeltaChart
                                         fromTime={fromTime}

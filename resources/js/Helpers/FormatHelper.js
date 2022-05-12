@@ -34,6 +34,15 @@ class FormatHelper
         return value.toFixed(digits);
     }
 
+    static formatPercent(value)
+    {
+        value = parseFloat(value);
+        if (isNaN(value)) {
+            value = 0.0;
+        }
+        return value.toFixed(1) + '%';
+    }
+
     static formatDate(date)
     {
         return date !== null ? (new Date(date)).toLocaleString() : '-';

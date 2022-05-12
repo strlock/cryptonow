@@ -43,4 +43,12 @@ interface OrderInterface
     public function setExchangeSlOrderId(?string $value): void;
     public function getExchangeTpOrderId(): ?string;
     public function setExchangeTpOrderId(?string $value): void;
+    public function getCreatedPrice(): ?float;
+    public function setCreatedPrice(?float $value): void;
+    public function getReadyPrice(): ?float;
+    public function setReadyPrice(?float $value): void;
+    public function getClosedPrice(): ?float;
+    public function setClosedPrice(?float $value): void;
+    public function getDiffPercent(): ?float;
+    public function setDiffPercent(?float $value): void;
 }

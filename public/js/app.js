@@ -9238,6 +9238,17 @@ var FormatHelper = /*#__PURE__*/function () {
       return value.toFixed(digits);
     }
   }, {
+    key: "formatPercent",
+    value: function formatPercent(value) {
+      value = parseFloat(value);
+
+      if (isNaN(value)) {
+        value = 0.0;
+      }
+
+      return value.toFixed(1) + '%';
+    }
+  }, {
     key: "formatDate",
     value: function formatDate(date) {
       return date !== null ? new Date(date).toLocaleString() : '-';
@@ -9822,14 +9833,17 @@ var App = function App() {
       var borderColor = i !== 0 ? chartsLinesColor : '#00ff00';
       var relativePriceDiffPercent = 100 * (mdCluster.toPrice - mdCluster.fromPrice) / mdCluster.fromPrice;
       var opacity = i === 0 ? 0.7 : 0.3;
-      annotations.push({
+      var annotation = {
         x: Math.round(mdCluster.fromTime - state.interval / 2),
         x2: Math.round(mdCluster.toTime - state.interval / 2),
         strokeDashArray: 0,
         borderColor: borderColor,
         fillColor: '#244B4B',
-        opacity: opacity,
-        label: {
+        opacity: opacity
+      };
+
+      if (i === 0) {
+        annotation.label = {
           text: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].formatAmount(mdCluster.marketDelta) + ', ' + Math.round(relativePriceDiffPercent * 100) / 100 + '%',
           borderColor: chartsLinesColor,
           style: {
@@ -9837,8 +9851,10 @@ var App = function App() {
             background: 'transparent',
             opacity: opacity
           }
-        }
-      });
+        };
+      }
+
+      annotations.push(annotation);
     });
     return annotations;
   }, [state.mdClusters]);
@@ -9860,7 +9876,7 @@ var App = function App() {
     };
   };
 
-  var yAnnotations = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+  var orderAnnotations = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     var result = [];
     var buyColor = '#00E396';
     var sellColor = '#E30096';
@@ -9877,7 +9893,9 @@ var App = function App() {
             color: chartsTextColor,
             background: 'transparent'
           },
-          text: 'Order ' + order.id + ': ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].formatPrice(order.price)
+          text: 'Order ' + order.id + ': ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].formatPrice(order.price),
+          textAnchor: 'start',
+          position: 'left'
         }
       });
 
@@ -9892,7 +9910,9 @@ var App = function App() {
               color: chartsTextColor,
               background: 'transparent'
             },
-            text: 'Order ' + order.id + ' SL: ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].formatPrice(order.sl)
+            text: 'Order ' + order.id + ' SL: ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].formatPrice(order.sl),
+            textAnchor: 'start',
+            position: 'left'
           }
         });
       }
@@ -9908,7 +9928,9 @@ var App = function App() {
               color: chartsTextColor,
               background: 'transparent'
             },
-            text: 'Order ' + order.id + ' TP: ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].formatPrice(order.tp)
+            text: 'Order ' + order.id + ' TP: ' + _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].formatPrice(order.tp),
+            textAnchor: 'start',
+            position: 'left'
           }
         });
       }
@@ -9930,6 +9952,11 @@ var App = function App() {
       });
     }
   }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender, isLoggedIn]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    setInterval(function () {
+      actions.ordersReRender();
+    }, _constants__WEBPACK_IMPORTED_MODULE_11__.ORDERS_REFRESH_INTERVAL);
+  }, []);
 
   if (state.initialized === false) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_Loading_Loading__WEBPACK_IMPORTED_MODULE_16__["default"], {});
@@ -9979,7 +10006,7 @@ var App = function App() {
                   linesColor: chartsLinesColor,
                   innerRef: priceChartRef,
                   xAnnotations: annotations,
-                  yAnnotations: yAnnotations,
+                  yAnnotations: orderAnnotations,
                   orders: state.orders
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_18__.jsx)(_MarketDeltaChart_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
                   fromTime: fromTime,
@@ -11196,9 +11223,9 @@ function OrdersListTable(_ref) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
             className: "text-center order-sl-tp",
             children: _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPrice(order.tp, true)
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("td", {
             className: "text-center order-state",
-            children: _constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[order.state]
+            children: [_constants__WEBPACK_IMPORTED_MODULE_1__.ORDER_STATE_TITLES[order.state], " ", _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_2__["default"].formatPercent(order.diff_percent)]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("td", {
             className: "text-center order-symbol",
             children: new Date(order.created_at).toLocaleString()
@@ -12050,14 +12077,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var REFRESH_INTERVAL = 15000;
 var POPUP_TIMEOUT = 15000;
-var ORDERS_REFRESH_INTERVAL = 3000;
+var ORDERS_REFRESH_INTERVAL = 15000;
 var ONE_MINUTE_MS = 60 * 1000;
 var ORDER_STATE_TITLES = {
-  'new': 'New Order',
-  'ready': 'Waiting SL or TP.',
-  'profit': 'Order completed (profit)',
-  'loss': 'Order completed (loss)',
-  'failed': 'Order failed',
+  'new': 'New',
+  'ready': 'Waiting',
+  'profit': 'Profit',
+  'loss': 'Loss',
+  'failed': 'Failed',
   'canceled': 'Canceled',
   'completed': 'Completed'
 };

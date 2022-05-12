@@ -29,6 +29,10 @@ class Order extends Model implements OrderInterface
         'exchange_order_id',
         'exchange_sl_order_id',
         'exchange_tp_order_id',
+        'created_price',
+        'ready_price',
+        'closed_price',
+        'diff_percent',
     ];
 
     /**
@@ -272,5 +276,45 @@ class Order extends Model implements OrderInterface
     public function setExchangeTpOrderId(?string $value): void
     {
         $this->exchange_tp_order_id = $value;
+    }
+
+    public function getCreatedPrice(): ?float
+    {
+        return $this->created_price;
+    }
+
+    public function setCreatedPrice(?float $value): void
+    {
+        $this->created_price = $value;
+    }
+
+    public function getReadyPrice(): ?float
+    {
+        return $this->ready_price;
+    }
+
+    public function setReadyPrice(?float $value): void
+    {
+        $this->ready_price = $value;
+    }
+
+    public function getClosedPrice(): ?float
+    {
+        return $this->closed_price;
+    }
+
+    public function setClosedPrice(?float $value): void
+    {
+        $this->closed_price = $value;
+    }
+
+    public function getDiffPercent(): ?float
+    {
+        return $this->diff_percent;
+    }
+
+    public function setDiffPercent(?float $value): void
+    {
+        $this->diff_percent = $value;
     }
 }

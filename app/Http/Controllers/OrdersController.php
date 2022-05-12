@@ -9,8 +9,10 @@ use App\Http\Resources\OrdersResource;
 use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\OrderInterface;
 use App\Repositories\OrdersRepository;
 use App\Services\OrdersService;
+use App\Services\OrdersServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
@@ -22,7 +24,7 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(OrdersRepository $ordersRepository, Request $request)
+    public function index(OrdersRepository $ordersRepository, Request $request, OrdersServiceInterface $ordersService)
     {
         try {
             $user = Auth::user();
@@ -42,6 +44,10 @@ class OrdersController extends Controller
                 ];
             }
             $orders = $ordersRepository->getUserOrders($user, $states);
+            foreach ($orders as &$order) {
+                /** @var OrderInterface $order */
+                $order->setDiffPercent($ordersService->getDifferenceToNextPricePercent($order));
+            }
             return OrdersResource::collection($orders);
         } catch (Throwable $e) {
             return response()->json(['error' => $e->getMessage()]);

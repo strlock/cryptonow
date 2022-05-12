@@ -20,10 +20,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(OrdersServiceInterface::class, OrdersService::class);
-        /*$this->app->bind(ExchangeInterface::class, function ($app, $parameters) {
-            $class = 'App\\Services\\Crypto\\Exchanges\\'.ucfirst($parameters['name']).'\\Facade';
-            return new $class();
-        });*/
         $this->app->bind(StrategyInterface::class, AnomalousMarketDeltaBuyStrategy::class);
         $this->app->bind(ExchangesFactoryInterface::class, ExchangesFactory::class);
     }

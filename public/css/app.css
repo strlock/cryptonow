@@ -14388,6 +14388,7 @@ h1, .h1 {
   background-color: var(--top-bg-color);
   border-radius: var(--main-border-radius);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  opacity: 0.95;
 }
 #top .top-left {
   grid-column-start: 1;
@@ -14413,7 +14414,6 @@ h1, .h1 {
 
 #app {
   width: 100%;
-  opacity: 0.95;
 }
 #app .container {
   max-width: 100%;
@@ -14558,6 +14558,10 @@ h1, .h1 {
 
 .tab-content > .tab-pane {
   padding-top: 1rem;
+}
+
+.modal {
+  z-index: 65535;
 }
 
 .modal-content {
