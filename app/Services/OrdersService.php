@@ -300,19 +300,17 @@ class OrdersService implements OrdersServiceInterface
         $exchange = ExchangesFactory::create();
         $exchangeSymbol = $exchange->getExchangeOrderSymbol($order->getSymbol());
         $currentPrice = $exchange->getCurrentPrice($exchangeSymbol);
-        $nextPrice = match ($order->getState()) {
-            OrderState::NEW() => $order->getPrice(),
-            OrderState::READY() => $currentPrice-$order->getPrice() > 0 ? $order->getTp() : $order->getSl(),
-            default => false,
-        };
         $prevPrice = match ($order->getState()) {
-            OrderState::NEW() => $order->getCreatedPrice(),
+            OrderState::NEW() => 0,//$order->getCreatedPrice(),
             OrderState::READY() => $order->getReadyPrice(),
             default => false,
         };
-        if ($nextPrice === false) {
-            return 0.0;
-        }
-        return 100*($currentPrice-$nextPrice)/abs($prevPrice-$nextPrice);
+        $priceDiff = $currentPrice-$order->getPrice();
+        $nextPrice = $priceDiff > 0 ? $order->getTp() : $order->getSl();
+        return match ($order->getState()) {
+            OrderState::NEW() => 100*($currentPrice/$order->getPrice()),
+            OrderState::READY() => 100*($currentPrice-$nextPrice)/abs($prevPrice-$nextPrice),
+            default => false,
+        };
     }
 }
