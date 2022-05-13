@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving signal detection. Fixing bugs.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Dto/MarketDeltaClusterDto.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Dto/MaxMarketDeltaDto.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/StrategyInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/StrategyInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/crypto.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/crypto.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -312,14 +306,7 @@
       <workItem from="1652267919605" duration="15226000" />
       <workItem from="1652332477877" duration="26749000" />
       <workItem from="1652420172462" duration="7637000" />
-      <workItem from="1652445727750" duration="6003000" />
-    </task>
-    <task id="LOCAL-00048" summary="Design, enumerations">
-      <created>1651412336975</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1651412336975</updated>
+      <workItem from="1652445727750" duration="6862000" />
     </task>
     <task id="LOCAL-00049" summary="Bugfix">
       <created>1651415137285</created>
@@ -657,7 +644,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652388386029</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="Improving signal detection. Fixing bugs.">
+      <created>1652453989237</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1652453989238</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -685,7 +679,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Bugfix" />
     <MESSAGE value="Imporving" />
     <MESSAGE value="Imporving orders list" />
     <MESSAGE value="Order cancel except delete. Save to DB SL and TP order ids" />
@@ -710,7 +703,8 @@
     <MESSAGE value="Percent progress bar" />
     <MESSAGE value="Fixing bug" />
     <MESSAGE value="Improving" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
+    <MESSAGE value="Improving signal detection. Fixing bugs." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving signal detection. Fixing bugs." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

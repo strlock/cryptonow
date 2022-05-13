@@ -315,9 +315,9 @@ class OrdersService implements OrdersServiceInterface
             $nextPrice = $priceDiff > 0 ? $order->getTp() : $order->getSl();
             $diffPercent = 0.0;
             if ($order->getState() === OrderState::NEW()) {
-                $diffPercent = 100 * ($currentPrice / $order->getPrice());
+                $diffPercent = 100*(($order->getReadyPrice()-$currentPrice)/abs($order->getReadyPrice()-$order->getPrice()));
             } else if ($order->getState() === OrderState::READY()) {
-                $diffPercent = 100 * ($currentPrice - $order->getReadyPrice()) / abs($nextPrice - $order->getReadyPrice());
+                $diffPercent = 100*($currentPrice - $order->getReadyPrice())/abs($nextPrice - $order->getReadyPrice());
             }
             $order->setDiffPercent($diffPercent);
         }
