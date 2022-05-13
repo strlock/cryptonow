@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Dto\MarketDeltaClusterDto;
+use App\Dto\MaxMarketDeltaDto;
 use App\Enums\TimeInterval;
 use App\Http\Resources\SeriesResource;
 use App\Services\GetAggregateMarketStatService;
@@ -46,14 +46,16 @@ class MarketDeltaController extends Controller
     public function getMdClusters(string $symbol): JsonResponse
     {
         $data = collect();
-        /** @var MarketDeltaClusterDto $mdCluster */
-        $mdCluster = $this->strategy->getMaxMarketDeltaCluster($symbol);
+        /** @var MaxMarketDeltaDto $mdCluster */
+        $mdCluster = $this->strategy->getMaxMarketDelta($symbol);
         $data->push([
             'fromTime' => $mdCluster->getFromTime(),
             'toTime' => $mdCluster->getToTime(),
             'marketDelta' => $mdCluster->getMarketDelta(),
             'fromPrice' => $mdCluster->getFromPrice(),
             'toPrice' => $mdCluster->getToPrice(),
+            'fromTimeFormatted' => date('d.m.Y H:i:s', $mdCluster->getFromTime()/1000),
+            'toTimeFormatted' => date('d.m.Y H:i:s', $mdCluster->getToTime()/1000),
         ]);
         return response()->json(['data' => $data]);
     }

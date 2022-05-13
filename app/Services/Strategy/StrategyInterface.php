@@ -4,7 +4,7 @@
 namespace App\Services\Strategy;
 
 
-use App\Dto\MarketDeltaClusterDto;
+use App\Dto\MaxMarketDeltaDto;
 use App\Enums\StrategySignal;
 
 interface StrategyInterface
@@ -17,7 +17,7 @@ interface StrategyInterface
 
     /**
      * @param string $symbol
-     * @return MarketDeltaClusterDto|null
+     * @return MaxMarketDeltaDto|null
      */
-    public function getMaxMarketDeltaCluster(string $symbol): ?MarketDeltaClusterDto;
+    public function getMaxMarketDelta(string $symbol): ?MaxMarketDeltaDto;
 }

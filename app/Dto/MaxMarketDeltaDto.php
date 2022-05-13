@@ -4,7 +4,7 @@
 namespace App\Dto;
 
 
-class MarketDeltaClusterDto
+class MaxMarketDeltaDto
 {
     public function __construct(
         private float $marketDelta,

@@ -9896,8 +9896,8 @@ var App = function App() {
       var relativePriceDiffPercent = 100 * (mdCluster.toPrice - mdCluster.fromPrice) / mdCluster.fromPrice;
       var opacity = i === 0 ? 0.7 : 0.3;
       var annotation = {
-        x: Math.round(mdCluster.fromTime - _TimeIntervals__WEBPACK_IMPORTED_MODULE_18__["default"].ONE_MINUTE / 2),
-        x2: Math.round(mdCluster.toTime - _TimeIntervals__WEBPACK_IMPORTED_MODULE_18__["default"].ONE_MINUTE / 2),
+        x: Math.round(mdCluster.fromTime - _TimeIntervals__WEBPACK_IMPORTED_MODULE_18__["default"].FIVE_MINUTES / 2),
+        x2: Math.round(mdCluster.toTime - _TimeIntervals__WEBPACK_IMPORTED_MODULE_18__["default"].FIVE_MINUTES / 2),
         strokeDashArray: 0,
         borderColor: borderColor,
         fillColor: '#244B4B',
