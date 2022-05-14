@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving.">
-      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +37,7 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="PhpDebugGeneral" xdebug_debug_port="11003" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
+  <component name="PhpDebugGeneral" xdebug_debug_port="11003" listening_started="true" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
     <xdebug_debug_ports port="11003" />
   </component>
   <component name="PhpServers">
@@ -206,7 +207,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/Helpers" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Console/Commands" />
     <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -218,11 +219,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\coding\OpenServer\domains\crypto\app\Console\Commands" />
       <recent name="E:\coding\OpenServer\domains\crypto\resources\js\Helpers" />
       <recent name="E:\coding\OpenServer\domains\crypto\resources\js\contexts" />
       <recent name="E:\coding\OpenServer\domains\crypto\app\Dto" />
       <recent name="E:\coding\OpenServer\domains\crypto\app\Repositories" />
-      <recent name="E:\coding\OpenServer\domains\crypto\resources\js\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\coding\OpenServer\domains\crypto\resources\js\components\Overlay" />
@@ -305,14 +306,7 @@
       <workItem from="1652267919605" duration="15226000" />
       <workItem from="1652332477877" duration="26749000" />
       <workItem from="1652420172462" duration="7637000" />
-      <workItem from="1652445727750" duration="7198000" />
-    </task>
-    <task id="LOCAL-00051" summary="Bugfix">
-      <created>1651416964295</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1651416964295</updated>
+      <workItem from="1652445727750" duration="11228000" />
     </task>
     <task id="LOCAL-00052" summary="Bugfix">
       <created>1651420821718</created>
@@ -650,7 +644,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652455420714</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="Improving.">
+      <created>1652455674474</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1652455674474</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -722,6 +723,11 @@
           <url>file://$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php</url>
           <line>91</line>
           <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php</url>
+          <line>60</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
