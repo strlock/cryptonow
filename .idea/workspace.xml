@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving.">
-      <change afterPath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" afterDir="false" />
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Bitfinex websocket client">
+      <change beforePath="$PROJECT_DIR$/.idea/crypto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/crypto.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitfinex/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitfinex/Facade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,6 +199,30 @@
       <path value="$PROJECT_DIR$/vendor/stella-maris/clock" />
       <path value="$PROJECT_DIR$/vendor/lcobucci/clock" />
       <path value="$PROJECT_DIR$/vendor/sourceboat/laravel-enumeration" />
+      <path value="$PROJECT_DIR$/vendor/league/uri" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-interfaces" />
+      <path value="$PROJECT_DIR$/vendor/league/uri-parser" />
+      <path value="$PROJECT_DIR$/vendor/amphp/windows-registry" />
+      <path value="$PROJECT_DIR$/vendor/amphp/websocket" />
+      <path value="$PROJECT_DIR$/vendor/amphp/websocket-client" />
+      <path value="$PROJECT_DIR$/vendor/amphp/socket" />
+      <path value="$PROJECT_DIR$/vendor/amphp/sync" />
+      <path value="$PROJECT_DIR$/vendor/amphp/process" />
+      <path value="$PROJECT_DIR$/vendor/amphp/serialization" />
+      <path value="$PROJECT_DIR$/vendor/amphp/http-client" />
+      <path value="$PROJECT_DIR$/vendor/amphp/parser" />
+      <path value="$PROJECT_DIR$/vendor/amphp/hpack" />
+      <path value="$PROJECT_DIR$/vendor/amphp/http" />
+      <path value="$PROJECT_DIR$/vendor/amphp/cache" />
+      <path value="$PROJECT_DIR$/vendor/amphp/dns" />
+      <path value="$PROJECT_DIR$/vendor/amphp/amp" />
+      <path value="$PROJECT_DIR$/vendor/amphp/byte-stream" />
+      <path value="$PROJECT_DIR$/vendor/cash/lrucache" />
+      <path value="$PROJECT_DIR$/vendor/daverandom/libdns" />
+      <path value="$PROJECT_DIR$/vendor/kelunik/certificate" />
+      <path value="$PROJECT_DIR$/vendor/writethesky/websocket-client" />
+      <path value="$PROJECT_DIR$/vendor/sabre/uri" />
+      <path value="$PROJECT_DIR$/vendor/codenix-sv/bitfinex-api-ws" />
     </include_path>
   </component>
   <component name="PhpXdebugProxy" host="127.0.0.1" port="11003" />
@@ -307,13 +337,10 @@
       <workItem from="1652332477877" duration="26749000" />
       <workItem from="1652420172462" duration="7637000" />
       <workItem from="1652445727750" duration="11228000" />
-    </task>
-    <task id="LOCAL-00052" summary="Bugfix">
-      <created>1651420821718</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1651420821718</updated>
+      <workItem from="1652503216537" duration="2970000" />
+      <workItem from="1652533634515" duration="1866000" />
+      <workItem from="1652605176721" duration="1939000" />
+      <workItem from="1652622108078" duration="6785000" />
     </task>
     <task id="LOCAL-00053" summary="Imporving">
       <created>1651424116088</created>
@@ -651,7 +678,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652455674474</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <task id="LOCAL-00101" summary="Bitfinex websocket client">
+      <created>1652503289703</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1652503289703</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -679,7 +713,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Imporving orders list" />
     <MESSAGE value="Order cancel except delete. Save to DB SL and TP order ids" />
     <MESSAGE value="Canceling orders on exchange. Moving curent price to context. Refactoring." />
     <MESSAGE value="Orders annotations" />
@@ -704,7 +737,8 @@
     <MESSAGE value="Improving" />
     <MESSAGE value="Improving signal detection. Fixing bugs." />
     <MESSAGE value="Improving." />
-    <option name="LAST_COMMIT_MESSAGE" value="Improving." />
+    <MESSAGE value="Bitfinex websocket client" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bitfinex websocket client" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -723,11 +757,6 @@
           <url>file://$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php</url>
           <line>91</line>
           <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php</url>
-          <line>60</line>
-          <option name="timeStamp" value="55" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

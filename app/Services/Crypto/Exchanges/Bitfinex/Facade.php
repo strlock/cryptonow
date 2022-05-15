@@ -77,11 +77,11 @@ class Facade extends AbstractFacade
      */
     protected function dispatchMinuteMarketStatFetchJob(string $exchangeSymbol, int $fromTime): void
     {
-        dispatch(
+        /*dispatch(
             (new BitfinexFetchMinuteMarketStat(
                 new FetchMinuteMarketStatDto($exchangeSymbol, $fromTime)
             ))->onQueue(QueueNames::BITFINEX_MARKET_STAT_CALCULATION)->delay($this->delay),
         );
-        $this->delay += 2;
+        $this->delay += 2;*/
     }
 }

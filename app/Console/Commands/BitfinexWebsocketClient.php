@@ -47,16 +47,19 @@ class BitfinexWebsocketClient extends Command
      */
     public function handle()
     {
+        /** @var AbstractFacade $exchange */
         $exchange = Factory::create('bitfinex');
         $exchangeSymbol = trim($this->argument('symbol'));
-        /** @var AbstractFacade $exchange */
         while (true) {
             try {
-                $client = new Client('wss://api-pub.bitfinex.com/ws/2');
+                echo 'Retrieving '.self::CHUNK_SIZE.' trades'.PHP_EOL;
+                $client = new Client('wss://api-pub.bitfinex.com/ws/2', [
+                    'timeout' => 10,
+                ]);
                 $client->send('{
                     "event": "subscribe",
                     "channel": "trades",
-                    "symbol": "'.$exchangeSymbol.'",
+                    "symbol": "'.$exchangeSymbol.'"
                 }');
                 $subscriptionResponse = json_decode($client->receive());
                 if (empty($subscriptionResponse) || $subscriptionResponse->event !== 'info') {
@@ -65,28 +68,31 @@ class BitfinexWebsocketClient extends Command
                 } else {
                     Log::debug('BITFINEX: subscription success! Symbol: '.$exchangeSymbol);
                 }
-                var_dump($client->receive());exit;
-                $response = json_decode($client->receive());
-                var_dump($response);exit;
-                if (empty($response)) {
-                    Log::debug('BITFINEX: Invalid response!');
-                    continue;
+                $i = 0;
+                while ($i < self::CHUNK_SIZE) {
+                    $response = json_decode($client->receive());
+                    if (empty($response)) {
+                        Log::debug('BITFINEX: Invalid response!');
+                        continue;
+                    }
+                    if (!is_array($response) || !isset($response[0]) || !isset($response[1])) {
+                        continue;
+                    }
+                    if ($response[1] === 'te') {
+                        $tradeData = $response[2] ?? [];
+                        $mdQueueName = 'bitfinex:md:'.$exchangeSymbol;
+                        $tradeTime = $tradeData[1];
+                        $tradeQuantity = $tradeData[2];
+                        $fromTime = TimeHelper::round($tradeTime, TimeInterval::MINUTE());
+                        $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
+                        Redis::zRem($mdQueueName, $fromTime . ':' . $marketDelta);
+                        $marketDelta += $tradeQuantity;
+                        echo $marketDelta . PHP_EOL;
+                        Redis::zAdd($mdQueueName, $fromTime, $fromTime . ':' . $marketDelta);
+                        $i++;
+                    }
                 }
-                $tradeData = $response->data;
-                if (empty($tradeData)) {
-                    Log::debug('BITFINEX: Empty trade data!');
-                    continue;
-                }
-                $mdQueueName = 'bitfinex:md:'.$exchangeSymbol;
-                $fromTime = TimeHelper::round((int)($tradeData->microtimestamp/1000), TimeInterval::MINUTE());
-                $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
-                Redis::zRem($mdQueueName, $fromTime.':'.$marketDelta);
-                $delta = $tradeData->amount*($tradeData->type === 1 ? -1 : 1);
-                $marketDelta += $delta;
-                echo $marketDelta.PHP_EOL;
-                Redis::zAdd($mdQueueName, $fromTime, $fromTime.':'.$marketDelta);
-                $i++;
-                //$client->close();
+                $client->close();
             } catch (Throwable $e) {
                 Log::debug($e);
             }
