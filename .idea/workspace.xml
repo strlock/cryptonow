@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Bitfinex websocket client">
-      <change beforePath="$PROJECT_DIR$/.idea/crypto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/crypto.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitfinex/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitfinex/Facade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersListTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -340,14 +337,7 @@
       <workItem from="1652503216537" duration="2970000" />
       <workItem from="1652533634515" duration="1866000" />
       <workItem from="1652605176721" duration="1939000" />
-      <workItem from="1652622108078" duration="6785000" />
-    </task>
-    <task id="LOCAL-00053" summary="Imporving">
-      <created>1651424116088</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1651424116088</updated>
+      <workItem from="1652622108078" duration="8832000" />
     </task>
     <task id="LOCAL-00054" summary="Imporving">
       <created>1651424250554</created>
@@ -685,7 +675,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652503289703</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="Bitfinex websocket client">
+      <created>1652634305994</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1652634305994</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

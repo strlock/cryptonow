@@ -33,11 +33,11 @@ function OrdersListTable({orders, page, pagesTotal, onPageSelected, onDeleteClic
                     <td className={"text-center order-sl-tp"}>{FormatHelper.formatPrice(order.sl, true)}</td>
                     <td className={"text-center order-sl-tp"}>{FormatHelper.formatPrice(order.tp, true)}</td>
                     <td className={"text-center order-state"}>
-                        {ORDER_STATE_TITLES[order.state]}
+                        <span className={"order-state-title"}>{ORDER_STATE_TITLES[order.state]}</span>
                         {!isHistory
                             ? ( <span>
                                     <ProgressBar striped={false} now={Math.min(absDiffPercent, 100.0)} label={FormatHelper.formatPercent(absDiffPercent)} variant={order.diff_percent >= 0 ? "success" : "danger"} className={"small-progress"} />
-                                    {ORDER_STATE_TITLES[OrderStateHelper.getNextOrderState(order.state, order.diff_percent)]}
+                                    <span className={"order-state-title"}>{ORDER_STATE_TITLES[OrderStateHelper.getNextOrderState(order.state, order.diff_percent)]}</span>
                                 </span> ) : null}
                     </td>
                     <td className={"text-center order-symbol"}>{(new Date(order.created_at)).toLocaleString()}</td>
