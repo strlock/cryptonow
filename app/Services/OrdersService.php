@@ -18,7 +18,7 @@ use App\Models\UserInterface;
 use App\Notifications\TelegramNotification;
 use App\Repositories\OrdersRepository;
 use App\Repositories\UsersRepository;
-use App\Services\Crypto\Exchanges\AbstractFacade;
+use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -211,7 +211,7 @@ class OrdersService implements OrdersServiceInterface
      */
     private function cancelPlacedOrdersFromExchange(OrderInterface $order): void
     {
-        /** @var AbstractFacade $exchange */
+        /** @var AbstractExchange $exchange */
         $exchange = ExchangesFactory::create($order->getExchange(), $order->getUserId());
         $exchangeSymbol = $exchange->getExchangeOrderSymbol($order->getSymbol());
         $placedOrderIds = collect();

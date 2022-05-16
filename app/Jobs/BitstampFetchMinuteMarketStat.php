@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Enums\TimeInterval;
-use App\Services\Crypto\Exchanges\FacadeInterface;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use App\Helpers\TimeHelper;
 use App\Dto\FetchMinuteMarketStatDto;

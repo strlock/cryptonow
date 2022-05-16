@@ -7,7 +7,7 @@ use App\Dto\PlaceOrderDto;
 use App\Enums\BinanceOrderType;
 use App\Enums\ExchangeOrderType;
 use App\Models\User;
-use App\Services\Crypto\Exchanges\AbstractFacade;
+use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Trade;
 use App\Dto\TimeIntervalChunkDto;
 use App\Enums\BinanceTimeIntervals;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class Facade extends AbstractFacade
+class Exchange extends AbstractExchange
 {
     protected const LIMIT = 1000;
     protected const CHUNK_INTERVAL = 60*60*1000;

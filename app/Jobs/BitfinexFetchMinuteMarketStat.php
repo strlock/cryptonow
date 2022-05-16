@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Enums\TimeInterval;
-use App\Services\Crypto\Exchanges\AbstractFacade as ExchangeFacade;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use App\Services\Crypto\Exchanges\TradeInterface;
 use App\Helpers\TimeHelper;
@@ -41,7 +40,6 @@ class BitfinexFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
      */
     public function handle()
     {
-        /** @var ExchangeFacade $exchange */
         $exchange = ExchangesFactory::create('bitfinex');
         $exchangeSymbol = $this->dto->getExchangeSymbol();
         $mdQueueName = 'bitfinex:md:'.$exchangeSymbol;

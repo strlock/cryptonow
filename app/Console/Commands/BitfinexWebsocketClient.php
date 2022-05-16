@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Enums\TimeInterval;
-use App\Services\Crypto\Exchanges\AbstractFacade;
+use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Helpers\TimeHelper;
 use Illuminate\Console\Command;
@@ -47,7 +47,7 @@ class BitfinexWebsocketClient extends Command
      */
     public function handle()
     {
-        /** @var AbstractFacade $exchange */
+        /** @var AbstractExchange $exchange */
         $exchange = Factory::create('bitfinex');
         $exchangeSymbol = trim($this->argument('symbol'));
         while (true) {

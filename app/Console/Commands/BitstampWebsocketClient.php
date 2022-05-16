@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Enums\TimeInterval;
-use App\Services\Crypto\Exchanges\AbstractFacade;
+use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Helpers\TimeHelper;
 use Illuminate\Console\Command;
@@ -50,7 +50,7 @@ class BitstampWebsocketClient extends Command
         $exchange = Factory::create('bitstamp');
         $exchangeSymbol = trim($this->argument('symbol'));
         $channel = 'live_trades_'.$exchangeSymbol;
-        /** @var AbstractFacade $exchange */
+        /** @var AbstractExchange $exchange */
         while (true) {
             try {
                 echo 'Retrieving '.self::CHUNK_SIZE.' trades'.PHP_EOL;

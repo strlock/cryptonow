@@ -8,10 +8,10 @@ use App\Enums\TimeInterval;
 use Illuminate\Support\Collection;
 
 /**
- * Interface FacadeInterface
+ * Interface ExchangeInterface
  * @package App\Services\Crypto\Exchanges
  */
-interface FacadeInterface
+interface ExchangeInterface
 {
     public function __construct(?int $userId = null);
 

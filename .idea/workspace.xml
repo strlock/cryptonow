@@ -3,11 +3,22 @@
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BinanceFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BinanceFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BitstampFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BitstampFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/AbstractFacade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/AbstractExchange.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Binance/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Binance/Exchange.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitfinex/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitfinex/Exchange.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitstamp/Facade.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Bitstamp/Exchange.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/FacadeInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/ExchangeInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Factory.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Factory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/FactoryInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/FactoryInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -340,14 +351,7 @@
       <workItem from="1652605176721" duration="1939000" />
       <workItem from="1652622108078" duration="9477000" />
       <workItem from="1652683307364" duration="2878000" />
-      <workItem from="1652698970093" duration="2452000" />
-    </task>
-    <task id="LOCAL-00058" summary="Order cancel except delete. Save to DB SL and TP order ids">
-      <created>1651521296122</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1651521296122</updated>
+      <workItem from="1652698970093" duration="3478000" />
     </task>
     <task id="LOCAL-00059" summary="Canceling orders on exchange. Moving curent price to context. Refactoring.">
       <created>1651558133535</created>
@@ -685,7 +689,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652700605117</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="Fixing bug">
+      <created>1652701638272</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1652701638272</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -745,7 +756,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php</url>
-          <line>45</line>
+          <line>43</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">

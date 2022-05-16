@@ -1,13 +1,13 @@
 <?php
 namespace App\Services\Crypto\Exchanges\Bitstamp;
 
-use App\Services\Crypto\Exchanges\AbstractFacade;
+use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Trade;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 
-class Facade extends AbstractFacade
+class Exchange extends AbstractExchange
 {
     protected array $symbolMap = [
         'BTCUSD' => ['btcusd'],

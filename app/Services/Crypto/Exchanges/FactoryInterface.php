@@ -11,7 +11,7 @@ interface FactoryInterface
     /**
      * @param string|null $name
      * @param int|null $userId
-     * @return FacadeInterface
+     * @return ExchangeInterface
      */
-    public static function create(?string $name = null, int $userId = null): FacadeInterface;
+    public static function create(?string $name = null, int $userId = null): ExchangeInterface;
 }

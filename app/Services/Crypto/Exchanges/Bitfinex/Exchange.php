@@ -1,17 +1,14 @@
 <?php
 namespace App\Services\Crypto\Exchanges\Bitfinex;
 
-use App\Services\Crypto\Exchanges\AbstractFacade;
+use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Trade;
-use App\Dto\FetchMinuteMarketStatDto;
 use App\Dto\TimeIntervalChunkDto;
-use App\Enums\QueueNames;
-use App\Jobs\BitfinexFetchMinuteMarketStat;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
 
-class Facade extends AbstractFacade
+class Exchange extends AbstractExchange
 {
     protected const LIMIT = 10000;
     protected const CHUNK_INTERVAL = 10*60*1000;

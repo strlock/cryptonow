@@ -11,7 +11,7 @@ use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
 
-abstract class AbstractFacade implements FacadeInterface
+abstract class AbstractExchange implements ExchangeInterface
 {
     protected const MAX_PAGES = 100;
     protected array $symbolMap = [];

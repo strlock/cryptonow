@@ -7,7 +7,7 @@ use App\Enums\OrderState;
 use App\Models\OrderInterface;
 use App\Models\User;
 use App\Repositories\OrdersRepository;
-use App\Services\Crypto\Exchanges\Binance\Facade as BinanceExchange;
+use App\Services\Crypto\Exchanges\Binance\Exchange as BinanceExchange;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Services\OrdersService;
 use Illuminate\Console\Command;

@@ -12,14 +12,14 @@ class Factory implements FactoryInterface
     /**
      * @param string|null $name
      * @param int|null $userId
-     * @return FacadeInterface
+     * @return ExchangeInterface
      */
-    public static function create(?string $name = null, int $userId = null): FacadeInterface
+    public static function create(?string $name = null, int $userId = null): ExchangeInterface
     {
         if (empty($name)) {
             $name = config('crypto.defaultExchange');
         }
-        $className = 'App\\Services\Crypto\\Exchanges\\'.Str::studly($name).'\\Facade';
+        $className = 'App\\Services\Crypto\\Exchanges\\'.Str::studly($name).'\\Exchange';
         return new $className($userId);
     }
 }
