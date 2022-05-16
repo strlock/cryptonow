@@ -45,6 +45,9 @@ const App = () => {
                 actions.setUser(response.data);
             }
             actions.setInitialized(true);
+        }, () => {
+            console.log('Initialized after error!');
+            actions.setInitialized(true);
         });
     }, []);
 

@@ -9816,6 +9816,9 @@ var App = function App() {
       }
 
       actions.setInitialized(true);
+    }, function () {
+      console.log('Initialized after error!');
+      actions.setInitialized(true);
     });
   }, []);
   _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].setFromSign('₿');
@@ -12168,7 +12171,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var REFRESH_INTERVAL = 15000;
 var POPUP_TIMEOUT = 15000;
-var ORDERS_REFRESH_INTERVAL = 30000;
+var ORDERS_REFRESH_INTERVAL = 10000;
 var ONE_MINUTE_MS = 60 * 1000;
 var ORDER_STATE_TITLES = {
   'new': 'New',
