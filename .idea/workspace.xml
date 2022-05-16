@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Design">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Debugging">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/Helpers/RequestHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Helpers/RequestHelper.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/StateProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/StateProvider.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -338,14 +337,8 @@
       <workItem from="1652533634515" duration="1866000" />
       <workItem from="1652605176721" duration="1939000" />
       <workItem from="1652622108078" duration="9477000" />
-      <workItem from="1652683307364" duration="2174000" />
-    </task>
-    <task id="LOCAL-00055" summary="Imporving orders list">
-      <created>1651508212641</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1651508212641</updated>
+      <workItem from="1652683307364" duration="2878000" />
+      <workItem from="1652698970093" duration="1315000" />
     </task>
     <task id="LOCAL-00056" summary="Imporving orders list">
       <created>1651508730629</created>
@@ -683,7 +676,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652636836511</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="Debugging">
+      <created>1652688434721</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1652688434722</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -711,7 +711,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Canceling orders on exchange. Moving curent price to context. Refactoring." />
     <MESSAGE value="Orders annotations" />
     <MESSAGE value="Signals and signal annotations" />
     <MESSAGE value="Signal and signal annotations. Refactoring." />
@@ -736,7 +735,8 @@
     <MESSAGE value="Improving." />
     <MESSAGE value="Bitfinex websocket client" />
     <MESSAGE value="Design" />
-    <option name="LAST_COMMIT_MESSAGE" value="Design" />
+    <MESSAGE value="Debugging" />
+    <option name="LAST_COMMIT_MESSAGE" value="Debugging" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

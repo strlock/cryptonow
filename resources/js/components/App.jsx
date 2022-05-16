@@ -24,7 +24,6 @@ import TimeIntervals from "../TimeIntervals";
 
 const App = () => {
     const [state, actions] = useContext(stateContext)
-    const isLoggedIn = state.user !== null;
 
     const updateInterval = 15000;
     const priceHeight = 400;
@@ -34,26 +33,16 @@ const App = () => {
     const popupTimeout = useRef(null);
     const ordersRefreshTimer = useRef(null);
     const wsClient = useRef(null);
-
     const priceChartRef = useRef();
     const mdChartRef = useRef();
     const ordersListRef = useRef();
 
+    const isLoggedIn = () => state.user !== null;
+
     useEffect(() => {
-        RequestHelper.setExpiredTokenCallback(() => {
-            LoginHelper.clearAccessToken();
-            actions.setUser(null);
-        })
-        alert(1);
         RequestHelper.fetch('/api/user', {}, response => {
-            alert(2);
-            if (response.data !== undefined) {
-                actions.setUser(response.data);
-            }
+            actions.setUser(response.data);
             actions.setInitialized(true);
-        }, error => {
-            alert(error);
-            actions.setInitialized(false);
         });
     }, []);
 
@@ -68,7 +57,7 @@ const App = () => {
     let toTime = TimeHelper.round((new Date()).getTime(), state.interval);
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (isLoggedIn()) {
             wsClient.current = new BinanceWebsocketClient(function(price) {
                 actions.setCurrentPrice(1.0*price);
             }, 'BTCBUSD');
@@ -77,7 +66,7 @@ const App = () => {
             wsClient.current = null;
         }
         return null;
-    }, [isLoggedIn]);
+    }, [state.user]);
 
     const showPopup = (message, type, title) => {
         actions.setPopup({
@@ -114,12 +103,12 @@ const App = () => {
     }
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (isLoggedIn()) {
             RequestHelper.fetch('/api/mdclusters/BTCUSD', {}, response => {
                 actions.setMdClusters(response.data);
             });
         }
-    }, [state.interval, isLoggedIn]);
+    }, [state.interval, state.user]);
 
     const mdClustersAnnotations = useMemo(() => {
         const annotations = [];
@@ -231,23 +220,23 @@ const App = () => {
     }, [state.orders]);
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (isLoggedIn()) {
             RequestHelper.fetch('/api/orders?page=' + state.ordersPage, {}, response => {
                 actions.setOrders(response.data, response.meta.current_page, response.meta.last_page);
             });
         }
-    }, [state.ordersPage, state.ordersPagesTotal, state.ordersReRender, isLoggedIn]);
+    }, [state.ordersPage, state.ordersPagesTotal, state.ordersReRender, state.user]);
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (isLoggedIn()) {
             RequestHelper.fetch('/api/orders?history=1&page=' + state.ordersHistoryPage, {}, response => {
                 actions.setOrdersHistory(response.data, response.meta.current_page, response.meta.last_page);
             });
         }
-    }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender, isLoggedIn]);
+    }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender, state.user]);
 
     useEffect(() => {
-        if (isLoggedIn) {
+        if (isLoggedIn()) {
             ordersRefreshTimer.current = setInterval(() => {
                 actions.ordersReRender();
             }, ORDERS_REFRESH_INTERVAL);
@@ -255,7 +244,7 @@ const App = () => {
             clearInterval(ordersRefreshTimer.current);
             ordersRefreshTimer.current = null;
         }
-    }, [isLoggedIn]);
+    }, [state.user]);
 
     if (state.initialized === false) {
         return <Loading />
@@ -267,7 +256,7 @@ const App = () => {
                          <p>{state.popup.message}</p>
                      </Alert>;
     let content = '';
-    if (isLoggedIn) {
+    if (isLoggedIn()) {
         content = <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-xl-12">
@@ -325,7 +314,7 @@ const App = () => {
         content = <LoginForm onSuccess={onLoginSuccess} onFail={onLoginFail} />
     }
     return ( <div id="page">
-                {isLoggedIn ? (
+                {isLoggedIn() ? (
                     <div id="top">
                         <div className="top-left">
                             <a href="/" className="logo-link">

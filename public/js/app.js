@@ -9498,8 +9498,10 @@ var RequestHelper = /*#__PURE__*/function () {
         return response.json();
       }).then(function (response) {
         if (response.status !== undefined && response.status === 'Token is Expired') {
-          if (RequestHelper.expiredTokenCallback !== null) {
-            RequestHelper.expiredTokenCallback();
+          _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_1__["default"].clearAccessToken();
+
+          if (failed) {
+            failed.call(this);
           }
 
           return;
@@ -9570,11 +9572,6 @@ var RequestHelper = /*#__PURE__*/function () {
 
       return syncFetch;
     }()
-  }, {
-    key: "setExpiredTokenCallback",
-    value: function setExpiredTokenCallback(callback) {
-      RequestHelper.expiredTokenCallback = callback;
-    }
   }]);
 
   return RequestHelper;
@@ -9796,7 +9793,6 @@ var App = function App() {
       state = _useContext2[0],
       actions = _useContext2[1];
 
-  var isLoggedIn = state.user !== null;
   var updateInterval = 15000;
   var priceHeight = 400;
   var mdHeight = 250;
@@ -9808,23 +9804,15 @@ var App = function App() {
   var priceChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var mdChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var ordersListRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+
+  var isLoggedIn = function isLoggedIn() {
+    return state.user !== null;
+  };
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].setExpiredTokenCallback(function () {
-      _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].clearAccessToken();
-      actions.setUser(null);
-    });
-    alert(1);
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/user', {}, function (response) {
-      alert(2);
-
-      if (response.data !== undefined) {
-        actions.setUser(response.data);
-      }
-
+      actions.setUser(response.data);
       actions.setInitialized(true);
-    }, function (error) {
-      alert(error);
-      actions.setInitialized(false);
     });
   }, []);
   _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].setFromSign('₿');
@@ -9838,7 +9826,7 @@ var App = function App() {
   var fromTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(_Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].subDaysFromDate(new Date(), daysForInterval).getTime(), state.interval);
   var toTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(new Date().getTime(), state.interval);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (isLoggedIn) {
+    if (isLoggedIn()) {
       wsClient.current = new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {
         actions.setCurrentPrice(1.0 * price);
       }, 'BTCBUSD');
@@ -9848,7 +9836,7 @@ var App = function App() {
     }
 
     return null;
-  }, [isLoggedIn]);
+  }, [state.user]);
 
   var showPopup = function showPopup(message, type, title) {
     actions.setPopup({
@@ -9887,12 +9875,12 @@ var App = function App() {
   };
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (isLoggedIn) {
+    if (isLoggedIn()) {
       _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/mdclusters/BTCUSD', {}, function (response) {
         actions.setMdClusters(response.data);
       });
     }
-  }, [state.interval, isLoggedIn]);
+  }, [state.interval, state.user]);
   var mdClustersAnnotations = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     var annotations = [];
 
@@ -10010,21 +9998,21 @@ var App = function App() {
     return result;
   }, [state.orders]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (isLoggedIn) {
+    if (isLoggedIn()) {
       _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/orders?page=' + state.ordersPage, {}, function (response) {
         actions.setOrders(response.data, response.meta.current_page, response.meta.last_page);
       });
     }
-  }, [state.ordersPage, state.ordersPagesTotal, state.ordersReRender, isLoggedIn]);
+  }, [state.ordersPage, state.ordersPagesTotal, state.ordersReRender, state.user]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (isLoggedIn) {
+    if (isLoggedIn()) {
       _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/orders?history=1&page=' + state.ordersHistoryPage, {}, function (response) {
         actions.setOrdersHistory(response.data, response.meta.current_page, response.meta.last_page);
       });
     }
-  }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender, isLoggedIn]);
+  }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender, state.user]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (isLoggedIn) {
+    if (isLoggedIn()) {
       ordersRefreshTimer.current = setInterval(function () {
         actions.ordersReRender();
       }, _constants__WEBPACK_IMPORTED_MODULE_11__.ORDERS_REFRESH_INTERVAL);
@@ -10032,7 +10020,7 @@ var App = function App() {
       clearInterval(ordersRefreshTimer.current);
       ordersRefreshTimer.current = null;
     }
-  }, [isLoggedIn]);
+  }, [state.user]);
 
   if (state.initialized === false) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_Loading_Loading__WEBPACK_IMPORTED_MODULE_16__["default"], {});
@@ -10055,7 +10043,7 @@ var App = function App() {
 
   var content = '';
 
-  if (isLoggedIn) {
+  if (isLoggedIn()) {
     content = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
       className: "container",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
@@ -10127,7 +10115,7 @@ var App = function App() {
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
     id: "page",
-    children: [isLoggedIn ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
+    children: [isLoggedIn() ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
       id: "top",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
         className: "top-left",

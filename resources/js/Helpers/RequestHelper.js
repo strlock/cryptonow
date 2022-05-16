@@ -19,8 +19,9 @@ class RequestHelper
         }
         return fetch(url, options).then(response => response.json()).then(function (response) {
             if (response.status !== undefined && response.status === 'Token is Expired') {
-                if (RequestHelper.expiredTokenCallback !== null) {
-                    RequestHelper.expiredTokenCallback();
+                LoginHelper.clearAccessToken();
+                if (failed) {
+                    failed.call(this);
                 }
                 return;
             }
@@ -53,11 +54,6 @@ class RequestHelper
             }
         }
         return response;
-    }
-
-    static setExpiredTokenCallback (callback)
-    {
-        RequestHelper.expiredTokenCallback = callback;
     }
 }
 
