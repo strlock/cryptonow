@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PriceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PriceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart/MarketDeltaChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/MarketDeltaChart/MarketDeltaChart.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/PriceChart/PriceChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/PriceChart/PriceChart.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/StateProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/StateProvider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/constants.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -346,14 +337,7 @@
       <workItem from="1652622108078" duration="9477000" />
       <workItem from="1652683307364" duration="2878000" />
       <workItem from="1652698970093" duration="5197000" />
-      <workItem from="1652718555224" duration="6944000" />
-    </task>
-    <task id="LOCAL-00061" summary="Signals and signal annotations">
-      <created>1651701867950</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1651701867950</updated>
+      <workItem from="1652718555224" duration="7964000" />
     </task>
     <task id="LOCAL-00062" summary="Signal and signal annotations. Refactoring.">
       <created>1651931058174</created>
@@ -691,7 +675,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652711748606</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="Improving">
+      <created>1652727935943</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1652727935944</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -736,7 +727,6 @@
     <MESSAGE value="Improving background" />
     <MESSAGE value="Orders diff percent" />
     <MESSAGE value="Percent progress bar" />
-    <MESSAGE value="Improving" />
     <MESSAGE value="Improving signal detection. Fixing bugs." />
     <MESSAGE value="Improving." />
     <MESSAGE value="Bitfinex websocket client" />
@@ -744,7 +734,8 @@
     <MESSAGE value="Debugging" />
     <MESSAGE value="Refactoring Facade -&gt; Exchange" />
     <MESSAGE value="Fixing bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug" />
+    <MESSAGE value="Improving" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

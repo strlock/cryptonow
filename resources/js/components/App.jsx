@@ -29,8 +29,8 @@ const App = () => {
     const [state, actions] = useContext(stateContext)
 
     const updateInterval = 15000;
-    const priceHeight = 400;
-    const mdHeight = 400;
+    const priceHeight = 600;
+    const mdHeight = 600;
     const chartsTextColor = '#A39ED8';
     const chartsLinesColor = '#635E98';
     const popupTimeout = useRef(null);

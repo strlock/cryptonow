@@ -9796,8 +9796,8 @@ var App = function App() {
       actions = _useContext2[1];
 
   var updateInterval = 15000;
-  var priceHeight = 400;
-  var mdHeight = 400;
+  var priceHeight = 600;
+  var mdHeight = 600;
   var chartsTextColor = '#A39ED8';
   var chartsLinesColor = '#635E98';
   var popupTimeout = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
