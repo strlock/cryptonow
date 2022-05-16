@@ -40,7 +40,7 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
                    $maxMd->getFromPrice().'-'.
                    $maxMd->getToPrice().' '.
             round($relativePriceDiffPercent, 2).'%');
-        $toTime = TimeHelper::round(TimeHelper::time(), TimeInterval::FIVE_MINUTES());
+        $toTime = TimeHelper::round(TimeHelper::time(), TimeInterval::HOUR());
         if ($toTime <= $maxMd->getToTime() && abs($relativePriceDiffPercent) < (float)config('crypto.strategyRelativePriceDiffPercent')) {
             return StrategySignal::BUY();
         }
@@ -52,7 +52,7 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
      */
     public function getMaxMarketDelta(string $symbol): ?MaxMarketDeltaDto
     {
-        $interval = TimeInterval::FIVE_MINUTES();
+        $interval = TimeInterval::HOUR();
         $toTime = TimeHelper::round(TimeHelper::time(), $interval);
         $fromTime = TimeHelper::round($toTime-(int)config('crypto.strategyPeriod'), $interval);
         $marketDeltaByTime = $this->aggregateMarketStatService->getAggregateMarketDelta($symbol, $fromTime, $toTime, $interval);
