@@ -24,6 +24,8 @@ import Loading from "./Loading/Loading";
 import StateProvider, {stateContext} from "./StateProvider";
 import TimeIntervals from "../TimeIntervals";
 import {useInterval} from "react-use";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const App = () => {
     const [state, actions] = useContext(stateContext)
@@ -340,7 +342,7 @@ const App = () => {
                             </a>
                         </div>
                         <div className="top-right">
-                            <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>{state.user.name}&nbsp;<i className="fa fa-arrow-right"></i></button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" className="btn btn-primary" onClick={() => onLogoutClick()}>{state.user.name}&nbsp;&nbsp;&nbsp;<FontAwesomeIcon icon={faRightFromBracket} /></button>&nbsp;&nbsp;&nbsp;
                             <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#userSettingsModal"><i className="fa fa-gear"></i></button>
                         </div>
                     </div>
