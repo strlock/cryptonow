@@ -9811,7 +9811,10 @@ var App = function App() {
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/user', {}, function (response) {
-      actions.setUser(response.data);
+      if (response.data !== undefined) {
+        actions.setUser(response.data);
+      }
+
       actions.setInitialized(true);
     });
   }, []);

@@ -41,7 +41,9 @@ const App = () => {
 
     useEffect(() => {
         RequestHelper.fetch('/api/user', {}, response => {
-            actions.setUser(response.data);
+            if (response.data !== undefined) {
+                actions.setUser(response.data);
+            }
             actions.setInitialized(true);
         });
     }, []);
