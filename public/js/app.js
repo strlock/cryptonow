@@ -9731,7 +9731,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./BinanceWebsocketClient */ "./resources/js/components/BinanceWebsocketClient.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! react-bootstrap/Alert */ "./node_modules/react-bootstrap/esm/Alert.js");
 /* harmony import */ var _Login_LoginForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Login/LoginForm */ "./resources/js/components/Login/LoginForm.jsx");
 /* harmony import */ var _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Helpers/LoginHelper */ "./resources/js/Helpers/LoginHelper.js");
 /* harmony import */ var _OrdersList_OrdersList__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./OrdersList/OrdersList */ "./resources/js/components/OrdersList/OrdersList.jsx");
@@ -9743,6 +9743,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Loading_Loading__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Loading/Loading */ "./resources/js/components/Loading/Loading.jsx");
 /* harmony import */ var _StateProvider__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./StateProvider */ "./resources/js/components/StateProvider.js");
 /* harmony import */ var _TimeIntervals__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../TimeIntervals */ "./resources/js/TimeIntervals.js");
+/* harmony import */ var react_use__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! react-use */ "./node_modules/react-use/esm/useInterval.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -9787,6 +9788,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var App = function App() {
   var _useContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_StateProvider__WEBPACK_IMPORTED_MODULE_17__.stateContext),
       _useContext2 = _slicedToArray(_useContext, 2),
@@ -9795,7 +9797,7 @@ var App = function App() {
 
   var updateInterval = 15000;
   var priceHeight = 400;
-  var mdHeight = 250;
+  var mdHeight = 400;
   var chartsTextColor = '#A39ED8';
   var chartsLinesColor = '#635E98';
   var popupTimeout = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
@@ -9809,6 +9811,17 @@ var App = function App() {
     return state.user !== null;
   };
 
+  var daysForInterval = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].daysForInterval(state.interval);
+  /*if (daysForInterval > 10) {
+      daysForInterval = 10;
+  }*/
+
+  var updateTimeRange = function updateTimeRange() {
+    var fromTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(_Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].subDaysFromDate(new Date(), daysForInterval).getTime(), state.interval);
+    var toTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(new Date().getTime(), state.interval);
+    actions.setTimeRange(fromTime, toTime);
+  };
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/user', {}, function (response) {
       if (response.data !== undefined) {
@@ -9817,23 +9830,18 @@ var App = function App() {
 
       actions.setInitialized(true);
     }, function () {
-      console.log('Initialized after error!');
       actions.setInitialized(true);
     });
+    updateTimeRange();
   }, []);
   _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].setFromSign('₿');
   _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].setToSign('$');
-  var daysForInterval = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].daysForInterval(state.interval);
-
-  if (daysForInterval > 10) {
-    daysForInterval = 10;
-  }
-
-  var fromTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(_Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].subDaysFromDate(new Date(), daysForInterval).getTime(), state.interval);
-  var toTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(new Date().getTime(), state.interval);
+  (0,react_use__WEBPACK_IMPORTED_MODULE_20__["default"])(function () {
+    updateTimeRange();
+  }, _constants__WEBPACK_IMPORTED_MODULE_11__.CHARTS_UPDATE_INTERVAL);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (isLoggedIn()) {
-      wsClient.current = new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {//actions.setCurrentPrice(1.0*price);
+      wsClient.current = new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {//wsClient.currentPrice = 1.0*price;
       }, 'BTCBUSD');
     } else if (wsClient.current !== null) {
       wsClient.current.close();
@@ -9925,12 +9933,12 @@ var App = function App() {
 
   var getToTimeAnnotation = function getToTimeAnnotation() {
     return {
-      x: Math.round(toTime - state.interval / 2),
+      x: Math.round(state.toTime - state.interval / 2),
       x2: null,
       strokeDashArray: 0,
       borderColor: '#00ff00',
       label: {
-        text: new Date(toTime).toLocaleTimeString(),
+        text: new Date(state.toTime).toLocaleTimeString(),
         borderColor: chartsLinesColor,
         style: {
           color: chartsTextColor,
@@ -10033,13 +10041,13 @@ var App = function App() {
 
   var annotations = [].concat(_toConsumableArray(mdClustersAnnotations), [getToTimeAnnotation()]);
 
-  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_20__["default"], {
+  var popupDom = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_21__["default"], {
     variant: state.popup.type,
     onClose: function onClose() {
       return hidePopup();
     },
     dismissible: true,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_20__["default"].Heading, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(react_bootstrap_Alert__WEBPACK_IMPORTED_MODULE_21__["default"].Heading, {
       children: state.popup.title
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("p", {
       children: state.popup.message
@@ -10068,8 +10076,9 @@ var App = function App() {
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
                 className: "chart",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_PriceChart_PriceChart__WEBPACK_IMPORTED_MODULE_3__["default"], {
-                  fromTime: fromTime,
-                  toTime: toTime,
+                  fromTime: state.fromTime,
+                  toTime: state.toTime,
+                  interval: state.interval,
                   height: priceHeight,
                   textColor: chartsTextColor,
                   linesColor: chartsLinesColor,
@@ -10078,8 +10087,9 @@ var App = function App() {
                   yAnnotations: orderAnnotations,
                   orders: state.orders
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_MarketDeltaChart_MarketDeltaChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
-                  fromTime: fromTime,
-                  toTime: toTime,
+                  fromTime: state.fromTime,
+                  toTime: state.toTime,
+                  interval: state.interval,
                   height: mdHeight,
                   updateInterval: updateInterval,
                   textColor: chartsTextColor,
@@ -10496,6 +10506,7 @@ var chartContext = null;
 var MarketDeltaChart = function MarketDeltaChart(_ref) {
   var fromTime = _ref.fromTime,
       toTime = _ref.toTime,
+      interval = _ref.interval,
       linesColor = _ref.linesColor,
       textColor = _ref.textColor,
       height = _ref.height,
@@ -10624,7 +10635,7 @@ var MarketDeltaChart = function MarketDeltaChart(_ref) {
       }
     },
     grid: {
-      borderColor: linesColor,
+      borderColor: '#34305B',
       padding: {
         right: 60
       }
@@ -10634,12 +10645,14 @@ var MarketDeltaChart = function MarketDeltaChart(_ref) {
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/marketDelta/BTCUSD/' + fromTime + '/' + toTime + '/' + state.interval, {}, function (response) {
-      setSeriesData(response.data);
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/marketDelta/BTCUSD/' + fromTime + '/' + toTime + '/' + interval, {}, function (response) {
+      if (response.data !== undefined) {
+        setSeriesData(response.data);
+      }
     }, function (error) {
       return console.log(error);
     });
-  }, [fromTime, toTime, state.interval]);
+  }, [fromTime, toTime, interval]);
   var series = [{
     name: 'Market Statistics',
     data: seriesData
@@ -11428,6 +11441,7 @@ var chartContext = null;
 var PriceChart = function PriceChart(_ref) {
   var fromTime = _ref.fromTime,
       toTime = _ref.toTime,
+      interval = _ref.interval,
       height = _ref.height,
       textColor = _ref.textColor,
       linesColor = _ref.linesColor,
@@ -11446,12 +11460,14 @@ var PriceChart = function PriceChart(_ref) {
       actions = _useContext2[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/price/BTCUSD/' + fromTime + '/' + toTime + '/' + state.interval, {}, function (response) {
-      setSeriesData(response.data);
+    _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_2__["default"].fetch('/api/price/BTCUSD/' + fromTime + '/' + toTime + '/' + interval, {}, function (response) {
+      if (response.data !== undefined) {
+        setSeriesData(response.data);
+      }
     }, function (error) {
       return console.log(error);
     });
-  }, [fromTime, toTime, state.interval]);
+  }, [fromTime, toTime, interval]);
   var priceAnnotation = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     return {
       y: state.currentPrice,
@@ -11593,7 +11609,7 @@ var PriceChart = function PriceChart(_ref) {
       }
     },
     grid: {
-      borderColor: linesColor,
+      borderColor: '#34305B',
       padding: {
         right: 60
       }
@@ -11659,6 +11675,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var stateContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(null);
 var initialState = {
   initialized: false,
+  fromTime: 0,
+  toTime: 0,
   orders: [],
   ordersPage: 1,
   ordersPagesTotal: 1,
@@ -11746,9 +11764,10 @@ var stateReducer = function stateReducer(state, action) {
         popup: initialState.popup
       });
 
-    case 'setWSClient':
+    case 'setTimeRange':
       return _objectSpread(_objectSpread({}, state), {}, {
-        wsClient: action.wsClient
+        fromTime: action.fromTime,
+        toTime: action.toTime
       });
 
     default:
@@ -11839,10 +11858,11 @@ function StateProvider(_ref) {
         type: 'resetPopup'
       });
     },
-    setWSClient: function setWSClient(wsClient) {
+    setTimeRange: function setTimeRange(fromTime, toTime) {
       return dispatch({
-        type: 'setWSClient',
-        wsClient: wsClient
+        type: 'setTimeRange',
+        fromTime: fromTime,
+        toTime: toTime
       });
     }
   };
@@ -12159,6 +12179,7 @@ function UserSettingsModal(_ref) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CHARTS_UPDATE_INTERVAL": () => (/* binding */ CHARTS_UPDATE_INTERVAL),
 /* harmony export */   "ORDERS_LIST_TAB_TITLES": () => (/* binding */ ORDERS_LIST_TAB_TITLES),
 /* harmony export */   "ORDERS_REFRESH_INTERVAL": () => (/* binding */ ORDERS_REFRESH_INTERVAL),
 /* harmony export */   "ORDER_DIRECTION_BUY": () => (/* binding */ ORDER_DIRECTION_BUY),
@@ -12172,6 +12193,7 @@ __webpack_require__.r(__webpack_exports__);
 var REFRESH_INTERVAL = 15000;
 var POPUP_TIMEOUT = 15000;
 var ORDERS_REFRESH_INTERVAL = 10000;
+var CHARTS_UPDATE_INTERVAL = 10000;
 var ONE_MINUTE_MS = 60 * 1000;
 var ORDER_STATE_TITLES = {
   'new': 'New',
@@ -75581,6 +75603,37 @@ var classNamesShape =  true ? prop_types__WEBPACK_IMPORTED_MODULE_0___default().
   exitDone: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().string),
   exitActive: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().string)
 })]) : 0;
+
+/***/ }),
+
+/***/ "./node_modules/react-use/esm/useInterval.js":
+/*!***************************************************!*\
+  !*** ./node_modules/react-use/esm/useInterval.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var useInterval = function (callback, delay) {
+    var savedCallback = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(function () { });
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+        savedCallback.current = callback;
+    });
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+        if (delay !== null) {
+            var interval_1 = setInterval(function () { return savedCallback.current(); }, delay || 0);
+            return function () { return clearInterval(interval_1); };
+        }
+        return undefined;
+    }, [delay]);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useInterval);
+
 
 /***/ }),
 

@@ -30,7 +30,7 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
     {
         $maxMd = $this->getMaxMarketDelta($symbol);
         if (empty($maxMd)) {
-            Log::debug('No maximum cluster right now');
+            Log::debug('No maximum market delta right now');
             return StrategySignal::NOTHING();
         }
         $relativePriceDiffPercent = 100*($maxMd->getToPrice()-$maxMd->getFromPrice())/$maxMd->getFromPrice();
@@ -41,9 +41,7 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
                    $maxMd->getToPrice().' '.
             round($relativePriceDiffPercent, 2).'%');
         $toTime = TimeHelper::round(TimeHelper::time(), TimeInterval::FIVE_MINUTES());
-        if ($toTime >= $maxMd->getFromTime() &&
-                $toTime <= $maxMd->getToTime() &&
-                    abs($relativePriceDiffPercent) < (float)config('crypto.strategyRelativePriceDiffPercent')) {
+        if ($toTime <= $maxMd->getToTime() && abs($relativePriceDiffPercent) < (float)config('crypto.strategyRelativePriceDiffPercent')) {
             return StrategySignal::BUY();
         }
         return StrategySignal::NOTHING();
@@ -69,7 +67,8 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
             if ($mdCurrent > 0.0) {
                 $mdPositiveSum += $mdCurrent;
             }
-            if ($mdCurrent > $mdMax && $mdCurrent > 2*$mdPositiveSum/$intervalsCount) {
+            $mdAvg = $mdPositiveSum/$intervalsCount;
+            if ($mdCurrent > $mdMax && $mdCurrent > 2*$mdAvg) {
                 $mdMax = $mdCurrent;
                 $mdFromTime = $time;
                 $mdToTime = $time + $interval->value();
@@ -79,8 +78,8 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
             $mdMax,
             $mdFromTime,
             $mdToTime,
-            $this->getMaxMdPriceAtTime($symbol, $mdFromTime),
-            $this->getMaxMdPriceAtTime($symbol, $mdToTime),
+            $this->getPriceAtTime($symbol, $mdFromTime),
+            $this->getPriceAtTime($symbol, $mdToTime),
         );
     }
 
@@ -90,7 +89,7 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
      * @return float
      * @throws Exception
      */
-    private function getMaxMdPriceAtTime(string $symbol, int $time): float
+    private function getPriceAtTime(string $symbol, int $time): float
     {
         $interval = TimeInterval::MINUTE();
         $toTime = TimeHelper::round(TimeHelper::time(), $interval);

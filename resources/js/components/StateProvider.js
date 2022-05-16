@@ -5,6 +5,8 @@ export const stateContext = React.createContext(null)
 
 const initialState = {
     initialized: false,
+    fromTime: 0,
+    toTime: 0,
     orders: [],
     ordersPage: 1,
     ordersPagesTotal: 1,
@@ -90,10 +92,11 @@ const stateReducer = (state, action) => {
                 ...state,
                 popup: initialState.popup
             }
-        case 'setWSClient':
+        case 'setTimeRange':
             return {
                 ...state,
-                wsClient: action.wsClient
+                fromTime: action.fromTime,
+                toTime: action.toTime,
             }
         default:
             return state;
@@ -153,9 +156,10 @@ function StateProvider({children}) {
         resetPopup: () => dispatch({
             type: 'resetPopup',
         }),
-        setWSClient: (wsClient) => dispatch({
-            type: 'setWSClient',
-            wsClient: wsClient,
+        setTimeRange: (fromTime, toTime) => dispatch({
+            type: 'setTimeRange',
+            fromTime: fromTime,
+            toTime: toTime,
         }),
     }
     return (

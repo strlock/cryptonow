@@ -12,7 +12,9 @@ import LoginHelper from "../Helpers/LoginHelper";
 import OrdersList from "./OrdersList/OrdersList";
 import {
     POPUP_TIMEOUT,
-    ORDER_DIRECTION_BUY, ORDERS_REFRESH_INTERVAL,
+    ORDER_DIRECTION_BUY,
+    ORDERS_REFRESH_INTERVAL,
+    CHARTS_UPDATE_INTERVAL,
 } from '../constants';
 import IntervalSelector from "./IntervalSelector/IntervalSelector";
 import FormatHelper from "../Helpers/FormatHelper";
@@ -21,13 +23,14 @@ import RequestHelper from "../Helpers/RequestHelper";
 import Loading from "./Loading/Loading";
 import StateProvider, {stateContext} from "./StateProvider";
 import TimeIntervals from "../TimeIntervals";
+import {useInterval} from "react-use";
 
 const App = () => {
     const [state, actions] = useContext(stateContext)
 
     const updateInterval = 15000;
     const priceHeight = 400;
-    const mdHeight = 250;
+    const mdHeight = 400;
     const chartsTextColor = '#A39ED8';
     const chartsLinesColor = '#635E98';
     const popupTimeout = useRef(null);
@@ -39,6 +42,17 @@ const App = () => {
 
     const isLoggedIn = () => state.user !== null;
 
+    const daysForInterval = TimeHelper.daysForInterval(state.interval)
+    /*if (daysForInterval > 10) {
+        daysForInterval = 10;
+    }*/
+
+    const updateTimeRange = () => {
+        const fromTime = TimeHelper.round((TimeHelper.subDaysFromDate(new Date(), daysForInterval)).getTime(), state.interval);
+        const toTime = TimeHelper.round((new Date()).getTime(), state.interval);
+        actions.setTimeRange(fromTime, toTime);
+    }
+
     useEffect(() => {
         RequestHelper.fetch('/api/user', {}, response => {
             if (response.data !== undefined) {
@@ -46,25 +60,22 @@ const App = () => {
             }
             actions.setInitialized(true);
         }, () => {
-            console.log('Initialized after error!');
             actions.setInitialized(true);
         });
+        updateTimeRange();
     }, []);
 
     FormatHelper.setFromSign('₿');
     FormatHelper.setToSign('$');
 
-    let daysForInterval = TimeHelper.daysForInterval(state.interval)
-    if (daysForInterval > 10) {
-        daysForInterval = 10;
-    }
-    let fromTime = TimeHelper.round((TimeHelper.subDaysFromDate(new Date(), daysForInterval)).getTime(), state.interval);
-    let toTime = TimeHelper.round((new Date()).getTime(), state.interval);
+    useInterval(() => {
+        updateTimeRange();
+    }, CHARTS_UPDATE_INTERVAL)
 
     useEffect(() => {
         if (isLoggedIn()) {
             wsClient.current = new BinanceWebsocketClient(function(price) {
-                //actions.setCurrentPrice(1.0*price);
+                //wsClient.currentPrice = 1.0*price;
             }, 'BTCBUSD');
         } else if (wsClient.current !== null) {
             wsClient.current.close();
@@ -150,12 +161,12 @@ const App = () => {
 
     const getToTimeAnnotation = () => {
         return {
-            x: Math.round(toTime - state.interval / 2),
+            x: Math.round(state.toTime - state.interval / 2),
             x2: null,
             strokeDashArray: 0,
             borderColor: '#00ff00',
             label: {
-                text: (new Date(toTime)).toLocaleTimeString(),
+                text: (new Date(state.toTime)).toLocaleTimeString(),
                 borderColor: chartsLinesColor,
                 style: {
                     color: chartsTextColor,
@@ -275,8 +286,9 @@ const App = () => {
                             <div className="card-body pt-0">
                                 <div className="chart">
                                     <PriceChart
-                                        fromTime={fromTime}
-                                        toTime={toTime}
+                                        fromTime={state.fromTime}
+                                        toTime={state.toTime}
+                                        interval={state.interval}
                                         height={priceHeight}
                                         textColor={chartsTextColor}
                                         linesColor={chartsLinesColor}
@@ -285,8 +297,9 @@ const App = () => {
                                         yAnnotations={orderAnnotations}
                                         orders={state.orders} />
                                     <MarketDeltaChart
-                                        fromTime={fromTime}
-                                        toTime={toTime}
+                                        fromTime={state.fromTime}
+                                        toTime={state.toTime}
+                                        interval={state.interval}
                                         height={mdHeight}
                                         updateInterval={updateInterval}
                                         textColor={chartsTextColor}

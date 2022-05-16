@@ -5,7 +5,7 @@ import {stateContext} from "../StateProvider";
 
 let chartContext = null
 
-const MarketDeltaChart = ({fromTime, toTime, linesColor, textColor, height, xAnnotations}) => {
+const MarketDeltaChart = ({fromTime, toTime, interval, linesColor, textColor, height, xAnnotations}) => {
     const [seriesData, setSeriesData] = useState([]);
     const [state, actions] = useContext(stateContext)
 
@@ -122,7 +122,7 @@ const MarketDeltaChart = ({fromTime, toTime, linesColor, textColor, height, xAnn
             }
         },
         grid: {
-            borderColor: linesColor,
+            borderColor: '#34305B',
             padding: {
                 right: 60,
             },
@@ -133,10 +133,12 @@ const MarketDeltaChart = ({fromTime, toTime, linesColor, textColor, height, xAnn
     };
 
     useEffect(() => {
-        RequestHelper.fetch('/api/marketDelta/BTCUSD/' + fromTime + '/' + toTime + '/' + state.interval, {}, response => {
-            setSeriesData(response.data);
+        RequestHelper.fetch('/api/marketDelta/BTCUSD/' + fromTime + '/' + toTime + '/' + interval, {}, response => {
+            if (response.data !== undefined) {
+                setSeriesData(response.data);
+            }
         }, error => console.log(error));
-    }, [fromTime, toTime, state.interval]);
+    }, [fromTime, toTime, interval]);
 
     const series = [{
         name: 'Market Statistics',

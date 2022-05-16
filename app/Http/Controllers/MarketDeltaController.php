@@ -9,6 +9,7 @@ use App\Services\GetAggregateMarketStatService;
 use App\Services\Strategy\StrategyInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MarketDeltaController extends Controller
 {
@@ -30,7 +31,10 @@ class MarketDeltaController extends Controller
     {
         $interval = TimeInterval::memberByValue($interval);
         $data = collect();
-        foreach ($this->aggregateMarketDeltaService->getAggregateMarketDelta($symbol, $fromTime, $toTime, $interval) as $time => $y) {
+        $marketDeltaItems = $this->aggregateMarketDeltaService->getAggregateMarketDelta($symbol, $fromTime, $toTime, $interval);
+        $marketDeltaItemKeys = $marketDeltaItems->keys();
+        //Log::debug('MarketDelta times: '.$marketDeltaItemKeys->first().'-'.$marketDeltaItemKeys->last().' '.date('d.m.Y H:i:s', $marketDeltaItemKeys->first()/1000).'-'.date('d.m.Y H:i:s', $marketDeltaItemKeys->last()/1000));
+        foreach ($marketDeltaItems as $time => $y) {
             $data->push([
                 'x' => $time,
                 'y' => $y,

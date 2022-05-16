@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\TimeInterval;
 use App\Services\Crypto\Exchanges\Factory;
-use App\Helpers\TimeHelper;
 use App\Http\Resources\SeriesResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PriceController extends Controller
 {
@@ -21,7 +21,10 @@ class PriceController extends Controller
         $data = collect();
         $exchange = Factory::create('binance');
         $exchangeSymbol = $exchange->getExchangeSymbol($symbol);
-        foreach ($exchange->getCandlesticks($exchangeSymbol, $fromTime, $toTime, $interval) as $time => $candlestickData) {
+        $candlesticks = $exchange->getCandlesticks($exchangeSymbol, $fromTime, $toTime, $interval);
+        $candlestickKeys = $candlesticks->keys();
+        //Log::debug('Price times: '.$candlestickKeys->first().'-'.$candlestickKeys->last().' '.date('d.m.Y H:i:s', $candlestickKeys->first()/1000).'-'.date('d.m.Y H:i:s', $candlestickKeys->last()/1000));
+        foreach ($candlesticks as $time => $candlestickData) {
             $data->push([
                 'x' => $time,
                 'y' => $candlestickData,
