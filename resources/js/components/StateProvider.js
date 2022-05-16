@@ -22,7 +22,6 @@ const initialState = {
         message: '',
         title: '',
     },
-    wsClient: null,
 }
 
 const stateReducer = (state, action) => {

@@ -9511,6 +9511,7 @@ var RequestHelper = /*#__PURE__*/function () {
       })["catch"](function (error) {
         if (failed) {
           failed.call(this, error);
+          console.log(error);
         }
       });
     })
@@ -9801,7 +9802,9 @@ var App = function App() {
   var mdHeight = 250;
   var chartsTextColor = '#A39ED8';
   var chartsLinesColor = '#635E98';
-  var popupTimeout = null;
+  var popupTimeout = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var ordersRefreshTimer = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var wsClient = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   var priceChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var mdChartRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var ordersListRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -9810,12 +9813,18 @@ var App = function App() {
       _Helpers_LoginHelper__WEBPACK_IMPORTED_MODULE_9__["default"].clearAccessToken();
       actions.setUser(null);
     });
+    alert(1);
     _Helpers_RequestHelper__WEBPACK_IMPORTED_MODULE_15__["default"].fetch('/api/user', {}, function (response) {
+      alert(2);
+
       if (response.data !== undefined) {
         actions.setUser(response.data);
       }
 
       actions.setInitialized(true);
+    }, function (error) {
+      alert(error);
+      actions.setInitialized(false);
     });
   }, []);
   _Helpers_FormatHelper__WEBPACK_IMPORTED_MODULE_13__["default"].setFromSign('₿');
@@ -9830,12 +9839,12 @@ var App = function App() {
   var toTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(new Date().getTime(), state.interval);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (isLoggedIn) {
-      actions.setWSClient(new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {
+      wsClient.current = new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {
         actions.setCurrentPrice(1.0 * price);
-      }, 'BTCBUSD'));
-    } else if (state.wsClient !== null) {
-      state.wsClient.close();
-      actions.setWSClient(null);
+      }, 'BTCBUSD');
+    } else if (wsClient.current !== null) {
+      wsClient.current.close();
+      wsClient.current = null;
     }
 
     return null;
@@ -9848,8 +9857,8 @@ var App = function App() {
       message: message,
       title: title
     });
-    clearTimeout(popupTimeout);
-    popupTimeout = setTimeout(function () {
+    clearTimeout(popupTimeout.current);
+    popupTimeout.current = setTimeout(function () {
       actions.resetPopup();
     }, _constants__WEBPACK_IMPORTED_MODULE_11__.POPUP_TIMEOUT);
   };
@@ -10015,10 +10024,15 @@ var App = function App() {
     }
   }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender, isLoggedIn]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    setInterval(function () {
-      actions.ordersReRender();
-    }, _constants__WEBPACK_IMPORTED_MODULE_11__.ORDERS_REFRESH_INTERVAL);
-  }, []);
+    if (isLoggedIn) {
+      ordersRefreshTimer.current = setInterval(function () {
+        actions.ordersReRender();
+      }, _constants__WEBPACK_IMPORTED_MODULE_11__.ORDERS_REFRESH_INTERVAL);
+    } else if (ordersRefreshTimer.current !== null) {
+      clearInterval(ordersRefreshTimer.current);
+      ordersRefreshTimer.current = null;
+    }
+  }, [isLoggedIn]);
 
   if (state.initialized === false) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(_Loading_Loading__WEBPACK_IMPORTED_MODULE_16__["default"], {});
@@ -11668,8 +11682,7 @@ var initialState = {
     type: 'success',
     message: '',
     title: ''
-  },
-  wsClient: null
+  }
 };
 
 var stateReducer = function stateReducer(state, action) {

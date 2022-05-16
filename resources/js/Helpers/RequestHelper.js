@@ -30,6 +30,7 @@ class RequestHelper
         }).catch(function (error) {
             if (failed) {
                 failed.call(this, error);
+                console.log(error);
             }
         });
     }

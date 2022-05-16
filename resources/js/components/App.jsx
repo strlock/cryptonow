@@ -31,7 +31,9 @@ const App = () => {
     const mdHeight = 250;
     const chartsTextColor = '#A39ED8';
     const chartsLinesColor = '#635E98';
-    let popupTimeout = null;
+    const popupTimeout = useRef(null);
+    const ordersRefreshTimer = useRef(null);
+    const wsClient = useRef(null);
 
     const priceChartRef = useRef();
     const mdChartRef = useRef();
@@ -42,11 +44,16 @@ const App = () => {
             LoginHelper.clearAccessToken();
             actions.setUser(null);
         })
+        alert(1);
         RequestHelper.fetch('/api/user', {}, response => {
+            alert(2);
             if (response.data !== undefined) {
                 actions.setUser(response.data);
             }
             actions.setInitialized(true);
+        }, error => {
+            alert(error);
+            actions.setInitialized(false);
         });
     }, []);
 
@@ -62,12 +69,12 @@ const App = () => {
 
     useEffect(() => {
         if (isLoggedIn) {
-            actions.setWSClient(new BinanceWebsocketClient(function(price) {
+            wsClient.current = new BinanceWebsocketClient(function(price) {
                 actions.setCurrentPrice(1.0*price);
-            }, 'BTCBUSD'));
-        } else if (state.wsClient !== null) {
-            state.wsClient.close()
-            actions.setWSClient(null)
+            }, 'BTCBUSD');
+        } else if (wsClient.current !== null) {
+            wsClient.current.close();
+            wsClient.current = null;
         }
         return null;
     }, [isLoggedIn]);
@@ -79,8 +86,8 @@ const App = () => {
             message: message,
             title: title,
         });
-        clearTimeout(popupTimeout);
-        popupTimeout = setTimeout(function() {
+        clearTimeout(popupTimeout.current);
+        popupTimeout.current = setTimeout(function() {
             actions.resetPopup();
         }, POPUP_TIMEOUT);
     }
@@ -240,10 +247,15 @@ const App = () => {
     }, [state.ordersHistoryPage, state.ordersHistoryPagesTotal, state.ordersReRender, isLoggedIn]);
 
     useEffect(() => {
-        setInterval(() => {
-            actions.ordersReRender();
-        }, ORDERS_REFRESH_INTERVAL);
-    }, []);
+        if (isLoggedIn) {
+            ordersRefreshTimer.current = setInterval(() => {
+                actions.ordersReRender();
+            }, ORDERS_REFRESH_INTERVAL);
+        } else if (ordersRefreshTimer.current !== null) {
+            clearInterval(ordersRefreshTimer.current);
+            ordersRefreshTimer.current = null;
+        }
+    }, [isLoggedIn]);
 
     if (state.initialized === false) {
         return <Loading />
