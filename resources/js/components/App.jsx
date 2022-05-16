@@ -61,7 +61,7 @@ const App = () => {
     useEffect(() => {
         if (isLoggedIn()) {
             wsClient.current = new BinanceWebsocketClient(function(price) {
-                actions.setCurrentPrice(1.0*price);
+                //actions.setCurrentPrice(1.0*price);
             }, 'BTCBUSD');
         } else if (wsClient.current !== null) {
             wsClient.current.close();

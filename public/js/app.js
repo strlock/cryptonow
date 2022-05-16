@@ -9830,8 +9830,7 @@ var App = function App() {
   var toTime = _Helpers_TimeHelper__WEBPACK_IMPORTED_MODULE_4__["default"].round(new Date().getTime(), state.interval);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (isLoggedIn()) {
-      wsClient.current = new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {
-        actions.setCurrentPrice(1.0 * price);
+      wsClient.current = new _BinanceWebsocketClient__WEBPACK_IMPORTED_MODULE_6__["default"](function (price) {//actions.setCurrentPrice(1.0*price);
       }, 'BTCBUSD');
     } else if (wsClient.current !== null) {
       wsClient.current.close();
@@ -12169,7 +12168,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var REFRESH_INTERVAL = 15000;
 var POPUP_TIMEOUT = 15000;
-var ORDERS_REFRESH_INTERVAL = 3000;
+var ORDERS_REFRESH_INTERVAL = 30000;
 var ONE_MINUTE_MS = 60 * 1000;
 var ORDER_STATE_TITLES = {
   'new': 'New',

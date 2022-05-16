@@ -14508,10 +14508,15 @@ h1, .h1 {
   height: 1rem;
 }
 
+.orders {
+  font-size: 16px;
+  line-height: 2rem;
+}
 .orders .progress {
   width: 50%;
   display: inline-block;
   margin: 0 1rem;
+  line-height: 1rem;
 }
 .orders .order-state-title {
   min-width: 3.5rem;
