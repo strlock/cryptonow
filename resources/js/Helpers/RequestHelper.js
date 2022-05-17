@@ -18,10 +18,15 @@ class RequestHelper
             };
         }
         return fetch(url, options).then(response => response.json()).then(function (response) {
-            if (response.status !== undefined && response.status === 'Token is Expired') {
-                LoginHelper.clearAccessToken();
-                if (failed) {
-                    failed.call(this);
+            if (response.status !== undefined) {
+                if (response.statusCode === 1) {
+                    LoginHelper.clearAccessToken();
+                    if (failed) {
+                        failed.call(this);
+                    }
+                }
+                if (response.statusCode === 2) {
+                    location.reload();
                 }
                 return;
             }
