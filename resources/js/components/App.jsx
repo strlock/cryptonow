@@ -41,6 +41,7 @@ const App = () => {
     const priceChartRef = useRef();
     const mdChartRef = useRef();
     const ordersListRef = useRef();
+    const updateTimeRangeInterval = useRef(null);
 
     const isLoggedIn = () => state.user !== null;
 
@@ -48,12 +49,6 @@ const App = () => {
     /*if (daysForInterval > 10) {
         daysForInterval = 10;
     }*/
-
-    const updateTimeRange = () => {
-        const fromTime = TimeHelper.round((TimeHelper.subDaysFromDate(new Date(), daysForInterval)).getTime(), state.interval);
-        const toTime = TimeHelper.round((new Date()).getTime(), state.interval);
-        actions.setTimeRange(fromTime, toTime);
-    }
 
     useEffect(() => {
         RequestHelper.fetch('/api/user', {}, response => {
@@ -64,15 +59,32 @@ const App = () => {
         }, () => {
             actions.setInitialized(true);
         });
-        updateTimeRange();
     }, []);
 
     FormatHelper.setFromSign('₿');
     FormatHelper.setToSign('$');
 
-    useInterval(() => {
-        updateTimeRange();
-    }, CHARTS_UPDATE_INTERVAL)
+    const updateTimeRange = () => {
+        const fromTime = TimeHelper.round((TimeHelper.subDaysFromDate(new Date(), daysForInterval)).getTime(), state.interval);
+        const toTime = TimeHelper.round((new Date()).getTime(), state.interval);
+        actions.setTimeRange(fromTime, toTime);
+    }
+
+    useEffect(() => {
+        if (isLoggedIn()) {
+            updateTimeRange();
+            updateTimeRangeInterval.current = setInterval(() => {
+                updateTimeRange();
+            }, CHARTS_UPDATE_INTERVAL);
+        } else if (updateTimeRangeInterval.current !== null) {
+            clearInterval(updateTimeRangeInterval.current);
+            updateTimeRangeInterval.current = null;
+        }
+        return () => {
+            clearInterval(updateTimeRangeInterval.current);
+            updateTimeRangeInterval.current = null;
+        }
+    }, [state.user]);
 
     useEffect(() => {
         if (isLoggedIn()) {
