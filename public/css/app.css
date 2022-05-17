@@ -11599,7 +11599,7 @@ h1, .h1 {
 .page-item.active .page-link {
   background-color: var(--text-color);
   color: var(--card-bg-color);
-  border: none;
+  border-color: #dee2e6;
 }
 
 .modal-header, .modal-footer {

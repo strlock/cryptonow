@@ -39,6 +39,7 @@ const App = () => {
     const ordersRefreshTimer = useRef(null);
     const wsClient = useRef(null);
     const priceChartRef = useRef();
+    const currentPriceRef = useRef(0.0);
     const mdChartRef = useRef();
     const ordersListRef = useRef();
     const updateTimeRangeInterval = useRef(null);
@@ -89,7 +90,7 @@ const App = () => {
     useEffect(() => {
         if (isLoggedIn()) {
             wsClient.current = new BinanceWebsocketClient(function(price) {
-                //wsClient.currentPrice = 1.0*price;
+                currentPriceRef.current = 1.0*price;
             }, 'BTCBUSD');
         } else if (wsClient.current !== null) {
             wsClient.current.close();
@@ -309,7 +310,9 @@ const App = () => {
                                         innerRef={priceChartRef}
                                         xAnnotations={annotations}
                                         yAnnotations={orderAnnotations}
-                                        orders={state.orders} />
+                                        orders={state.orders}
+                                        currentPrice={currentPriceRef.current}
+                                    />
                                     <MarketDeltaChart
                                         fromTime={state.fromTime}
                                         toTime={state.toTime}
@@ -340,7 +343,7 @@ const App = () => {
                     </div>
                 </div>
                 <UserSettingsModal showPopup={showPopup} />
-                <OrderForm showPopup={showPopup} />
+                <OrderForm showPopup={showPopup} currentPrice={currentPriceRef.current} />
             </div>
     } else {
         content = <LoginForm onSuccess={onLoginSuccess} onFail={onLoginFail} />

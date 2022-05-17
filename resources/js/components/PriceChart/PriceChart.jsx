@@ -6,7 +6,7 @@ import {stateContext} from "../StateProvider";
 
 let chartContext = null;
 
-const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, xAnnotations, yAnnotations, orders}) => {
+const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, xAnnotations, yAnnotations, orders, currentPrice}) => {
     const [seriesData, setSeriesData] = useState([]);
     const [state, actions] = useContext(stateContext);
 
@@ -23,7 +23,7 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, 
 
     const priceAnnotation = useMemo(() => {
         return {
-            y: state.currentPrice,
+            y: currentPrice,
             borderColor: '#fff',
             strokeDashArray: 1,
             label: {
@@ -34,10 +34,10 @@ const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, 
                     color: textColor,
                     background: linesColor,
                 },
-                text: FormatHelper.formatPrice(state.currentPrice)
+                text: FormatHelper.formatPrice(currentPrice)
             }
         };
-    }, [state.currentPrice]);
+    }, [currentPrice]);
 
     const yRange = useMemo(() => {
         let prices = [];

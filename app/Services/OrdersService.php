@@ -12,6 +12,7 @@ use App\Dto\PlaceOrderDto;
 use App\Enums\ExchangeOrderType;
 use App\Enums\OrderState;
 use App\Enums\OrderDirection;
+use App\Exceptions\CannotPlaceExchangeOrderException;
 use App\Models\Order;
 use App\Models\OrderInterface;
 use App\Models\UserInterface;
@@ -28,12 +29,14 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class OrdersService implements OrdersServiceInterface
 {
     public function __construct(
         private OrdersRepository $ordersRepository,
         private UsersRepository $usersRepository,
+        private TelegramServiceInterface $telegramService,
     )
     {
         //
@@ -71,7 +74,7 @@ class OrdersService implements OrdersServiceInterface
             $order->getId(),
         ));
         if ($exchangeOrderId === false) {
-            throw new Exception('Cannot place order to exchange');
+            throw new CannotPlaceExchangeOrderException($order);
         }
         $currentPrice = $exchange->getCurrentPrice($exchangeSymbol);
         $order->setCreatedPrice($currentPrice);
@@ -248,7 +251,6 @@ class OrdersService implements OrdersServiceInterface
 
     /**
      * @param CreateAutomaticOrdersDto $dto
-     * @throws Exception
      */
     public function createUsersAutomaticOrders(CreateAutomaticOrdersDto $dto): void
     {
@@ -289,7 +291,7 @@ class OrdersService implements OrdersServiceInterface
             }
             $message = 'New order created: '.Str::studly($dto->getDirection()->key()).' '.$amount.' '.$dto->getSymbol().'. Price: '.$price.', Take profit: '.$tp.', Stop loss: '.$sl;
             Log::debug($message);
-            Notification::route('telegram', config('telegram.botChatId'))->notify(new TelegramNotification($message));
+            $this->telegramService->sendMessage($message);
         }
     }
 

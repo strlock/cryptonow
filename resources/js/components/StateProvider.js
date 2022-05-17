@@ -15,7 +15,6 @@ const initialState = {
     ordersHistoryPage: 1,
     ordersHistoryPagesTotal: 1,
     user: null,
-    currentPrice: 0.0,
     interval: TimeIntervals.FIVE_MINUTES,
     mdClusters: [],
     popup: {
@@ -63,10 +62,6 @@ const stateReducer = (state, action) => {
                 ...state,
                 user: action.user
             }
-        case 'setCurrentPrice':
-            return {
-                ...state,
-                currentPrice: action.price}
         case 'ordersReRender':
             return {
                 ...state,
@@ -133,10 +128,6 @@ function StateProvider({children}) {
         setUser: (user) => dispatch({
             type: 'setUser',
             user: user,
-        }),
-        setCurrentPrice: (price) => dispatch({
-            type: 'setCurrentPrice',
-            price: price,
         }),
         ordersReRender: () => dispatch({
             type: 'ordersReRender',
