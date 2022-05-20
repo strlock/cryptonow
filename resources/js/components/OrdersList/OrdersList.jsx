@@ -31,7 +31,6 @@ const OrdersList = () => {
                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
                     <button className={"nav-link active"} id={"nav-orders-tab"} data-bs-toggle="tab" data-bs-target={"#nav-orders"} type="button" role="tab" aria-controls={"nav-orders"} aria-selected={"true"}>Active Orders</button>
                     <button className={"nav-link"} id={"nav-history-tab"} data-bs-toggle="tab" data-bs-target={"#nav-history"} type="button" role="tab" aria-controls={"nav-history"} aria-selected={"false"}>History</button>
-                    <button type="button" className="btn btn-success new-order-button" data-bs-toggle="modal" data-bs-target="#newOrderModal">New order</button>
                 </div>
             </nav>
             <div className="tab-content" id="ordersListTabContent">

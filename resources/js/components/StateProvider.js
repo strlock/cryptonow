@@ -17,6 +17,7 @@ const initialState = {
     user: null,
     interval: TimeIntervals.FIVE_MINUTES,
     mdClusters: [],
+    currentPrice: 0.0,
     popup: {
         show: false,
         type: 'success',
@@ -93,6 +94,11 @@ const stateReducer = (state, action) => {
                 fromTime: action.fromTime,
                 toTime: action.toTime,
             }
+        case 'setCurrentPrice':
+            return {
+                ...state,
+                currentPrice: action.currentPrice
+            }
         default:
             return state;
     }
@@ -151,6 +157,10 @@ function StateProvider({children}) {
             type: 'setTimeRange',
             fromTime: fromTime,
             toTime: toTime,
+        }),
+        setCurrentPrice: (currentPrice) => dispatch({
+            type: 'setCurrentPrice',
+            currentPrice: currentPrice,
         }),
     }
     return (

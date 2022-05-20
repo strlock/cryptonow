@@ -270,7 +270,16 @@ h1{
     border-color: transparent;
 }
 
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+.left-nav-link {
+    display: block;
+    width: 134px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link, .left-nav-link {
     background: linear-gradient(var(--active-tab-color), var(--active-tab-color-end));
     color: var(--active-tab-text-color);
     border: none;
@@ -310,12 +319,6 @@ h1{
     border: 3px solid var(--active-interval-color);
 }
 
-.new-order-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
 .page-item .page-link, .page-item.disabled .page-link {
     background-color: transparent;
     color: var(--text-color);
@@ -329,6 +332,22 @@ h1{
 
 .modal-header,.modal-footer {
     border: none;
+}
+
+#middle {
+    display: flex;
+    justify-content: space-between;
+    #left-nav {
+        width: 120px;
+        border-radius: var(--main-border-radius);
+        background-color: var(--card-bg-color);
+        margin-right: 2em;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        min-height: 1411px;
+    }
 }
 
 @media(max-width: 1500px){

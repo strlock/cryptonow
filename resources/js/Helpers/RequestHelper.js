@@ -19,14 +19,15 @@ class RequestHelper
         }
         return fetch(url, options).then(response => response.json()).then(function (response) {
             if (response.status !== undefined) {
-                if (response.statusCode === 1) {
+                if (response.statusCode === 1 || response.statusCode === 2) {
                     LoginHelper.clearAccessToken();
+                    if (RequestHelper.expiredTokenCallback !== null) {
+                        RequestHelper.expiredTokenCallback();
+                    }
                     if (failed) {
                         failed.call(this);
+                        console.log('Token is expired!');
                     }
-                }
-                if (response.statusCode === 2) {
-                    location.reload();
                 }
                 return;
             }
@@ -59,6 +60,11 @@ class RequestHelper
             }
         }
         return response;
+    }
+
+    static setExpiredTokenCallback (callback)
+    {
+        RequestHelper.expiredTokenCallback = callback;
     }
 }
 

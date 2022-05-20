@@ -7,8 +7,9 @@ import {
 } from "../../constants";
 import $ from "jquery";
 import {stateContext} from "../StateProvider";
+import usePopup from "../../hooks/usePopup";
 
-const OrderForm = ({showPopup, currentPrice}) => {
+const OrderForm = ({currentPrice}) => {
     const [market, setMarket] = useState(false);
     const [sl, setSl] = useState(0);
     const [tp, setTp] = useState(0);
@@ -17,12 +18,13 @@ const OrderForm = ({showPopup, currentPrice}) => {
     const [direction, setDirection] = useState(ORDER_DIRECTION_BUY);
     const [state, actions] = useContext(stateContext)
 
-    const totalRef = useRef();
-    const amountRef = useRef();
-    const priceRef = useRef();
-    const slRef = useRef();
-    const tpRef = useRef();
-    const marketRef = useRef();
+    const totalRef = useRef()
+    const amountRef = useRef()
+    const priceRef = useRef()
+    const slRef = useRef()
+    const tpRef = useRef()
+    const marketRef = useRef()
+    const popup = usePopup()
 
     const onMarketChange = (event) => {
         const target = event.target;
@@ -85,7 +87,7 @@ const OrderForm = ({showPopup, currentPrice}) => {
             clearForm();
             closeModal();
             if (response.error !== undefined) {
-                showPopup(response.error, 'danger');
+                popup.show(response.error, 'danger');
                 console.log(response.error);
             } else {
                 actions.ordersReRender();
@@ -167,7 +169,7 @@ const OrderForm = ({showPopup, currentPrice}) => {
                             </div>
                             <div className="input-group input-group-sm mb-4">
                                 <label htmlFor="price" className="input-group-text w-25 bg-dark text-white">Price</label>
-                                <input type="text" name="price" id="price" defaultValue={market ? currentPrice : ''} className="form-control bg-dark text-white" disabled={market} ref={priceRef} onChange={() => onPriceChange()} />
+                                <input type="text" name="price" id="price" defaultValue={market ? state.currentPrice : ''} className="form-control bg-dark text-white" disabled={market} ref={priceRef} onChange={() => onPriceChange()} />
                             </div>
                             <div className="input-group input-group-sm mb-4">
                                 <label htmlFor="volume" className="input-group-text w-25 bg-dark text-white">Amount</label>

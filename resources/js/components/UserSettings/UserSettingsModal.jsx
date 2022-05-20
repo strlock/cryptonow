@@ -2,8 +2,9 @@ import React, {useRef, useContext} from 'react';
 import RequestHelper from "../../Helpers/RequestHelper";
 import $ from "jquery";
 import {stateContext} from "../StateProvider";
+import usePopup from "../../hooks/usePopup";
 
-function UserSettingsModal({showPopup}) {
+function UserSettingsModal() {
     const binanceApiKeyRef = useRef();
     const binanceApiSeceretRef = useRef();
     const aoTpRef = useRef();
@@ -12,6 +13,7 @@ function UserSettingsModal({showPopup}) {
     const aoLimitIndentPercentRef = useRef();
     const aoEnabledRef = useRef();
     const [state, actions] = useContext(stateContext);
+    const popup = usePopup()
 
     const onSaveClick = () => {
         let data = new FormData();
@@ -26,12 +28,12 @@ function UserSettingsModal({showPopup}) {
             method: 'POST',
             body: data,
         }, response => {
-            if (response.error) {
-                showPopup(response.message, 'danger');
-            } else {
-                showPopup(response.message);
-            }
             $('#userSettingsModal .btn-close').trigger('click');
+            if (response.error) {
+                popup.show(response.message, 'danger');
+            } else {
+                popup.show(response.message);
+            }
         });
     }
 
