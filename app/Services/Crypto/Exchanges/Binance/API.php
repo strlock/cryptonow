@@ -130,9 +130,9 @@ class API extends BinanceAPI
      * @param float $quantity
      * @param float $tpPrice
      * @param float $slPrice
-     * @param float $slDiff
+     * @param array $params
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function orderOCO(string $side, string $symbol, float $quantity, float $tpPrice, float $slPrice, array $params = []): array
     {
@@ -140,9 +140,9 @@ class API extends BinanceAPI
         $params['side'] = strtoupper($side);
         $params['quantity'] = $quantity;
         $params['recvWindow'] = 60000;
-        $params['price'] = $tpPrice;
+        $params['price'] = round($tpPrice, 2);
         $params['stopLimitTimeInForce'] = "GTC";
-        $params['stopPrice'] = $slPrice;
+        $params['stopPrice'] = round($slPrice, 2);
         $slDiff = ($tpPrice - $slPrice)*0.01;
         $params['stopLimitPrice'] = round($slPrice - $slDiff, 2);
         Log::debug('BINANCE: Placing OCO order. Side: '.$side.', Symbol: '.$symbol.', Quantity: '.$quantity.

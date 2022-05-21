@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug">
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Page.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Pages/About/About.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/Pages/Dashboard/Dashboard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/hooks/usePopup.js" afterDir="false" />
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Left navigation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Binance/API.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/Binance/API.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/Helpers/RequestHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Helpers/RequestHelper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrderForm/OrderForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrderForm/OrderForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/OrdersList/OrdersList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/PriceChart/PriceChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/PriceChart/PriceChart.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/StateProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/StateProvider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/UserSettings/UserSettingsModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UserSettings/UserSettingsModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/About/About.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/About/About.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -359,13 +347,8 @@
       <workItem from="1652902878732" duration="51000" />
       <workItem from="1652936655585" duration="56000" />
       <workItem from="1653062166947" duration="1299000" />
-    </task>
-    <task id="LOCAL-00070" summary="Improving. Fixing bug">
-      <created>1652124784500</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1652124784500</updated>
+      <workItem from="1653071765497" duration="253000" />
+      <workItem from="1653130475533" duration="399000" />
     </task>
     <task id="LOCAL-00071" summary="Testmode for exchanges">
       <created>1652125412766</created>
@@ -703,7 +686,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652776254983</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="Left navigation">
+      <created>1653071794083</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1653071794084</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -731,7 +721,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Automatic orders" />
     <MESSAGE value="Refactoring BTCUSDT -&gt; BTCUSD" />
     <MESSAGE value="Improving login. Refactoring" />
     <MESSAGE value="Improving. Fixing bug" />
@@ -756,7 +745,8 @@
     <MESSAGE value="Improving orders and telegram messages" />
     <MESSAGE value="Fixing bug with current price" />
     <MESSAGE value="Fixing bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug" />
+    <MESSAGE value="Left navigation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Left navigation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
