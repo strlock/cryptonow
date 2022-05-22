@@ -17,7 +17,7 @@ use App\Models\Order;
 use App\Models\OrderInterface;
 use App\Models\UserInterface;
 use App\Notifications\TelegramNotification;
-use App\Repositories\OrdersRepository;
+use App\Repositories\MarketDeltaRepository;
 use App\Repositories\UsersRepository;
 use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
@@ -34,7 +34,7 @@ use Throwable;
 class OrdersService implements OrdersServiceInterface
 {
     public function __construct(
-        private OrdersRepository $ordersRepository,
+        private MarketDeltaRepository $ordersRepository,
         private UsersRepository $usersRepository,
         private TelegramServiceInterface $telegramService,
     )

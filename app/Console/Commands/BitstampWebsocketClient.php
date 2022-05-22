@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Enums\TimeInterval;
+use App\Models\MarketDelta;
 use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Helpers\TimeHelper;
@@ -89,11 +90,16 @@ class BitstampWebsocketClient extends Command
                     $mdQueueName = 'bitstamp:md:'.$exchangeSymbol;
                     $fromTime = TimeHelper::round((int)($tradeData->microtimestamp/1000), TimeInterval::MINUTE());
                     $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
-                    Redis::zRem($mdQueueName, $fromTime.':'.$marketDelta);
                     $delta = $tradeData->amount*($tradeData->type === 1 ? -1 : 1);
                     $marketDelta += $delta;
                     echo $marketDelta.PHP_EOL;
-                    Redis::zAdd($mdQueueName, $fromTime, $fromTime.':'.$marketDelta);
+                    MarketDelta::updateOrCreate([
+                        'symbol' => $exchangeSymbol,
+                        'exchange' => 'bitstamp',
+                        'time' => $fromTime,
+                    ], [
+                        'value' => $marketDelta,
+                    ]);
                     $i++;
                 }
                 $client->close();

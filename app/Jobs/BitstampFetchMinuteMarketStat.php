@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Enums\TimeInterval;
+use App\Models\MarketDelta;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use App\Helpers\TimeHelper;
 use App\Dto\FetchMinuteMarketStatDto;
@@ -60,7 +61,13 @@ class BitstampFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
             $marketDelta += $trade->getVolume();
         }
         Log::debug('BITSTAMP: Adding minute market stat to database. Market delta: '.$marketDelta, ['symbol' => $exchangeSymbol, 'fromTime' => $fromTime]);
-        Redis::zAdd($mdQueueName, $fromTime, $fromTime.':'.$marketDelta);
+        MarketDelta::updateOrCreate([
+            'symbol' => $exchangeSymbol,
+            'exchange' => 'bitstamp',
+            'time' => $fromTime,
+        ], [
+            'value' => $marketDelta,
+        ]);
     }
 
     /**

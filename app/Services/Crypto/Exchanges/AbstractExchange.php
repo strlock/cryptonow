@@ -7,6 +7,7 @@ use App\Dto\PlaceOrderDto;
 use App\Dto\TimeIntervalChunkDto;
 use App\Enums\TimeInterval;
 use App\Helpers\TimeHelper;
+use App\Repositories\MarketDeltaRepository;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
@@ -47,13 +48,9 @@ abstract class AbstractExchange implements ExchangeInterface
      * @return float|false
      */
     final public function getMinuteMarketDeltaFromDatabase (string $exchangeSymbol, int $fromTime): float|false {
-        $mdQueueName = strtolower($this->getExchangeName()).':md:'.$exchangeSymbol;
-        $value = Redis::zRangeByScore($mdQueueName, $fromTime, $fromTime);
-        if (!empty($value)) {
-            list(,$value) = explode(':', $value[0]);
-            return $value;
-        }
-        return false;
+        $marketDeltaRepository = app(MarketDeltaRepository::class);
+        $marketDelta = $marketDeltaRepository->getMarketDeltaByTime($this->getExchangeName(), $exchangeSymbol, $fromTime);
+        return $marketDelta->value ?? 0.0;
     }
 
     /**
@@ -71,6 +68,7 @@ abstract class AbstractExchange implements ExchangeInterface
      * @param int $fromTime
      * @param int|null $toTime
      * @return Collection
+     * @throws Exception
      */
     public function getTrades(string $exchangeSymbol, int $fromTime, int $toTime = null): Collection
     {

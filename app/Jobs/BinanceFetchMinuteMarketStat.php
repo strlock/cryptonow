@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Enums\TimeInterval;
+use App\Models\MarketDelta;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use App\Services\Crypto\Exchanges\TradeInterface;
 use App\Helpers\TimeHelper;
@@ -64,7 +65,13 @@ class BinanceFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
             $marketDelta += $trade->getVolume();
         }
         Log::debug('BINANCE: Adding minute market stat to database. Market delta: '.$marketDelta, ['symbol' => $exchangeSymbol, 'fromTime' => $fromTime]);
-        Redis::zAdd($mdQueueName, $fromTime, $fromTime.':'.$marketDelta);
+        MarketDelta::updateOrCreate([
+            'symbol' => $exchangeSymbol,
+            'exchange' => 'binance',
+            'time' => $fromTime,
+        ], [
+            'value' => $marketDelta,
+        ]);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Enums\TimeInterval;
+use App\Models\MarketDelta;
 use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Helpers\TimeHelper;
@@ -68,14 +69,18 @@ class BinanceWebsocketClient extends Command
                     }
                     $price = $response->p;
                     event(new BinancePrice($price));
-                    $mdKey = 'binance:md:'.$exchangeSymbol;
                     $fromTime = TimeHelper::round((int)($response->E), TimeInterval::MINUTE());
                     $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
-                    Redis::zRem($mdKey, $fromTime.':'.$marketDelta);
                     $delta = $response->q*($response->m ? -1 : 1);
                     $marketDelta += $delta;
                     echo round($price, 2).': '.$marketDelta.PHP_EOL;
-                    Redis::zAdd($mdKey, $fromTime, $fromTime.':'.$marketDelta);
+                    MarketDelta::updateOrCreate([
+                        'symbol' => $exchangeSymbol,
+                        'exchange' => 'binance',
+                        'time' => $fromTime,
+                    ], [
+                        'value' => $marketDelta,
+                    ]);
                     $i++;
                 }
                 $client->close();

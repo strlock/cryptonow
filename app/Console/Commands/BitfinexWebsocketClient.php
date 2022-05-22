@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Enums\TimeInterval;
+use App\Models\MarketDelta;
 use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Helpers\TimeHelper;
@@ -85,10 +86,15 @@ class BitfinexWebsocketClient extends Command
                         $tradeQuantity = $tradeData[2];
                         $fromTime = TimeHelper::round($tradeTime, TimeInterval::MINUTE());
                         $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
-                        Redis::zRem($mdQueueName, $fromTime . ':' . $marketDelta);
                         $marketDelta += $tradeQuantity;
                         echo $marketDelta . PHP_EOL;
-                        Redis::zAdd($mdQueueName, $fromTime, $fromTime . ':' . $marketDelta);
+                        MarketDelta::updateOrCreate([
+                            'symbol' => $exchangeSymbol,
+                            'exchange' => 'bitfinex',
+                            'time' => $fromTime,
+                        ], [
+                            'value' => $marketDelta,
+                        ]);
                         $i++;
                     }
                 }
