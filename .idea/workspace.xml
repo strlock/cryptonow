@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bugs">
-      <change afterPath="$PROJECT_DIR$/app/Repositories/MarketDeltaRepository.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_05_22_191146_create_market_delta_table.php" afterDir="false" />
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Moving market delta statistics to MySQL">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/BinanceFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BinanceFetchMinuteMarketStat.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/BitstampFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BitstampFetchMinuteMarketStat.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/MarketDelta.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/MarketDelta.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/AbstractExchange.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/AbstractExchange.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -361,14 +349,7 @@
       <workItem from="1653130475533" duration="1182000" />
       <workItem from="1653141491072" duration="20000" />
       <workItem from="1653208656525" duration="594000" />
-      <workItem from="1653235530534" duration="3011000" />
-    </task>
-    <task id="LOCAL-00072" summary="Fixing bug. Improving logs">
-      <created>1652161140991</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1652161140992</updated>
+      <workItem from="1653235530534" duration="3627000" />
     </task>
     <task id="LOCAL-00073" summary="Fixing bug">
       <created>1652163917532</created>
@@ -706,7 +687,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653130914012</updated>
     </task>
-    <option name="localTasksCounter" value="121" />
+    <task id="LOCAL-00121" summary="Moving market delta statistics to MySQL">
+      <created>1653238608375</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1653238608375</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -734,7 +722,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Improving login. Refactoring" />
     <MESSAGE value="Improving. Fixing bug" />
     <MESSAGE value="Testmode for exchanges" />
     <MESSAGE value="Fixing bug. Improving logs" />
@@ -759,7 +746,8 @@
     <MESSAGE value="Fixing bug" />
     <MESSAGE value="Left navigation" />
     <MESSAGE value="Fixing bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bugs" />
+    <MESSAGE value="Moving market delta statistics to MySQL" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moving market delta statistics to MySQL" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
