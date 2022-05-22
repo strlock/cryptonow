@@ -16,7 +16,7 @@ use App\Exceptions\CannotPlaceExchangeOrderException;
 use App\Models\Order;
 use App\Models\OrderInterface;
 use App\Models\UserInterface;
-use App\Repositories\MarketDeltaRepository;
+use App\Repositories\OrdersRepository;
 use App\Repositories\UsersRepository;
 use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
@@ -31,7 +31,7 @@ use Illuminate\Support\Collection;
 class OrdersService implements OrdersServiceInterface
 {
     public function __construct(
-        private MarketDeltaRepository $ordersRepository,
+        private OrdersRepository $ordersRepository,
         private UsersRepository $usersRepository,
         private TelegramServiceInterface $telegramService,
     )
