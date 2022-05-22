@@ -8,6 +8,7 @@ use App\Models\MarketDelta;
 class MarketDeltaRepository
 {
     /**
+     * @param string $exchange
      * @param string $symbol
      * @param int $time
      * @return MarketDelta|null

@@ -16,7 +16,6 @@ use App\Exceptions\CannotPlaceExchangeOrderException;
 use App\Models\Order;
 use App\Models\OrderInterface;
 use App\Models\UserInterface;
-use App\Notifications\TelegramNotification;
 use App\Repositories\MarketDeltaRepository;
 use App\Repositories\UsersRepository;
 use App\Services\Crypto\Exchanges\AbstractExchange;
@@ -26,10 +25,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
-use Throwable;
 
 class OrdersService implements OrdersServiceInterface
 {
@@ -251,6 +248,7 @@ class OrdersService implements OrdersServiceInterface
 
     /**
      * @param CreateAutomaticOrdersDto $dto
+     * @throws Exception
      */
     public function createUsersAutomaticOrders(CreateAutomaticOrdersDto $dto): void
     {

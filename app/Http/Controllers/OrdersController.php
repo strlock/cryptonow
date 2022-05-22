@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Repositories\MarketDeltaRepository;
+use App\Repositories\OrdersRepository;
 use App\Services\OrdersService;
 use App\Services\OrdersServiceInterface;
 use App\Services\TelegramService;
@@ -24,12 +25,12 @@ class OrdersController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \App\Repositories\MarketDeltaRepository $ordersRepository
+     * @param \App\Repositories\OrdersRepository $ordersRepository
      * @param \Illuminate\Http\Request $request
      * @param \App\Services\OrdersServiceInterface $ordersService
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index(MarketDeltaRepository $ordersRepository, Request $request, OrdersServiceInterface $ordersService): \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    public function index(OrdersRepository $ordersRepository, Request $request, OrdersServiceInterface $ordersService): \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         try {
             $user = Auth::user();

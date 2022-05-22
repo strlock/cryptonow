@@ -6,7 +6,7 @@ use App\Enums\BinanceOrderExecutionType;
 use App\Enums\OrderState;
 use App\Models\OrderInterface;
 use App\Models\User;
-use App\Repositories\MarketDeltaRepository;
+use App\Repositories\OrdersRepository;
 use App\Services\Crypto\Exchanges\Binance\Exchange as BinanceExchange;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Services\OrdersService;
@@ -45,7 +45,7 @@ class BinanceWebsocketUserDataClient extends Command
      *
      * @return int
      */
-    public function handle(OrdersService $ordersService, MarketDeltaRepository $ordersRepository)
+    public function handle(OrdersService $ordersService, OrdersRepository $ordersRepository)
     {
         $userId = (int)$this->argument('userId');
         $user = User::find($userId);
