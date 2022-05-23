@@ -33,7 +33,7 @@ class MarketDeltaRepository
             if (!$result[$item->exchange]->has($item->symbol)) {
                 $result[$item->exchange]->put($item->symbol, collect());
             }
-            $result[$item->exchange][$item->symbol]->put($fromTime, $item->value);
+            $result[$item->exchange][$item->symbol]->put($item->time, $item->value);
         }
         return $result;
     }
