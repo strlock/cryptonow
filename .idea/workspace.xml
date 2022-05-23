@@ -3,8 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/OrdersService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrdersService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitfinexWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BinanceFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BinanceFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/BitstampFetchMinuteMarketStat.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/BitstampFetchMinuteMarketStat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Repositories/MarketDeltaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/MarketDeltaRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/AbstractExchange.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Crypto/Exchanges/AbstractExchange.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +45,7 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="PhpDebugGeneral" xdebug_debug_port="11003" listening_started="true" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
+  <component name="PhpDebugGeneral" xdebug_debug_port="11003" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
     <xdebug_debug_ports port="11003" />
   </component>
   <component name="PhpServers">
@@ -350,14 +357,8 @@
       <workItem from="1653130475533" duration="1182000" />
       <workItem from="1653141491072" duration="20000" />
       <workItem from="1653208656525" duration="594000" />
-      <workItem from="1653235530534" duration="4011000" />
-    </task>
-    <task id="LOCAL-00075" summary="Common state. Pagination.">
-      <created>1652215577701</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1652215577701</updated>
+      <workItem from="1653235530534" duration="4627000" />
+      <workItem from="1653282420670" duration="1901000" />
     </task>
     <task id="LOCAL-00076" summary="Fixing Bugs. Refactoring">
       <created>1652255003047</created>
@@ -695,7 +696,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653239473495</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="Fixing bugs">
+      <created>1653239590542</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1653239590542</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -754,11 +762,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Jobs/BitfinexFetchMinuteMarketStat.php</url>
-          <line>44</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Notifications/NotificationSender.php</url>
           <line>199</line>
           <option name="timeStamp" value="24" />
@@ -767,6 +770,11 @@
           <url>file://$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketUserDataClient.php</url>
           <line>91</line>
           <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Repositories/MarketDeltaRepository.php</url>
+          <line>26</line>
+          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

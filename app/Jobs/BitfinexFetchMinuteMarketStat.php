@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Enums\TimeInterval;
 use App\Models\MarketDelta;
+use App\Repositories\MarketDeltaRepository;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use App\Services\Crypto\Exchanges\TradeInterface;
 use App\Helpers\TimeHelper;
@@ -39,7 +40,7 @@ class BitfinexFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
      * @return void
      * @throws Exception
      */
-    public function handle()
+    public function handle(MarketDeltaRepository $marketDeltaRepository)
     {
         $exchange = ExchangesFactory::create('bitfinex');
         $exchangeSymbol = $this->dto->getExchangeSymbol();
@@ -49,7 +50,7 @@ class BitfinexFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
         $nowDate = Date::now();
         $nowDate->setSeconds(0);
         $nowDate->setMicroseconds(0);
-        $marketDelta = $exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
+        $marketDelta = $marketDeltaRepository->getMinuteMarketDelta('bitfinex', $exchangeSymbol, $fromTime);
         if ($marketDelta !== false) {
             Log::debug('BITFINEX: Minute market stat already fetched.', ['symbol' => $exchangeSymbol, 'fromTime' => date('d.m.Y H:i:s', $fromTime/1000)]);
             return;

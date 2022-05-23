@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Enums\TimeInterval;
 use App\Models\MarketDelta;
+use App\Repositories\MarketDeltaRepository;
 use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Helpers\TimeHelper;
@@ -36,7 +37,7 @@ class BitfinexWebsocketClient extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(private MarketDeltaRepository $marketDeltaRepository)
     {
         parent::__construct();
     }
@@ -81,11 +82,10 @@ class BitfinexWebsocketClient extends Command
                     }
                     if ($response[1] === 'te') {
                         $tradeData = $response[2] ?? [];
-                        $mdQueueName = 'bitfinex:md:'.$exchangeSymbol;
                         $tradeTime = $tradeData[1];
                         $tradeQuantity = $tradeData[2];
                         $fromTime = TimeHelper::round($tradeTime, TimeInterval::MINUTE());
-                        $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
+                        $marketDelta = (float)$this->marketDeltaRepository->getMinuteMarketDelta('bitfinex', $exchangeSymbol, $fromTime);
                         $marketDelta += $tradeQuantity;
                         echo $marketDelta . PHP_EOL;
                         MarketDelta::updateOrCreate([

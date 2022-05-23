@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Enums\TimeInterval;
+use App\Repositories\MarketDeltaRepository;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Helpers\TimeHelper;
 use Exception;
@@ -17,6 +18,11 @@ class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInte
         'binance',
         'bitstamp',
     ];
+
+    public function __construct(private MarketDeltaRepository $marketDeltaRepository)
+    {
+        //
+    }
 
     /**
      * @param string $symbol
@@ -34,6 +40,7 @@ class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInte
         $result = collect();
         $fromTime = TimeHelper::round($fromTime, $interval);
         $toTime = TimeHelper::round($toTime, $interval);
+        $marketDelta = $this->marketDeltaRepository->getTimeRangeMarketDeltaByExchangeAndSymbol($fromTime, $toTime);
         while ($fromTime <= $toTime) {
             $result[$fromTime] = 0.0;
             $nextTime = $fromTime;
@@ -41,7 +48,7 @@ class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInte
                 foreach ($this->exchangeNames as $exchangeName) {
                     $exchange = Factory::create($exchangeName);
                     foreach ($exchange->getExchangeSymbols($symbol) as $exchangeSymbol) {
-                        $result[$fromTime] += $exchange->getMinuteMarketDelta($exchangeSymbol, $nextTime);
+                        $result[$fromTime] += $marketDelta[$exchangeName][$exchangeSymbol][$nextTime];
                     }
                 }
                 $nextTime += TimeInterval::MINUTE()->value();

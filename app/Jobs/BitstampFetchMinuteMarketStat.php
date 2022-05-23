@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Enums\TimeInterval;
 use App\Models\MarketDelta;
+use App\Repositories\MarketDeltaRepository;
 use App\Services\Crypto\Exchanges\Factory as ExchangesFactory;
 use App\Helpers\TimeHelper;
 use App\Dto\FetchMinuteMarketStatDto;
@@ -36,7 +37,7 @@ class BitstampFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
      *
      * @return void
      */
-    public function handle()
+    public function handle(MarketDeltaRepository $marketDeltaRepository)
     {
         $exchange = ExchangesFactory::create('bitstamp');
         $exchangeSymbol = $this->dto->getExchangeSymbol();
@@ -46,7 +47,7 @@ class BitstampFetchMinuteMarketStat implements ShouldQueue, ShouldBeUnique
         $nowDate = Date::now();
         $nowDate->setSeconds(0);
         $nowDate->setMicroseconds(0);
-        $marketDelta = $exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
+        $marketDelta = $marketDeltaRepository->getMinuteMarketDelta('bitstamp', $exchangeSymbol, $fromTime);
         if ($marketDelta !== false) {
             Log::debug('BITSTAMP: Minute market stat already fetched.', ['symbol' => $exchangeSymbol, 'fromTime' => date('d.m.Y H:i:s', $fromTime/1000)]);
             return;

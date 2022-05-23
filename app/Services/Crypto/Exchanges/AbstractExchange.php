@@ -20,40 +20,6 @@ abstract class AbstractExchange implements ExchangeInterface
     protected int $orderSymbolIndex = 0;
 
     /**
-     * @param string $exchangeSymbol
-     * @param int $fromTime
-     */
-    abstract protected function dispatchMinuteMarketStatFetchJob(string $exchangeSymbol, int $fromTime): void;
-
-    /**
-     * @param string $exchangeSymbol
-     * @param int $fromTime
-     * @return float
-     * @throws Exception
-     */
-    final public function getMinuteMarketDelta(string $exchangeSymbol, int $fromTime): float
-    {
-        $fromTime = TimeHelper::round($fromTime, TimeInterval::MINUTE());
-        $result = $this->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
-        if ($result !== false) {
-            return $result;
-        }
-        $this->dispatchMinuteMarketStatFetchJob($exchangeSymbol, $fromTime);
-        return 0.0;
-    }
-
-    /**
-     * @param string $exchangeSymbol
-     * @param int $fromTime
-     * @return float|false
-     */
-    final public function getMinuteMarketDeltaFromDatabase (string $exchangeSymbol, int $fromTime): float|false {
-        $marketDeltaRepository = app(MarketDeltaRepository::class);
-        $marketDelta = $marketDeltaRepository->getMarketDeltaByTime($this->getExchangeName(), $exchangeSymbol, $fromTime);
-        return $marketDelta->value ?? 0.0;
-    }
-
-    /**
      * @param TradeInterface $first
      * @param TradeInterface $second
      * @return int

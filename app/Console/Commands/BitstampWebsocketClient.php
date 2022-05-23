@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Enums\TimeInterval;
 use App\Models\MarketDelta;
+use App\Repositories\MarketDeltaRepository;
 use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Helpers\TimeHelper;
@@ -36,7 +37,7 @@ class BitstampWebsocketClient extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(private MarketDeltaRepository $marketDeltaRepository)
     {
         parent::__construct();
     }
@@ -87,9 +88,8 @@ class BitstampWebsocketClient extends Command
                         Log::debug('BITSTAMP: Empty trade data!');
                         continue;
                     }
-                    $mdQueueName = 'bitstamp:md:'.$exchangeSymbol;
                     $fromTime = TimeHelper::round((int)($tradeData->microtimestamp/1000), TimeInterval::MINUTE());
-                    $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
+                    $marketDelta = (float)$this->marketDeltaRepository->getMinuteMarketDelta('bitstamp', $exchangeSymbol, $fromTime);
                     $delta = $tradeData->amount*($tradeData->type === 1 ? -1 : 1);
                     $marketDelta += $delta;
                     echo $marketDelta.PHP_EOL;

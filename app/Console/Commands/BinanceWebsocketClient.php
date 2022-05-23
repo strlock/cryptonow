@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Enums\TimeInterval;
 use App\Models\MarketDelta;
+use App\Repositories\MarketDeltaRepository;
 use App\Services\Crypto\Exchanges\AbstractExchange;
 use App\Services\Crypto\Exchanges\Factory;
 use App\Helpers\TimeHelper;
@@ -37,7 +38,7 @@ class BinanceWebsocketClient extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(private MarketDeltaRepository $marketDeltaRepository)
     {
         parent::__construct();
     }
@@ -70,7 +71,7 @@ class BinanceWebsocketClient extends Command
                     $price = $response->p;
                     event(new BinancePrice($price));
                     $fromTime = TimeHelper::round((int)($response->E), TimeInterval::MINUTE());
-                    $marketDelta = (float)$exchange->getMinuteMarketDeltaFromDatabase($exchangeSymbol, $fromTime);
+                    $marketDelta = (float)$this->marketDeltaRepository->getMinuteMarketDelta('binance', $exchangeSymbol, $fromTime);
                     $delta = $response->q*($response->m ? -1 : 1);
                     $marketDelta += $delta;
                     echo round($price, 2).': '.$marketDelta.PHP_EOL;
