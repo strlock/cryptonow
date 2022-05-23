@@ -48,7 +48,10 @@ class GetAggregateMarketStatService implements GetAggregateMarketStatServiceInte
                 foreach ($this->exchangeNames as $exchangeName) {
                     $exchange = Factory::create($exchangeName);
                     foreach ($exchange->getExchangeSymbols($symbol) as $exchangeSymbol) {
-                        $result[$fromTime] += $marketDelta[$exchangeName][$exchangeSymbol][$nextTime] ?? 0.0;
+                        if ($marketDelta->has($exchangeName) && $marketDelta[$exchangeName]->has($exchangeSymbol) &&
+                                $marketDelta[$exchangeName][$exchangeSymbol]->has($nextTime)) {
+                            $result[$fromTime] += $marketDelta[$exchangeName][$exchangeSymbol][$nextTime];
+                        }
                     }
                 }
                 $nextTime += TimeInterval::MINUTE()->value();

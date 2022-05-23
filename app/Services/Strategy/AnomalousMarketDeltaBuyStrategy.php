@@ -29,7 +29,7 @@ class AnomalousMarketDeltaBuyStrategy implements StrategyInterface
     public function getSignal(string $symbol): StrategySignal
     {
         $maxMd = $this->getMaxMarketDelta($symbol);
-        if (empty($maxMd) || $maxMd->getFromPrice() === 0) {
+        if (empty($maxMd) || (float)$maxMd->getFromPrice() === 0.0) {
             Log::debug('No maximum market delta right now');
             return StrategySignal::NOTHING();
         }
