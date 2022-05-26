@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bugs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/GetAggregateMarketStatService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/Strategy/AnomalousMarketDeltaBuyStrategy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -352,14 +352,11 @@
       <workItem from="1653208656525" duration="594000" />
       <workItem from="1653235530534" duration="4627000" />
       <workItem from="1653282420670" duration="2913000" />
-      <workItem from="1653337698797" duration="186000" />
-    </task>
-    <task id="LOCAL-00078" summary="Fixing bug. Refactoring">
-      <created>1652280289241</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1652280289241</updated>
+      <workItem from="1653337698797" duration="410000" />
+      <workItem from="1653371339343" duration="51000" />
+      <workItem from="1653420375156" duration="658000" />
+      <workItem from="1653489920233" duration="432000" />
+      <workItem from="1653545841393" duration="571000" />
     </task>
     <task id="LOCAL-00079" summary="Fixing bugs. Refactoring.">
       <created>1652288290330</created>
@@ -697,7 +694,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653284697628</updated>
     </task>
-    <option name="localTasksCounter" value="127" />
+    <task id="LOCAL-00127" summary="Fixing bugs">
+      <created>1653337896369</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1653337896369</updated>
+    </task>
+    <option name="localTasksCounter" value="128" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

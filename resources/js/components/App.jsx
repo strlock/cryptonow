@@ -8,7 +8,7 @@ import {stateContext} from "./StateProvider";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import About from "./Pages/About/About"
 import usePopup from "../hooks/usePopup"
-import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Routes, HashRouter as Router } from 'react-router-dom';
 import StateProvider from "./StateProvider";
 
 const App = () => {
