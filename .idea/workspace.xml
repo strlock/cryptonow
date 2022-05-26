@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="IMproving routing">
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug">
+      <change afterPath="$PROJECT_DIR$/config/telegram-logger.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/crypto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/crypto.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/telegram.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/telegram.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,30 +200,8 @@
       <path value="$PROJECT_DIR$/vendor/stella-maris/clock" />
       <path value="$PROJECT_DIR$/vendor/lcobucci/clock" />
       <path value="$PROJECT_DIR$/vendor/sourceboat/laravel-enumeration" />
-      <path value="$PROJECT_DIR$/vendor/league/uri" />
-      <path value="$PROJECT_DIR$/vendor/league/uri-interfaces" />
-      <path value="$PROJECT_DIR$/vendor/league/uri-parser" />
-      <path value="$PROJECT_DIR$/vendor/amphp/windows-registry" />
-      <path value="$PROJECT_DIR$/vendor/amphp/websocket" />
-      <path value="$PROJECT_DIR$/vendor/amphp/websocket-client" />
-      <path value="$PROJECT_DIR$/vendor/amphp/socket" />
-      <path value="$PROJECT_DIR$/vendor/amphp/sync" />
-      <path value="$PROJECT_DIR$/vendor/amphp/process" />
-      <path value="$PROJECT_DIR$/vendor/amphp/serialization" />
-      <path value="$PROJECT_DIR$/vendor/amphp/http-client" />
-      <path value="$PROJECT_DIR$/vendor/amphp/parser" />
-      <path value="$PROJECT_DIR$/vendor/amphp/hpack" />
-      <path value="$PROJECT_DIR$/vendor/amphp/http" />
-      <path value="$PROJECT_DIR$/vendor/amphp/cache" />
-      <path value="$PROJECT_DIR$/vendor/amphp/dns" />
-      <path value="$PROJECT_DIR$/vendor/amphp/amp" />
-      <path value="$PROJECT_DIR$/vendor/amphp/byte-stream" />
-      <path value="$PROJECT_DIR$/vendor/cash/lrucache" />
-      <path value="$PROJECT_DIR$/vendor/daverandom/libdns" />
-      <path value="$PROJECT_DIR$/vendor/kelunik/certificate" />
-      <path value="$PROJECT_DIR$/vendor/writethesky/websocket-client" />
+      <path value="$PROJECT_DIR$/vendor/rafaellaurindo/laravel-telegram-logging" />
       <path value="$PROJECT_DIR$/vendor/sabre/uri" />
-      <path value="$PROJECT_DIR$/vendor/codenix-sv/bitfinex-api-ws" />
     </include_path>
   </component>
   <component name="PhpXdebugProxy" host="127.0.0.1" port="11003" />
@@ -356,14 +340,8 @@
       <workItem from="1653371339343" duration="51000" />
       <workItem from="1653420375156" duration="658000" />
       <workItem from="1653489920233" duration="432000" />
-      <workItem from="1653545841393" duration="5113000" />
-    </task>
-    <task id="LOCAL-00080" summary="Adding background">
-      <created>1652288346498</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1652288346498</updated>
+      <workItem from="1653545841393" duration="5949000" />
+      <workItem from="1653555273624" duration="616000" />
     </task>
     <task id="LOCAL-00081" summary="Adding loading GIF">
       <created>1652288392716</created>
@@ -701,7 +679,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653546703981</updated>
     </task>
-    <option name="localTasksCounter" value="129" />
+    <task id="LOCAL-00129" summary="Fixing bug">
+      <created>1653551944218</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1653551944218</updated>
+    </task>
+    <option name="localTasksCounter" value="130" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -750,11 +735,11 @@
     <MESSAGE value="Fixing bug with current price" />
     <MESSAGE value="Left navigation" />
     <MESSAGE value="Moving market delta statistics to MySQL" />
-    <MESSAGE value="Fixing bug" />
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Fixing bugs" />
     <MESSAGE value="IMproving routing" />
-    <option name="LAST_COMMIT_MESSAGE" value="IMproving routing" />
+    <MESSAGE value="Fixing bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

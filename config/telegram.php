@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'botChatId' => env('TELEGRAM_BOT_CHAT_ID', ''),
+    'botChatId' => env('TELEGRAM_CHAT_ID', ''),
 ];
