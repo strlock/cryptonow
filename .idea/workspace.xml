@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bugs">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="IMproving routing">
+      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -356,14 +356,7 @@
       <workItem from="1653371339343" duration="51000" />
       <workItem from="1653420375156" duration="658000" />
       <workItem from="1653489920233" duration="432000" />
-      <workItem from="1653545841393" duration="571000" />
-    </task>
-    <task id="LOCAL-00079" summary="Fixing bugs. Refactoring.">
-      <created>1652288290330</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1652288290330</updated>
+      <workItem from="1653545841393" duration="5113000" />
     </task>
     <task id="LOCAL-00080" summary="Adding background">
       <created>1652288346498</created>
@@ -701,7 +694,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653337896369</updated>
     </task>
-    <option name="localTasksCounter" value="128" />
+    <task id="LOCAL-00128" summary="IMproving routing">
+      <created>1653546703980</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1653546703981</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -729,7 +729,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Testmode for exchanges" />
     <MESSAGE value="Fixing bug. Improving logs" />
     <MESSAGE value="Common state. Pagination." />
     <MESSAGE value="Fixing Bugs. Refactoring" />
@@ -754,7 +753,8 @@
     <MESSAGE value="Fixing bug" />
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Fixing bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bugs" />
+    <MESSAGE value="IMproving routing" />
+    <option name="LAST_COMMIT_MESSAGE" value="IMproving routing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -770,9 +770,19 @@
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/Repositories/MarketDeltaRepository.php</url>
-          <line>26</line>
-          <option name="timeStamp" value="37" />
+          <url>file://$PROJECT_DIR$/vendor/encore/laravel-admin/src/Form.php</url>
+          <line>535</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/vendor/encore/laravel-admin/src/Form.php</url>
+          <line>540</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/vendor/encore/laravel-admin/src/Form/Field/ImageField.php</url>
+          <line>180</line>
+          <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
