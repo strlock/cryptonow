@@ -11,6 +11,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 use WebSocket\Client;
+use WebSocket\TimeoutException;
 
 class BinanceWebsocketClient extends Command
 {
@@ -51,19 +52,25 @@ class BinanceWebsocketClient extends Command
         $streamName = strtolower($exchangeSymbol).'@aggTrade';
         while (true) {
             try {
-                echo 'Retrieving '.self::CHUNK_SIZE.' trades'.PHP_EOL;
-                $client = new Client('wss://stream.binance.com:9443/ws/'.$streamName, [
+                echo 'Retrieving ' . self::CHUNK_SIZE . ' trades' . PHP_EOL;
+                $client = new Client(
+                    'wss://stream.binance.com:9443/ws/' . $streamName, [
                     'timeout' => 5,
-                ]);
+                ]
+                );
                 $fromTime = TimeHelper::round(TimeHelper::time(), TimeInterval::MINUTE());
                 $minutesMarketDelta = [
-                    $fromTime => $this->marketDeltaRepository->getMinuteMarketDelta('binance', $exchangeSymbol, $fromTime)
+                    $fromTime => $this->marketDeltaRepository->getMinuteMarketDelta(
+                        'binance',
+                        $exchangeSymbol,
+                        $fromTime
+                    )
                 ];
                 $i = 0;
                 while ($i < self::CHUNK_SIZE) {
                     $response = json_decode($client->receive());
                     if (empty($response)) {
-                        echo 'Invalid response!'.PHP_EOL;
+                        echo 'Invalid response!' . PHP_EOL;
                         Log::debug('BINANCE: Invalid response!');
                         continue;
                     }
@@ -73,20 +80,28 @@ class BinanceWebsocketClient extends Command
                     if (empty($minutesMarketDelta[$fromTime])) {
                         $minutesMarketDelta[$fromTime] = 0.0;
                     }
-                    $minutesMarketDelta[$fromTime] += $response->q*($response->m ? -1 : 1);
-                    echo $i.':'.$fromTime.':'.round($price, 2).': '.$minutesMarketDelta[$fromTime].PHP_EOL;
+                    $minutesMarketDelta[$fromTime] += $response->q * ($response->m ? -1 : 1);
+                    echo $i . ':' . $fromTime . ':' . round(
+                            $price,
+                            2
+                        ) . ': ' . $minutesMarketDelta[$fromTime] . PHP_EOL;
                     $i++;
                 }
                 foreach ($minutesMarketDelta as $fromTime => $marketDelta) {
-                    MarketDelta::updateOrCreate([
-                        'symbol' => $exchangeSymbol,
-                        'exchange' => 'binance',
-                        'time' => $fromTime,
-                    ], [
-                        'value' => $marketDelta,
-                    ]);
+                    MarketDelta::updateOrCreate(
+                        [
+                            'symbol' => $exchangeSymbol,
+                            'exchange' => 'binance',
+                            'time' => $fromTime,
+                        ],
+                        [
+                            'value' => $marketDelta,
+                        ]
+                    );
                 }
                 $client->close();
+            } catch (TimeoutException $e) {
+                echo 'Timeout'.PHP_EOL;
             } catch (Throwable $e) {
                 echo $e->getMessage().PHP_EOL;
                 Log::error($e);

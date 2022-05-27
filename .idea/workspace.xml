@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="DB queries optimization">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Dashboard/Dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/StateProvider.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/StateProvider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -339,14 +337,8 @@
       <workItem from="1653555273624" duration="2657000" />
       <workItem from="1653659241055" duration="545000" />
       <workItem from="1653659811737" duration="2192000" />
-      <workItem from="1653675293348" duration="486000" />
-    </task>
-    <task id="LOCAL-00084" summary="Fixing bug">
-      <created>1652345490141</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1652345490141</updated>
+      <workItem from="1653675293348" duration="517000" />
+      <workItem from="1653675861003" duration="968000" />
     </task>
     <task id="LOCAL-00085" summary="Percent progress bar">
       <created>1652347917849</created>
@@ -684,7 +676,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653661370786</updated>
     </task>
-    <option name="localTasksCounter" value="133" />
+    <task id="LOCAL-00133" summary="Fixing bug">
+      <created>1653675795018</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1653675795020</updated>
+    </task>
+    <option name="localTasksCounter" value="134" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -733,11 +732,11 @@
     <MESSAGE value="Refactoring" />
     <MESSAGE value="Fixing bugs" />
     <MESSAGE value="IMproving routing" />
-    <MESSAGE value="Fixing bug" />
     <MESSAGE value="Telegram logger" />
     <MESSAGE value="Improving" />
     <MESSAGE value="DB queries optimization" />
-    <option name="LAST_COMMIT_MESSAGE" value="DB queries optimization" />
+    <MESSAGE value="Fixing bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
