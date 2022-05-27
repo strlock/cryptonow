@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug">
-      <change afterPath="$PROJECT_DIR$/config/telegram-logger.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/crypto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/crypto.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Telegram logger">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MarketDeltaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/telegram.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/telegram.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -341,14 +335,8 @@
       <workItem from="1653420375156" duration="658000" />
       <workItem from="1653489920233" duration="432000" />
       <workItem from="1653545841393" duration="5949000" />
-      <workItem from="1653555273624" duration="616000" />
-    </task>
-    <task id="LOCAL-00081" summary="Adding loading GIF">
-      <created>1652288392716</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1652288392716</updated>
+      <workItem from="1653555273624" duration="2657000" />
+      <workItem from="1653659241055" duration="245000" />
     </task>
     <task id="LOCAL-00082" summary="Improving background">
       <created>1652291477373</created>
@@ -686,7 +674,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653551944218</updated>
     </task>
-    <option name="localTasksCounter" value="130" />
+    <task id="LOCAL-00130" summary="Telegram logger">
+      <created>1653555920762</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1653555920763</updated>
+    </task>
+    <option name="localTasksCounter" value="131" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -714,7 +709,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixing bug. Improving logs" />
     <MESSAGE value="Common state. Pagination." />
     <MESSAGE value="Fixing Bugs. Refactoring" />
     <MESSAGE value="Fixing bug. Refactoring" />
@@ -739,7 +733,8 @@
     <MESSAGE value="Fixing bugs" />
     <MESSAGE value="IMproving routing" />
     <MESSAGE value="Fixing bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bug" />
+    <MESSAGE value="Telegram logger" />
+    <option name="LAST_COMMIT_MESSAGE" value="Telegram logger" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

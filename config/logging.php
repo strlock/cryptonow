@@ -117,7 +117,7 @@ return [
         'telegram' => [
             'driver' => 'custom',
             'via'    => RLaurindo\TelegramLogger\TelegramLogger::class,
-            'level'  => 'debug',
+            'level'  => 'error',
         ]
     ],
 

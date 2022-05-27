@@ -10,9 +10,9 @@ use App\Services\Crypto\Exchanges\Factory;
 use App\Helpers\TimeHelper;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 use Throwable;
 use WebSocket\Client;
+use WebSocket\TimeoutException;
 
 class BitstampWebsocketClient extends Command
 {
@@ -103,6 +103,8 @@ class BitstampWebsocketClient extends Command
                     $i++;
                 }
                 $client->close();
+            } catch (TimeoutException $e) {
+                echo 'BITSTAMP: Timeout'.PHP_EOL;
             } catch (Throwable $e) {
                 echo $e->getMessage().PHP_EOL;
                 Log::error($e);
