@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Telegram logger">
+    <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Improving">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BitstampWebsocketClient.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/logging.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logging.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +37,7 @@
   <component name="PackageJsonUpdateNotifier">
     <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
-  <component name="PhpDebugGeneral" xdebug_debug_port="11003" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
+  <component name="PhpDebugGeneral" xdebug_debug_port="11003" listening_started="true" local_pass_configuration_options="false" xdebug_force_break_when_no_path_mapping="false" xdebug_force_break_when_outside_project="false">
     <xdebug_debug_ports port="11003" />
   </component>
   <component name="PhpServers">
@@ -336,14 +335,8 @@
       <workItem from="1653489920233" duration="432000" />
       <workItem from="1653545841393" duration="5949000" />
       <workItem from="1653555273624" duration="2657000" />
-      <workItem from="1653659241055" duration="245000" />
-    </task>
-    <task id="LOCAL-00082" summary="Improving background">
-      <created>1652291477373</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1652291477373</updated>
+      <workItem from="1653659241055" duration="545000" />
+      <workItem from="1653659811737" duration="1404000" />
     </task>
     <task id="LOCAL-00083" summary="Orders diff percent">
       <created>1652339172125</created>
@@ -681,7 +674,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653555920763</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="Improving">
+      <created>1653659585683</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1653659585683</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -724,7 +724,6 @@
     <MESSAGE value="Design" />
     <MESSAGE value="Debugging" />
     <MESSAGE value="Refactoring Facade -&gt; Exchange" />
-    <MESSAGE value="Improving" />
     <MESSAGE value="Improving orders and telegram messages" />
     <MESSAGE value="Fixing bug with current price" />
     <MESSAGE value="Left navigation" />
@@ -734,7 +733,8 @@
     <MESSAGE value="IMproving routing" />
     <MESSAGE value="Fixing bug" />
     <MESSAGE value="Telegram logger" />
-    <option name="LAST_COMMIT_MESSAGE" value="Telegram logger" />
+    <MESSAGE value="Improving" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improving" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -764,6 +764,16 @@
           <line>180</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php</url>
+          <line>49</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php</url>
+          <line>79</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -771,15 +781,6 @@
         <watch expression="date('d.m.Y H:i:s', $fromTime/1000)" language="PHP" />
         <watch expression="date('d.m.Y H:i:s', $time/1000)" language="PHP" />
         <watch expression="date('d.m.Y H:i:s', $toTime/1000)" language="PHP" />
-      </configuration>
-      <configuration name="artisan">
-        <watch expression="$order-&gt;getDirection()" language="PHP" />
-        <watch expression="date('d.m.Y H:i:s', $fromTime/1000)" language="PHP" />
-        <watch expression="date('d.m.Y H:i:s', $toTime/1000)" language="PHP" />
-        <watch expression="$order-&gt;getState()" language="PHP" />
-        <watch expression="date('d.m.Y H:i:s', $lastMdCluster-&gt;getToTime()/1000)" language="PHP" />
-        <watch expression="$user-&gt;getId()" language="PHP" />
-        <watch expression="$this-&gt;userHasOpenedOrder($user)" language="PHP" />
       </configuration>
     </watches-manager>
   </component>
