@@ -36,9 +36,6 @@ const Dashboard = () => {
     const isLoggedIn = () => state.user !== null;
 
     const daysForInterval = TimeHelper.daysForInterval(state.interval)
-    /*if (daysForInterval > 10) {
-        daysForInterval = 10;
-    }*/
 
     const updateTimeRange = () => {
         const fromTime = TimeHelper.round((TimeHelper.subDaysFromDate(new Date(), daysForInterval)).getTime(), state.interval);
@@ -60,7 +57,7 @@ const Dashboard = () => {
             clearInterval(updateTimeRangeInterval.current);
             updateTimeRangeInterval.current = null;
         }
-    }, [state.user]);
+    }, [state.user, state.interval]);
 
     useEffect(() => {
         if (isLoggedIn()) {
