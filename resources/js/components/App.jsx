@@ -13,7 +13,6 @@ import StateProvider from "./StateProvider";
 
 const App = () => {
     const [state, actions] = useContext(stateContext)
-    const popupTimeout = useRef(null)
     const popup = usePopup()
 
     useEffect(() => {

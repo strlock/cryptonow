@@ -6,20 +6,22 @@ import {stateContext} from "../StateProvider";
 
 let chartContext = null;
 
-const PriceChart = ({fromTime, toTime, interval, height, textColor, linesColor, xAnnotations, yAnnotations, orders}) => {
+const PriceChart = ({height, textColor, linesColor, xAnnotations, yAnnotations, orders}) => {
     const [seriesData, setSeriesData] = useState([]);
     const [state, actions] = useContext(stateContext);
 
     useEffect(() => {
-        RequestHelper.fetch('/api/price/BTCUSD/' + fromTime + '/' + toTime + '/' + interval, {},
-            response => {
-                if (response.data !== undefined) {
-                    setSeriesData(response.data);
-                }
-            },
-            error => console.log(error)
-        );
-    }, [fromTime, toTime, interval]);
+        if (state.fromTime !== 0 && state.toTime !== 0) {
+            RequestHelper.fetch('/api/price/BTCUSD/' + state.fromTime + '/' + state.toTime + '/' + state.interval, {},
+                response => {
+                    if (response.data !== undefined) {
+                        setSeriesData(response.data);
+                    }
+                },
+                error => console.log(error)
+            );
+        }
+    }, [state.fromTime, state.toTime, state.interval]);
 
     const priceAnnotation = useMemo(() => {
         return {

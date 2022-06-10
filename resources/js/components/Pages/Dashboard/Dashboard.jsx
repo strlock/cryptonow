@@ -35,11 +35,8 @@ const Dashboard = () => {
 
     const isLoggedIn = () => state.user !== null;
 
-    const daysForInterval = TimeHelper.daysForInterval(state.interval)
-
     const updateTimeRange = () => {
-        const fromTime = TimeHelper.round((TimeHelper.subDaysFromDate(new Date(), daysForInterval)).getTime(), state.interval);
-        const toTime = TimeHelper.round((new Date()).getTime(), state.interval);
+        const [fromTime, toTime] = TimeHelper.getTimeRangeForInterval(state.interval);
         actions.setTimeRange(fromTime, toTime);
     }
 
@@ -225,9 +222,6 @@ const Dashboard = () => {
                 <div className="card-body pt-0">
                     <div className="chart">
                         <PriceChart
-                            fromTime={state.fromTime}
-                            toTime={state.toTime}
-                            interval={state.interval}
                             height={priceHeight}
                             textColor={chartsTextColor}
                             linesColor={chartsLinesColor}

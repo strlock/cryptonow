@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0f10bfc4-e797-43d1-88ef-b1fc13e316ce" name="Default Changelist" comment="Fixing bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/BinanceWebsocketClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/Helpers/TimeHelper.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/Helpers/TimeHelper.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Pages/Dashboard/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Pages/Dashboard/Dashboard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/PriceChart/PriceChart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/PriceChart/PriceChart.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -338,14 +342,13 @@
       <workItem from="1653659241055" duration="545000" />
       <workItem from="1653659811737" duration="2192000" />
       <workItem from="1653675293348" duration="517000" />
-      <workItem from="1653675861003" duration="968000" />
-    </task>
-    <task id="LOCAL-00085" summary="Percent progress bar">
-      <created>1652347917849</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1652347917849</updated>
+      <workItem from="1653675861003" duration="1110000" />
+      <workItem from="1653682583722" duration="613000" />
+      <workItem from="1653711907257" duration="3677000" />
+      <workItem from="1653826845447" duration="668000" />
+      <workItem from="1654753229050" duration="66000" />
+      <workItem from="1654767932884" duration="2702000" />
+      <workItem from="1654843616284" duration="4415000" />
     </task>
     <task id="LOCAL-00086" summary="Improving">
       <created>1652351653616</created>
@@ -683,7 +686,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653675795020</updated>
     </task>
-    <option name="localTasksCounter" value="134" />
+    <task id="LOCAL-00134" summary="Fixing bug">
+      <created>1653679566464</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1653679566465</updated>
+    </task>
+    <option name="localTasksCounter" value="135" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -765,6 +775,11 @@
           <url>file://$PROJECT_DIR$/vendor/encore/laravel-admin/src/Form/Field/ImageField.php</url>
           <line>180</line>
           <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Console/Commands/Sorts.php</url>
+          <line>58</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
